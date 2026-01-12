@@ -76,12 +76,37 @@ Use after modifying `src/content.config.ts` or adding new content fields.
 | `bun run format`       | Auto-format with Prettier        |
 | `bun run format:check` | Check formatting without changes |
 
-## Pre-commit Checklist
+## Git Hooks (Automated Quality Checks)
 
-1. `bun run format` — Fix formatting
-2. `bun run lint` — Check for errors
-3. `bun astro check` — Verify types
-4. `bun run build` — Ensure build succeeds
+Git hooks are configured via [Lefthook](https://github.com/evilmartians/lefthook) to automatically run quality checks.
+
+### Pre-commit (runs on every commit)
+
+1. `bun run format:check` — Verify formatting
+2. `bun run lint` — Check for linting errors
+
+### Pre-push (runs before pushing)
+
+1. `bun astro check` — TypeScript validation
+2. `bun run build` — Full production build
+
+### Setup
+
+Hooks are installed automatically when you run `bun install` (via the `prepare` script). To manually reinstall:
+
+```bash
+bunx lefthook install
+```
+
+### Bypassing Hooks (use sparingly)
+
+```bash
+# Skip pre-commit hooks
+git commit --no-verify -m "message"
+
+# Skip pre-push hooks
+git push --no-verify
+```
 
 ## Notes
 
