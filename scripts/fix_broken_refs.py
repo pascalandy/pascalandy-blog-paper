@@ -25,7 +25,7 @@ from pathlib import Path
 
 # --- Configuration ---
 MARKDOWN_DIRS = [Path("to_import"), Path("src/data/blog")]
-IMAGE_DIR = Path("public/og-legacy")
+IMAGE_DIR = Path("src/assets/images/og-legacy")
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp"}
 
 
@@ -82,17 +82,20 @@ def find_replacement(ref_path: str, images: dict[str, Path]) -> str | None:
     if filename in images:
         # Found a match - build the new path
         img_path = images[filename]
-        # Convert to URL path: public/og-legacy/... -> /og-legacy/...
-        rel_path = img_path.relative_to(Path("public"))
-        return f"/{rel_path}"
+        # Convert to relative path: src/assets/images/og-legacy/... -> ../../assets/images/og-legacy/...
+        rel_parts = img_path.relative_to(Path("src/assets/images"))
+        return f"../../assets/images/{rel_parts}"
 
     return None
 
 
 def check_image_exists(ref_path: str) -> bool:
     """Check if the referenced image exists."""
-    # /og-legacy/... -> public/og-legacy/...
-    if ref_path.startswith("/"):
+    # Handle relative paths: ../../assets/images/...
+    if ref_path.startswith("../../assets/"):
+        file_path = Path("src") / ref_path.lstrip("../../")
+    # Handle absolute paths: /og-legacy/... -> public/og-legacy/...
+    elif ref_path.startswith("/"):
         file_path = Path("public") / ref_path.lstrip("/")
     else:
         file_path = Path("public") / ref_path
