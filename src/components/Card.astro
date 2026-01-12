@@ -15,6 +15,7 @@ const { title, description } = data;
 <li class="my-6">
   <a
     href={getPath(id, filePath)}
+    data-astro-prefetch="viewport"
     class:list={[
       "inline-block text-lg font-medium text-accent",
       "decoration-dashed underline-offset-4 hover:underline",

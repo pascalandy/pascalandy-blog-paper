@@ -5,6 +5,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
+import { Picture } from "astro:assets";
 import bannerImage from "@/assets/images/pascalandy-banner.jpg";
 
 const posts = await getCollection("blog");
@@ -18,8 +19,10 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
   <Header />
   <main id="main-content" data-layout="index" class="app-layout">
     <section id="hero" class="pt-8 pb-6">
-      <img
-        src={bannerImage.src}
+      <Picture
+        src={bannerImage}
+        formats={["avif", "webp"]}
+        loading="eager"
         alt="Pascal Andy"
         class="mb-6 w-full rounded-lg"
       />
