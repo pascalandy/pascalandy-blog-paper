@@ -384,7 +384,7 @@ def main() -> int:
     print(f"Potential savings:    {summary['potential_savings']}")
 
     # Save full report
-    report_path = Path("image_analysis_report.json")
+    report_path = Path("dev_notes/clean_img/image_analysis_report.json")
     with report_path.open("w", encoding="utf-8") as f:
         json.dump(report, f, indent=2)
     print(f"\nFull report saved to: {report_path}")
