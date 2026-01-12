@@ -23,6 +23,17 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
+          cache: true
+          cache-dependency-path: bun.lockb
+
+      - name: Cache Astro build
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules/.astro
+          key: astro-build-${{ runner.os }}-${{ hashFiles('src/**', 'astro.config.ts') }}
+          restore-keys: |
+            astro-build-${{ runner.os }}-
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
