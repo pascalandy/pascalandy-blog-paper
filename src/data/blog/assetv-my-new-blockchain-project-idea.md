@@ -5,7 +5,7 @@ tags:
 date_created: 2018-05-10
 author: "Pascal Andy"
 description: "Idée de projet blockchain AssetV: un système décentralisé de versionnement d'actifs numériques inspiré de Git."
-ogImage: "/og-legacy/2018/05/pascalandy-com_header_2017-04-10_14h46.jpg"
+ogImage: ../../assets/images/og-legacy/2018/05/pascalandy-com_header_2017-04-10_14h46.jpg
 ---
 
 1/ As a developer and a crypto-user I just had this spark.

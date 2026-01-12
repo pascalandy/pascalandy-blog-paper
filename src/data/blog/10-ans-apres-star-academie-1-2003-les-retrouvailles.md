@@ -5,7 +5,7 @@ tags:
 date_created: 2014-10-26
 author: "Pascal Andy"
 description: "Le 8 juin 2013, je recevais un courriel en même temps que les treize autres académiciens de la première cuvée de Star Académie. C'était Marianik Giffard"
-ogImage: "/og-legacy/2017/04/10_ans_star_academie-1462895695802.jpg"
+ogImage: ../../assets/images/og-legacy/2017/04/10_ans_star_academie-1462895695802.jpg
 ---
 
 Le 8 juin 2013, je recevais un courriel en même temps que les treize autres académiciens de la première cuvée de Star Académie. C'était [Marianik Giffard](https://twitter.com/MarianikGiffard) qui nous envoyait un courriel pour connaître notre intention face à de possibles retrouvailles. Une des options allait comme ci.

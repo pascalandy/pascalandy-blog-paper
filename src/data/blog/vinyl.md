@@ -5,7 +5,7 @@ tags:
 date_created: 2022-11-21
 author: Pascal Andy
 description: "J'ai posé cette question sur ce groupe Facebook et j'ai reçu plusieurs suggestions d'endroits pour acheter des LP. Voici la liste ultime pour faire vos prochaines trouvailles!"
-ogImage: "/og-legacy/2021/11/vinyl-1.jpg"
+ogImage: ../../assets/images/og-legacy/2021/11/vinyl-1.jpg
 ---
 
 Voici la liste ultime pour faire vos prochaines trouvailles!

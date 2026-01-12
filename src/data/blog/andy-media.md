@@ -5,7 +5,7 @@ tags:
 date_created: 2014-02-17
 author: "Pascal Andy"
 description: "Être « nul avec les technos », c'était encore drôle en 2010, mais aujourd'hui, c'est un frein au développement de plusieurs organisations."
-ogImage: "/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg"
+ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 ---
 
 Nous vivons un mode de vie résolument digital. Être « nul avec les technos », c'était drôle en 2010, mais aujourd'hui, c'est un frein au développement de plusieurs personnes. Dans le contexte où nos vies professionnelles et personnelles fusionnent, ça devient quasi obligatoire d'être à l'aise avec les machines qui nous entourent.
