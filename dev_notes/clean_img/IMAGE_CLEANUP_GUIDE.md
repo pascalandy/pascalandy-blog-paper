@@ -146,7 +146,7 @@ uv run scripts/analyze_images.py
 ### 3.2 Check remaining image count
 
 ```bash
-find public/og-legacy -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.gif" -o -name "*.webp" \) | wc -l
+find public/og-legacy -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \) | wc -l
 ```
 
 ### 3.3 Check remaining size
@@ -163,9 +163,9 @@ After cleanup:
 
 | Metric | Before | After |
 |--------|--------|-------|
-| Images | 710 | ~97 |
-| Size | 176.3 MB | ~20 MB |
-| Savings | - | ~156 MB |
+| Images | 710 | 78 |
+| Size | 176.3 MB | 18 MB |
+| Savings | - | 158 MB (89%) |
 
 ---
 
