@@ -48,8 +48,12 @@ export default defineConfig({
     },
   },
   image: {
-    responsiveStyles: true,
+    // Default layout for all images (can be overridden per-component)
     layout: "constrained",
+    // Enable CSS for responsive image resizing
+    responsiveStyles: true,
+    // Breakpoints for srcset generation (common device widths)
+    breakpoints: [640, 750, 828, 1080, 1200, 1920],
   },
   env: {
     schema: {
