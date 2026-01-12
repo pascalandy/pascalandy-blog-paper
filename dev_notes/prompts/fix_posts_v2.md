@@ -107,6 +107,10 @@ source: content to import
 destination: actual astro site
 ogImage: "../../assets/images/og-legacy/2021/11/turntable.jpg"
 
+be careful about "pascalandy-com_header", there is a lot of duplicates
+ogImage: "../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg"
+
+
 ### 5. DO NOT CHANGE
 
 - Post body content (keep original text intact)
