@@ -136,7 +136,6 @@ Built with:
 | `/posts/[...slug]/index.png` | Dynamic OG image |
 | `/tags/[tag]/[...page]` | Tag filtering with pagination |
 | `/search/` | Pagefind search UI |
-| `/archives/` | Posts grouped by year/month |
 | `/rss.xml` | RSS feed (API route) |
 
 #### 2. Post Filtering Logic
