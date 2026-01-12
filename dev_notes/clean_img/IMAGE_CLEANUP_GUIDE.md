@@ -29,7 +29,7 @@ These 613 images are NOT referenced by any markdown post. Safe to delete.
 
 ```bash
 # Count orphaned images
-cat image_analysis_report.json | python3 -c "
+cat dev_notes/clean_img/image_analysis_report.json | uv run python -c "
 import json, sys
 data = json.load(sys.stdin)
 orphaned = data.get('orphaned_images', [])
@@ -43,7 +43,7 @@ print(f'Total size: {total_size / 1024 / 1024:.1f} MB')
 
 ```bash
 # Delete all orphaned images
-cat image_analysis_report.json | python3 -c "
+cat dev_notes/clean_img/image_analysis_report.json | uv run python -c "
 import json, sys
 data = json.load(sys.stdin)
 for img in data.get('orphaned_images', []):
@@ -87,7 +87,7 @@ git commit -m "chore: remove 613 orphaned images (155.9 MB)"
 
 ```bash
 # Show top 10 duplicate groups by savings
-cat image_analysis_report.json | python3 -c "
+cat dev_notes/clean_img/image_analysis_report.json | uv run python -c "
 import json, sys
 data = json.load(sys.stdin)
 for i, group in enumerate(data.get('duplicate_groups', [])[:10], 1):
@@ -103,7 +103,7 @@ for i, group in enumerate(data.get('duplicate_groups', [])[:10], 1):
 
 ```bash
 # Delete all duplicate images (source images are preserved)
-cat image_analysis_report.json | python3 -c "
+cat dev_notes/clean_img/image_analysis_report.json | uv run python -c "
 import json, sys
 data = json.load(sys.stdin)
 for group in data.get('duplicate_groups', []):
