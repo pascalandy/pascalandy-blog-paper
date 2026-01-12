@@ -10,8 +10,9 @@ Scans markdown files for image references and fixes paths to deleted duplicates
 by finding the correct source image.
 
 Usage:
-    uv run scripts/fix_broken_refs.py --dry-run  # Preview changes
-    uv run scripts/fix_broken_refs.py            # Apply changes
+    uv run scripts/fix_broken_refs.py --dry-run           # Preview changes
+    uv run scripts/fix_broken_refs.py                     # Apply changes
+    uv run scripts/fix_broken_refs.py --dry-run --strict  # CI mode (exit 1 if broken)
 """
 
 from __future__ import annotations
@@ -164,6 +165,11 @@ def main() -> int:
         action="store_true",
         help="Preview changes without applying them",
     )
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Exit with code 1 if any broken references are found (for CI)",
+    )
     args = parser.parse_args()
 
     print("=" * 60)
@@ -227,6 +233,10 @@ def main() -> int:
         print("\n" + "=" * 60)
         print("Run without --dry-run to apply these fixes")
         print("=" * 60)
+
+    # Exit with error code if strict mode and broken refs found
+    if args.strict and all_changes:
+        return 1
 
     return 0
 
