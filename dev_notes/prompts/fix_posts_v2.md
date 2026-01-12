@@ -9,8 +9,8 @@ Importing old posts from a previous Ghost blog. The JSON-to-Markdown conversion 
 ### Step 1: Select Next Post
 From `./to_import/`:
 - List all `.md` files
-- Sort by frontmatter `date_created` (most recent first)
-- Select the most recent file
+- Sort files by filenames.
+- Select A to Z
 - If no files remain, report "Import complete" and stop
 
 ### Step 2: Move File
@@ -32,9 +32,8 @@ Apply fixes per sections below, then report to user.
 - Anything that feels off
 
 ### Step 5: Commit & Loop
-- Commit changes
-- Return to Step 1 (do not ask, just proceed)
 
+- ask to continue, Return to Step 1
 ---
 
 ## Fix Categories
@@ -98,14 +97,14 @@ New tags allowed if clearly relevant (use `lowercase-kebab-case`).
 `ogImage:` will be broken
 
 So you must do your due diligence, find the picture within the image to import directory. 
-then copy the image and the subdirectories into the astro site. 
+then **copy** the image from the source into the destination 
 
 example:
 
-path with all our old content:
+source: content to import
 ./to_import/images_to_Import/2021/11/turntable.jpg
 
-new path (actual astro site):
+destination: actual astro site
 ogImage: "../../assets/images/og-legacy/2021/11/turntable.jpg"
 
 ### 5. DO NOT CHANGE
