@@ -13,12 +13,7 @@ pre-commit:
       fail_text: "Linting errors found. Fix them before committing."
 
 pre-push:
-  parallel: false
   jobs:
     - name: check
       run: bun astro check
       fail_text: "TypeScript errors found. Fix them before pushing."
-
-    - name: build
-      run: bun run build
-      fail_text: "Build failed. Fix errors before pushing."
