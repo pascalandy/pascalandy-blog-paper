@@ -38,3 +38,19 @@ jobs:
 
       - name: Build
         run: bun run build
+
+  deploy:
+    name: Deploy to Sevalla
+    runs-on: ubuntu-latest
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Deploy static site
+        uses: sevalla-hosting/sevalla-deploy@v1.0.1
+        with:
+          action: deploy-static-site
+          sevalla-token: ${{ secrets.SEVALLA_TOKEN }}
+          static-site-id: ${{ vars.SEVALLA_STATIC_SITE_ID }}
+          branch: main
+          wait-for-finish: true
