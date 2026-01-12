@@ -407,6 +407,29 @@ export const SITE = {
 
 - `PUBLIC_GOOGLE_SITE_VERIFICATION` - Optional Google verification meta tag
 
+## Deployment
+
+The site deploys to **Sevalla** automatically via GitHub Actions.
+
+### CI/CD Pipeline (`.github/workflows/ci.yml`)
+
+1. **Validate job** (runs on all pushes and PRs):
+   - Lint (`bun run lint`)
+   - Format check (`bun run format:check`)
+   - Type check (`bun astro check`)
+   - Build (`bun run build`)
+
+2. **Deploy job** (runs only on push to `main`, after validate passes):
+   - Uses `sevalla-hosting/sevalla-deploy@v1.0.1`
+   - Requires `SEVALLA_TOKEN` secret and `SEVALLA_STATIC_SITE_ID` variable
+
+### Required GitHub Configuration
+
+| Type | Name | Description |
+|------|------|-------------|
+| Secret | `SEVALLA_TOKEN` | API token for Sevalla authentication |
+| Variable | `SEVALLA_STATIC_SITE_ID` | Target static site ID on Sevalla |
+
 ## Error Handling
 
 - Avoid `console.log` (will fail lint)
