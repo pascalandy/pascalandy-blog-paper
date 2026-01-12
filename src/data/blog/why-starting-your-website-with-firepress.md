@@ -10,4 +10,4 @@ ogImage: "../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10
 
 I moved this post on the official FirePress site:
 
-- <http://firepress.org/en/why-starting-your-next-website-with-firepress/>
+- <https://firepress.org/en/why-launching-your-next-website-with-firepress/>
