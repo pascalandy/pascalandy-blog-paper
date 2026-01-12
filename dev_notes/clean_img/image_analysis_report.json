@@ -1,0 +1,17 @@
+{
+  "summary": {
+    "total_images": 78,
+    "total_size": "18.0 MB",
+    "total_size_bytes": 18852427,
+    "duplicate_groups": 0,
+    "total_duplicate_files": 0,
+    "duplicate_size": "0.0 B",
+    "duplicate_size_bytes": 0,
+    "used_images": 78,
+    "orphaned_images": 0,
+    "potential_savings": "0.0 B"
+  },
+  "duplicate_groups": [],
+  "orphaned_images": [],
+  "cleanup_commands": []
+}
