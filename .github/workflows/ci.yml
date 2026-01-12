@@ -34,14 +34,14 @@ jobs:
         with:
           bun-version: "1.3.4"
           cache: true
-          cache-dependency-path: bun.lockb
+          cache-dependency-path: bun.lock
 
       - name: Cache Astro build
         uses: actions/cache@v4
         with:
           path: |
             node_modules/.astro
-          key: astro-build-${{ runner.os }}-${{ hashFiles('src/**', 'astro.config.ts', 'tsconfig.json', 'package.json') }}
+          key: astro-build-${{ runner.os }}-${{ hashFiles('src/**/*.{astro,ts,tsx,js,md,css}', 'astro.config.ts', 'tsconfig.json', 'package.json') }}
           restore-keys: |
             astro-build-${{ runner.os }}-
 
