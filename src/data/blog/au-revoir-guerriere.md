@@ -7,7 +7,7 @@ author: "Pascal Andy"
 description: "Julie Marchand partage sa transformation personnelle, passant de guerrière à douceur après 15 ans de cheminement."
 ---
 
-![Julie-Marchand-2018-09-04_06h56](/og-legacy/2018/09/julie-marchand-2018-09-04-06h56.jpg)
+![Julie-Marchand-2018-09-04_06h56](../../assets/images/og-legacy/2018/09/julie-marchand-2018-09-04-06h56.jpg)
 
 _Originalement publié [sur le wall](https://www.facebook.com/julie.marchand.fitness/posts/1868047546575687?xts%5B0%5D=68.ARDHRUhP8t-m0Cy1Mt2YriXS35tPyKPdbpxV2w6jHot4Ln6nJel9YOwlItBnrsThqBMhHefz7jpZIiP1nsVE2iWWHPWI-Tsm9C0c4bkwu-Bitec52PBPAU2Y9BgUKHKJKNZBk&tn=K-R) de Julie Marchand._
 

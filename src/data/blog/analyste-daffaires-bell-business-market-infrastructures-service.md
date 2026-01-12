@@ -5,7 +5,6 @@ tags:
 date_created: 2016-10-29
 author: "Pascal Andy"
 description: "À l'intérieur de Bell Business Market, j'agis à titre de consultant Analyste d'Affaires Lead à l'intérieur du district Infrastructures Services (I.S.)."
-ogImage: "/og-legacy/2018/10/pascalandy-com_header_2017-04-10_14h46-2.jpg"
 ---
 
 ### Analyste d'Affaires T.I. / Field management services (FMS)

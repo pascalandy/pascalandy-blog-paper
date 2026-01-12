@@ -5,7 +5,6 @@ tags:
 date_created: 2018-10-27
 author: "Pascal Andy"
 description: "Analyste d'Affaires Sénior T.I. - Mon profil, recommandations et témoignages de Bell Canada et Banque Nationale"
-ogImage: "/og-legacy/2018/10/pascalandy-com_header_2017-04-10_14h46.jpg"
 ---
 
 ### Recommandations et témoignages

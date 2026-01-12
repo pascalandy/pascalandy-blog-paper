@@ -5,10 +5,9 @@ tags:
 date_created: 2018-07-17
 author: "Pascal Andy"
 description: "Analyste d'Affaires Sénior T.I. à la Banque Nationale du Canada - Programme Gestion des Accès et Centre Transformation Office"
-ogImage: "/og-legacy/2018/10/pascalandy-com_header_2017-04-10_14h46-1.jpg"
 ---
 
-![dispo-analyste-affaires-pascal](/og-legacy/2018/10/dispo-analyste-affaires-pascal.jpg)
+![dispo-analyste-affaires-pascal](../../assets/images/og-legacy/2018/10/dispo-analyste-affaires-pascal.jpg)
 
 _Cette page est une sous-section de mon [offre en tant que Consultant](/posts/analyste-daffaires-senior-ti/)_.
 
