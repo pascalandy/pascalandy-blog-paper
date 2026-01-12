@@ -93,12 +93,33 @@ Use these exact values:
 
 New tags allowed if clearly relevant (use `lowercase-kebab-case`).
 
-### 4. DO NOT CHANGE
+### 4. import images 
+
+`ogImage:` will be broken
+
+So you must do your due diligence, find the picture within the image to import directory. 
+then copy the image and the subdirectories into the astro site. 
+
+example:
+
+path with all our old content:
+./to_import/images_to_Import/2021/11/turntable.jpg
+
+new path (actual astro site):
+ogImage: "../../assets/images/og-legacy/2021/11/turntable.jpg"
+
+### 5. DO NOT CHANGE
 
 - Post body content (keep original text intact)
 - Writing style, tone, formatting
 - Valid existing links
 - Existing valid metadata
+
+### 6. test the site
+
+`bun run build`
+
+This will discover if a link is broken. Usually it's about pictures. 
 
 ---
 
