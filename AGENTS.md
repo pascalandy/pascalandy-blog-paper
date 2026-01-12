@@ -2,12 +2,13 @@
 
 > Guidelines for AI coding agents working in this Astro blog theme repository.
 
-## Outils CLI préférés
+## Preferred CLI Tools
 
-- `rg` (ripgrep) — jamais `grep`
-- `fd` — jamais `find`
-- `uv` — jamais `python3` directement
-- `bun` — jamais `npm/pnpm`
+- `rg` (ripgrep) — never use `grep`
+- `fd` — never use `find`
+- `uv` — never use `python3` directly
+- `bun` — never use `npm/pnpm`
+- `gh` — GitHub CLI (authenticated and ready)
 - **Screenshot**: `ls -lt ~/Documents/screenshots | head -2`
 
 ## Design & Style Workflow
@@ -35,6 +36,28 @@ When the user asks to commit:
 4. Never combine unrelated changes in a single commit
 
 If a commit message needs "and" to describe what it does, split it into multiple commits.
+
+## Greptile (AI Code Review)
+
+Greptile automatically reviews PRs. To interact with it:
+
+| Command | Purpose |
+|---------|---------|
+| `@greptileai` | Trigger a review |
+| `@greptileai review this draft` | Review draft PRs |
+| `@greptileai check for X` | Ask specific questions |
+
+**Training Greptile:**
+- 👍 on comments = "Keep flagging this pattern"
+- 👎 on comments = "Stop mentioning this"
+- Reply with context = Teach it your conventions
+
+**Troubleshooting:**
+- If review doesn't appear, comment `@greptileai` to force it
+- First-time indexing takes a couple of hours
+- Draft PRs are skipped by default
+
+Docs: https://www.greptile.com/docs/code-review/developer-essentials
 
 ## Project Overview
 
