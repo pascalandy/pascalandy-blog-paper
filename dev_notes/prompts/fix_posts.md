@@ -9,10 +9,9 @@ As we work on 9 articles at a time, I want you to spawn 9 agents to:
 ## Workflow
 
 ### Step 1: Select Next Post
-From `./to_import/`:
+From `"to_import/posts_to_import/*.md"`:
 - List all `.md` files
-- Sort files by filenames.
-- Select A to Z
+- Sort files by filename (A to Z)
 - If no files remain, report "Import complete" and stop
 
 ### Step 2: Move File
@@ -82,19 +81,65 @@ Correct pattern for inline picture:
 
 **Malformed code blocks:**
 - Ghost export uses `[code]...[/code]` instead of proper markdown
-- BAD:
+
+BAD:
   ```
   [code]
   bash
   git checkout -b <topic-branch-name>
   [/code]
   ```
-- GOOD:
+
+GOOD:
   ````shell
   git checkout -b <topic-branch-name>
   ````
 - Auto-fix: Replace `[code]...[/code]` with triple backticks
 - Use language hint from first line if present (bash, shell, javascript, etc.)
+
+BAD:
+```md
+### 🙌 EN GROS (TL;DR)
+
+— 🍺 de la boisson
+
+— 🍕 de la bouffe
+
+— 💡 du monde intéressé et intéressant
+
+— ❤️ un sujet passionnant
+
+— 🏒 un présentateur qui n'a pas peur d'aller dans les coins
+```
+
+GOOD
+```md
+### 🙌 EN GROS (TL;DR)
+
+— 🍺 de la boisson
+— 🍕 de la bouffe
+— 💡 du monde intéressé et intéressant
+— ❤️ un sujet passionnant
+— 🏒 un présentateur qui n'a pas peur d'aller dans les coins
+```
+
+BAD table
+```md
+|
+---|---
+**Où** : | Fintech Cadence, 1250 rue Guy #600, Montreal H3H 2L3
+**Quand** : | Mardi 4 juin 2019 à 17h15
+**Prix** : | gratuit!
+```
+
+Good
+```md
+| @ | Details |
+|---|---|
+| **Où** : | Fintech Cadence, 1250 rue Guy #600, Montreal H3H 2L3 |
+| **Quand** : | Mardi 4 juin 2019 à 17h15 |
+| **Prix** : | gratuit! |
+```
 
 **Frontmatter url:**
 should alway start with: `ogImage: ../../assets/images/og-legacy/`
