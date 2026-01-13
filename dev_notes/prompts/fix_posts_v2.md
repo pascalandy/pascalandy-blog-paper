@@ -34,7 +34,7 @@ Apply fixes per sections below, then report to user.
 ### Step 5: confirmation
 
 - ask to continue, Return to Step 1
-(the user will commit)
+(let the user commit)
 
 ---
 
@@ -111,7 +111,7 @@ This will discover if a link is broken. Usually it's about pictures.
 
 ## Output Format
 
-For each post, report:
+Five at a time each post, report:
 
 ```
 ## [filename]
@@ -126,5 +126,3 @@ For each post, report:
 
 Awaiting approval for flagged items...
 ```
-
-After approval: commit and proceed to next post.
