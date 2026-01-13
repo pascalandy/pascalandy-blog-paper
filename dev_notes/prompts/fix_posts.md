@@ -68,10 +68,17 @@ Apply fixes per sections below, then report to user.
 - GOOD: `[Link text](/posts/some-article/)`
 - Auto-fix by wrapping in `[Lire cet article](URL)`
 
+Correct pattern for inline picture:
+
+````md
+![image-rsvp](../../assets/images/og-legacy/2017/11/rsvp-2.jpg)
+````
+
 **Markdown syntax:**
 - Fix malformed `[]()` patterns
 - Fix unclosed brackets or parentheses
 - Malformed bold markdown weird patterns
+- remove any `---` at end of a given post
 
 **Malformed code blocks:**
 - Ghost export uses `[code]...[/code]` instead of proper markdown
