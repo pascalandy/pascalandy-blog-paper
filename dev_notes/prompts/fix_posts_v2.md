@@ -2,6 +2,8 @@
 
 Importing old posts from a previous Ghost blog. The JSON-to-Markdown conversion introduced glitches that need fixing.
 
+As we work on five articles at a time, I want you to spawn five agents:
+
 ---
 
 ## Workflow
