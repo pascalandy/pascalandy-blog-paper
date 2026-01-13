@@ -2,7 +2,7 @@
 
 Importing old posts from a previous Ghost blog. The JSON-to-Markdown conversion introduced glitches that need fixing.
 
-As we work on five articles at a time, I want you to spawn five agents:
+As we work on 9 articles at a time, I want you to spawn 9 agents to:
 
 ---
 
@@ -30,6 +30,7 @@ Apply fixes per sections below, then report to user.
 
 **Require confirmation:**
 - Broken external links (flagged, not auto-removed)
+- Missing image files (report exact path needed)
 - Unusual patterns or edge cases
 - Anything that feels off
 
@@ -58,11 +59,35 @@ Apply fixes per sections below, then report to user.
 
 **Image paths:**
 - `/content/og-legacy/` → `/og-legacy/`
+- **Verify image exists**: Check that referenced images exist in `public/og-legacy/` or `src/assets/images/`
+- If image missing: **flag for user review** with the exact path needed
+
+**Bare URLs (not proper links):**
+- Detect URLs on their own line without markdown link syntax
+- BAD: `/posts/some-article/` (bare path, not clickable)
+- GOOD: `[Link text](/posts/some-article/)`
+- Auto-fix by wrapping in `[Lire cet article](URL)`
 
 **Markdown syntax:**
 - Fix malformed `[]()` patterns
 - Fix unclosed brackets or parentheses
-- malformed bold markdown weird patterns
+- Malformed bold markdown weird patterns
+
+**Malformed code blocks:**
+- Ghost export uses `[code]...[/code]` instead of proper markdown
+- BAD:
+  ```
+  [code]
+  bash
+  git checkout -b <topic-branch-name>
+  [/code]
+  ```
+- GOOD:
+  ````shell
+  git checkout -b <topic-branch-name>
+  ````
+- Auto-fix: Replace `[code]...[/code]` with triple backticks
+- Use language hint from first line if present (bash, shell, javascript, etc.)
 
 **Frontmatter url:**
 should alway start with: `ogImage: ../../assets/images/og-legacy/`

@@ -248,17 +248,7 @@ Voici ce qu'ils ont dit après mon passage comme consultant à la BNC :
 
 ---
 
-\_\_
-
-[code]
-
-Sent: 25 octobre 2018 06:50
-
-To: Pascal Nguyen Deschênes
-
-Subject: RE: Fin d'une époque
-
-[/code]
+**Courriel du 25 octobre 2018**
 
 D’abord et avant tout, tu es une personne très dynamique. Ceci fait en sorte que tu ‘sors du troupeau’, que tu ‘sortes la tête de l’eau’ et qu’on te remarque.
 
@@ -273,17 +263,7 @@ Finalement, comme homme, je t’ai apprécié car tu es plein d’entregent et d
 
 ---
 
-\_\_
-
-[code]
-
-Sent: 24 octobre 2018 13:41
-
-To: Pascal Nguyen Deschênes
-
-Subject: RE: Fin d'une époque
-
-[/code]
+**Courriel du 24 octobre 2018**
 
 Premièrement, Pascal est un consultant performant, motivé et positif. Il fait preuve d'originalité et d'imagination dans chacune de ses approches et réflexions ce qui favorise grandement l'innovation. Il n'hésite pas à partager ses connaissances.
 
@@ -301,17 +281,7 @@ _Note de Pascal : Patrick est la personne qui m'a engagé 1 ans et demi auparava
 
 ---
 
-\_\_
-
-[code]
-
-Sent: 19 octobre 2018 12:00
-
-To: Pascal Nguyen Deschênes
-
-Subject: RE: Fin d'une époque
-
-[/code]
+**Courriel du 19 octobre 2018**
 
 Je peux te dire que j’ai grandement apprécié travailler avec toi et que je serai très contente de te recroiser dans de futurs dossiers à la Banque. Je te souhaite un prochain contrat à la hauteur de tes capacités.
 
@@ -327,17 +297,7 @@ Merci pour ton excellente contribution, pour ta rigueur et ta proactivité, c’
 
 ---
 
-\_\_
-
-[code]
-
-Sent: 24 octobre 2018 16:52
-
-To: Pascal Nguyen Deschênes
-
-Subject: RE: Fin d'une époque
-
-[/code]
+**Courriel du 24 octobre 2018**
 
 Le mot qui de catégorise le plus est « Rigueur » !
 
@@ -357,17 +317,7 @@ Gouvernance financière, Finances
 
 ---
 
-\_\_
-
-[code]
-
-Sent: 24 octobre 2018 14:26
-
-To: Pascal Nguyen Deschênes
-
-Subject: RE: Fin d'une époque
-
-[/code]
+**Courriel du 24 octobre 2018**
 
 J’ai beaucoup apprécié travailler avec toi pour ton dynamisme, ta personnalité et ta compréhension des enjeux de ce projet. Toute mes félicitations pour tes réalisations et la résolution des différentes situations non conformes rencontrées.
 
@@ -380,17 +330,7 @@ Merci,
 
 ---
 
-\_\_
-
-[code]
-
-Sent: 29 octobre 2018 11:59
-
-To: Pascal Nguyen Deschênes
-
-Subject: RE: Fin d'une époque
-
-[/code]
+**Courriel du 29 octobre 2018**
 
 Premièrement, je voudrais te remercier pour ton apport au programme.
 
@@ -403,17 +343,7 @@ Merci,
 
 ---
 
-**+**
-
-[code]
-
-Sent: 1 mars 2018 13:23
-
-To: gestionnaire
-
-Subject: Travail de Pascal Nguyen Deschênes-Octroi gestion des accès
-
-[/code]
+**Courriel du 1 mars 2018**
 
 Allo Patrick,
 
