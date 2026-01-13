@@ -1,458 +1,90 @@
-# AGENTS.md - AstroPaper Codebase Guide
+# Project preferences
 
-> Guidelines for AI coding agents working in this Astro blog theme repository.
+## CLI Tools
+- `rg` not grep | `fd` not find | `uv` not python3 | `bun` not npm | `gh` ready
+- Screenshots: `ls -lt ~/Documents/screenshots | head -2`
 
-## Preferred CLI Tools
+## Make Targets
+- `make qa` pre-commit | `make ci` fast check | `make build` | `make lint` | `make format`
 
-- `rg` (ripgrep) — never use `grep`
-- `fd` — never use `find`
-- `uv` — never use `python3` directly
-- `bun` — never use `npm/pnpm`
-- `gh` — GitHub CLI (authenticated and ready)
-- **Screenshot**: `ls -lt ~/Documents/screenshots | head -2`
+## Pre-commit
+- Spawn @charlie → "run: make qa"
 
-## Design & Style Workflow
+## Design/Style
+- Verify w/ MCP Chrome DevTools
+- Max viewport: 1400x900 (prevents crash)
+- resize_page before screenshots
 
-When working on design and style changes:
+## Git
+Atomic commits only. "and" in msg = split it.
+- `git status` + `git diff --stat`
+- Group by purpose, not filetype
+- Separate commits per logical change
 
-1. **Always verify visually** - Use MCP Chrome DevTools to double-check your work
-2. **Safe viewport settings** - Max width 1400px to avoid crashing the MCP server
-3. **Resize before screenshots** - Call `resize_page` with safe dimensions before taking snapshots
+## CI
+- via gihub actions: `@greptileai` triggers review | 👍=keep | 👎=stop | reply=teach
+- Deploy in done via GH Actions on Sevalla
 
+## Stack
+- Astro 5 | TS strict | Tailwind v4 | Pagefind
+
+## Astro Docs
+- Index: docs.astro.build/llms-small.txt
+
+## Architecture
 ```
-# Safe viewport dimensions
-width: 1400 (maximum)
-height: 900 (recommended)
+astro.config.ts → src/config.ts + content.config + src/constants
+                         ↓
+              src/layouts/ (SEO, themes, transitions)
+                         ↓
+         src/pages/ + src/components/ + src/utils/
 ```
 
-## Git Workflow
+## Routes
+`/` home | `/posts/[...page]` list | `/posts/[...slug]/` post | `/tags/[tag]/` filter | `/search/` | `/rss.xml`
 
-**Always use atomic commits** - one logical change per commit.
+## Post Visibility
+- Drafts: dev only | Scheduled: visible after pubDatetime-15min
 
-When the user asks to commit:
-1. Analyze all changes with `git status` and `git diff --stat`
-2. Group changes by logical purpose (not by file type)
-3. Create separate commits for each logical group
-4. Never combine unrelated changes in a single commit
+## Dev Cmds
+- USER runs dev server, not agent (if not ask)
 
-If a commit message needs "and" to describe what it does, split it into multiple commits.
+## Code Style
+- TS strict, `@/*` alias, `type` not interface
+- Imports: external → @/ → relative → type
+- Prettier: semicolons, double quotes, 2 spaces, 80 chars
+- ESLint: no console.log
+- Names: Components=PascalCase | utils=camelCase | CONSTANTS=SCREAMING_SNAKE
 
-## Greptile (AI Code Review)
+## Tailwind
+- `class:list` for conditionals
+- Never hardcode colors → use theme vars
+- `app-layout` = container util
 
-Greptile automatically reviews PRs. To interact with it:
+## Themes
+`src/config.ts` THEMES/ACTIVE_THEME | 19 OKLCH vars per mode | shadcn compatible
 
-| Command | Purpose |
-|---------|---------|
-| `@greptileai` | Trigger a review |
-| `@greptileai review this draft` | Review draft PRs |
-| `@greptileai check for X` | Ask specific questions |
-
-**Training Greptile:**
-- 👍 on comments = "Keep flagging this pattern"
-- 👎 on comments = "Stop mentioning this"
-- Reply with context = Teach it your conventions
-
-**Troubleshooting:**
-- If review doesn't appear, comment `@greptileai` to force it
-- First-time indexing takes a couple of hours
-- Draft PRs are skipped by default
-
-Docs: https://www.greptile.com/docs/code-review/developer-essentials
-
-## Project Overview
-
-Built with:
-- **Astro 5** - Static site generator
-- **TypeScript** - Strict mode enabled
-- **Tailwind CSS v4** - Utility-first styling
-- **Pagefind** - Static search functionality
-
-## Official Astro docs
-
-> Astro is an all-in-one web framework for building websites.
-
-- Astro uses island architecture and server-first design to reduce client-side JavaScript overhead and ship high performance websites.
-- Astro’s friendly content-focused features like content collections and built-in Markdown support make it an excellent choice for blogs, marketing, and e-commerce sites amongst others.
-- The `.astro` templating syntax provides powerful server rendering in a format that follows HTML standards and will feel very familiar to anyone who has used JSX.
-- Astro supports popular UI frameworks like React, Vue, Svelte, Preact, and Solid through official integrations.
-- Astro is powered by Vite, comes with a fast development server, bundles your JavaScript and CSS for you, and makes building websites feel fun.
-
-### Documentation Sets
-
-- [Abridged documentation](https://docs.astro.build/llms-small.txt): a compact version of the documentation for Astro, with non-essential content removed
-- [Complete documentation](https://docs.astro.build/llms-full.txt): the full documentation for Astro
-- [API Reference](https://docs.astro.build/_llms-txt/api-reference.txt): terse, structured descriptions of Astro’s APIs
-- [How-to Recipes](https://docs.astro.build/_llms-txt/how-to-recipes.txt): guided examples of adding features to an Astro project
-- [Build a Blog Tutorial](https://docs.astro.build/_llms-txt/build-a-blog-tutorial.txt): a step-by-step guide to building a basic blog with Astro
-- [Deployment Guides](https://docs.astro.build/_llms-txt/deployment-guides.txt): recipes for how to deploy an Astro website to different services
-- [CMS Guides](https://docs.astro.build/_llms-txt/cms-guides.txt): recipes for how to use different content management systems in an Astro project
-- [Backend Services](https://docs.astro.build/_llms-txt/backend-services.txt): advice on how to integrate backend services like Firebase, Sentry, and Supabase in an Astro project
-- [Migration Guides](https://docs.astro.build/_llms-txt/migration-guides.txt): advice on how to migrate a project built with another tool to Astro
-- [Additional Guides](https://docs.astro.build/_llms-txt/additional-guides.txt): guides to e-commerce, authentication, testing, and digital asset management in Astro projects
-
-### Notes
-
-- The complete documentation includes all content from the official documentation
-- The content is automatically generated from the same source as the official documentation
-
-### Optional
-
-- [The Astro blog](https://astro.build/blog/): the latest news about Astro development
-
-## Project architecture
-
-### Project Purpose
-
-**AstroPaper** is a minimal, responsive, accessible, and SEO-friendly Astro blog theme. It's designed as a production-ready blog starter with:
-- Perfect Lighthouse scores (100/100 across all metrics)
-- Screen reader accessibility (tested with VoiceOver/TalkBack)
-- Light/dark mode with multiple theme options
-- Static search via Pagefind
-- Dynamic OG image generation
+## Content
+Posts: `src/data/blog/` | Zod validated | `_` prefix = ignored | subdirs preserved in URL
 
 ---
 
-### Core Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     astro.config.ts                         │
-│  (Vite + Tailwind v4 + Sitemap + Shiki transformers)        │
-└─────────────────────────────────────────────────────────────┘
-                              │
-        ┌─────────────────────┼─────────────────────┐
-        ▼                     ▼                     ▼
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│  src/config.ts │    │content.config │    │ src/constants │
-│  SITE settings │    │  Zod schema   │    │ SOCIALS/SHARE │
-│  THEMES colors │    │  blog loader  │    │    links      │
-└───────────────┘    └───────────────┘    └───────────────┘
-        │                     │                     │
-        └─────────────────────┼─────────────────────┘
-                              ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    src/layouts/                             │
-│  Layout.astro → PostDetails.astro / Main.astro / About      │
-│  (SEO meta, theme injection, view transitions)              │
-└─────────────────────────────────────────────────────────────┘
-                              │
-        ┌─────────────────────┼─────────────────────┐
-        ▼                     ▼                     ▼
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│  src/pages/   │    │src/components/│    │  src/utils/   │
-│  File routing │    │ 14 components │    │ Post filters  │
-│  API routes   │    │ Header/Footer │    │ Path/slug gen │
-│  Dynamic [..] │    │ Card/Tag/etc  │    │ OG generation │
-└───────────────┘    └───────────────┘    └───────────────┘
-```
-
----
-
-### Key Implementation Details
-
-#### 1. Routing Architecture
-| Route Pattern | Purpose |
-|---------------|---------|
-| `/` | Homepage (featured + recent posts) |
-| `/posts/[...page]` | Paginated post listing |
-| `/posts/[...slug]/` | Individual post |
-| `/posts/[...slug]/index.png` | Dynamic OG image |
-| `/tags/[tag]/[...page]` | Tag filtering with pagination |
-| `/search/` | Pagefind search UI |
-| `/rss.xml` | RSS feed (API route) |
-
-#### 2. Post Filtering Logic
-```typescript
-// postFilter.ts - determines what posts are visible
-const isPublishTimePassed =
-  Date.now() > pubDatetime - SITE.scheduledPostMargin;
-return !data.draft && (import.meta.env.DEV || isPublishTimePassed);
-```
-- **Drafts:** Hidden in production, visible in dev
-- **Scheduled posts:** Hidden until `pubDatetime - 15min`
-
-#### 3. Client-Side Features
-- **Theme toggle:** Persists to localStorage, syncs with system preference
-- **Mermaid diagrams:** Conditionally loaded when `mermaid: true` in frontmatter
-- **Code blocks:** Copy buttons, diff highlighting, filename headers
-- **Progress bar:** Scroll indicator on post pages
-- **Back navigation:** Uses sessionStorage to track history
-
----
-
-### Component Inventory
-
-| Component | Purpose |
-|-----------|---------|
-| `Header.astro` | Nav, theme toggle, search, mobile menu |
-| `Footer.astro` | Socials, copyright |
-| `Card.astro` | Post card (title, date, description) |
-| `Pagination.astro` | Prev/Next page controls |
-| `Tag.astro` | Tag link with hash icon |
-| `Datetime.astro` | Formatted date with timezone |
-| `Breadcrumb.astro` | Path-based breadcrumbs |
-| `TableOfContents.astro` | Collapsible TOC from headings |
-| `ShareLinks.astro` | Social share buttons |
-| `BackToTopButton.astro` | Scroll-to-top with progress |
-
----
-
-### Styling Architecture
-
-Defined in `src/styles/global.css`:
-
-```css
-/* Tailwind v4 with custom dark mode variant */
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
-/* Theme variables mapped to Tailwind colors */
-@theme inline {
-  --color-primary: var(--primary);
-  --color-accent: var(--primary);  /* backward compat */
-  /* ... theme mappings */
-}
-
-/* Custom utilities */
-@utility app-layout { @apply mx-auto w-full max-w-3xl px-4; }
-```
-
----
-
-### Data Flow Summary
-
-```
-Markdown posts
-        ↓
-Content Collection (Zod validation)
-        ↓
-getCollection("blog")
-        ↓
-postFilter() → exclude drafts/scheduled
-        ↓
-getSortedPosts() → sort by date desc
-        ↓
-Pages render via Card.astro / PostDetails.astro
-        ↓
-Static HTML + Pagefind index + OG images
-```
-
-## Development Commands
-
-See [Development Workflow](/posts/dev_notes/development-workflow/) for full documentation.
-
-Quick reference:
-```bash
-bun run dev      # Start dev server (localhost:4321)
-bun run build    # Full production build
-bun run lint     # ESLint check
-bun run format   # Auto-format with Prettier
-```
-
-### Dev Server
-
-**The user must run the dev server, not the AI agent.**
-
-Starting/stopping the dev server from the agent causes issues:
-- Agent loses control of the process
-- Port conflicts when restarting
-- HMR state becomes unpredictable
-
-## Code Style Guidelines
-
-### TypeScript
-
-- **Strict mode** enabled via `astro/tsconfigs/strict`
-- Use path alias `@/*` for imports from `./src/*`
-- Prefer explicit type annotations for function parameters
-- Use `type` keyword for type definitions (not `interface` unless extending)
-
-```typescript
-// Good - using path alias and explicit types
-import { SITE } from "@/config";
-import type { CollectionEntry } from "astro:content";
-
-const getSortedPosts = (posts: CollectionEntry<"blog">[]) => { ... };
-```
-
-### Imports Order
-
-1. External packages (`astro:content`, `dayjs`, etc.)
-2. Internal aliases (`@/config`, `@/utils/*`)
-3. Relative imports (`./Component.astro`)
-4. Type imports last (use `import type`)
-
-```typescript
-import { getCollection } from "astro:content";
-import { SITE } from "@/config";
-import getSortedPosts from "@/utils/getSortedPosts";
-import type { CollectionEntry } from "astro:content";
-```
-
-### Formatting (Prettier)
-
-- **Semicolons**: Required
-- **Quotes**: Double quotes (`"`)
-- **Tab width**: 2 spaces
-- **Print width**: 80 characters
-- **Trailing commas**: ES5 style
-- **Arrow parens**: Avoid when possible (`x => x`)
-- **End of line**: LF
-
-### ESLint Rules
-
-- `no-console: "error"` - Console statements are forbidden
-- TypeScript recommended rules enabled
-- Astro recommended rules enabled
-
-### Naming Conventions
-
-| Type | Convention | Example |
-|------|------------|---------|
-| Components | PascalCase | `Card.astro`, `Header.astro` |
-| Utility files | camelCase | `getSortedPosts.ts`, `slugify.ts` |
-| Functions | camelCase | `postFilter()`, `getPath()` |
-| Constants | SCREAMING_SNAKE_CASE | `SITE`, `SOCIALS`, `BLOG_PATH` |
-| Types/Interfaces | PascalCase | `Props`, `Social` |
-
-### Astro Components
-
-```astro
----
-// 1. Imports (external, then internal, then types)
-import { getCollection } from "astro:content";
-import Layout from "@/layouts/Layout.astro";
-import type { CollectionEntry } from "astro:content";
-
-// 2. Props type definition
-type Props = {
-  title: string;
-  description?: string;
-};
-
-// 3. Destructure props with defaults
-const { title, description = "Default description" } = Astro.props;
-
-// 4. Component logic
-const posts = await getCollection("blog");
----
-
-<!-- 5. Template with Tailwind classes -->
-<Layout>
-  <h1 class="text-2xl font-semibold">{title}</h1>
-</Layout>
-```
-
-### Tailwind CSS
-
-- Use `class:list` directive for conditional classes
-- Prefer utility classes over custom CSS
-- **Never hardcode colors** - always use theme variables
-- Layout utility: `app-layout` (max-width container with padding)
-
-#### Theme System (shadcn/ui compatible)
-
-- Themes live in `src/config.ts` (`THEMES`, `ACTIVE_THEME`)
-- Each theme provides **19 CSS variables** per theme (light + dark) using **OKLCH**
-- Built-in themes: Caffeine, Elegant Luxury, Claude
-- Theme CSS is generated in `src/layouts/Layout.astro`
-
-#### Theme Colors (shadcn/ui compatible)
-
-| Variable | Purpose |
-|----------|---------|
-| `background` / `foreground` | Page background and text |
-| `card` / `card-foreground` | Card surfaces |
-| `popover` / `popover-foreground` | Popover/dropdown surfaces |
-| `primary` / `primary-foreground` | Primary actions, links |
-| `secondary` / `secondary-foreground` | Secondary elements |
-| `muted` / `muted-foreground` | Muted backgrounds, subtle text |
-| `accent` / `accent-foreground` | Accents (maps to primary) |
-| `destructive` / `destructive-foreground` | Error/danger states |
-| `border` | Border color |
-| `input` | Input borders |
-| `ring` | Focus rings |
-
-```astro
-<div
-  class:list={[
-    "pt-12 pb-6",
-    { "border-b border-border": showBorder },
-  ]}
->
-```
-
-### Utility Functions
-
-- One function per file in `src/utils/`
-- Use default exports for main function
-- Include JSDoc comments for complex functions
-
-```typescript
-import type { CollectionEntry } from "astro:content";
-import postFilter from "./postFilter";
-
-/**
- * Returns posts sorted by date (newest first)
- */
-const getSortedPosts = (posts: CollectionEntry<"blog">[]) => {
-  return posts.filter(postFilter).sort((a, b) => /* ... */);
-};
-
-export default getSortedPosts;
-```
-
-## Content Collections
-
-Blog posts live in `src/data/blog/` and are validated by Zod via `src/content.config.ts`.
-
-See [Frontmatter Schema](/posts/dev_notes/frontmatter-schema/) for field reference.
-
-- **Loader:** `glob({ pattern: "**/[^_]*.md" })` - excludes `_` prefixed files
-- **Subdirectories:** Preserved in URL paths (e.g., `src/data/blog/2025/post.md` → `/posts/2025/post/`)
-- **TOC:** Automatic - generated from h2/h3 headings in the layout
-
-## Configuration
-
-### Site Config (`src/config.ts`)
-
-```typescript
-export const SITE = {
-  website: "https://example.com/",
-  author: "Your Name",
-  title: "Site Title",
-  desc: "Site description",
-  // ... see file for all options
-} as const;
-```
-
-### Environment Variables
-
-- `PUBLIC_GOOGLE_SITE_VERIFICATION` - Optional Google verification meta tag
-
-## Deployment
-
-The site deploys to **Sevalla** automatically via GitHub Actions.
-
-### CI/CD Pipeline (`.github/workflows/ci.yml`)
-
-1. **Validate job** (runs on all pushes and PRs):
-   - Lint (`bun run lint`)
-   - Format check (`bun run format:check`)
-   - Type check (`bun astro check`)
-   - Build (`bun run build`)
-
-2. **Deploy job** (runs only on push to `main`, after validate passes):
-   - Uses `sevalla-hosting/sevalla-deploy@v1.0.1`
-   - Requires `SEVALLA_TOKEN` secret and `SEVALLA_STATIC_SITE_ID` variable
-
-### Required GitHub Configuration
-
-| Type | Name | Description |
-|------|------|-------------|
-| Secret | `SEVALLA_TOKEN` | API token for Sevalla authentication |
-| Variable | `SEVALLA_STATIC_SITE_ID` | Target static site ID on Sevalla |
-
-## Error Handling
-
-- Avoid `console.log` (will fail lint)
-- Use Astro's built-in error pages (`src/pages/404.astro`)
+# Global User Preferences
+
+## Communication Style
+- Never end sentences with ellipses (...) - it comes across as passive aggressive
+- Ask questions one at a time
+- Acknowledge requests neutrally without enthusiasm inflation
+- Skip validation language ("great idea!", "perfect!", "excellent!", "amazing!", "kick ass!")
+- Skip affirmations ("you're right!", "exactly!", "absolutely!")
+- Use neutral confirmations: "Got it", "On it", "Understood", "Starting now"
+- Focus on execution over commentary
+
+## AI Slop Patterns to Avoid
+- Never use "not X, but Y" or "not just X, but Y" - state things directly
+- No hedging: "I'd be happy to...", "I'd love to...", "Let me go ahead and...", "I'll just...", "If you don't mind..."
+- No false collaboration: "Let's dive in", "Let's get started", "We can see that...", "As we discussed..."
+- No filler transitions: "Now, let's...", "Next, I'll...", "Moving on to...", "With that said..."
+- No overclaiming: "I completely understand", "That makes total sense"
+- No performative narration: Don't announce actions then do them - just do them
+- No redundant confirmations: "Sure thing!", "Of course!", "Certainly!"

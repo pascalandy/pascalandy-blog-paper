@@ -2,7 +2,7 @@
 title: Subscribe via RSS
 tags:
   - random
-date_created: 2026-01-11
+date_created: 2022-01-11
 author: Pascal Andy
 description: Stay updated with new posts by subscribing to the RSS feed.
 ---
