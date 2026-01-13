@@ -15,7 +15,7 @@ description: "Commands and workflow for developing, testing, and building the bl
 
 ```bash
 # Start dev server (hot reload)
-bun run lint && bun run format | tspin && bun run build | tspin && bun run dev | tspin
+bun run lint && bun run format && bun run build && bun run dev
 
 # Preview production build locally
 bun run preview
@@ -37,7 +37,7 @@ bun run format:check
 # stop on error
 
 # Auto-format all files
-bun run format | tspin
+bun run format
 ```
 
 ## Production Build
