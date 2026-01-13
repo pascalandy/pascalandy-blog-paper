@@ -1,9 +1,21 @@
+# marking them .PHONY ensures they always execute when called.
 .PHONY: dev build preview lint format format-check check clean ci
 
 # === Development ===
 
+# Full workflow: lint, format, build, then dev (user runs de server)
+# user runs this locally
 dev:
-	bun run dev | tspin
+	bun run lint && bun run format | tspin && bun run build | tspin && bun run dev | tspin
+
+# qa workflow for agent (without running server)
+# this autoformat issues
+qa:
+	bun run lint && bun run format | tspin && bun run build | tspin
+
+# this do NOT autoformat
+ci:
+	bun run lint && bun run format:check && bun run build | tspin
 
 preview:
 	bun run preview | tspin
@@ -26,20 +38,6 @@ format:
 
 format-check:
 	bun run format:check
-
-# === Combined Workflows ===
-
-# Fast CI: lint + format check + build (what you run before commits)
-ci:
-	bun run lint && bun run format:check && bun run build | tspin
-
-# qa workflow for agent
-qa:
-	bun run lint && bun run format | tspin && bun run build | tspin
-
-# Full workflow: lint, format, build, then dev
-devall:
-	bun run lint && bun run format | tspin && bun run build | tspin && bun run dev | tspin
 
 # === Cleanup ===
 
