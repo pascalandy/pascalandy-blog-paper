@@ -31,9 +31,11 @@ Apply fixes per sections below, then report to user.
 - Unusual patterns or edge cases
 - Anything that feels off
 
-### Step 5: Commit & Loop
+### Step 5: confirmation
 
 - ask to continue, Return to Step 1
+(the user will commit)
+
 ---
 
 ## Fix Categories
@@ -92,32 +94,14 @@ Use these exact values:
 
 New tags allowed if clearly relevant (use `lowercase-kebab-case`).
 
-### 4. import images 
-
-`ogImage:` will be broken
-
-So you must do your due diligence, find the picture within the image to import directory. 
-then **copy** the image from the source into the destination 
-
-example:
-
-source: content to import
-./to_import/images_to_Import/2021/11/turntable.jpg
-
-destination: actual astro site
-ogImage: "../../assets/images/og-legacy/2021/11/turntable.jpg"
-
-be careful about "pascalandy-com_header", there is a lot of duplicates
-ogImage: "../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg"
-
-### 5. DO NOT CHANGE
+### 4. DO NOT CHANGE
 
 - Post body content (keep original text intact)
 - Writing style, tone, formatting
 - Valid existing links
 - Existing valid metadata
 
-### 6. test the site
+### 5. test the site
 
 `bun run build`
 
