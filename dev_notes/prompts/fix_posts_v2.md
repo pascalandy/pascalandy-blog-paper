@@ -62,6 +62,13 @@ Apply fixes per sections below, then report to user.
 **Markdown syntax:**
 - Fix malformed `[]()` patterns
 - Fix unclosed brackets or parentheses
+- malformed bold markdown weird patterns
+
+````md
+\*\***
+or
+  \_\_
+````
 
 ### 2. METADATA FIXES
 
