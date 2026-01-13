@@ -64,6 +64,9 @@ Apply fixes per sections below, then report to user.
 - Fix unclosed brackets or parentheses
 - malformed bold markdown weird patterns
 
+**Frontmatter url:**
+should alway start with: `ogImage: ../../assets/images/og-legacy/`
+
 ````md
 \*\***
 or
