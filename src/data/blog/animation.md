@@ -1,10 +1,9 @@
 ---
-title: "Animation"
-tags:
-  - crypto-in-montreal
+author: Pascal Andy
 date_created: 2018-01-04
-author: "Pascal Andy"
-description: "Guide d'animation pour les soirées CryptoInMontreal: plan de match, niveaux d'expérience et format des discussions."
+title: "Animation"
+tags: ["uncategorized"]
+description: "Rappel de la mission de #CryptoInMontreal"
 ---
 
 ## Rappel de la mission de #CryptoInMontreal
@@ -16,16 +15,14 @@ Trois points.
 - Quatre grands thèmes seront discuté (15min)
 - 6 équipes qui auront tous un Capitaine désigné
 - Les quatre thèmes seront:
--       1. discuter entre les équipes
--       2. discuter en tour de table avec les Capitaines
+  - 1. discuter entre les équipes
+  - 2. discuter en tour de table avec les Capitaines
 
 ## Niveaux d'expériences à main levé
 
 1. Juste curieux (pas presser à investir)
 2. Chaud (prêt à investir)
-
 3. Intermédiare (moins de 6 mois dans le monde des cryptos)
-
 4. Avancé (6 mois et plus d'expérience dans le monde des cryptos)
 
 ## Nommer les Capitaines de la soirée (18h40)

@@ -59,7 +59,7 @@ Réserve ta place sur **Meetup** en [cliquant ici](https://www.meetup.com/Crypto
 — un présentateur qui n'a pas peur d'aller dans les coins
 — le tout offert gratuitement @ #CryptoInMontreal
 
-![banner](/og-legacy/2019/02/027b-cryptoinmontreal.jpg)
+![banner](../../assets/images/og-legacy/2019/02/027b-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg)
 
 ### Sponsor officiel
 

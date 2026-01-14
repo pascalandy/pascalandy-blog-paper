@@ -14,49 +14,27 @@ Voici la liste ultime pour faire vos prochaines trouvailles!
 
 1. [leknockoutdisquaire.com](https://leknockoutdisquaire.com/) (Québec, QC)
 2. [societedesloisirs.ca](https://www.societedesloisirs.ca/) (Québec, QC)
-
 3. [explosivegroove.com](https://explosivegroove.com/collections/vinyles-neufs) (Québec, QC)
-
 4. [cdmelomane.com](https://www.cdmelomane.com/) (Québec, Qc)
-
 5. [fuzzymuzik.com](https://fuzzymuzik.com/product-category/vinyles/vinyles-neufs/) (Lévis, QC)
-
 6. [lenoise.ca/collections](https://lenoise.ca/collections/vinyl/Music-On-Vinyl) (Montreal, QC)
-
-7. [freesonrock.com/collections](https://freesonrock.com/collections/nouveaute-prog) (Montreal, QC)
-
+7. [reesonrock.com/collections](https://freesonrock.com/collections/nouveaute-prog) (Montreal, QC)
 8. [aux33tours.com/collections](https://aux33tours.com/collections/nouveautes) (Montreal, QC)
-
 9. [levacarme.com/collections](https://levacarme.com/collections/nouveautes) (Montreal, QC)
-
 10. [vinylesdhieraaujourdhui.com](https://www.vinylesdhieraaujourdhui.com/shop/355?page=1&limit=180&sort_by=created_date&sort_order=desc) (Laval, QC)
-
 11. [shop.johnythecatrecords.ca](https://shop.johnythecatrecords.ca/) (Verdun, QC)
-
-12. [planeteclaire.ca](https://www.planeteclaire.ca/collection/1/vinyles-neufs) (Chicoutimi, QC)
-
+12. [planeteclaire.ca](https://www.planeteclaire.ca/fc/vinyles-neufs/) (Chicoutimi, QC)
 13. [frequencesledisquaire.com](https://frequencesledisquaire.com/nouveaux-arrivages-vinyles/) (Saint-Hyacinthe, QC)
-
-14. [latabletournante.com](https://latabletournante.com/categorie-produit/usages/) (Terrebonne, QC)
-
+14. [latabletournante.com](https://latabletournante.com/categorie-produit/nouveau-arrivages/)  (Terrebonne, QC)
 15. [disquairegeneralnostalgie.ca](https://disquairegeneralnostalgie.ca/VINYLES-NEUFS-c107012507) (Repentigny, QC)
-
 16. [encorerecords.ca](https://encorerecords.ca/collections/vinyl) (Kitchener, ON)
-
 17. [pucerock.ca](https://www.pucerock.ca/) (Trois-Rivières)
-
 18. [thesoundchoice.square.site](https://thesoundchoice.square.site/shop/analogue-productions/5?page=1&limit=120&sort_by=category_order&sort_order=asc) (Toronto)
-
 19. [sonicboommusic.com](https://www.sonicboommusic.com/collections/vinyl) (Toronto)
-
 20. [tazrecords.com](https://tazrecords.com/) (Halifax)
-
 21. [idshop.ca/collections](https://idshop.ca/collections/lp-neuf) (inconnu)
-
 22. [lindicatif.com](http://lindicatif.com/) (pas de vente en ligne)
-
 23. [facebook.com/Boutiqueloblique](https://www.facebook.com/Boutiqueloblique)
-
 24. [facebook.com/vinivinyle](https://www.facebook.com/vinivinyle/)
 
 ## **Corpos**
@@ -74,7 +52,7 @@ Voici la liste ultime pour faire vos prochaines trouvailles!
 
 ## **En recherche**
 
-**Notes au vendeurs** : Le plus important c'est que le vinyl joue comme un neuf (VG+). La pochette n'a pas besoin d'être comme une neuve.
+**Notes au vendeurs**: Le plus important c'est que le vinyl joue comme un neuf (VG+). La pochette n'a pas besoin d'être comme une neuve.
 
 **Mise à jour** : 2022-12-14_11h20
 

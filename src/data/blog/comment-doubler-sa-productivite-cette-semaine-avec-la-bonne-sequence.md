@@ -1,11 +1,10 @@
 ---
-title: "Comment doubler sa productivité cette semaine avec la bonne séquence"
-tags:
-  - repost
+author: Pascal Andy
 date_created: 2014-11-10
-author: "Pascal Andy"
-description: " Imagine que ta semaine est représentée par sept seaux. Sans priorité particulière, tu les remplis de petites roches, de sable et de grosses pierres."
+title: "Comment doubler sa productivité cette semaine avec la bonne séquence"
+tags: ["Repost"]
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
+description: "C'est dans ce texte paru sur le blog zenhabits que j'ai réalisé qu'il manquait un élément essentiel à mes « To Do List ». Voici l'ingrédient manquant."
 ---
 
 C'est dans ce [texte](http://zenhabits.net/big-rocks-first-double-your-productivity-this-week/) paru sur le blog [zenhabits](http://zenhabits.net/) que j'ai réalisé qu'il manquait un élément essentiel à mes « To Do List ». Voici l'ingrédient manquant.
@@ -47,8 +46,8 @@ Plusieurs grands auteurs tels que Steven Covey (les sept habitudes des gens effi
 
 Savoir comment glisser ses petites roches à travers les plus grosses dans la bonne séquence est le nerf de la guerre pour augmenter sa productivité. Pour accomplir de plus grandes tâches, il faut éliminer les activités moins signifiantes ou les placer après nos grosses pierres. C’est une des meilleures méthodes pour passer à travers le plus important, sans pour autant arrêter de se préoccuper des tâches plus légères.
 
----
-
-#### À partager
+#### 📤 À partager
 
 Prendre l'habitude de me faire des « To-Do list » m'a vraiment aidé à être plus productif. Avec le temps, je me suis rendu compte qu'il me manquait un ingrédient essentiel ... la bonne séquence.
+
+/posts/comment-doubler-sa-productivite-cette-semaine-avec-la-bonne-sequence/

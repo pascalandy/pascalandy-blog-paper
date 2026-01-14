@@ -1,11 +1,10 @@
 ---
-title: "Copywriter recherché pour communiquer l’essence d'une nouvelle startup"
-tags:
-  - emplois
+author: Pascal Andy
 date_created: 2018-06-13
-author: "Pascal Andy"
+title: "Copywriter recherché pour communiquer l’essence d'une nouvelle startup"
+tags: ["consultation"]
+ogImage: ../../assets/images/og-legacy/2018/06/pascalandy-com_header_2017-04-10_14h46-2.jpg
 description: "Offre d'emploi pour copywriter anglophone afin de rédiger et reformuler les textes d'une nouvelle startup."
-ogImage: "../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg"
 ---
 
 Bonjour,
@@ -18,13 +17,13 @@ Si tu connais bien comment rédiger en _markdown_ c’est encore mieux!
 
 ## Quantité et charge de travail
 
-**À court terme** , je désire que l’on soit ensemble pour que l’on puisse échanger sur l’essence du propos. De plus on pourra s’assurer d’avoir un bon workflow afin que je puisse bien voir les changements apportés textes.
+**À court terme**, je désire que l’on soit ensemble pour que l’on puisse échanger sur l’essence du propos. De plus on pourra s’assurer d’avoir un bon workflow afin que je puisse bien voir les changements apportés textes.
 
 Ce qui est particulièrement intéressant, c'est le fait que je donnerai un contrat **récurrent** sur une longue période.
 
 ## Comment postuler ?
 
-Si tu sens que tu pourrais être la meilleure personne au monde pour cette position et que [mes attentes générales](/posts/travaillons-ensemble/) résonnent avec toi, je veux vraiment te connaître. Utilise cette opportunité pour me démontrer qui tu es. Identique dans ta demande le mot “kiwit” afin que je sache que tu as pris le temps de lire cette offre.
+Si tu sens que tu pourrais être la meilleure personne au monde pour cette position et que [mes attentes générales](../travaillons-ensemble/) résonnent avec toi, je veux vraiment te connaître. Utilise cette opportunité pour me démontrer qui tu es. Identique dans ta demande le mot “kiwit” afin que je sache que tu as pris le temps de lire cette offre.
 
 [Utilise cette forme](https://firepress.typeform.com/to/hQJ3di) avant le 19 juin 2018.
 

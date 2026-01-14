@@ -14,4 +14,6 @@ On ne peut pas être contre les courriels qui remplacent les timbres et les fact
 
 On fait, ça nous fait plutôt réaliser une question beaucoup plus fondamentale. « Comment puis-je contribuer dans ce monde. » Profitez-en pour vous poser réellement la question.
 
-<http://www.lapresse.ca/actualites/montreal/201502/20/01-4845825-manfifestation-contre-uberx-les-chauffeurs-de-taxi-simpatientent.php>
+http://www.lapresse.ca/actualites/montreal/201502/20/01-4845825-manfifestation-contre-uberx-les-chauffeurs-de-taxi-simpatientent.php
+
+📷 [source](http://michaelqaqish.com/final-discussion-papers-released-taxi-and-limousine-regulation-and-service-review/)

@@ -6,12 +6,12 @@
 # Full workflow: lint, format, build, then dev (user runs de server)
 # user runs this locally
 dev:
-	bun run lint && bun run format | tspin && bun run build | tspin && bun run dev | tspin
+	bun run lint && bun run format && bun run format:check | tspin && bun run build | tspin && bun run dev | tspin
 
 # qa workflow for agent (without running server)
 # this autoformat issues
 qa:
-	bun run lint && bun run format | tspin && bun run build | tspin
+	bun run lint && bun run format && bun run format:check | tspin && bun run build | tspin
 
 # this do NOT autoformat
 ci:

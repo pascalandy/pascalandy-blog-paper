@@ -4,8 +4,8 @@ tags:
   - crypto-in-montreal
 date_created: 2019-05-15
 author: "Pascal Andy"
-description: "Crypto In Montréal: événements sur les cryptomonnaies et le blockchain à Montréal. Mission, calendrier, ressources et FAQ."
 ogImage: "../../assets/images/og-legacy/2021/01/bull-2021-01-06_23h01-5.jpg"
+description: "Crypto In Montréal: événements sur les cryptomonnaies et le blockchain à Montréal. Mission, calendrier, ressources et FAQ."
 ---
 
 Crypto In Montréal est un événement au sujet des cryptomonnaies et du blockchain. Nos événements ont lieux aux trois ou quatre semaines à Montréal, Québec, Canada.
@@ -43,7 +43,11 @@ Crypto In Montreal à pour mission:
 
 ### Teaser 2019
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/f3zyNnqi8gg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ### Teaser 2018
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ---
 
@@ -119,12 +123,9 @@ Les albums photos [se trouvent ici](/posts/cryptoinmontreal-photo/).
 
 ### Accronymes
 
-| Accronyme | Définition          |
-| --------- | ------------------- |
-| FOMO      | fear of missing out |
-
-FUD | fear, uncertainty, doubt
-
-HODL | Hold On For Dear Life
-
-ATH | All Time High
+| Accronyme | Définition               |
+| :-------- | :----------------------- |
+| FOMO      | fear of missing out      |
+| FUD       | fear, uncertainty, doubt |
+| HODL      | Hold On For Dear Life    |
+| ATH       | All Time High            |

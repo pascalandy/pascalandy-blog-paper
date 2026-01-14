@@ -1,10 +1,10 @@
 ---
-title: "L'IA (intelligence artificielle) est le prochain saut de productivité"
-tags:
-  - repost
-date_created: 2022-11-24
 author: Pascal Andy
-description: "L'IA représente la prochaine révolution de productivité 100x pour les développeurs et les non-programmeurs."
+date_created: 2022-11-24
+title: "L'IA (intelligence artificielle) est le prochain saut de productivité"
+tags: ["Repost"]
+description: "Je ne pense pas que les gens comprennent les changements monumentaux à venir dans les logiciels au cours de cette décennie.
+Qu'en est-il pour le gens non-technique?"
 ---
 
 Je ne pense pas que les gens comprennent les changements monumentaux à venir dans les logiciels au cours de cette décennie.
@@ -25,4 +25,4 @@ Les programmeurs commanderont des armées d'agents logiciels pour construire des
 
 Les non-programmeurs pourront également utiliser ces agents pour réaliser des tâches logicielles. Chacun dans le monde sera au moins capable de créer des logiciels du niveau de John Carmack.
 
-tweet original: https://twitter.com/amasad/status/1595557790063304704
+[tweet original](https://x.com/amasad/status/1595557790063304704)

@@ -1,27 +1,20 @@
 ---
-title: "Comment soumettre sa présentation pour CryptoInMontreal"
-tags:
-  - crypto-in-montreal
+author: Pascal Andy
 date_created: 2018-08-17
-author: "Pascal Andy"
-description: "Guide étape par étape pour soumettre votre pitch et vos slides pour présenter lors des meetups CryptoInMontreal."
-ogImage: ../../assets/images/og-legacy/2018/03/banner-large-cyptoinmontreal.jpg
+title: "Comment soumettre sa présentation pour #CryptoInMontreal"
+tags: ["Crypto In Montreal"]
+description: "Voici comment procéder pour soumettre une présentation:"
 ---
 
 Voici comment procéder pour soumettre une présentation:
 
 1. Ci-bas, voici **trois examples** de « pitch » pour introduire la présentation que tu feras. Fais-ton texte en anglais ou en français. Je reviserai ton texte au besoin.
 2. Envois-moi la dès que possible afin que je puisse mettre en ligne l'événement :)
-
-3. Une fois qu'il est prêt, envoie-moi ton pitch par email ou bien ici —> <https://firepress.typeform.com/to/hQJ3di>
-
-4. Pour ton Powerpoint (slides), je te demande d'**inclure cette image** comme **première et derrière image**. Télécharge-la ici: <https://jumpshare.com/v/31DDGeYMRsyX9in3DzZW>
+3. Une fois qu'il est prêt, envoie-moi ton pitch par email ou bien ici —> https://firepress.typeform.com/to/hQJ3di
+4. Pour ton Powerpoint (slides), je te demande d'**inclure cette image** comme **première et derrière image**. Télécharge-la ici: https://jumpshare.com/v/31DDGeYMRsyX9in3DzZW
 
 Cheers!
-
 Pascal
-
----
 
 # EXAMPLE #1)
 
@@ -34,8 +27,6 @@ D'abord, pour ceux et celles qui désirent s'initier aux cryptomonnaies et au bl
 Ensuite je laisserai le plancher à **Jérémy Kohl** de chez [Jekit](http://b.jekit.net/) qui prendra le plancher pour présenter ce qu'est le mining, ses avantages et ses enjeux.
 
 Puis je ferai une **démo unique en son genre** qui démontre comment fonctionne le POW et la fonction de hashing SHA-25\* qui est au coeur du protocole Bitcoin.
-
----
 
 # EXAMPLE #2)
 
@@ -57,15 +48,13 @@ Cette soirée sera menée par **David Gordon**.
 - Différentes stratégies de trading
 - **Démo de backtesting** et de paper trading
 
----
-
 # EXAMPLE #3)
 
 ## Agenda de la soirée
 
 Pour cet événement **Pascal Andy** laissera place à **Jérémy Kohl** de chez [Jekit](http://b.jekit.net/) qui prendra le plancher pour présenter les avantages et les enjeux de faire du mining.
 
-**Nous aborderons ces sujets** :
+**Nous aborderons ces sujets**:
 
 - Les cryptomonnaies une révolution monétaire
 - Le minage de cryptomonnaies
@@ -74,16 +63,16 @@ Pour cet événement **Pascal Andy** laissera place à **Jérémy Kohl** de chez
 - Anatomie d’un bloc
 - La difficulté et le Nonce
 - POW vs POS
-- _Pause ☕ et questions_
+  - _Pause ☕ et questions_
 - Mines, Mineurs, Rig
 - Les enjeux énergétiques
 - Questions courantes sur le mining
 - Les Pools
 - Les différents types de mineurs
-- Asics
-- GPU
+  - Asics
+  - GPU
 - Calculer sa rentabilité (ROI)
-- _Pause ☕ et questions_
+  - _Pause ☕ et questions_
 - FIN
 
-[![banner-large-cyptoinmontreal](/og-legacy/2018/03/banner-large-cyptoinmontreal.jpg)](/tags/crypto-in-montreal)
+![banner-large-cyptoinmontreal](../../assets/images/og-legacy/2018/03/banner-large-cyptoinmontreal.JPG)

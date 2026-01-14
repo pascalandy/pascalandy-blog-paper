@@ -43,7 +43,7 @@ Merci d'arriver à**17h30** **maximum**. On débutera pour 17h40 🙏.
 
 ### Billetterie
 
-[![rsvp](/og-legacy/2019/05/CIM-billetterie.jpg)](https://www.meetup.com/CryptoInMontreal/)
+[![rsvp](../../assets/images/og-legacy/2019/05/CIM-billetterie.jpg)](https://www.meetup.com/CryptoInMontreal/)
 
 Réserve ta place ici. Ça demande beaucoup d'organisation :
 
@@ -52,11 +52,13 @@ Réserve ta place ici. Ça demande beaucoup d'organisation :
 
 ### Teaser 2019
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/f3zyNnqi8gg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ### Teaser 2018
 
-<https://www.youtube.com/embed/2_rPjzXXfBA>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
-![2019-05-02_20h53_08-1](/og-legacy/2019/05/031-cryptoinmontreal.jpg)
+![2019-05-02_20h53_08-1](../../assets/images/og-legacy/2019/05/031-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg)
 
 ### Commanditaire officiel
 

@@ -1,11 +1,10 @@
 ---
-title: "Chiffrer ses données tout comme tirer ses rideaux dans ses fenêtres"
-tags:
-  - technologie
+author: Pascal Andy
 date_created: 2014-10-10
-author: "Pascal Andy"
-description: "Quand je demande l'avis des gens autour de moi à propos de leurs vies privées en ligne, ils me répondent souvent un truc léger du genre : moi de toute façon … je n'ai rien à cacher Pascal"
-ogImage: "../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg"
+title: "Chiffrer ses données tout comme tirer ses rideaux dans ses fenêtres"
+tags: ["Technologie"]
+ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
+description: "Quand je demande l’avis des gens autour de moi à propos de leurs vies privées en ligne, ils me répondent souvent un truc léger du genre : « moi de toute..."
 ---
 
 Quand je demande l’avis des gens autour de moi à propos de leurs vies privées en ligne, ils me répondent souvent un truc léger du genre : « moi de toute façon … je n’ai rien à cacher Pascal ». Ma seconde question ressemble généralement à celle-ci …
@@ -30,8 +29,6 @@ Quand on s’y arrête, il y a relativement beaucoup de données que nous voulon
 - l’archivage de documents d’assurances
 - etc …
 
----
-
 ## Ce n’est plus seulement Je, Me, Moi
 
 Il n’est plus rare de posséder des données concernant d’autres personnes. Je crois qu’il est de notre responsabilité et de notre réputation de les protéger.
@@ -40,7 +37,7 @@ Je vais même aller plus loin. Je te l’annonce aujourd’hui Lekt que ça fait
 
 Spiderman avait tellement raison « Avec de grands pouvoirs viennent de grandes responsabilités. » La puissance du partage d’information vient avec son lot de défis.
 
-> _" Il n’est plus rare de posséder des données concernant d’autres personnes. Je crois qu’il est de notre responsabilité et de notre réputation de les protéger."_
+> _"Il n’est plus rare de posséder des données concernant d’autres personnes. Je crois qu’il est de notre responsabilité et de notre réputation de les protéger."_
 
 Gérer des données demande un des efforts, j’en conviens. Par ‘effort’ je sous entends que ça prend du temps. Le sujet n’est pas à la mode, mais tellement critique dans notre vie numérisée. En contrepartie pour ceux et celles qui désirent quelque chose de plus léger, je vous propose de visiter le site de [méteomedia](http://www.meteomedia.com/weather/caqc0363).
 

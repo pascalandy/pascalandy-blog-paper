@@ -65,7 +65,7 @@ Réserve ta place parce que ça demande beaucoup d'organisation :
 — 🏒 un présentateur qui n'a pas peur d'aller dans les coins
 — 🙌 le tout offert gratuitement @ #CryptoInMontreal
 
-![banner](/og-legacy/2019/11/038b-cryptoinmontreal.jpg)
+![banner](../../assets/images/og-legacy/2019/11/038b-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg)
 
 ### Qu'est-ce que t'attends ?
 

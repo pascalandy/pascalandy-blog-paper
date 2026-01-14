@@ -46,7 +46,7 @@ Zakaria parlera du proof-of-stake dans le contexte de la blockchain Tezos (par e
 
 **Zakaria Boukhcheb** est un des organisateurs du Meetup Tezos Montréal depuis septembre 2018 et un adepte des cryptomonnaies depuis plusieurs années. Il s'intéresse à l'économie, à la finance, à la technologie, aux sciences et aux arts.
 
-Dans tous les cas, je vais m'assurer qu'on passe tous une belle soirée! Notre Meetup favorise les triades, les échanges authentiques et l’apprentissage. C'est pas ta classe boring. C'est du réseautage comme le réseautage devrait être fait. See ya 👩‍⚕️ 👨‍⚕️ 👩‍🌾 👨‍🌾 👩‍🍳 👨‍🍳 👩‍🎓 👨‍🎓 👩‍🎤 👨‍🎤.
+Dans tous les cas, je vais m'assurer qu'on passe tous une belle soirée! Notre Meetup favorise les triades, les échanges authentiques et l’apprentissage. C'est pas ta classe boring. C'est du réseautage comme le réseautage devrait être fait. See ya 👩‍⚕️ 👨‍⚕️ 👩‍🌾 👨‍🌾 👩‍🍳 👨‍🍳 👩‍🎓 👨‍🎓 👩‍🎤 👨.
 
 ### À propos de l'organisateur
 
@@ -69,13 +69,19 @@ Réserve ta place parce que ça demande beaucoup d'organisation :
 - sur **Meetup** en [cliquant ici](https://www.meetup.com/CryptoInMontreal) 👈
 - sur **EventBrite** en [cliquant ici](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206) 👈
 
-[![rsvp](/og-legacy/2019/02/rsvp.jpg)](https://www.meetup.com/CryptoInMontreal/)
+[![rsvp](../../assets/images/og-legacy/2019/02/rsvp.jpg)](https://www.meetup.com/CryptoInMontreal/)
 
 _C'est problématique quand les gens **confirment leurs présences**, **mais** qui **ne se présentent pas**. Faire un RSVP, **c'est s'engager** à être présent à l'événement 🙌. Merci de respecter votre engagement._
 
 ### Teaser 2019
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/f3zyNnqi8gg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ### Teaser 2018
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+![banner](../../assets/images/og-legacy/2019/04/030a-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg)
 
 ### EN GROS (TL;DR)
 

@@ -1,11 +1,10 @@
 ---
-title: "CIM Keynote"
-tags:
-  - crypto-in-montreal
+author: Pascal Andy
 date_created: 2018-09-24
-author: "Pascal Andy"
-description: "Guide pour les présentateurs de Crypto In Montreal: checkpoints logistique, mission et ressources utiles."
-ogImage: "../../assets/images/og-legacy/2021/01/bull-2021-01-06_23h01-4.jpg"
+title: "cim-keynote"
+tags: ["uncategorized"]
+ogImage: ../../assets/images/og-legacy/2021/01/bull-2021-01-06_23h01-4.jpg
+description: "Pour qui"
 ---
 
 ### Pour qui
@@ -62,8 +61,6 @@ Dans l’histoire de l’humanité on remarque qu’il existe quelque façon d'o
 
 - L'équipement
 - le ROI — [whattomine.com](https://whattomine.com/)
-
----
 
 ### Liens pertinents
 

@@ -1,12 +1,10 @@
 ---
-title: "Combien ça te coûte quand des machines cliquent sur ta pub ?"
-tags:
-  - repost
-  - technologie
+author: Pascal Andy
 date_created: 2015-03-21
-author: "Pascal Andy"
-description: "La fraude publicitaire est un secret de polichinelle dans le monde du marketing en ligne. Elle a cours depuis que la publicité existe sur internet. "
+title: "Combien ça te coûte quand des machines cliquent sur ta pub ?"
+tags: ["Technologie", "Repost"]
 ogImage: ../../assets/images/og-legacy/2017/04/107_Combien_c_a_te_cou_te_quand_des_machines_cliquent_sur_ta_pub_1-1462908555109.jpg
+description: "La fraude publicitaire est un secret de polichinelle dans le monde du marketing en ligne. Elle a cours depuis que la publicité existe sur internet. Les..."
 ---
 
 La fraude publicitaire est un secret de polichinelle dans le monde du marketing en ligne. Elle a cours depuis que la publicité existe sur internet. Les experts estiment que pour chaque dollar dépensé par une compagnie pour une campagne publicitaire en ligne, environ la moitié est perdue en raison de la fraude au clic.
@@ -21,18 +19,17 @@ Qui plus est, le problème semble prendre de l’ampleur. L’année dernière, 
 
 Comment les fraudeurs s’y prennent-ils ? Il existe de nombreux moyens de « crosser le système ». En voici quelques-uns :
 
-**Les logiciels malveillants de détournement de clics.** \- Ce genre de logiciels malveillants (_malware_) dirige les utilisateurs réels vers des sites web qu’ils n’ont jamais eu l’intention de visiter. Une autre méthode consiste à utiliser des robots pour imiter les utilisateurs réels en « cliquant » sur des annonces ou en chargeant une page à répétition.
+**Les logiciels malveillants de détournement de clics.** - Ce genre de logiciels malveillants (_malware_) dirige les utilisateurs réels vers des sites web qu’ils n’ont jamais eu l’intention de visiter. Une autre méthode consiste à utiliser des robots pour imiter les utilisateurs réels en « cliquant » sur des annonces ou en chargeant une page à répétition.
 
-**La réduction du cadre des images.** \- La réduction du cadre (_iFrame stuffing_) consiste à compresser une annonce en la réduisant à la taille minuscule d’un pixel carré. La publicité est présentée sur un site comme s’il s’agissait d’une vraie annonce et est répertoriée comme ayant été vue, même si un utilisateur réel ne serait jamais capable de voir une annonce aussi minuscule.
+**La réduction du cadre des images.** - La réduction du cadre (_iFrame stuffing_) consiste à compresser une annonce en la réduisant à la taille minuscule d’un pixel carré. La publicité est présentée sur un site comme s’il s’agissait d’une vraie annonce et est répertoriée comme ayant été vue, même si un utilisateur réel ne serait jamais capable de voir une annonce aussi minuscule.
 
-**L’empilage de publicités.** \- Dans ce genre d’arnaques (_ad stacking_), plusieurs annonces sont placées les unes par-dessus les autres dans un seul emplacement publicitaire. Seule l’annonce qui se trouve sur le dessus peut être vue, mais toutes les annonces sont considérées comme ayant été vues.
+**L’empilage de publicités.** - Dans ce genre d’arnaques (_ad stacking_), plusieurs annonces sont placées les unes par-dessus les autres dans un seul emplacement publicitaire. Seule l’annonce qui se trouve sur le dessus peut être vue, mais toutes les annonces sont considérées comme ayant été vues.
 
 Ce genre de fraudes en ligne manipule les indicateurs de mesure, comme les taux de visionnement de pages et le nombre de clics. Cette pratique rend la méthode de calcul du coût par mille impressions, un modèle dangereux pour les annonceurs.
 
 Pour comprendre à quel point ça peut être dangereux, prenons en exemple l’une des arnaques les plus sophistiquées qui ont cours de nos jours. Cette escroquerie fonctionne en utilisant des activités automatisées illégales. Pour mettre l’arnaque en place, un fraudeur crée un site web qui ressemble à un magazine, mais dont le seul but est d’accueillir des annonces. Le contenu s’ajoute automatiquement. Il est recueilli dans des fermes de contenus ou copié à partir de publications réelles.
 
 Ensuite, le fraudeur distribue un logiciel malveillant (ou se sert de ceux qui sont déjà en place) qui amène l’ordinateur contaminé à ouvrir de nombreuses fenêtres de navigation en arrière-plan, complètement cachées à la vue de l’utilisateur.
-
 Les navigateurs sont dirigés vers les fausses pages web du fraudeur et imitent le comportement humain. Pour ce faire, ils sautent d’un lien à l’autre, déplacent virtuellement le curseur ou font défiler la page et cliquent sur des annonces de temps en temps.
 
 Voici la [vidéo](https://www.youtube.com/embed/ZAcRnD-ltzU) d’un système automatisé illégal en action.
@@ -65,10 +62,8 @@ Et s’il est prometteur que certaines agences et certains éditeurs aient comme
 
 Cet article est une adaptation de [ce texte](http://techcrunch.com/2014/10/03/are-bots-hijacking-your-marketing-budget/) de [Noam Schwartz](https://twitter.com/noamsch).
 
----
-
-#### À partager
+#### 📤 À partager
 
 Voici le sujet le plus TABOO qui guète le monde de la publicité en 2015.
 
-[Lien vers cet article](/posts/combien-ca-te-coute-quand-des-machines-cliquent-sur-ta-pub/)
+/posts/combien-ca-te-coute-quand-des-machines-cliquent-sur-ta-pub/

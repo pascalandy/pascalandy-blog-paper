@@ -26,13 +26,13 @@ Pour en savoir plus: [pascalandy.com/blog/qui-est-pascal-andy](/posts/qui-est-pa
 
 ### 🗓️ Où, quand, combien?
 
-|
----|---
-**Où** : | Desjardins Lab Lévis
-**Adresse** : | 200 Rue des Commandeurs, Lévis, QC G6V 6R2
-**Quand** : | 19 mars 2020
-**Heure** : | 11h30 à 13h30
-**Prix** : | On s'en occupe, pour toi c'est gratuit.
+|              |                                            |
+| :----------- | :----------------------------------------- |
+| **Où**:      | Desjardins Lab Lévis                       |
+| **Adresse**: | 200 Rue des Commandeurs, Lévis, QC G6V 6R2 |
+| **Quand**:   | 19 mars 2020                               |
+| **Heure**:   | 11h30 à 13h30                              |
+| **Prix**:    | On s'en occupe, pour toi c'est gratuit.    |
 
 Le **Desjardins Lab** propose une programmation d’événements rassemblant des profils passionnés et inspirants, abordant des thématiques de l’innovation et du développement de la créativité. Leur objectif est de contribuer de manière engagée au développement de la culture d’innovation de notre société.
 
@@ -42,18 +42,11 @@ Le **Desjardins Lab** propose une programmation d’événements rassemblant de
 
 ### 🦄 EN GROS (TL;DR)
 
-— 💡 des gens intéressés et intéressants
-
-— ❤️ un sujet passionnant
-
-— 🏒 un présentateur qui n'a pas peur d'aller dans les coins
-
-— 🙌 le tout offert gratuitement par Desjardins Lab
+- 💡 des gens intéressés et intéressants
+- ❤️ un sujet passionnant
+- 🏒 un présentateur qui n'a pas peur d'aller dans les coins
+- 🙌 le tout offert gratuitement par Desjardins Lab
 
 ### ✨ Qu'est-ce que t'attends ?
 
 Amène tes fesses parce que c'est difficile de résister à ça si tu me demandes mon avis 🙊. Il te reste juste à faire ton RSVP 🙌.
-
-Cheers!
-
-Pascal

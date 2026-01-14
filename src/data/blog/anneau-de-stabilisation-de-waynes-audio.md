@@ -1,10 +1,9 @@
 ---
-title: "Anneau de stabilisation de Wayne's Audio"
-tags:
-  - hifi
+author: Pascal Andy
 date_created: 2023-05-17
-author: "Pascal Andy"
-description: "Compte rendu de l'anneau de stabilisation Wayne's Audio pour platine vinyle: installation, correction des oscillations et impressions sur la VPI Signature 21."
+title: "Anneau de stabilisation de Wayne's Audio"
+tags: ["HiFi"]
+description: "Un compte rendu de mon expérience avec l'anneau de stabilisation de Wayne's Audio. Tout d'abord, l'utilisation de cet anneau nécessite une certaine..."
 ---
 
 Un compte rendu de mon expérience avec l'anneau de stabilisation de Wayne's Audio. Tout d'abord, l'utilisation de cet anneau nécessite une certaine patience. Il faut positionner délicatement l'anneau sur le disque, puis l'ajuster avec précision en utilisant un gabarit en plastique.
