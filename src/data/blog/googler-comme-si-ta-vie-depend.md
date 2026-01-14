@@ -8,17 +8,13 @@ description: "Guide des opérateurs de recherche Google avancés pour des résul
 ---
 
 art of cooking pasta
-
 "art of cooking pasta"
 
 site:pascalandy.com "art of cooking pasta"
-
 art of cooking pasta -pizza
 
 art of cooking pasta after:2020
-
 art of cooking pasta before:2018
-
 art of cooking pasta 2018..2020
 
 "art of cooking pasta" | "art of cooking pesto"
@@ -28,7 +24,6 @@ art of cooking pasta 2018..2020
 site:\*.bdc.ca entrepreneur -www
 
 related:pascalandy.com
-
 cache:pascalandy.com
 
 <https://duckduckgo.com/>

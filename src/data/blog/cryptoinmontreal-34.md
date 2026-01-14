@@ -3,7 +3,7 @@ title: "Le Big Bang De L'ère Financière : Une Introduction Au Blockchain et Au
 tags:
   - crypto-in-montreal
 date_created: 2019-08-05
-author: "Jeremy Kohl"
+author: "Pascal Andy"
 description: "Introduction au blockchain et aux cryptomonnaies lors de la 34e édition de CryptoInMontreal au Desjardins Lab, le 21 août 2019."
 ogImage: "../../assets/images/og-legacy/2019/08/034-cryptoinmontreal.jpg"
 ---
@@ -52,7 +52,7 @@ Réserve ta place parce que ça demande beaucoup d'organisation :
 - sur **Meetup** en [cliquant ici](https://www.meetup.com/CryptoInMontreal) 👈
 - sur **EventBrite** en [cliquant ici](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206) 👈
 
-[![rsvp](/og-legacy/2019/02/rsvp.jpg)](https://www.meetup.com/CryptoInMontreal/)
+[![rsvp](/og-legacy/2019/05/CIM-billetterie.jpg)](https://www.meetup.com/CryptoInMontreal/)
 
 ### Teaser
 

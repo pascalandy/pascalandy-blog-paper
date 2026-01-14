@@ -62,7 +62,7 @@ Réserve ta place parce que ça demande beaucoup d'organisation :
 - sur **Meetup** en [cliquant ici](https://www.meetup.com/CryptoInMontreal) 👈
 - sur **EventBrite** en [cliquant ici](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206) 👈
 
-[![rsvp](/og-legacy/2019/05/cim-billetterie.jpg)](https://www.meetup.com/CryptoInMontreal/)
+[![rsvp](/og-legacy/2019/05/CIM-billetterie.jpg)](https://www.meetup.com/CryptoInMontreal/)
 
 _P.S. C'est problématique quand les gens **confirment leurs présences mais ne se présentent pas**. Faire un RSVP, **c'est s'engager** à être présent à l'événement 🙌. Merci de respecter votre engagement :-p_
 

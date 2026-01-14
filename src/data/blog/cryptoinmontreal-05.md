@@ -1,11 +1,10 @@
 ---
-title: "#CryptoInMontreal 05 — Miner ou acheter ses coins ?"
-tags:
-  - crypto-in-montreal
+author: Pascal Andy
 date_created: 2018-02-01
-author: "Pascal Andy"
+title: "#CryptoInMontreal 05 — Miner ou acheter ses coins ?"
+tags: ["Crypto In Montreal"]
+ogImage: ../../assets/images/og-legacy/2018/02/banner-large-cyptoinmontreal.JPG
 description: "Le 5e événement de #CryptoInMontreal à lieu le 8 février 2018. Nous parlerons spécialement de sujets liés au mining."
-ogImage: "../../assets/images/og-legacy/2018/02/banner-large-cyptoinmontreal.JPG"
 ---
 
 ## ANNULÉ / CANCELLED
@@ -21,7 +20,6 @@ Je viens d'apprendre qu'il me coûterais 120$ pour payer un agent de sécurité 
 Je m'en excuse et je le prends comme une leçon apprise.
 
 Cheers!
-
 Pascal
 
 .
@@ -46,6 +44,8 @@ Pascal
 
 Le 5e événement de #CryptoInMontreal à lieu le 8 février 2018. Nous parlerons spécialement de sujets liés au mining 🛠🛠🛠.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
 Pour ceux et celles qui désirent s'initier aux cryptomonnaies et au blockchain, **l'introduction au monde des cryptos** sera donnée par Pascal Andy à **18h30**. La présentation permettra d'introduire de façon très pratique ceux qui cherchent à faire leur premier pas dans le monde des cryptomonnaies.
 
 Pour 2018, les événements auront lieu aux deux semaines 📅📅.
@@ -56,15 +56,11 @@ Your speak **English**? You're welcome as well! I just don't have the time to tr
 
 > Faire un RSVP, c'est s'engager à être présent à l'événement 🙌
 
-- **Date** et **heure** : jeudi 8 février 2018 dès 18h15 (fin vers 21h)
-- **Lieu** : Banque Nationale
-- **Adresse** : 500 Places d’Armes, Montréal QC H2Y 2W3
+- **Date** et **heure**: jeudi 8 février 2018 dès 18h15 (fin vers 21h)
+- **Lieu**: Banque Nationale
+- **Adresse**: 500 Places d’Armes, Montréal QC H2Y 2W3
 
-Cheers!
-
-[Pascal Andy](/posts/now/)
-
----
+Cheers!<br>[Pascal Andy](/posts/now/)
 
 ## Est-ce pour moi ?
 
@@ -72,18 +68,17 @@ L'événement #CryptoInMontreal s’adresse à toi si tu veux:
 
 1. Commencer à investir dans les cryptomonnaies
 2. Discuter avec des gens qui s’intéressent au blockchain et la crypto
-
 3. Agrandir ton cercle d’amis et de connaissances
 
 En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 
 - Le **premier** objectif est de **démocratiser les cryptomonnaies** (cryptocurrency). Nous voulons aider les gens qui désirent commencer à investir dans les cryptomonnaies à faire leurs premiers pas.
 - Le **deuxième** objectif est de **réunir les initiés** qui s'intéressent déjà au sujet des cryptomonnaies. Nous pourrons échanger et découvrir les différents enjeux de l’écosystème du blockchain et des cryptomonnaies altcoins.
-- Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades** , c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
-
----
+- Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades**, c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
 
 ## Agenda et déroulement de la soirée
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/W_FN9-B60ao" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
 
 [Lien direct vers YouTube](https://youtu.be/W_FN9-B60ao)
 
@@ -99,24 +94,20 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 - **18h40** — Je ferai une introduction de 20 min afin que les invités puissent faire leurs premiers pas dans le monde des cryptomonnaies.
 - **19h10** — Je nommerai les **Capitaines** pour la soirée (voir la vidéo ci-dessous pour plus de contexte).
 - Avec l’ensemble des invités sur places, nous déterminerons les 3 grands thèmes à discuter pour la soirée.
-- **19h20** , 1er sujet | **19h45** , 2e sujet | **20h10** , 3e sujet
+- **19h20**, 1er sujet | **19h45**, 2e sujet | **20h10**, 3e sujet
 - **Dynamique de groupe** — Chaque sujet est discuté en groupe. Une fois le temps écoulé nous faisons un tour de table avec les Capitaines de chaque équipe.
 - **20h35** — Elevator pitch
-- S'ils le désirent, les participants pourront faire un elevator pitch de 90 secondes et répondre aux questions des autres invités.
-- Le but est de faire découvrir un sujet plus pointu de l'univers des cryptos. Exemple: une technologie, un projet, un événement politique, etc.
+  - S'ils le désirent, les participants pourront faire un elevator pitch de 90 secondes et répondre aux questions des autres invités.
+  - Le but est de faire découvrir un sujet plus pointu de l'univers des cryptos. Exemple: une technologie, un projet, un événement politique, etc.
 - **21h00** — Réseautage, rencontre et hasards de la vie. Au final n'est pas pourquoi on prend le temps de se déplacer?
-
----
 
 ## Informations générales
 
-- [Site officiel](/tags/crypto-in-montreal/) de #CryptoInMontreal
+- [Site officiel](/tags/cryptoinmontreal/) de #CryptoInMontreal
 - [Pré-requis](/posts/cryptoinmontreal-informations-generales/#prerequis)
 - [Qui est l'organisateur](/posts/cryptoinmontreal-informations-generales/#organisateur) de #CryptoInMontreal ?
 - [FAQ](/posts/cryptoinmontreal-informations-generales/#faq) (questions et réponses)
 - [Le calendrier 2018](/posts/cryptoinmontreal-informations-generales/#calendrier).
-
----
 
 ## Contacts
 
@@ -124,13 +115,11 @@ Le meilleur endroit pour me joindre est sur [Twitter](https://twitter.com/askpas
 
 Il y a plusieurs façon de demeurer au courant des prochains événements:
 
-- [Site web officiel](/tags/crypto-in-montreal/)
+- [Site web officiel](/tags/cryptoinmontreal/)
 - Suivre sur [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - Suivre sur [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - Suivre sur [Facebook](https://www.facebook.com/cryptoinmontreal/)
 - Suivre sur [Twitter](https://twitter.com/search?src=typd&q=%23cryptoinmontreal)
-
----
 
 ## RSVP et présence
 
@@ -138,17 +127,15 @@ Lorsque vous confirmez votre présence, merci de respectez votre engagement.
 
 Il devient très difficile de gérer les gens qui **confirment** leurs présences, mais qui ne se présente pas. Faire un RSVP, c'est s'engager à être présent à l'événement 🙌
 
----
-
 ## Billetterie
 
 L'admission est **gratuite**. Deux façons de réserver sa place:
 
-- **Meetup** : <https://www.meetup.com/CryptoInMontreal/events/247367122/>
-- **EventBrite** : <https://www.eventbrite.ca/e/cryptoinmontreal-05-miner-ou-acheter-ses-coins-tickets-42734336551>
+- **Meetup**: https://www.meetup.com/CryptoInMontreal/events/247367122/
+- **EventBrite**: https://www.eventbrite.ca/e/cryptoinmontreal-05-miner-ou-acheter-ses-coins-tickets-42734336551
 
 > Faire un RSVP, c'est s'engager à être présent à l'événement 🙌
 
-![image-rsvp](/og-legacy/2017/11/rsvp-2.jpg)
+![image-rsvp](../../assets/images/og-legacy/2017/11/rsvp-2.jpg)
 
 Au plaisir de se croiser au prochain événement de #CryptoInMontreal!

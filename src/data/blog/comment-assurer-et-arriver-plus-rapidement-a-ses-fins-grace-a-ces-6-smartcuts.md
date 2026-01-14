@@ -1,11 +1,10 @@
 ---
-title: "Comment assurer et arriver plus rapidement à ses fins grâce à ces 6 smartcuts"
-tags:
-  - technologie
+author: Pascal Andy
 date_created: 2015-05-19
-author: "Pascal Andy"
-description: "Fait. Je veux réussir et tu veux réussir. Et on veut tous que ça arrive rapidement. Mais la réalité est qu’on ne peut pas y consacrer plus de temps que"
+title: "Comment assurer et arriver plus rapidement à ses fins grâce à ces 6 smartcuts"
+tags: ["Technologie"]
 ogImage: ../../assets/images/og-legacy/2017/04/119_Comment_assurer_et_arriver_plus_rapidement_a__ses_fins_gra_ce_a__ces_6_smartcuts-1462912385420.jpg
+description: "Fait. Je veux réussir et tu veux réussir. Et on veut tous que ça arrive rapidement. Mais la réalité est qu’on ne peut pas y consacrer plus de temps que..."
 ---
 
 Fait. Je veux réussir et tu veux réussir. Et on veut tous que ça arrive rapidement. Mais la réalité est qu’on ne peut pas y consacrer plus de temps que celui dont on dispose. Il y a 24 heures par jour pour tout le monde. De ce fait, quoi faire ?
@@ -30,7 +29,7 @@ Parlant de peur, j'ai mon opinion sur le sujet. « C'est pas ma faute, je suis t
 
 1. La peur de ne pas être à la hauteur.
 
-_Celle-ci cache la plus grande d'entre toutes_
+   _Celle-ci cache la plus grande d'entre toutes_
 
 2. La peur de ne pas être aimé.
 
@@ -39,6 +38,8 @@ Assez parlé de peurs et revenons à notre sujet.
 Ne prendre aucun risque peut aider à accomplir ses tâches « assez bien », mais c’est rarement la façon dont on se rend jusqu’au sommet ou le moyen d’y accéder rapidement. En ne prenant pas de risque, tu n’as pas à souffrir pendant des années avant d'essayer. Mais il faut bel et bien que tu apprennes à faire et à penser. Quelle est la meilleure façon de trouver l'aide dont tu as cruellement besoin?
 
 ## 2- Trouve ton Yoda
+
+![](../../assets/images/og-legacy/2017/04/119_herosjourney_b-1462912399927.jpg)
 
 Les recherches que Shane a d’abord consultées affirmaient que les mentors n’aidaient pas les gens à aller de l’avant. Et Shane a réagi exactement de la même manière que moi… M. Miyagi n’a pas aidé ? Morpheus n’a pas aidé ? Yoda était inutile ? WTF ?!?
 
@@ -99,7 +100,7 @@ Tu n’es pas en retard. Tu arrives exactement au bon moment. Le timing n’est 
 
 Quand tu as des restrictions, tu ne peux pas prendre le chemin le plus facile. Les contraintes t’obligent à réfléchir. Et souvent, à moins d’y être forcés, on ne réfléchit pas plus qu’il ne le faut. Lorsqu’on est placé devant un défi, on n’a pas le choix de faire preuve d’originalité.
 
-Voici ce qu’en dit _Smartcuts : How Hackers, Innovators, and Icons Accelerate Success_ :
+Voici ce qu’en dit _Smartcuts : How Hackers, Innovators, and Icons Accelerate Success_:
 
 « Les contraintes font du haïku l’une des formes de poésie les plus innovantes du monde. Les contraintes nous fournissent des frontières qui dirigent notre attention et nous permettent d’être plus créatifs. C’est pourquoi, incidemment, les petites compagnies qui commencent à peine arrivent bien souvent avec des idées inédites. Elles débutent avec si peu de ressources qu’elles se doivent de trouver des solutions qui simplifient leur existence. »
 
@@ -141,8 +142,8 @@ Alors, ouvre les yeux sur les choses qui sont vraiment importantes dans ta vie e
 
 Note de l'éditeur. Cet article est une adaptation et en quelque sorte un « mashup » de mes perceptions du [texte](http://www.bakadesuyo.com/2014/11/how-to-be-successful/) d'[Eric Barker](https://twitter.com/bakadesuyo).
 
----
-
-#### À partager
+#### 📤 À partager
 
 Les meilleurs présidents des États-Unis ont en fait travaillé moins longtemps en politique que les pires présidents des États-Unis. Dans tous les domaines, on remarque que les gens qui connaissent l’ascension la plus rapide et qui réussissent le mieux ne sont souvent pas ceux qui ont le plus d’expérience.
+
+/posts/comment-assurer-et-arriver-plus-rapidement-a-ses-fins-grace-a-ces-6-smartcuts/

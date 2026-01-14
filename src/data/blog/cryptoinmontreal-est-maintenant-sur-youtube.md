@@ -16,4 +16,4 @@ Playlist YouTube ==> [Lire cet article](https://bit.ly/2NC5D4j)
 
 À bientôt!
 
-![banner-large-cyptoinmontreal](../../assets/images/og-legacy/2018/03/banner-large-cyptoinmontreal.jpg)
+![banner-large-cyptoinmontreal](../../assets/images/og-legacy/2018/03/banner-large-cyptoinmontreal.JPG)

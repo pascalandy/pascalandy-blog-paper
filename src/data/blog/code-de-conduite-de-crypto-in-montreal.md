@@ -1,18 +1,17 @@
 ---
-title: "Code de conduite de Crypto in Montréal"
-tags:
-  - crypto-in-montreal
+author: Pascal Andy
 date_created: 2018-06-28
-author: "Pascal Andy"
+title: "Code de conduite de Crypto in Montréal"
+tags: ["Crypto In Montreal"]
+ogImage: ../../assets/images/og-legacy/2018/06/banner-large-cyptoinmontreal.JPG
 description: "Code de conduite de Crypto in Montréal #CryptoInMontreal"
-ogImage: "../../assets/images/og-legacy/2018/06/banner-large-cyptoinmontreal.JPG"
 ---
 
 Tous les participants, conférenciers, sponsors et volontaires pour notre conférence doivent accepter le code de conduite suivant. Les organisateurs s'attacheront à faire respecter ce code durant l'événement. Nous attendons de la part de chaque participant une coopération pour assurer un environnement sain pour tous.
 
 En bref, ne soyez pas un imbécile.
 
-> Les événements de #CryptoInMontreal ont lieu aux 2 semaines! Tous les détails se trouvent sur la [page informations générales](/posts/cim/).
+> Les événements de #CryptoInMontreal ont lieu aux 2 semaines! Tous les détails se trouvent sur la [page informations générales](../cim/).
 
 ## Besoin d'aide ?
 
@@ -38,12 +37,10 @@ Les membres de l'organisation seront ravis d'aider les participants à contacter
 
 Nous attendons des participants qu'ils suivent ces règles dans le bâtiment des conférences et des ateliers, ainsi que pendant les événements sociaux relatifs à la conférence.
 
-> Les événements de #CryptoInMontreal ont lieu aux 2 semaines! Tous les détails se trouvent sur la [page informations générales](/posts/cim/).
+> Les événements de #CryptoInMontreal ont lieu aux 2 semaines! Tous les détails se trouvent sur la [page informations générales](../cim/).
 
 ## Crédits
 
-Version originale et crédit: <http://2012.jsconf.us/#/about> & The Ada Initiative
-
-Merci d'aider à la traduction et à l'amélioration de ce texte : <http://github.com/leftlogic/confcodeofconduct.com>
-
+Version originale et crédit: http://2012.jsconf.us/#/about & The Ada Initiative
+Merci d'aider à la traduction et à l'amélioration de ce texte : http://github.com/leftlogic/confcodeofconduct.com
 Ce texte est sous licence Creative Commons Attribution 3.0 Unported License

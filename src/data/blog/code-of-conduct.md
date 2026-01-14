@@ -1,11 +1,11 @@
 ---
+author: Pascal Andy
+date_created: 2017-10-22
 title: "Code of Conduct"
 tags:
-  - technologie
-date_created: 2017-10-22
-author: "Pascal Andy"
-description: "Community guidelines outlining respectful, collaborative behavior standards for all members, contributors, and users."
-ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
+  - crypto-in-montreal
+ogImage: ../../assets/images/og-legacy/2017/10/pascalandy-com_header_2017-04-10_14h46-8.jpg
+description: "As members of this Community, we recognize that our behavior is our choice and this choice will result in our culture."
 ---
 
 As members of this Community, we recognize that our behavior is our choice and this choice will result in our culture.
@@ -22,27 +22,29 @@ Participants are responsible for knowing and abiding by the following:
 - Whether you're a regular contributor or a newcomer, all members care about making this community a safe place for you and we've got your back.
 - We are committed to providing a friendly, safe, and welcoming environment for all, regardless of gender, sexual orientation, disability, ethnicity, religion, or similar personal characteristic.
 - We will exclude you from interaction if you insult, demean, or harass anyone. That is not welcome behavior. We interpret the term "harassment" as including the definition in the [Citizen Code of Conduct](http://citizencodeofconduct.org/); if you have any lack of clarity about what might be included in that concept, please read their definition. In particular, we don't tolerate behavior that excludes people in socially marginalized groups.
-- Private harassment is also unacceptable. No matter who you are, if you feel you have been or are being harassed or made uncomfortable by a community member, please report it.
-- Respect that people have differences of opinion and that every design or implementation choice carries a trade-off and numerous costs. There is seldom a right answer.
+- Private harassment is also unacceptable. No matter who you are, if you feel you have been or are being harassed or made uncomfortable by a community member
+- - Respect that people have differences of opinion and that every design or implementation choice carries a trade-off and numerous costs. There is seldom a right answer.
 - We respect data and findings. If you have solid ideas you want to experiment with, make a fork and see how it works.
 
 #### Contacts
 
-- Please contact one of the Slack admins, event organizers, or any member of the Community admin team via [/rester-en-contact/](/posts/rester-en-contact/) or via Twitter <https://twitter.com/askpascalandy>
+- Please contact one of the Slack admins, event organizers, or any member of the Community admin team via /posts/rester-en-contact/ or via Twitter https://twitter.com/askpascalandy
 - If you believe someone is violating the code of conduct, we ask that you report it.
 
 ## Additional Community Beliefs
 
 This Code of Conduct presents a summary of the shared values and “common sense” thinking in our community. The basic social ingredients that hold our project together include:
 
-- Be considerate
-- Be respectful
-- Be collaborative
-- Be pragmatic
-- Support others in the community
-- Get support from others in the community
+- [Be considerate](#be-considerate)
+- [Be respectful](#be-respectful)
+- [Be collaborative](#be-collaborative)
+- [Be pragmatic](#be-pragmatic)
+- [Support others in the community](#support-others-in-the-community)
+- [Get support from others in the community](#get-support-from-others-in-the-community)
 
 This Code of Conduct reflects the agreed standards of behavior for members of our community, in any forum such as mailing list, wiki, website, IRC channels, Slack teams or other online forums, public meetings, or private correspondence within the context of the {code} Community. The community acts according to the standards written down in this Code of Conduct and will defend these standards for the benefit of the community. Leaders of any group, such as moderators of mailing lists, IRC channels, forums, etc., will exercise the right to suspend access to any person who persistently breaks our shared Code of Conduct.
+
+<a id="be-considerate"></a>
 
 ### Be considerate
 
@@ -52,6 +54,8 @@ As a contributor, ensure full credit is given for the work of others and bear in
 
 As a user, remember that contributors work hard on their part and take great pride in it. If you are frustrated, your problems are more likely to be resolved if you can give accurate and well-mannered information to all concerned.
 
+<a id="be-respectful"></a>
+
 ### Be respectful
 
 In order for the community to stay healthy, its members must feel comfortable and accepted. Treating one another with respect is absolutely necessary for this. In a disagreement, remember to assume that people mean well.
@@ -59,6 +63,8 @@ In order for the community to stay healthy, its members must feel comfortable an
 We do not tolerate personal attacks, racism, sexism, ageism, or any other form of discrimination. Disagreement is inevitable, from time to time, but respect for the views of others will go a long way to winning respect for your own view. Respecting other people, their work, their contributions and assuming well-meaning motivation will make community members feel comfortable and safe and will result in motivation and productivity.
 
 We expect members of our community to be respectful when dealing with other contributors, users, and communities. Remember that we are an international project and that you may be unaware of important aspects of other cultures.
+
+<a id="be-collaborative"></a>
 
 ### Be collaborative
 
@@ -72,11 +78,15 @@ Contributors on every project come and go. When you leave or disengage from the 
 
 As a user, your feedback is important, as is its form. Poorly thought-out comments can cause pain and the demotivation of other community members, while a considerate discussion of problems can bring positive results. Your encouraging words work wonders.
 
+<a id="be-pragmatic"></a>
+
 ### Be pragmatic
 
 We are a pragmatic community. We value tangible results over having the last word in a discussion. We defend our core values, but we don't let arguments about minor issues get in the way of achieving more important results. We are open to suggestions and welcome solutions regardless of their origin.
 
 When in doubt, we support a solution that helps get things done over one that has theoretical merits but isn't being worked on. Use the tools and methods that help get the job done. Let decisions be taken by those who do the work.
+
+<a id="support-others-in-the-community"></a>
 
 ### Support others in the community
 
@@ -87,6 +97,8 @@ When problems arise, consider respectfully reminding those involved of our share
 Leaders are defined by their actions and can help set a good example by working to resolve issues in the spirit of this Code of Conduct before the situation escalates.
 
 If you witness others being treated poorly or abused, think first about how you can offer them support. If you feel that the situation is beyond your ability to help individually, go privately to the victim and ask if some form of official intervention is needed. Similarly you should support anyone who appears to be in danger of burning out, either through work-related stress or personal problems.
+
+<a id="get-support-from-others-in-the-community"></a>
 
 ### Get support from others in the community
 

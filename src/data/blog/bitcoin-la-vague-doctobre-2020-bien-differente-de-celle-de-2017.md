@@ -1,12 +1,10 @@
 ---
-title: "Bitcoin, la vague d'octobre 2020 bien differente de celle de 2017"
-tags:
-  - crypto
-  - repost
+author: Pascal Andy
 date_created: 2020-11-20
-author: "Pascal Andy"
-description: "D'ou vient l'argent frais pour faire monter le court du Bitcoin de 10K a 18K. Les entrees de fonds des individus ont ete moderees."
-ogImage: "../../assets/images/og-legacy/2021/01/pascalandy-bg-2021-01-06_23h42.jpg"
+title: "Bitcoin, la vague d'octobre 2020 bien différente de celle de 2017"
+tags: ["Crypto", "Repost"]
+ogImage: ../../assets/images/og-legacy/2021/01/pascalandy-bg-2021-01-06_23h42.jpg
+description: "Ceci est un repost du tweet de Ari David Paul qui semble bien expliquer la vague à la hausse sur les marchés du BTC depuis octobre 2020. Celle-ci est très..."
 ---
 
 Ceci est un repost du [tweet](https://twitter.com/AriDavidPaul/status/1329840898461622273) de Ari David Paul qui semble bien expliquer la vague à la hausse sur les marchés du BTC depuis octobre 2020. Celle-ci est très différente de la vague de 2017.
@@ -26,16 +24,15 @@ Je répète, de 1% à 10% !
 6/ des éléments comme le support de Square, Paypal, Micro Strategy et les récentes recherches de JP Morgan et Citi sur la vente les ont convaincus que la CTB est là pour rester. Pour l'instant, il ne s'agit que de minorités. Peut-être que la troisième fois qu'un ami milliardaire le recommande, ils achèteront.
 
 7/ les questions les plus fréquentes:
-
-Q1) Les gouvernements l'interdiraient-ils s'il devient assez gros ?
-
+Q1) Les gouvernements l'interdiraient-ils s'il devient assez gros ?
 Q2) On entend dire que l'exploitation minière est concentrée en Chine, est-ce un risque ?
 
 - Non et voici pour décentralisé veut dire décentralisé (...)
 - Oh nice! Comment puis-je acheter pour 100 millions de dollars et comment puis-je les stocker ?
 
-[Crypto In Montreal](/posts/cim/) est un evenement au sujet des cryptomonnaies et du blockchain. Nos evenements sont disponible [via notre groupe Meetup](https://www.meetup.com/CryptoInMontreal/).
+[Crypto In Montréal](/posts/cim/) est un événement au sujet des cryptomonnaies et du blockchain. Nos événements sont disponible [via notre groupe Meetup](https://www.meetup.com/CryptoInMontreal/).
+
+Pour terminer, si tu souhaites recevoir les mise à jours de mon blog, [inscris-toi ici](/posts/signin/). Mon site est hébergé sur FirePress _(j'en suis le fondateur)_ et j'offre [21 jours d'essai gratuit](https://firepress.org/en/pricing/).
 
 Cheers!
-
 Pascal

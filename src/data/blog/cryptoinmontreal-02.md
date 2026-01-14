@@ -1,21 +1,23 @@
 ---
+author: Pascal Andy
+date_created: 2017-12-10
 title: "#CryptoInMontreal 02 — S'initier aux cryptomonnaies (Bitcoin, Ethereum, Litecoin)"
 tags:
   - crypto-in-montreal
-date_created: 2017-12-10
-author: "Pascal Andy"
-description: "Événement #CryptoInMontreal pour s'initier au Bitcoin, Ethereum et Litecoin à l'Hôtel Gault de Montréal le 19 décembre 2017."
+ogImage: ../../assets/images/og-legacy/2017/12/banner-large-cyptoinmontreal.JPG
+description: "Les événements organisés par #CryptoInMontreal ont deux buts principaux: 
+Le premier objectif est de démocratiser les cryto-monnaies (cryptocurrency). Nous voulons aider les gens qui désirent commencer à investir "
 ---
 
 ## Lieu et date
 
-- **Date** : mardi 19 décembre novembre 2017
+- **Date**: mardi 19 décembre novembre 2017
 - **Heure** Je serai sur place à **19h00**. Merci d'être prêt pour 19h30.
-- **Lieu** : Hôtel Gault ([site web](http://www.hotelgault.com/))
-- **Adresse** : 449 rue Sainte-Hélène, Montréal QC H2Y 2K9, Canada (**métro** Square-Victoria)
-- **Consommations** : L'endroit un resto-bar. Les invités sont libres de prendre ce qu'ils désirent.
+- **Lieu**: Hôtel Gault ([site web](http://www.hotelgault.com/))
+- **Adresse**: 449 rue Sainte-Hélène, Montréal QC H2Y 2K9, Canada (**métro** Square-Victoria)
+- **Consommations**: L'endroit un resto-bar. Les invités sont libres de prendre ce qu'ils désirent.
 
-![Gault](/og-legacy/2017/11/gault.jpg)
+![Gault](../../assets/images/og-legacy/2017/11/Gault.jpg)
 
 ## Agenda
 
@@ -44,16 +46,13 @@ J'ai regroupé les points ci-dessous sous la [page informations générales](/po
 
 1. Intention
 2. Prérequis
-
 3. Qui est l'organisateur de #CryptoInMontreal ?
-
 4. FAQ (questions et réponses)
-
 5. Le calendrier 2017 et 2018
 
 ## Contact
 
-La page officielle de #CryptoInMontreal se trouve sous mon blog au [pascalandy.com/blog/tag/cryptoinmontreal](/tags/crypto-in-montreal/).
+La page officielle de #CryptoInMontreal se trouve sous mon blog au [pascalandy.com/blog/tag/cryptoinmontreal](/tags/cryptoinmontreal/).
 
 Je suis très actif sur [Twitter](https://twitter.com/askpascalandy) et sur la page [Facebook](https://www.facebook.com/cryptoinmontreal). Au plaisir de se croiser au prochain événement de #CryptoInMontreal!
 
@@ -61,8 +60,6 @@ Je suis très actif sur [Twitter](https://twitter.com/askpascalandy) et sur la p
 
 L'admission est **gratuite** et les billets de cet événement [ se trouvent ici](https://www.eventbrite.ca/e/cryptoinmontreal-02-tickets-41179846028).
 
-[![image-rsvp](/og-legacy/2017/11/rsvp-2.jpg)](https://www.eventbrite.ca/e/cryptoinmontreal-02-tickets-41179846028)
+[![image-rsvp](../../assets/images/og-legacy/2017/11/rsvp-2.jpg)](https://www.eventbrite.ca/e/cryptoinmontreal-02-tickets-41179846028)
 
-Cheers!
-
-[Pascal Andy](/posts/now/)
+Cheers!<br>[Pascal Andy](/posts/now/)

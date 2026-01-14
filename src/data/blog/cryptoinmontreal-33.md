@@ -57,7 +57,7 @@ Réserve ta place parce que ça demande beaucoup d'organisation :
 - sur **Meetup** en [cliquant ici](https://www.meetup.com/CryptoInMontreal) 👈
 - sur **EventBrite** en [cliquant ici](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206) 👈
 
-[![rsvp](/og-legacy/2019/05/cim-billetterie.jpg)](https://www.meetup.com/CryptoInMontreal/)
+[![rsvp](../../assets/images/og-legacy/2019/05/CIM-billetterie.jpg)](https://www.meetup.com/CryptoInMontreal/)
 
 ### 🙌 EN GROS (TL;DR)
 

@@ -16,12 +16,12 @@ By contributing to this project, you agree to the [Contributor Code of Conduct o
 
 Use the issues tracker for:
 
-- bug reports
-- submitting pull requests
+- [bug reports](#bug-reports)
+- [submitting pull requests](#pull-requests)
 
 Development issues can be discussed on [Twitter](https://twitter.com/askpascalandy).
 
-We do our best to keep the issue tracker tidy and organized, thus making it useful for everyone. For example, we classify open issues per perceived difficulty, making it easier for developers to contribute.
+We do our best to keep the issue tracker tidy and organized, thus making it useful for everyone. For example, we classify open issues per perceived difficulty, making it easier for developers to [contribute](#pull-requests).
 
 ## Bug reports
 
@@ -31,7 +31,6 @@ Guidelines for bug reports:
 
 1. **Use the GitHub issue search** — check if the issue has already been reported.
 2. **Check if the issue has been fixed** — try to reproduce it using the `master` branch in the repository.
-
 3. **Isolate and report the problem** — ideally create a reduced test case.
 
 Please try to be as detailed as possible in your report. Include information about your Operating System, Docker version, docker info, etc. Please provide steps to reproduce the issue as well as the outcome you were expecting! All these details will help developers to fix any potential bugs.
@@ -44,7 +43,6 @@ A summary of the issue and the environment in which it occurs. If suitable, incl
 
 1. This is the first step
 2. This is the second step
-
 3. Further steps, etc.
 
 ## Feature requests
@@ -65,24 +63,24 @@ If you have any large pull request in mind (e.g. implementing features, refactor
 
 Please adhere to the coding conventions in the project (indentation, accurate comments, etc.) and don't forget to add your own tests and documentation. When working with git, we recommend the following process to craft an excellent pull request:
 
-**The process** :
+**The process**:
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) the project, clone your fork, and configure the remotes:
 
-```shell
+```
+bash
 # Clone your fork of the repo into the current directory
 git clone https://github.com/<your-username>/docker-stack-this
-
 # Navigate to the newly cloned directory
 cd docker-stack-this
-
 # Assign the original repo to a remote called "upstream"
 git remote add upstream https://github.com/pascalandy/docker-stack-this
 ```
 
 1. If you cloned a while ago, get the latest changes from upstream, and update your fork:
 
-```shell
+```
+bash
 git checkout master
 git pull upstream master
 git push
@@ -90,28 +88,28 @@ git push
 
 1. Create a new topic branch (off of `master`) to contain your feature, change, or fix.
 
-**IMPORTANT** : Making changes in the `master` branch is discouraged. You should always keep your local `master` in sync with the upstream `master` and make your changes in topic branches.
+**IMPORTANT**: Making changes in the `master` branch is discouraged. You should always keep your local `master` in sync with the upstream `master` and make your changes in topic branches.
 
-```shell
+```
 bash
 git checkout -b <topic-branch-name>
 ```
 
 1. Commit your changes in logical chunks. Keep your commit messages organized, with a short description in the first line and more detailed information on the following lines. Feel free to use Git's [interactive rebase](https://help.github.com/articles/about-git-rebase/) feature to tidy up your commits before making them public.
 2. Make sure all the tests are still passing by following your documentation.
-
 3. Push your topic branch up to your fork:
 
-```shell
+```
+bash
 git push origin <topic-branch-name>
 ```
 
 1. [Open a Pull Request](https://help.github.com/articles/about-pull-requests/) with a clear title and description.
 2. If you haven't updated your pull request for a while, you should consider rebasing on `master` and resolving any conflicts.
 
-**IMPORTANT** : _Never ever_ merge upstream `master` into your branches. You should always `git rebase` on `master` to bring your changes up to date when necessary.
+**IMPORTANT**: _Never ever_ merge upstream `master` into your branches. You should always `git rebase` on `master` to bring your changes up to date when necessary.
 
-```shell
+```
 git checkout master
 git pull upstream master
 git checkout <your-topic-branch>

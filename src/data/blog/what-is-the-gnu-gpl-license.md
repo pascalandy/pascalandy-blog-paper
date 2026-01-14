@@ -9,7 +9,3 @@ ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_
 ---
 
 I created a **Markdown's** version of the GNU GPL license [on Github](https://github.com/pascalandy/GNU-GENERAL-PUBLIC-LICENSE). It seems no one ever bother to do it before.
-
-## Seth Godin explains
-
-Taken from Seth's podcast Akimbo, episode "All rights reserved". This worths 1m40 of your time.

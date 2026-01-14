@@ -1,25 +1,27 @@
 ---
-title: "Analyste d'Affaires Sénior T.I."
-tags:
-  - Consultation
+author: Pascal Andy
 date_created: 2018-10-27
-author: "Pascal Andy"
-description: "Analyste d'Affaires Sénior T.I. - Mon profil, recommandations et témoignages de Bell Canada et Banque Nationale"
+title: "Analyste d'Affaires Sénior T.I."
+tags: ["Consultation"]
+ogImage: ../../assets/images/og-legacy/2018/10/pascalandy-com_header_2017-04-10_14h46.jpg
+description: "Recommandations et témoignages"
 ---
 
 ### Recommandations et témoignages
 
-- J’ai reçu [sept recommandations](/posts/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada/#recommandations-et-témoignages) lors mon passage à la Banque Nationale du Canada. [Les voici](/posts/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada/#recommandations-et-témoignages).
-- Après mon passage à chez **Bell Canada** , voici les **recommandations** [qu'ils m'ont partagés](/posts/analyste-daffaires-bell-business-market-infrastructures-service/#recommandations-et-témoignages)
+- J’ai reçu [sept recommandations](/posts/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada/#recommandations-et-t-moignages) lors mon passage à la Banque Nationale du Canada. [Les voici](/posts/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada/#recommandations-et-t-moignages).
+- Après mon passage à chez **Bell Canada**, voici les **recommandations** [qu'ils m'ont partagés](/posts/analyste-daffaires-bell-business-market-infrastructures-service/#recommandationsettmoignages)
 
 ### En deux questions
 
-Dans **cette vidéo** , je réponds à deux questions fondamentales:
+Dans **cette vidéo**, je réponds à deux questions fondamentales:
 
 - Quel serait mon mandat idéal ?
 - Qu'est-ce qui me distincte en tant qu'Analyste d'Affaires ?
 
-_Deux ans auparavant, j'avais fait un**exercice similaire**. On retrouve une archive de [cette vidéo ici](https://youtu.be/rqAAFAmnjKo)_.
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uRNuGjLNyOQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+_Deux ans auparavant, j'avais fait un **exercice similaire**. On retrouve une archive de [cette vidéo ici](https://youtu.be/rqAAFAmnjKo)_.
 
 ### Plus loin que l'Analyste d'Affaires
 
@@ -38,22 +40,16 @@ Mon type de **personnalité Myers Briggs** : [ENTP-A DEBATER](/posts/my-personal
 
 1. Labeled me as [The Bridge Maker](/posts/i-am-the-bridge-maker/)
 2. Trustworthy and reliable
-
 3. Insatiable learner
-
 4. Great communicator
-
 5. Early adopter _(therefore, I stay up to date and embrace change)_
 
 **► WHAT I EXPECT FROM YOU**
 
 1. To put me in the driver's seat
 2. Present me with challenges _(I'm not looking for a job)_
-
 3. Share me a clear vision to believe in
-
 4. Give me continuous feedback _(start, stop, continue to do)_
-
 5. Reward great work _(because I'm a human and I love to know what I do is meaningful)_
 
 **► MY BACKGROUND**
@@ -62,7 +58,7 @@ Mon type de **personnalité Myers Briggs** : [ENTP-A DEBATER](/posts/my-personal
 - Deep understanding of Infrastructures, non-functionnal requirements, Networks, Acces Management, Segregation of Duties under complex compliance rule, InfoSec
 - **Solid technical aptitudes** (Git, Infra as Code, Business rule as a Code, Docker, Container, Microservices, Linux)
 - Driven to work within an **Agile** framework & DevOps
-- Founded 2 **startups** : I launched 2 web apps from the paper ideas to their
+- Founded 2 **startups**: I launched 2 web apps from the paper ideas to their
 - Driven to resolve challenges between the « Business Needs » and the IT reality
   deployments
 - Worked on complex billing projects that require profound SAP development.
@@ -73,20 +69,16 @@ Mon type de **personnalité Myers Briggs** : [ENTP-A DEBATER](/posts/my-personal
 
 ### Une histoire de jeunesse
 
-Depuis que je suis tout jeune, j’aime créer et réaliser mes idées avec tout ce qui peut me tomber sous la main. Des blocs Lego aux [Construx](https://www.google.ca/search?q=Walkie-Talkie+Fisher+Price&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiqp-Pa893RAhVo8IMKHUa5D2cQ_AUICCgB&biw=2510&bih=1343#safe=off&tbm=isch&q=Construx), des cabanes dans le bois aux Kits d’électricité pour les 5 à 12 ans, des remorques à vélo « pimpés » aux codes morse sur les Walkies-Talkies [Fisher Price](https://www.google.ca/search?q=Walkie-Talkie+Fisher+Price&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiqp-Pa893RAhVo8IMKHUa5D2cQ_AUICCgB&biw=2510&bih=1343), j’ai toujours été extrêmement intéressé **à faire fonctionner les choses par moi-même**. Je suis un _**geek** at heart_.
+Depuis que je suis tout jeune, j’aime créer et réaliser mes idées avec tout ce qui peut me tomber sous la main. Des blocs Lego aux [Construx](https://www.google.ca/search?q=Walkie-Talkie+Fisher+Price&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiqp-Pa893RAhVo8IMKHUa5D2cQ_AUICCgB&biw=2510&bih=1343#safe=off&tbm=isch&q=Construx), des cabanes dans le bois aux Kits d’électricité pour les 5 à 12 ans, des remorques à vélo « pimpés » aux codes morse sur les Walkies-Talkies [Fisher Price](https://www.google.ca/search?q=Walkie-Talkie+Fisher+Price&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiqp-Pa893RAhVo8IMKHUa5D2cQ_AUICCgB&biw=2510&bih=1343), j’ai toujours été extrêmement intéressé **à faire fonctionner les choses par moi-même**. Je suis un **\*geek** at heart\*.
 
 J’ai toujours été une personne qui **entreprend des projets** sans avoir besoin de suivre de plans préétablis. Avec le temps, je réalise que j’aime prendre le risque de pouvoir me planter. Le plus important pour moi est de sortir de ma zone de confort, d’apprendre et de faire mieux la prochaine fois.
 
-De par mon passé comme _camelot, militaire, associé chez Bureau en gros, agent de sécurité, programmeur, chanteur, commis-caissier à la SAQ, administrateur d’un magasin de détail, ingénieur sonore, entrepreneur, Grands-Frères, fondateur de trois startups, d'Analyste d’Affaires_ , je crois qu’il y a un extraordinaire **effet boule de neige à posséder des connaissances dans une multitude de champs d’intérêt**.
+De par mon passé comme _camelot, militaire, associé chez Bureau en gros, agent de sécurité, programmeur, chanteur, commis-caissier à la SAQ, administrateur d’un magasin de détail, ingénieur sonore, entrepreneur, Grands-Frères, fondateur de trois startups, d'Analyste d’Affaires_, je crois qu’il y a un extraordinaire **effet boule de neige à posséder des connaissances dans une multitude de champs d’intérêt**.
 
 En somme, j’adore connecter les points qui semblent disparates pour en faire apparaître le « big picture ». **J’aime me questionner et résoudre ce qui est complexe**. Pour moi, c’est une façon de vivre.
 
 ### Contact
 
 [Linkedin](https://www.linkedin.com/in/pascalnguyendeschenes)
-
 [M'écrire](/posts/rester-en-contact/)
-
 Pascal Nguyen Deschênes
-
----

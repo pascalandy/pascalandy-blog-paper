@@ -68,8 +68,4 @@ Tous les gens présents à l'événement obtiendront un crédit de 20$ valable s
 
 Amène tes fesses parce que c'est difficile de résister à ça si tu me demandes mon avis :-p
 
-Cheers!
-
-Pascal
-
-![flyer](/og-legacy/2019/01/026-cryptoinmontreal-1.jpg)
+![flyer](../../assets/images/og-legacy/2019/01/026-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy-1.jpg)

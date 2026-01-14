@@ -1,11 +1,10 @@
 ---
-title: "Comprendre l'algo trading et mettre en place un robot trader | 15e édition de #CryptoInMontreal"
-tags:
-  - crypto-in-montreal
+author: Pascal Andy
 date_created: 2018-06-11
-author: "Pascal Andy"
-description: "Initiation au trading algorithmique et mise en place d'un robot trader pour les cryptomonnaies lors de la 15e édition de CryptoInMontreal."
-ogImage: "../../assets/images/og-legacy/2018/06/015-CryptoInMontreal.jpg"
+title: "Comprendre l'algo trading et mettre en place un robot trader | 15e édition de #CryptoInMontreal"
+tags: ["Crypto In Montreal"]
+ogImage: ../../assets/images/og-legacy/2018/06/015-CryptoInMontreal.jpg
+description: "Cette soirée a pour but d'initier les invités qui désirent apprendre à mettre en place un robot (bot) qui fera du trading (ordre d'achats et de ventes) et..."
 ---
 
 Cette soirée a pour but d'initier les invités qui désirent apprendre à mettre en place un robot (bot) qui fera du trading (ordre d'achats et de ventes) et prendra des décisions basées sur des algorithmes (trading algorithmique). Ces robots feront du trading pour leur propriétaire sur les marchés des cryptomonnaies. Crunchie stuff.
@@ -28,15 +27,15 @@ Cette soirée sera menée par **David Gordon**.
 
 ## Quand et où ?
 
-- **Date** & **heure** : mardi 19 juin 2018 à 18h45
-- **Lieu** : [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal QC H3G 2C1 Montréal Québec Canada
-- **Prix** : 10$ payable sur place. Le prix inclut: _cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs et des produits sans gluten et véganes_.
+- **Date** & **heure**: mardi 19 juin 2018 à 18h45
+- **Lieu**: [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal QC H3G 2C1 Montréal Québec Canada
+- **Prix**: 10$ payable sur place. Le prix inclut: _cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs et des produits sans gluten et véganes_.
 
-- **Détails** de cet événement: [/posts/cryptoinmontreal-15/](/posts/cryptoinmontreal-15/)
-- **Calendrier 2018 de #CryptoInMontreal** : <http://bit.ly/2HItqwp>
-- **Teaser** de l'événement sur YouTube: <http://bit.ly/2MoLaRc>
+* **Détails** de cet événement: /posts/cryptoinmontreal-15/
+* **Calendrier 2018 de #CryptoInMontreal**: http://bit.ly/2HItqwp
+* **Teaser** de l'événement sur YouTube: http://bit.ly/2MoLaRc
 
----
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ## Est-ce pour moi ?
 
@@ -44,16 +43,13 @@ L'événement #CryptoInMontreal s’adresse à toi si tu veux:
 
 1. Commencer à investir dans les cryptomonnaies
 2. Discuter avec des gens qui s’intéressent au blockchain et la crypto
-
 3. Agrandir ton cercle d’amis et de connaissances
 
 En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 
 - Le **premier** objectif est de **démocratiser les cryptomonnaies** (cryptocurrency). Nous voulons aider les gens qui désirent commencer à investir dans les cryptomonnaies à faire leurs premiers pas.
 - Le **deuxième** objectif est de **réunir les initiés** qui s'intéressent déjà au sujet des cryptomonnaies. Nous pourrons échanger et découvrir les différents enjeux de l’écosystème du blockchain et des cryptomonnaies altcoins.
-- Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades** , c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
-
----
+- Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades**, c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
 
 ## Contacts
 
@@ -61,21 +57,17 @@ Je suis très actif sur [Twitter](https://twitter.com/askpascalandy) et sur le h
 
 Il y a plusieurs façons de demeurer au courant des prochains événements:
 
-- [Site web officiel](/tags/crypto-in-montreal/)
+- [Site web officiel](/tags/cryptoinmontreal/)
 - Suivre sur [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - Suivre sur [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - Suivre sur [Facebook](https://www.facebook.com/cryptoinmontreal/)
 - Suivre sur [Twitter](https://twitter.com/search?src=typd&q=%23cryptoinmontreal)
-
----
 
 ## RSVP et présence
 
 Il devient difficile de gérer la soirée à cause des gens qui **confirment** leurs présences, mais qui ne se présente pas. Faire un RSVP, c'est s'engager à être présent à l'événement 🙌.
 
 Lorsque vous confirmez votre présence, merci de respecter votre engagement.
-
----
 
 ## Billetterie
 
@@ -88,5 +80,4 @@ Réservez votre place sur **Meetup** en [cliquant ici](https://www.meetup.com/Cr
 Au plaisir de se croiser au prochain événement de #CryptoInMontreal!
 
 Cheers!
-
 Pascal

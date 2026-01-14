@@ -55,8 +55,7 @@ Réserve ta place parce que ça demande beaucoup d'organisation :
 
 - sur **Meetup** en [cliquant ici](https://www.meetup.com/CryptoInMontreal) 👈
 - sur **EventBrite** en [cliquant ici](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206) 👈
-
-[![rsvp](/og-legacy/2019/02/rsvp.jpg)](https://www.meetup.com/CryptoInMontreal/)
+  [![rsvp](../../assets/images/og-legacy/2019/02/rsvp.jpg)](https://www.meetup.com/CryptoInMontreal/)
 
 ### Teaser
 
@@ -71,9 +70,7 @@ Réserve ta place parce que ça demande beaucoup d'organisation :
 — 🏒 un présentateur qui n'a pas peur d'aller dans les coins
 — 🙌 le tout offert gratuitement @ #CryptoInMontreal
 
-![banner](/og-legacy/2019/04/029b-cryptoinmontreal.jpg)
-
-### Sponsor officiel
+![banner](../../assets/images/og-legacy/2019/04/029b-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg)### Sponsor officiel
 
 Because you need a website, because you [tried Ghost](https://firepress.org/#discover-ghost) and enjoyed the software, because our Early adopter's [hosting plan](https://firepress.org/#pricing) is sound, because you believe [what we believe](https://firepress.org/en/why-launching-your-next-website-with-firepress/), and because it's your turn to share with the world what you made...
 

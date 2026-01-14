@@ -1,8 +1,6 @@
 # Fix Imported Posts (v2)
 
-Importing old posts from a previous Ghost blog. The JSON-to-Markdown conversion introduced glitches that need fixing.
-
-As we work on 9 articles at a time, I want you to spawn 9 agents to:
+I am importing old posts from a previous Ghost blog. The JSON-to-Markdown conversion introduced glitches that need fixing.
 
 ---
 
@@ -11,7 +9,8 @@ As we work on 9 articles at a time, I want you to spawn 9 agents to:
 ### Step 1: Select Next Post
 From `"to_import/posts_to_import/*.md"`:
 - List all `.md` files
-- Sort files by filename (A to Z)
+- Sort files by filename
+- Pick the first one avil (A to Z)
 - If no files remain, report "Import complete" and stop
 
 ### Step 2: Move File

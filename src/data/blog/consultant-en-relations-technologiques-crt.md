@@ -1,16 +1,15 @@
 ---
-title: "Consultant en Relations Technologiques"
-tags:
-  - random
+author: Pascal Andy
 date_created: 2014-02-14
-author: "Pascal Andy"
-description: "Dans notre société du savoir, le « **Flux de Travail Digital** » fait la différence entre accomplir beaucoup facilement, ou peu difficilement. »"
-ogImage: "../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg"
+title: "Consultant en Relations Technologiques (CRT)"
+tags: ["Random"]
+ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
+description: "Dans notre société du savoir, le « Flux de Travail Digital » fait la différence entre accomplir beaucoup facilement, ou peu difficilement. »"
 ---
 
 Dans notre société du savoir, le « **Flux de Travail Digital** » fait la différence entre accomplir beaucoup facilement, ou peu difficilement. »
 
-Puisque la vie est une **histoire de relations** , on fait naturellement l’effort d’améliorer ses relations au travail, ses relations interpersonnelles et amoureuses. Mais qu’en est-il de nos relations avec les technologies?
+Puisque la vie est une **histoire de relations**, on fait naturellement l’effort d’améliorer ses relations au travail, ses relations interpersonnelles et amoureuses. Mais qu’en est-il de nos relations avec les technologies?
 
 À mon avis, un bon « Flux de Travail Digital » est aussi essentiel qu'un permis de conduire. [Lekt](/posts/lekt-le-lecteur/), t'arrive-t-il de te demander comment faire “quelque chose” avec les technologies et/ou comment arriver à tes fins avec les logiciels? Si oui, laisse-moi t'aider.
 
@@ -30,13 +29,9 @@ L’étroite relation qui s’est installée entre les humains et les machines e
 
 1. Par toutes les options qu’offrent les technologies ?
 2. Par ta boîte courriel ?
-
 3. Par le statut de tes projets en cours ?
-
 4. Par les opérations quotidiennes ?
-
 5. Par ta facturation ?
-
 6. Par tes (non) sauvegardes ?
 
 - etc.
@@ -51,9 +46,11 @@ Oui… je peux entendre le cri de ta voix éraillée qui se rebelle contre les t
 
 On dit qu’une image vaut mille mots hein? Essayons-le…
 
-Imagine que toutes les technologies qui t’entourent sont comme des musiciens qui doivent jouer les bonnes notes aux bons moments. Sans être en mesure de mettre le doigt dessus, ce que tu cherches vraiment c’est un **chef d’orchestre** , une personne qui pourra faire jouer ensemble tous ces instruments pour produire une symphonie mélodieuse.
+![](../../assets/images/og-legacy/2017/04/consultant_en_relations_technologiques_maj_2014_03_09_23H40PM-1462831065812.jpg)
 
-**En d'autres mots** :
+Imagine que toutes les technologies qui t’entourent sont comme des musiciens qui doivent jouer les bonnes notes aux bons moments. Sans être en mesure de mettre le doigt dessus, ce que tu cherches vraiment c’est un **chef d’orchestre**, une personne qui pourra faire jouer ensemble tous ces instruments pour produire une symphonie mélodieuse.
+
+**En d'autres mots**:
 
 1. La symphonie est ton flux de travail.
 2. Les instruments sont les logiciels que tu utilises.
@@ -74,8 +71,8 @@ Ajoutons à ça une augmentation majeure de ta motivation à travailler dans un 
 J'aime toujours éclaircir les points suivants:
 
 - **Quoi** faire est toujours plus important que "comment" faire.
-- Être **efficace** , c'est savoir quoi faire et dans quel ordre.
-- Être **efficient** , c'est de faire une tâche dans le moins de temps possible.
+- Être **efficace**, c'est savoir quoi faire et dans quel ordre.
+- Être **efficient**, c'est de faire une tâche dans le moins de temps possible.
 
 ## La bonne nouvelle
 

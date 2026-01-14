@@ -5,15 +5,19 @@ pre-commit:
   parallel: false
   jobs:
     - name: format
+      run: bun run format
+      fail_text: "Error while formatting"
+
+    - name: format
       run: bun run format:check
-      fail_text: "Formatting issues found. Run 'bun run format' to fix."
+      fail_text: "Formatting issues found. Run 'bun run format' to fix"
 
     - name: lint
-      run: bun run lint
-      fail_text: "Linting errors found. Fix them before committing."
+      run: bun run lint | tspin
+      fail_text: "Linting errors found. Fix them before committing"
 
 pre-push:
   jobs:
     - name: check
-      run: bun astro check
-      fail_text: "TypeScript errors found. Fix them before pushing."
+      run: bun astro check | tspin
+      fail_text: "TypeScript errors found. Fix them before pushing"

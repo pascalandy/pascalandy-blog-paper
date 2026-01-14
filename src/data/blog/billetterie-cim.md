@@ -13,5 +13,4 @@ Réserve ta place pour le [prochain Meetup ici](https://www.meetup.com/CryptoInM
 Quand les gens **confirment leurs présences mais ne se présentent pas** c'est problématique pour nous les organisateurs. Faire un **RSVP**, c'est s'engager à être présent à l'événement. Lorsque vous confirmez votre présence, merci de respecter votre engagement.
 
 > **Faire un RSVP, c'est s'engager à être présent à l'événement**
-
-[![rsvp](/og-legacy/2018/05/rsvp-b.jpg)](https://www.meetup.com/CryptoInMontreal)
+> [![rsvp](../../assets/images/og-legacy/2018/05/rsvp-b.jpg)](https://www.meetup.com/CryptoInMontreal)

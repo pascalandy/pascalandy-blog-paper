@@ -1,20 +1,21 @@
 ---
-title: "Comment reprendre le dessus quand le rythme accélère"
-tags:
-  - technologie
+author: Pascal Andy
 date_created: 2014-09-16
-author: "Pascal Andy"
-description: "Je sais par expériences que les technologies nous simplifient la vie et que paradoxalement, elles la font accélérer. Prenons par exemple un étudiant"
+title: "Comment reprendre le dessus quand le rythme accélère"
+tags: ["Technologie"]
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
+description: "Je sais par expériences que les technologies nous simplifient la vie et que paradoxalement, elles la font accélérer. Prenons par exemple un étudiant qui est..."
 ---
 
 Je sais par expériences que les technologies nous simplifient la vie et que paradoxalement, elles la font accélérer. Prenons par exemple un étudiant qui est inscrit à un cours de physique quantique de niveau avancé. Il lui suffira de rater un seul cours pour qu’il soit sérieusement déstabilisé pour le reste de sa session. C’est un peu ce qui se passe avec les innovations technologiques.
 
 Nous finissons par sentir que tout va trop vite et c’est pour cette raison que la majorité d’entre nous, nous nous sentons dépassés. La complexité des technologies se trouve à travers le rythme infernal de l’avancement de celles-ci. La courbe n’est pas linéaire, mais bien exponentielle.
 
+![](../../assets/images/og-legacy/2017/04/rythme_qui_accelere_2014_09_14_14h42-1462846803857.jpg)
+
 - La ligne **orange** est une droite linéaire
 - La **courbe** en jaune est exponentielle
-- “Le **clash** “, c’est le moment où bien gens abandonnent.
+- “Le **clash**“, c’est le moment où bien gens abandonnent.
 - Les pointillés verticaux est l'endroit où j'estime que nous nous trouvons actuellement
 
 La rapidité par lesquelles elles se transforment et se redéfinissent sans cesse nous laisse souvent ce goût méchant et « sûrette » d’un shooter de Téquila à bas prix. Nous nous retrouvons comme cet élève sans points de repère dans un examen de physique quantique alors qu’il cherchait en fait, à passer son examen de sociologie 101. Le « clash » est sans pitié. Dans la bouche de bien des gens, ça sort comme ça.
@@ -27,6 +28,8 @@ La rapidité par lesquelles elles se transforment et se redéfinissent sans cess
 Et tant d’autres cris du coeur. S’il y a bien une sensation que nous détestons tous, c’est bien celle d’être l’amateur, l’ignorant et le rejet de la place. Alors on se discrédite dans le but de ne pas ressentir cette douleur.
 
 ## Un permis de conduire classe 5B ? Aujourd’hui !?
+
+![](../../assets/images/og-legacy/2017/04/rythme_qui_accelere_b_2014_09_14_14h42-1462846787590.jpg)
 
 Il y a tout juste 15 ans, nous roulions à bord d’une Ford Topaz et aujourd’hui nous sommes au volant d’un « stock-car » avec 600 HP sous le capot. Pour 99 % d’entre nous qui avons en poche un permis de conduire de classe 5B, les courbes arrivent décidément trop vites depuis ces dernières années. On se retrouve en position de dérapage un peu trop souvent à notre goût. Le pire, c’est que tout arrivera de plus en plus vite.
 
@@ -74,6 +77,8 @@ Vous avez vu ces tâches comme insignifiantes, trop faciles et vous avez vu pass
 L’exemple est très banal j’en conviens. La question est de savoir en combien de temps pouvez-vous réaliser cette tâche « banale » ? En cinq minutes ou en moins de une minute ? Que vous soyez très agile ou non avec votre ordinateur, je peux vous affirmer que vous apprendrez à devenir plus rapide grâce à ce que je vais vous montrer. Remarquez dans ce vidéo à quel point j’utilise très peu ma souris. J’ai réussi la tâche en 51 secondes. (Je pourrais le faire en 45 sec en recommençant.)
 
 **Ci-dessous, la preuve que ça se fait bien. Un indice ? Le mot « raccourci ».**
+
+<iframe src="//player.vimeo.com/video/51370032" width="500" height="312" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
 J’aimerais vous faire remarquer que mon logiciel de courriel et mon fureteur étaient tous les deux fermés.
 
@@ -282,9 +287,7 @@ Dernier essai pour cent soixante-quinze DOOLLAARS ! (Avez-vous remarqué que vou
 .
 
 Aller !!! Répondez-y dans votre tête. – Quelle est la différence entre les deux groupes ?
-
 OK. Je vous donne la réponse.
-
 Roulement de tambour … tadada damm – Ta dadam dammm - Ta dadam dammm
 
 .
@@ -370,7 +373,6 @@ On ne sait jamais trop à quoi s’attendre en tant que recrue d’un gars comme
 Après les cinq semaines passées sur ce cours de recrue, mon ami David et moi sommes revenus sur cette histoire de « coup ». Un jour il me dit :
 
 « Tsé Pass … finalement là … il y a jamais eu de coup … » la face en point d’interrogation.
-
 « Tellement … y voulait juste nous faire peur Lizotte … »
 
 Morale de l’histoire ?

@@ -7,7 +7,7 @@
 ## Make Targets
 - `make qa` pre-commit | `make ci` fast check | `make build` | `make lint` | `make format`
 
-## Pre-commit
+## To this this app
 - Spawn @charlie → "run: make qa"
 
 ## Design/Style

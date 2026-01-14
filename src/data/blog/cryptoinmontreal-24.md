@@ -1,14 +1,16 @@
 ---
-title: "Le Bitcoin et les Altcoins, une introduction au monde des cryptos | CryptoInMontreal #24"
-tags:
-  - crypto-in-montreal
+author: Pascal Andy
 date_created: 2018-11-12
-author: "Pascal Andy"
-description: "Meetup d'introduction aux cryptomonnaies et au Bitcoin avec une démo du protocole SHA-256, incluant un crédit de 20$ pour les participants."
+title: "Le Bitcoin et les Altcoins, une introduction au monde des cryptos | CryptoInMontreal #24"
+tags: ["Crypto In Montreal"]
 ogImage: ../../assets/images/og-legacy/2018/11/024-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg
+description: "Voici le plan de match pour le 24e événement de #CryptoInMontreal qui sera un meetup d'introduction sur le sujet."
 ---
 
-Voici le plan de match pour le **24e événement** de [#CryptoInMontreal](/posts/tag/cryptoinmontreal/) qui sera un meetup d'introduction sur le sujet.
+Voici le plan de match pour le **24e événement** de [#CryptoInMontreal](/tags/cryptoinmontreal/) qui sera un meetup d'introduction sur le sujet.
+
+Pour les détails de cet événement et l'accès à la billeterie :
+/posts/cryptoinmontreal-24/
 
 ## AGENDA DE LA SOIRÉE
 
@@ -20,15 +22,17 @@ Puis je ferai une **démo unique en son genre** qui démontre comment fonctionne
 
 Tous les gens présents à l'événement obtiendront un crédit de 20$ valable sur un marché d'échange canadien. La carte 'voucher' sera remise en personne.
 
-![flyer de l'événement](/og-legacy/2018/10/023-cryptoinmontreal.jpg)
+![flyer de l'événement](../../assets/images/og-legacy/2018/10/023-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg)
 
 ## Quand, où, combien?
 
-- **Quand** : Ce mardi 20 novembre dès **18h45** (_ouverture des portes à 18h30_)
-- **Lieu** : Le [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders) au 2067 rue Crescent, Montréal Québec H3G 2C1 (2e étage)
+- **Quand**: Ce mardi 20 novembre dès **18h45** (_ouverture des portes à 18h30_)
+- **Lieu**: Le [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders) au 2067 rue Crescent, Montréal Québec H3G 2C1 (2e étage)
 - Le coût est de **10$ payable à l'entrée**
-- **Le prix inclut** : les cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs. _Il y a même des produits sans gluten et véganes_ (c'est pas de l'inclusion ça!).
-- **Je produis cet événement gratuitement pour la bonne cause**. Il faut savoir que le prix d'entré est chargé par le Club Insiders qui est un espace de co-working. Ils s'assurent que toute la logistique de la soirée soit impeccable.
+  - **Le prix inclut**: les cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs. _Il y a même des produits sans gluten et véganes_ (c'est pas de l'inclusion ça!).
+  - **Je produis cet événement gratuitement pour la bonne cause**. Il faut savoir que le prix d'entré est chargé par le Club Insiders qui est un espace de co-working. Ils s'assurent que toute la logistique de la soirée soit impeccable.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ## Billetterie
 
@@ -36,17 +40,14 @@ Réservez votre place sur **Meetup** en [cliquant ici](https://www.meetup.com/Cr
 
 > Faire un RSVP, c'est s'engager à être présent à l'événement 🙌
 
-[![rsvp](/og-legacy/2018/05/rsvp-b.jpg)](https://www.meetup.com/CryptoInMontreal)
+[![rsvp](../../assets/images/og-legacy/2018/05/rsvp-b.jpg)](https://www.meetup.com/CryptoInMontreal)
 
 Au plaisir de se croiser au prochain événement de #CryptoInMontreal!
 
 Cheers!
-
 Pascal
 
-P.S. Ça devient problématique quand les gens **confirment leurs présences mais ne se présentent pas**. Faire un **RSVP**, c'est s'engager à être présent à l'événement. Lorsque vous confirmez votre présence, merci de respecter votre engagement.
-
----
+P.S. Ça devient problématique quand les gens **confirment leurs présences mais ne se présentent pas** . Faire un **RSVP**, c'est s'engager à être présent à l'événement 🙌. Lorsque vous confirmez votre présence, merci de respecter votre engagement .
 
 ## Est-ce pour moi ?
 
@@ -54,22 +55,21 @@ L'événement #CryptoInMontreal s’adresse à toi si tu veux:
 
 1. Commencer à investir dans les cryptomonnaies
 2. Discuter avec des gens qui s’intéressent au blockchain et la crypto
-
 3. Agrandir ton cercle d’amis et de connaissances
 
 En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 
 - Le **premier** objectif est de **démocratiser les cryptomonnaies** (cryptocurrency). Nous voulons aider les gens qui désirent commencer à investir dans les cryptomonnaies à faire leurs premiers pas.
 - Le **deuxième** objectif est de **réunir les initiés** qui s'intéressent déjà au sujet des cryptomonnaies. Nous pourrons échanger et découvrir les différents enjeux de l’écosystème du blockchain et des cryptomonnaies altcoins.
-- Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades** , c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
+- Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades**, c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
 
 ## Contacts
 
-Personnellement, je suis très actif sur [Twitter](https://twitter.com/askpascalandy). Voici plusieurs façon de demeurer au courant des prochaines activités de [CryptoInMontreal](/posts/tag/cryptoinmontreal/) :
+Personnellement, je suis très actif sur [Twitter](https://twitter.com/askpascalandy). Voici plusieurs façon de demeurer au courant des prochaines activités de [CryptoInMontreal](/tags/cryptoinmontreal/) :
 
 - [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - [YouTube](https://www.youtube.com/playlist?list=PL9epbd8UeXHsfQe2Tr4O1T5FHdAafAk_b)
 - [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - [Twitter](https://twitter.com/askpascalandy)
 - [Page Facebook](https://www.facebook.com/cryptoinmontreal/)
-- [Site web officiel](/posts/tag/cryptoinmontreal/) | [Calendrier 2018](/posts/calendrier-2018-de-cryptoinmontreal/) | [Information générales](/posts/cryptoinmontreal-informations-generales/)
+- [Site web officiel](/tags/cryptoinmontreal/) | 📅 [Calendrier 2018](/posts/calendrier-2018-de-cryptoinmontreal/) | [Information générales](/posts/cryptoinmontreal-informations-generales/)
