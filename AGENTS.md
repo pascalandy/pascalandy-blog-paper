@@ -47,6 +47,17 @@ When user say "create a PR":
   - "manage this pr"
   - "pr please"
 
+### PR File Limit
+Max 96 files per PR (Greptile skips review above this).
+
+**When exceeding 90 files** (common with bulk content updates):
+1. Stage only a subset of files (< 90) for initial PR
+2. Push, wait for CI + Greptile review
+3. Once approved, commit remaining files
+4. Push again (Greptile already reviewed the logic)
+
+Example: 110 content files changed → push 80 first, get review, then push remaining 30.
+
 ## Stack
 - Astro 5 | TS strict | Tailwind v4 | Pagefind
 
