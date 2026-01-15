@@ -28,6 +28,8 @@ Atomic commits only. "and" in msg = split it.
 - Group by purpose, not filetype
 - Separate commits per logical change
 
+For files under `dev_notes`, simply commit with -m "update dev_notes". This is my scratchpad.
+
 ## PR
 When user say "create a PR":
 
