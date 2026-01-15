@@ -73,8 +73,14 @@ const isActive = (path: string) => {
           "sm:mt-0 sm:flex sm:w-auto sm:items-center sm:gap-x-5 sm:gap-y-0",
         ]}
       >
-        <li class="col-span-2">
-          <a href="/blog" class:list={{ "active-nav": isActive("/blog") }}>
+        <li class="col-span-2 flex items-center">
+          <a
+            href="/blog"
+            class:list={[
+              "leading-none sm:-translate-y-0.5",
+              { "active-nav": isActive("/blog") },
+            ]}
+          >
             Blog
           </a>
         </li>
@@ -117,13 +123,13 @@ const isActive = (path: string) => {
               <LinkButton
                 href="/search"
                 class:list={[
-                  "focus-outline flex p-3 sm:p-1",
+                  "focus-outline flex justify-center p-3 sm:p-1",
                   { "[&>svg]:stroke-accent": isActive("/search") },
                 ]}
                 title="Search"
                 aria-label="search"
               >
-                <IconSearch class="size-5" />
+                <IconSearch class="size-[22px]" />
                 <span class="sr-only">Search</span>
               </LinkButton>
             </li>
