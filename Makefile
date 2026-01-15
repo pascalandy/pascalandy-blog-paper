@@ -1,40 +1,42 @@
 # marking them .PHONY ensures they always execute when called.
 .PHONY: dev build preview lint format format-check check check-tags clean ci qa
 
+SHELL := /bin/bash
+
 # === Development ===
 
 # Full workflow: lint, format, build, then dev (user runs de server)
 # user runs this locally
 dev:
-	bun run lint && bun run format && bun run format:check | tspin && bun run build | tspin && bun run dev | tspin
+	@set -o pipefail && bun run lint && bun run format && bun run format:check | tspin && bun run build | tspin && bun run dev | tspin
 
 # qa workflow for agent (without running server)
 # this autoformat issues
 qa:
-	bun run lint && bun run format && bun run format:check | tspin && ./scripts/check-tags.sh && bun run build | tspin
+	@set -o pipefail && bun run lint && bun run format && bun run format:check | tspin && ./scripts/check-tags.sh && bun run build | tspin
 
 # this do NOT autoformat
 ci:
-	bun run lint && bun run format:check && ./scripts/check-tags.sh && bun run build | tspin
+	@set -o pipefail && bun run lint && bun run format:check && ./scripts/check-tags.sh && bun run build | tspin
 
 preview:
-	bun run preview | tspin
+	@set -o pipefail && bun run preview | tspin
 
 # === Build ===
 
 build:
-	bun run build | tspin
+	@set -o pipefail && bun run build | tspin
 
 check:
-	bun run sync && astro check | tspin
+	@set -o pipefail && bun run sync && astro check | tspin
 
 # === Code Quality ===
 
 lint:
-	bun run lint | tspin
+	@set -o pipefail && bun run lint | tspin
 
 format:
-	bun run format | tspin
+	@set -o pipefail && bun run format | tspin
 
 format-check:
 	bun run format:check
