@@ -6,9 +6,7 @@ import Footer from "@/components/Footer.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
 import EditPost from "@/components/EditPost.astro";
-import ShareLinks from "@/components/ShareLinks.astro";
 
-import BackToTopButton from "@/components/BackToTopButton.astro";
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
 import IconChevronLeft from "@/assets/icons/IconChevronLeft.svg";
@@ -95,42 +93,45 @@ const nextPost =
       <Content />
     </article>
 
-    <hr class="my-8 border-dashed" />
-
-    <div class="flex items-center gap-2 text-muted-foreground">
-      <Datetime {date_created} size="sm" />
-      {
-        SITE.editPost.enabled && !hideEditPost && (
-          <>
-            <span aria-hidden="true">|</span>
-            <EditPost {hideEditPost} {post} />
-          </>
-        )
-      }
+    <div
+      class="mt-12 flex flex-wrap items-center justify-between gap-x-6 gap-y-3"
+    >
+      <div class="flex items-center gap-2 text-muted-foreground">
+        <Datetime {date_created} size="sm" />
+        {
+          SITE.editPost.enabled && !hideEditPost && (
+            <>
+              <span aria-hidden="true">|</span>
+              <EditPost {hideEditPost} {post} />
+            </>
+          )
+        }
+      </div>
+      <ul class="flex flex-wrap gap-2">
+        {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
+      </ul>
     </div>
 
-    <ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
-    </ul>
-
-    <BackToTopButton />
-
-    <ShareLinks />
-
-    <hr class="my-6 border-dashed" />
-
-    <!-- Previous/Next Post Buttons -->
-    <div data-pagefind-ignore class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+    <!-- Previous/Next Post Navigation -->
+    <nav
+      data-pagefind-ignore
+      aria-label="Post navigation"
+      class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2"
+    >
       {
         prevPost && (
           <a
             href={getPath(prevPost.id, prevPost.filePath)}
-            class="flex w-full gap-1 hover:opacity-75"
+            class="group flex items-start gap-2 rounded-lg border border-border/50 p-4 transition-colors hover:border-accent/50 hover:bg-accent/5"
           >
-            <IconChevronLeft class="inline-block flex-none rtl:rotate-180" />
-            <div>
-              <span>Previous Post</span>
-              <div class="text-sm text-accent/85">{prevPost.title}</div>
+            <IconChevronLeft class="mt-0.5 flex-none text-muted-foreground transition-colors group-hover:text-accent rtl:rotate-180" />
+            <div class="min-w-0">
+              <span class="text-xs tracking-wide text-muted-foreground uppercase">
+                Previous
+              </span>
+              <div class="truncate text-sm text-foreground group-hover:text-accent">
+                {prevPost.title}
+              </div>
             </div>
           </a>
         )
@@ -139,17 +140,21 @@ const nextPost =
         nextPost && (
           <a
             href={getPath(nextPost.id, nextPost.filePath)}
-            class="flex w-full justify-end gap-1 text-end hover:opacity-75 sm:col-start-2"
+            class="group flex items-start justify-end gap-2 rounded-lg border border-border/50 p-4 text-end transition-colors hover:border-accent/50 hover:bg-accent/5 sm:col-start-2"
           >
-            <div>
-              <span>Next Post</span>
-              <div class="text-sm text-accent/85">{nextPost.title}</div>
+            <div class="min-w-0">
+              <span class="text-xs tracking-wide text-muted-foreground uppercase">
+                Next
+              </span>
+              <div class="truncate text-sm text-foreground group-hover:text-accent">
+                {nextPost.title}
+              </div>
             </div>
-            <IconChevronRight class="inline-block flex-none rtl:rotate-180" />
+            <IconChevronRight class="mt-0.5 flex-none text-muted-foreground transition-colors group-hover:text-accent rtl:rotate-180" />
           </a>
         )
       }
-    </div>
+    </nav>
   </main>
   <Footer />
 </Layout>
