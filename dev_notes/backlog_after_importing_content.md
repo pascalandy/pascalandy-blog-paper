@@ -10,33 +10,19 @@ description: "Commands and workflow for developing, testing, and building the bl
 
 # BACKLOG
 
-## tags
+## route
 
-I want to work on the frontmatter, more specifically the tags. Right now there's a lot of objects like this.
+So about route, I see that all posts are under /posts/name-here
 
-..
-tags: ["Personnel"]
-..
+But before my old site was under blogs, I would like to update the route so that every blog posts are going on to /blog.
+like: https://pascalandy.com/blog/ 
 
-So I never want to see these blocks. And why is that? is that because I prefer to have tags as bullet points:
+We also need to think about all the internal links that actually goes into /posts 
 
-tags:
-  - technologie
-  - crypto
+Also, I would like to understand how do I manage the fact that I have some post that That should be a page. so should I create a tag page or like I don't know what's the right strategy on that 
 
-While at it, I would like to make sure that every tags respect the format kebab case. So no capital, no underscore, only hyphen
+plan
 
-And of course, once things are converted, I want to have a rule where I don't see any brackets. So that should be part of, I don't know how to enforce this. I guess it will not be the astro by itself.
-
-plan think
-
-
-
-reformat tags
-as bullet point
-without capital letters
-
-tags: ["Crypto"]
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
