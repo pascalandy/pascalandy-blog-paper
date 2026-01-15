@@ -17,28 +17,77 @@ mkdir ~/devtree
 
 ---
 
-## Starting 3 New Posts
+## Agent Instructions: Creating a New Worktree
+
+When user says "create a new tree" for feature `[feature_name]`:
+
+1. **List existing worktrees:**
+
+   ```bash
+   git worktree list
+   ```
+
+2. **Determine next tree number:**
+   - If no trees exist in `~/devtree/` → use `tree1`
+   - If `tree1_*` and `tree2_*` exist → use `tree3`
+   - Always increment from the highest existing number
+
+3. **Create the worktree:**
+
+   ```bash
+   git worktree add ~/devtree/tree[N]_[feature_name] -b feature/[feature_name]
+   ```
+
+4. **Assign port for dev server (if needed):**
+   - Main repo: port 4321 (default)
+   - tree1: port 4322
+   - tree2: port 4323
+   - tree3: port 4324
+   - Pattern: `4321 + tree_number`
+
+### Example: First Tree
+
+User: "Create a new tree for blue-sky"
 
 ```bash
-# From your main repo
-cd ~/Documents/github_local/pascalandy-blog-paper
+# Agent runs:
+git worktree list
+# Output shows only main repo, no trees in ~/devtree/
 
-# Create 3 worktrees for 3 posts
-git worktree add ~/devtree/blue-sky feature/blue-sky -b
-git worktree add ~/devtree/green-field feature/green-field -b
-git worktree add ~/devtree/yellow-sun feature/yellow-sun -b
+# Agent creates:
+git worktree add ~/devtree/tree1_blue-sky -b feature/blue-sky
 ```
 
-You now have:
+### Example: Third Tree
+
+User: "Create a new tree for yellow-sun"
+
+```bash
+# Agent runs:
+git worktree list
+# Output shows:
+# ~/Documents/github_local/pascalandy-blog-paper  main
+# ~/devtree/tree1_blue-sky                        feature/blue-sky
+# ~/devtree/tree2_green-field                     feature/green-field
+
+# Agent creates:
+git worktree add ~/devtree/tree3_yellow-sun -b feature/yellow-sun
+```
+
+---
+
+## Directory Structure
+
+After creating 3 worktrees:
 
 ```
 ~/devtree/
-├── blue-sky/        # feature/blue-sky
-├── green-field/     # feature/green-field
-└── yellow-sun/      # feature/yellow-sun
+├── tree1_blue-sky/      # feature/blue-sky     (port 4322 if running server)
+├── tree2_green-field/   # feature/green-field  (port 4323 if running server)
+└── tree3_yellow-sun/    # feature/yellow-sun   (port 4324 if running server)
 
 ~/Documents/github_local/
-└── pascalandy-blog-paper/   # main branch (run dev server here)
+└── pascalandy-blog-paper/   # main branch (port 4321)
 ```
 
 ---
@@ -49,15 +98,15 @@ You now have:
 
 ```bash
 # Open each in separate VS Code windows
-code ~/devtree/blue-sky
-code ~/devtree/green-field
-code ~/devtree/yellow-sun
+code ~/devtree/tree1_blue-sky
+code ~/devtree/tree2_green-field
+code ~/devtree/tree3_yellow-sun
 ```
 
 **Committing as you go:**
 
 ```bash
-cd ~/devtree/blue-sky
+cd ~/devtree/tree1_blue-sky
 git add .
 git commit -m "fix typos in blue-sky"
 
@@ -70,7 +119,7 @@ git commit -m "rewrite intro section"
 
 ## Dev Server and Previewing Posts
 
-**No port conflicts.** You only run the dev server once, in your main repo.
+**Default approach:** Run dev server only in main repo.
 
 The worktrees at `~/devtree/` are just for **editing files**. You don't run a server there.
 
@@ -78,9 +127,9 @@ The worktrees at `~/devtree/` are just for **editing files**. You don't run a se
 ~/Documents/github_local/pascalandy-blog-paper/   # main branch
 └── runs dev server at localhost:4321
 
-~/devtree/blue-sky/        # just edit files here
-~/devtree/green-field/     # just edit files here
-~/devtree/yellow-sun/      # just edit files here
+~/devtree/tree1_blue-sky/      # just edit files here
+~/devtree/tree2_green-field/   # just edit files here
+~/devtree/tree3_yellow-sun/    # just edit files here
 ```
 
 **To preview a post before publishing:**
@@ -100,13 +149,20 @@ git merge --abort
 
 Your main repo stays on `main`, server keeps running, you just temporarily pull in the changes to preview them.
 
+**Alternative:** Run dev server directly in a worktree on its assigned port:
+
+```bash
+cd ~/devtree/tree1_blue-sky
+bun run dev --port 4322
+```
+
 ---
 
-## Publishing Blue Sky (First Post)
+## Publishing a Post
 
 ```bash
 # 1. Go to the worktree
-cd ~/devtree/blue-sky
+cd ~/devtree/tree1_blue-sky
 
 # 2. Make sure you're up to date with main
 git fetch origin
@@ -123,62 +179,8 @@ cd ~/Documents/github_local/pascalandy-blog-paper
 git pull origin main
 
 # 6. Clean up the worktree
-git worktree remove ~/devtree/blue-sky
+git worktree remove ~/devtree/tree1_blue-sky
 git branch -d feature/blue-sky
-```
-
----
-
-## Publishing Green Field (Second Post, Days Later)
-
-```bash
-# 1. Go to the worktree
-cd ~/devtree/green-field
-
-# 2. Rebase on latest main (which now includes blue-sky)
-git fetch origin
-git rebase origin/main
-
-# 3. Push and create PR
-git push -u origin feature/green-field
-gh pr create --title "Add post: Green Field" --body "New blog post about green field"
-
-# 4. Wait for PR to be approved and merged on GitHub...
-
-# 5. Update local main
-cd ~/Documents/github_local/pascalandy-blog-paper
-git pull origin main
-
-# 6. Clean up
-git worktree remove ~/devtree/green-field
-git branch -d feature/green-field
-```
-
----
-
-## Publishing Yellow Sun (Third Post, Weeks Later)
-
-```bash
-# 1. Go to the worktree
-cd ~/devtree/yellow-sun
-
-# 2. Rebase on latest main
-git fetch origin
-git rebase origin/main
-
-# 3. Push and create PR
-git push -u origin feature/yellow-sun
-gh pr create --title "Add post: Yellow Sun" --body "New blog post about yellow sun"
-
-# 4. Wait for PR to be approved and merged on GitHub...
-
-# 5. Update local main
-cd ~/Documents/github_local/pascalandy-blog-paper
-git pull origin main
-
-# 6. Clean up
-git worktree remove ~/devtree/yellow-sun
-git branch -d feature/yellow-sun
 ```
 
 ---
@@ -200,7 +202,7 @@ Clean. Linear. Each post merged one after another.
 git worktree list
 
 # Remove a worktree after merging
-git worktree remove ~/devtree/blue-sky
+git worktree remove ~/devtree/tree1_blue-sky
 
 # Clean up if you manually deleted a worktree folder
 git worktree prune
@@ -220,3 +222,5 @@ git branch -a
 | Merge via GitHub PR, not locally | PR gives you CI checks, review      |
 | Delete worktree after merge      | Prevents stale folders piling up    |
 | Never commit to main directly    | All changes go through PRs          |
+| Naming: `tree[N]_[feature]`      | Auto-increment, predictable ports   |
+| Port: `4321 + tree_number`       | No conflicts between worktrees      |

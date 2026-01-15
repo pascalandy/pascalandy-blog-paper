@@ -8,7 +8,22 @@ SHELL := /bin/bash
 # Full workflow: lint, format, build, then dev (user runs de server)
 # user runs this locally
 dev:
-	@set -o pipefail && bun run lint && bun run format && bun run format:check | tspin && bun run build | tspin && bun run dev | tspin
+	@set -o pipefail && bun run lint && bun run format && bun run format:check | tspin && bun run build | tspin && bun run dev --port 4320 | tspin
+
+tree1:
+	@set -o pipefail && bun run lint && bun run format && bun run format:check | tspin && bun run build | tspin && bun run dev --port 4321 | tspin
+
+tree2:
+	@set -o pipefail && bun run lint && bun run format && bun run format:check | tspin && bun run build | tspin && bun run dev --port 4322 | tspin
+
+tree3:
+	@set -o pipefail && bun run lint && bun run format && bun run format:check | tspin && bun run build | tspin && bun run dev --port 4323 | tspin
+
+tree4:
+	@set -o pipefail && bun run lint && bun run format && bun run format:check | tspin && bun run build | tspin && bun run dev --port 4324 | tspin
+
+tree5:
+	@set -o pipefail && bun run lint && bun run format && bun run format:check | tspin && bun run build | tspin && bun run dev --port 4325 | tspin
 
 # qa workflow for agent (without running server)
 # this autoformat issues
