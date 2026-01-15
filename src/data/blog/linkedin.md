@@ -1,10 +1,11 @@
 ---
-author: Pascal Andy
+author: Pascal Nguyen Deschênes
 date_created: 2018-09-06
 title: "LinkedIn"
 tags:
-  - uncategorized
-description: "Voici où me trouver sur Linkedin."
+  - profil
+ogImage: ../../assets/images/og-legacy/2018/09/linkedin-pascal-nguyen-deschenes-b.jpg
+description: "Connectez avec Pascal Andy sur LinkedIn."
 ---
 
 Voici où me trouver sur [Linkedin](https://www.linkedin.com/in/pascalnguyendeschenes/).
