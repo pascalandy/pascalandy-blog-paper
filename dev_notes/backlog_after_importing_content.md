@@ -4,25 +4,15 @@ tags:
   - dev-notes
 date_created: 2026-01-14
 author: Pascal Andy
-description: "Commands and workflow for developing, testing, and building the blog"
+description: "BACKLOG, todo"
 ---
-
 
 # BACKLOG
 
-## route
+=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-So about route, I see that all posts are under /posts/name-here
-
-But before my old site was under blogs, I would like to update the route so that every blog posts are going on to /blog.
-like: https://pascalandy.com/blog/ 
-
-We also need to think about all the internal links that actually goes into /posts 
-
-Also, I would like to understand how do I manage the fact that I have some post that That should be a page. so should I create a tag page or like I don't know what's the right strategy on that 
-
-plan
-
+comment taguer un post comme une page
+cacher par défault tous les tags crypto in montreal
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
@@ -38,16 +28,6 @@ faire apparaitre une image header par défault.
 
 attention à : La génération pas de casque... celle née avant 1990
 
-=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
-
-comment taguer un post comme une page
-
-cacher par défault tous les tags crypto in montreal
-
-=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
-
-valider qu'il n'y a plus de redirect.
-page à supprimer
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
