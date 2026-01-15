@@ -9,22 +9,13 @@ description: "BACKLOG, todo"
 
 # BACKLOG
 
-Now, I would like to think about all the good utilities that are useful when managing any given project on GitHub. 
+=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-So as you can see in the CI, I have already a few of them. The next one will be the, I would say, the security part of it. Considering that I'm running an astro site Uh What should I monitor here? I don't want it to be overkill, but I think it deserves to have some coverage here. 
+STYLE: improve table of content
 
-examples I found
+=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-Dependency Security
-
-| Tool | Purpose |
-|------|---------|
-| OSSF Scorecard | Security health metrics for your repo |
-| Socket.dev | Supply chain security (detect malicious packages) |
-| Stale | Auto-close stale issues/PRs |
-| Lock Threads | Lock old resolved issues |
-| Codecov / Coveralls | Code coverage reports on PRs |
-| All Contributors | Recognize all contributors (not just code) |
+STYLE: improve the nav allignement
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 

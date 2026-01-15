@@ -1,3 +1,12 @@
+---
+title: "git worktree workflow"
+tags:
+  - dev-notes
+date_created: 2026-01-14
+author: Pascal Andy
+description: "understadning this git worktree workflow"
+---
+
 # Complete Worktree Workflow for Blog Posts
 
 ## One-Time Setup
