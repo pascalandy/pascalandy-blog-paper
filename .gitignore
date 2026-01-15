@@ -4,6 +4,8 @@ to_import/
 
 # ai dev
 .claude/
+.opencode/
+.codex/
 
 # caching
 .astro-cache/
