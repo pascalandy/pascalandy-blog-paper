@@ -84,4 +84,4 @@ Peut-on détruire la carrière des gens parce qu’ont découvre qu’ils sont h
 
 Qu’on s’appelle la rockstar de l’heure, le quidam sans histoire, le premier ministre d’un pays, il n’y a pas de différence. La vie privée est un droit.
 
-/blog/prive-ou-personnel-peu-importe-cest-pas-de-tes-affaires/
+[Lien permanent](/blog/prive-ou-personnel-peu-importe-cest-pas-de-tes-affaires/)

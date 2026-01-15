@@ -8,10 +8,10 @@ ogImage: ../../assets/images/og-legacy/2018/09/021-Crypto-In-Montre-al_CryptoInM
 description: "D'abord, pour ceux et celles qui désirent s'initier aux cryptomonnaies et au blockchain, l'introduction au monde des cryptos sera donnée par moi, Pascal Andy, dès 18h30. La présentation permettra d'introduire de façon très pratique ceux qui cherchent à faire"
 ---
 
-Voici le plan de match pour le **21e événement** de [#CryptoInMontreal](/tags/cryptoinmontreal/) qui sera un meetup d'introduction sur le sujet.
+Voici le plan de match pour le **21e événement** de [#CryptoInMontreal](/tags/crypto-in-montreal/) qui sera un meetup d'introduction sur le sujet.
 
 Les détails de cet événement et l'accès à la billeterie :
-/blog/cryptoinmontreal-21/
+[Lien permanent](/blog/cryptoinmontreal-21/)
 
 ## AGENDA DE LA SOIRÉ:
 
@@ -60,7 +60,7 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 - Le **deuxième** objectif est de **réunir les initiés** qui s'intéressent déjà au sujet des cryptomonnaies. Nous pourrons échanger et découvrir les différents enjeux de l’écosystème du blockchain et des cryptomonnaies altcoins.
 - Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades**, c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
 
-- **Calendrier 2018**: /blog/calendrier-2018-de-cryptoinmontreal/
+- **Calendrier 2018**: /blog/calendrier-crypto-in-montreal/
 - **Teaser** de l'événement sur [YouTube](https://www.youtube.com/watch?v=2_rPjzXXfBA)
 
 ## Un petit geste qui nous aide grandement
@@ -74,7 +74,7 @@ Je suis très actif sur [Twitter](https://twitter.com/askpascalandy) et sur le h
 
 Plusieurs façon de demeurer au courant des prochains événements:
 
-- [Site web officiel](/tags/cryptoinmontreal/)
+- [Site web officiel](/tags/crypto-in-montreal/)
 - [YouTube](https://www.youtube.com/playlist?list=PL9epbd8UeXHsfQe2Tr4O1T5FHdAafAk_b)
 - [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)

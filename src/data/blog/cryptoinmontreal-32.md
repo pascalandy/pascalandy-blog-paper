@@ -8,7 +8,7 @@ description: "Introduction pratique aux cryptomonnaies et démo proof-of-work au
 ogImage: ../../assets/images/og-legacy/2019/06/032b-cryptoinmontreal.jpg
 ---
 
-La **32e édition** de [Crypto In Montreal](/blog/tag/cryptoinmontreal/) aura lieu sur les planchers du **Desjardins Lab** au centre-ville de Montréal. L'ordre du jour:
+La **32e édition** de [Crypto In Montreal](/tags/crypto-in-montreal/) aura lieu sur les planchers du **Desjardins Lab** au centre-ville de Montréal. L'ordre du jour:
 
 - D'abord, pour ceux et celles qui désirent s'initier aux cryptomonnaies et au blockchain, **l'introduction au monde des cryptos** sera donnée par moi, Pascal Andy, dès 17h30. La présentation permettra d'introduire de façon très pratique ceux qui cherchent à faire leur premier pas dans le monde des cryptomonnaies.
 - **What the heck do miners mine?** Je ferai une démo unique en son genre qui démontre comment fonctionne le proof-of-work (PoW) qui sécurise le protocole Bitcoin.

@@ -147,4 +147,4 @@ Note de l'éditeur. Cet article est une adaptation et en quelque sorte un « mas
 
 Les meilleurs présidents des États-Unis ont en fait travaillé moins longtemps en politique que les pires présidents des États-Unis. Dans tous les domaines, on remarque que les gens qui connaissent l’ascension la plus rapide et qui réussissent le mieux ne sont souvent pas ceux qui ont le plus d’expérience.
 
-/blog/comment-assurer-et-arriver-plus-rapidement-a-ses-fins-grace-a-ces-6-smartcuts/
+[Lien permanent](/blog/comment-assurer-et-arriver-plus-rapidement-a-ses-fins-grace-a-ces-6-smartcuts/)

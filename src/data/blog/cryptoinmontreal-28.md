@@ -10,7 +10,7 @@ ogImage: ../../assets/images/og-legacy/2019/03/028a-CryptoInMontreal_Crypto-In-M
 
 Join us for the 28th edition of Crypto In Montreal. Our hosts will be **Tamara Kara** and **Laura Gheorghiu**. We will dive deep into the privacy & confidentiality aspects of the blockchain. Then we will do Q&A session on crypto taxation and legal issues.
 
-All details about [#CryptoInMontreal](/tag/cryptoinmontreal/) and tickets:
+All details about [#CryptoInMontreal](/tags/crypto-in-montreal/) and tickets:
 
 [https://pascalandy.com/blog/cryptoinmontreal-28](/blog/cryptoinmontreal-28)
 

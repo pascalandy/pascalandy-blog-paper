@@ -17,7 +17,7 @@ _I do speak english too so ... don't be shy to shoot me a high five in the comme
 ### 🎧 Vidéo de « Nés pour Mourir »
 
 Aussi en streaming sur Soundcloud
-/blog/nes-pour-mourir-audio/
+[Version audio](/blog/nes-pour-mourir-audio/)
 
 ### ☕ L'histoire
 

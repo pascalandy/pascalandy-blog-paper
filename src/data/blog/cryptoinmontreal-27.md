@@ -10,7 +10,7 @@ ogImage: ../../assets/images/og-legacy/2019/02/027b-cryptoinmontreal.jpg
 
 Le **27e événement** de Crypto In Montreal aura lieu chez **Ernst & Young** Montréal. Notre hôte nous offrira gracieusement vin — bière et petites bouchées généreuse pour notre sympathique Meetup.
 
-Pour les détails sur [#CryptoInMontreal](/blog/tag/cryptoinmontreal/) et la billetterie:
+Pour les détails sur [#CryptoInMontreal](/tags/crypto-in-montreal/) et la billetterie:
 
 [Lire cet article](/blog/cryptoinmontreal-27/)
 

@@ -16,8 +16,8 @@ Join us for a discussion of the current tax treatment of transactions involving 
 The topics below will be discussed as well as any questions that you might have. Please note, not all questions currently have answers.
 
 ► OFFICIAL WEBSITE
-/blog/tag/cryptoinmontreal/
+[CryptoInMontreal](/tags/crypto-in-montreal/)
 
 ► EVENT DETAILS
 20th event of #CryptoInMontreal
-/blog/crypto![banner-large-cyptoinmontreal](../../assets/images/og-legacy/2018/03/banner-large-cyptoinmontreal.JPG)e-cyptoinmontreal.JPG)](/blog/tag/cryptoinmontreal/)
+/blog/crypto![banner-large-cyptoinmontreal](../../assets/images/og-legacy/2018/03/banner-large-cyptoinmontreal.JPG)e-cyptoinmontreal.JPG)](/tags/crypto-in-montreal/)

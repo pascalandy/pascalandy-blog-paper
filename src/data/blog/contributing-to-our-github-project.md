@@ -57,7 +57,7 @@ Try to keep unnecessary details out of the first paragraph, it's only there to g
 
 Good pull requests - patches, improvements, new features are a fantastic help. They should remain focused in scope and avoid containing unrelated commits.
 
-By submitting a patch, you agree that your work will be licensed under the [license](./LICENCE.md) used by the project.
+By submitting a patch, you agree that your work will be licensed under the license used by the project.
 
 If you have any large pull request in mind (e.g. implementing features, refactoring code, etc.), **please ask first** via an issue, otherwise you risk spending a lot of time working on something that the project's developers might not want to merge into the project.
 

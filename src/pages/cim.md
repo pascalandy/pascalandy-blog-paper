@@ -63,7 +63,7 @@ Afin de profiter au maximum de ce qu'ils apprendront durant l'evenement, je cons
 - [coinberry.com](https://app.coinberry.com/invite/11588b26230) — Reserve aux participants de CryptoInMontreal et valable sur Coinberry, un marche de change canadien. Selon leurs termes: nous obtiendrons tous les deux **20$**.
 - [binance.com](https://www.binance.com/?ref=11155319) — Invite your friends to trade on Binance, and you will receive 20% of his/her trading fees as commission, in real-time.
 
-![coinberry](/og-legacy/2018/08/coinberry.jpg)![binance](/og-legacy/2018/08/binance.jpg)
+![coinberry](../assets/images/og-legacy/2018/08/coinberry.jpg)![binance](../assets/images/og-legacy/2018/08/binance.jpg)
 
 ---
 
@@ -98,7 +98,7 @@ Les albums photos [se trouvent ici](/blog/cryptoinmontreal-photo/).
 
 ### FAQ (questions et reponses)
 
-- Pour trouver un **evenement** se referer au [site web officiel](/blog/cryptoinmontreal-informations-generales/) de #CryptoInMontreal
+- Pour trouver un **evenement** se referer au [site web officiel](/tags/crypto-in-montreal/) de #CryptoInMontreal
 - Dependement de l'audience, les rencontres #CryptoInMontreal se deroulent en francais et/ou en anglais.
 - Les rencontres #CryptoInMontreal se deroulent **en personne**.
 - Le meilleur endroit pour **contacter Pascal Andy** est sur [Twitter](https://twitter.com/askpascalandy) ou bien [par courriel](/blog/rester-en-contact/).

@@ -13,6 +13,6 @@ description: "Want some more?"
 ## 📢 Want some more?
 
 [The manifesto - Why did I decide to start Dper?](/blog/each-day-traditional-social-networks-are-disconnecting-from-you/)
-🏷️ [Search tag](/tags/dper/) about Dper
+🏷️ [Search tag](/tags/startups/) about Dper
 🏛️ Go to Dper [homepage](/blog/dper-app/)
 📖 Key [definitions](/blog/definitions/) about startups

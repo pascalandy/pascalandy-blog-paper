@@ -117,9 +117,9 @@ git push --no-verify
 
 ## Related Dev Notes
 
-- [Frontmatter Schema](/blog/dev_notes/frontmatter-schema/) — Required and optional fields for blog posts
-- [How to configure AstroPaper theme](/blog/dev_notes/how-to-configure-astropaper-theme/) — Theme customization options
-- [shadcn Theme System](/blog/dev_notes/shadcn-theme-system/) — Color schemes and theming
-- [How to update dependencies](/blog/dev_notes/how-to-update-dependencies/) — Keeping packages up to date
-- [Git Hooks for dates](/blog/dev_notes/setting-dates-via-git-hooks/) — Auto-set created/modified dates
-- [Using Mermaid](/blog/dev_notes/using-mermaid/) — Adding diagrams to posts
+- [Frontmatter Schema](/blog/dev-notes/frontmatter-schema/) — Required and optional fields for blog posts
+- [How to configure AstroPaper theme](/blog/dev-notes/how-to-configure-astropaper-theme/) — Theme customization options
+- [shadcn Theme System](/blog/dev-notes/shadcn-theme-system/) — Color schemes and theming
+- [How to update dependencies](/blog/dev-notes/how-to-update-dependencies/) — Keeping packages up to date
+- [Git Hooks for dates](/blog/dev-notes/setting-dates-via-git-hooks/) — Auto-set created/modified dates
+- [Using Mermaid](/blog/dev-notes/using-mermaid/) — Adding diagrams to posts

@@ -27,7 +27,7 @@ Do you speak **English**? You're welcome as well! I just don't have the time to 
 - **Adresse**: 10719 Rue Lajeunesse, Montréal, QC H3L 2E7 · Montréal, QC
 
 Tous les détails de l'événement:
-/blog/cryptoinmontreal-06/
+[Lien permanent](/blog/cryptoinmontreal-06/)
 
 Cheers!<br>[Pascal Andy](/now/)
 
@@ -72,11 +72,11 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 
 ## Informations générales
 
-- [Site officiel](/tags/cryptoinmontreal/) de #CryptoInMontreal
-- [Pré-requis](/blog/cryptoinmontreal-informations-generales/#prerequis)
-- [Qui est l'organisateur](/blog/cryptoinmontreal-informations-generales/#organisateur) de #CryptoInMontreal ?
-- [FAQ](/blog/cryptoinmontreal-informations-generales/#faq) (questions et réponses)
-- [Le calendrier 2018](/blog/cryptoinmontreal-informations-generales/#calendrier).
+- [Site officiel](/tags/crypto-in-montreal/) de #CryptoInMontreal
+- [Pré-requis](/tags/crypto-in-montreal/)
+- [Qui est l'organisateur](/tags/crypto-in-montreal/) de #CryptoInMontreal ?
+- [FAQ](/tags/crypto-in-montreal/) (questions et réponses)
+- [Le calendrier 2018](/tags/crypto-in-montreal/).
 
 ## Contacts
 
@@ -84,7 +84,7 @@ Je suis très (très) actif sur [Twitter](https://twitter.com/askpascalandy) et 
 
 Il y a plusieurs façon de demeurer au courant des prochains événements:
 
-- [Site web officiel](/tags/cryptoinmontreal/)
+- [Site web officiel](/tags/crypto-in-montreal/)
 - Suivre sur [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - Suivre sur [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - Suivre sur [Facebook](https://www.facebook.com/cryptoinmontreal/)

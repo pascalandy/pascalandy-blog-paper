@@ -8,10 +8,10 @@ ogImage: ../../assets/images/og-legacy/2018/11/024-CryptoInMontreal_Crypto-In-Mo
 description: "Voici le plan de match pour le 24e événement de #CryptoInMontreal qui sera un meetup d'introduction sur le sujet."
 ---
 
-Voici le plan de match pour le **24e événement** de [#CryptoInMontreal](/tags/cryptoinmontreal/) qui sera un meetup d'introduction sur le sujet.
+Voici le plan de match pour le **24e événement** de [#CryptoInMontreal](/tags/crypto-in-montreal/) qui sera un meetup d'introduction sur le sujet.
 
 Pour les détails de cet événement et l'accès à la billeterie :
-/blog/cryptoinmontreal-24/
+[Lien permanent](/blog/cryptoinmontreal-24/)
 
 ## AGENDA DE LA SOIRÉE
 
@@ -66,11 +66,11 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 
 ## Contacts
 
-Personnellement, je suis très actif sur [Twitter](https://twitter.com/askpascalandy). Voici plusieurs façon de demeurer au courant des prochaines activités de [CryptoInMontreal](/tags/cryptoinmontreal/) :
+Personnellement, je suis très actif sur [Twitter](https://twitter.com/askpascalandy). Voici plusieurs façon de demeurer au courant des prochaines activités de [CryptoInMontreal](/tags/crypto-in-montreal/) :
 
 - [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - [YouTube](https://www.youtube.com/playlist?list=PL9epbd8UeXHsfQe2Tr4O1T5FHdAafAk_b)
 - [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - [Twitter](https://twitter.com/askpascalandy)
 - [Page Facebook](https://www.facebook.com/cryptoinmontreal/)
-- [Site web officiel](/tags/cryptoinmontreal/) | 📅 [Calendrier 2018](/blog/calendrier-2018-de-cryptoinmontreal/) | [Information générales](/blog/cryptoinmontreal-informations-generales/)
+- [Site web officiel](/tags/crypto-in-montreal/) | 📅 [Calendrier 2018](/blog/calendrier-crypto-in-montreal/) | [CryptoInMontreal](/tags/crypto-in-montreal/)

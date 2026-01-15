@@ -21,7 +21,7 @@ description: "FirePress DevOps"
 - [Backblaze B2\_\_\_\_\_\_\_\_\_](https://tree-sac0-0004.backblaze.com/b2_browse_files2.htm)
 - [Trello Backlog & Roadmap](https://trello.com/b/0fCwwzqc/firepress-roadmap)
 - [FirePress (admin panel)](https://firepress.org/en/ghost/#/site)
-- [pascalandy (admin panel)](/blog/ghost/#/posts) | [favoris](/blog/ghost/#/editor/page/5d6edd8124617c0006ffd600)
+- [pascalandy.com](/)
 - [Notion \_\_\_\_\_\_\_\_\_\_\_\_](https://www.notion.so/92b370d5fd9243a18baa96a16e515b93?v=42b15bd564f943fc998dab870c411142)
 - [Cloudflare\_\_\_\_\_\_\_\_\_\_](https://dash.cloudflare.com/6e488a5a5ddddf4e5557ef0844c352ea)
 - [Mailgun\_\_\_\_\_\_\_\_\_\_\_\_](https://app.mailgun.com/app/sending/domains)

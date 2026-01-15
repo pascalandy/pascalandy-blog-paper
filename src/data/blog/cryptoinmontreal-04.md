@@ -11,7 +11,7 @@ Le premier objectif est de démocratiser les cryto-monnaies (cryptocurrency). No
 
 ## Lieu et date
 
-Le 4e événement de #CryptoInMontreal à lieu le 23 janvier 2018 (aussi -> [calendrier 2018](/blog/cryptoinmontreal-informations-generales/#calendrier)).
+Le 4e événement de #CryptoInMontreal à lieu le 23 janvier 2018 (aussi -> [calendrier 2018](/tags/crypto-in-montreal/)).
 
 Pour ceux et celles qui désirent s'initier aux cryptomonnaie et au blockchain, **ne manquez pas l'introduction** qui sera donnée par Pascal Andy à **18h30** tappant. La présentation permettra d'introduire de façon très pratique ceux qui cherchent à faire leur premier pas dans le monde des cryptomonnaies.
 
@@ -41,11 +41,11 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 
 ## Informations générales
 
-1. Le **site officiel** de #CryptoInMontreal se trouve sur mon blog au: /tags/cryptoinmontreal/
-2. [Pré-requis](/blog/cryptoinmontreal-informations-generales/#prerequis) (ouvrir son compte sur un marché de change)
-3. [Qui est l'organisateur](/blog/cryptoinmontreal-informations-generales/#organisateur) de #CryptoInMontreal ?
-4. [FAQ](/blog/cryptoinmontreal-informations-generales/#faq) (questions et réponses)
-5. [Le calendrier 2018](/blog/cryptoinmontreal-informations-generales/#calendrier). Les événements #CryptoInMontreal auront à tous les deux semaines.
+1. Le **site officiel** de #CryptoInMontreal se trouve sur mon blog au: /tags/crypto-in-montreal/
+2. [Pré-requis](/tags/crypto-in-montreal/) (ouvrir son compte sur un marché de change)
+3. [Qui est l'organisateur](/tags/crypto-in-montreal/) de #CryptoInMontreal ?
+4. [FAQ](/tags/crypto-in-montreal/) (questions et réponses)
+5. [Le calendrier 2018](/tags/crypto-in-montreal/). Les événements #CryptoInMontreal auront à tous les deux semaines.
 
 ## Agenda et déroulement de la soirée
 
@@ -78,7 +78,7 @@ Je suis très actif sur [Twitter](https://twitter.com/askpascalandy).
 
 Plusieurs façon de demeurer au courant des prochains événements:
 
-- [Site web officiel](/tags/cryptoinmontreal/)
+- [Site web officiel](/tags/crypto-in-montreal/)
 - Suivre sur [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - Suivre sur [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - Suivre sur [Facebook](https://www.facebook.com/cryptoinmontreal/)
@@ -98,7 +98,7 @@ Les billets de cet événement [ se trouvent ici](https://www.eventbrite.com/e/c
 
 #### 2) Meetup
 
-https://www.meetup.com/CryptoInMontreal/events/dwwjfpyxcbfc/
+[Événement sur Meetup](https://www.meetup.com/CryptoInMontreal/events/dwwjfpyxcbfc/)
 
 Au plaisir de se croiser au prochain événement de #CryptoInMontreal!
 

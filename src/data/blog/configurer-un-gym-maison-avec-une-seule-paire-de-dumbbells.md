@@ -46,7 +46,7 @@ La **barre de curl** me sert de aussi de barre olympique pour faire du **deadlif
 - <https://www.amazon.ca/gp/product/B07C6MKGPD/ref=ppx_yo_dt_b_asin_title_o00_s01?ie=UTF8&psc=1>
 - <https://www.amazon.ca/gp/product/B07FKHTP6C/ref=ppx_yo_dt_b_asin_title_o00_s02?ie=UTF8&psc=1>
 
-Pour terminer, si tu souhaites recevoir les mise à jours de mon blog, [inscris-toi ici](/blog/signin/). Mon site est hébergé sur FirePress _(j'en suis le fondateur)_ et j'offre [21 jours d'essai gratuit](https://firepress.org/en/pricing/).
+Pour terminer, si tu souhaites recevoir les mise à jours de mon blog. Mon site est hébergé sur FirePress _(j'en suis le fondateur)_ et j'offre [21 jours d'essai gratuit](https://firepress.org/en/pricing/).
 
 Cheers!
 Pascal

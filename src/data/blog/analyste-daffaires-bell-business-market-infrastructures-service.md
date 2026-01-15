@@ -10,7 +10,7 @@ description: "om/blog/analyste-daffaires-senior-ti/)"
 
 [![dispo-analyste-affai![dispo-analyste-affaires-pascal](../../assets/images/og-legacy/2018/10/dispo-analyste-affaires-pascal.jpg)om/blog/analyste-daffaires-senior-ti/)
 
-_Cette page est une sous-section de mon [offre en tant que Consultant](/blog/analyste-daffaires-senior-it/)_.
+_Cette page est une sous-section de mon [offre en tant que Consultant](/blog/analyste-daffaires-senior-ti/)_.
 
 ### 1) Analyste d'Affaires T.I. / Field management services (FMS)
 
