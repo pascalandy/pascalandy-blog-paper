@@ -1,0 +1,74 @@
+# Astro/TypeScript project labeler config
+# Docs: https://github.com/actions/labeler
+
+content:
+  - changed-files:
+      - any-glob-to-any-file: "src/data/blog/**/*"
+
+astro:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/pages/**/*"
+          - "src/layouts/**/*"
+          - "src/components/**/*"
+          - "astro.config.ts"
+          - "src/config.ts"
+
+styles:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/styles/**/*"
+          - "tailwind.config.*"
+          - "**/*.css"
+
+typescript:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "tsconfig.json"
+          - "src/**/*.ts"
+
+config:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/config.ts"
+          - "src/constants.ts"
+          - "content.config.ts"
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file: ".github/**/*"
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "*.md"
+          - "docs/**/*"
+          - "!CHANGELOG.md"
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "package.json"
+          - "pnpm-lock.yaml"
+          - "bun.lockb"
+          - "renovate.json"
+
+tooling:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "eslint.config.js"
+          - ".prettierrc"
+          - ".prettierignore"
+          - "lefthook.yml"
+          - "Makefile"
+
+utils:
+  - changed-files:
+      - any-glob-to-any-file: "src/utils/**/*"
+
+seo:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "src/layouts/Layout.astro"
+          - "public/robots.txt"
+          - "public/sitemap*"
