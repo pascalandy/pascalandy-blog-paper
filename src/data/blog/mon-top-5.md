@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2016-05-11
 title: "Mon Top 5"
-tags: ["Random"]
+tags:
+  - random
 ogImage: ../../assets/images/og-legacy/2020/07/pascalandy-com_header_2020-07-16_10h11-1.jpg
 description: "Nouveau sur le blog? Voici les cinq articles que je te propose de lire."
 ---

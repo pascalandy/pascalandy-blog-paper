@@ -4,16 +4,23 @@
 - `rg` not grep | `fd` not find | `uv` not python3 | `bun` not npm | `gh` ready
 - Screenshots: `ls -lt ~/Documents/screenshots | head -2`
 
+## Browser, esign/Style
+- the user will ask you to test something on the website, like:
+  - http://localhost:4321/
+  - http://localhost:4321/posts/lhorizon-cest-toi
+  - http://localhost:4321/tags
+- run` agent-browser --help` to see avail cmd, go!
+
+**Rules**:
+- Max viewport: 1920X1920 (prevents crash)
+- resize_page before screenshots
+  - magick mogrify -resize '1920x1920>' -quality 70 {filename}
+
 ## Make Targets
 - `make qa` pre-commit | `make ci` fast check | `make build` | `make lint` | `make format`
 
-## To this this app
-- Spawn @charlie → "run: make qa"
-
-## Design/Style
-- Verify w/ MCP Chrome DevTools
-- Max viewport: 1400x900 (prevents crash)
-- resize_page before screenshots
+## To test this app
+- Spawn @charlie → tell it: "run: make qa"
 
 ## Git
 Atomic commits only. "and" in msg = split it.
@@ -21,9 +28,10 @@ Atomic commits only. "and" in msg = split it.
 - Group by purpose, not filetype
 - Separate commits per logical change
 
-## CI
+## PR
+- use gh / follow github action build
 - via gihub actions: `@greptileai` triggers review | 👍=keep | 👎=stop | reply=teach
-- Deploy in done via GH Actions on Sevalla
+- Deployment is automatic
 
 ## Stack
 - Astro 5 | TS strict | Tailwind v4 | Pagefind

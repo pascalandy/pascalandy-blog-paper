@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2017-02-04
 title: "I Am The Bridge Maker"
-tags: ["Consultation"]
+tags:
+  - consultation
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "om/blog/analyste-daffaires-senior-ti/)"
 ---

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2016-11-16
 title: "How do I help organisations to thrive as a Full Stack Architect"
-tags: ["Consultation"]
+tags:
+  - consultation
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "om/blog/analyste-daffaires-senior-ti/)"
 ---

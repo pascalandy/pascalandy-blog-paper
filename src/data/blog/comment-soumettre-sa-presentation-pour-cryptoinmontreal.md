@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-08-17
 title: "Comment soumettre sa présentation pour #CryptoInMontreal"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 description: "Voici comment procéder pour soumettre une présentation:"
 ---
 

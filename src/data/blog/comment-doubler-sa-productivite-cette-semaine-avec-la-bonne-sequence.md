@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-11-10
 title: "Comment doubler sa productivité cette semaine avec la bonne séquence"
-tags: ["Repost"]
+tags:
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "C'est dans ce texte paru sur le blog zenhabits que j'ai réalisé qu'il manquait un élément essentiel à mes « To Do List ». Voici l'ingrédient manquant."
 ---

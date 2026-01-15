@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2017-02-22
 title: "My DCA (Definite Chief Aim)"
-tags: ["personnel"]
+tags:
+  - personnel
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Pascal Andy My mission is to touch most people with love and passion and help them realize their ambitions. In order to achieve my mission, every day I grow..."
 ---

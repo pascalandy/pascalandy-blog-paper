@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2019-01-10
 title: "Contributor Code of Conduct on GitHub"
-tags: ["Startups"]
+tags:
+  - startups
 ogImage: ../../assets/images/og-legacy/2019/01/pascalandy-com_header_2017-04-10_14h46-2.jpg
 description: "Our Pledge"
 ---

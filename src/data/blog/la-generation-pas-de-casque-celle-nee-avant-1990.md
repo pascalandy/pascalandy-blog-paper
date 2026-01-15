@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-03-07
 title: "La génération pas de casque... celle née avant 1990"
-tags: ["Repost"]
+tags:
+  - repost
 ogImage: ../../assets/images/og-legacy/2016/May/un_selfie_en_1980b___pascal_andy_blog-1462843185197.jpg
 description: "(ci-haut: un selfie... en 1990)"
 ---

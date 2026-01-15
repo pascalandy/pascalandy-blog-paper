@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2015-05-11
 title: "Appartement à louer verdun"
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "[om/blog/souscrire-au-blog-de-pascal-andy/)"
 ---

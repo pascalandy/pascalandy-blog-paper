@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-09-04
 title: "La vision de Dominick Gauthier (et l'homme derrière nos Skieurs québecois)"
-tags: ["Du Fond Des Tripes"]
+tags:
+  - du-fond-des-tripes
 ogImage: ../../assets/images/og-legacy/2017/04/guay_cover_2-1462846020456.jpg
 description: "J'ai une profonde admiration pour Dominick Gauthier, le fondateur de B2Ten (B2DIX). Dans cet extrait audio, j'explique à quel point je trouve la vision de..."
 ---

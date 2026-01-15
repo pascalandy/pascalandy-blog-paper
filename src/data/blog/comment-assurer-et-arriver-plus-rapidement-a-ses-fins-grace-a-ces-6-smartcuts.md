@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2015-05-19
 title: "Comment assurer et arriver plus rapidement à ses fins grâce à ces 6 smartcuts"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/119_Comment_assurer_et_arriver_plus_rapidement_a__ses_fins_gra_ce_a__ces_6_smartcuts-1462912385420.jpg
 description: "Fait. Je veux réussir et tu veux réussir. Et on veut tous que ça arrive rapidement. Mais la réalité est qu’on ne peut pas y consacrer plus de temps que..."
 ---

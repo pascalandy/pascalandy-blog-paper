@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2015-08-28
 title: "Looking for a Geeky Node Developer (Ghost)"
-tags: ["Emplois"]
+tags:
+  - emplois
 description: "Looking for a Geeky Node Developer (Ghost)"
 ---
 

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2021-06-11
 title: "Bloquer les gens de ses réseaux sociaux"
-tags: ["Personnel"]
+tags:
+  - personnel
 ogImage: ../../assets/images/og-legacy/2021/01/blocked.jpg
 description: 'Pour moi, traiter ces voyageurs de "Touristatas" ça n''a pas de sens et je lui ai dit. Prendre en photo ces voyageurs comme s''ils étaient des mafieux je...'
 ---

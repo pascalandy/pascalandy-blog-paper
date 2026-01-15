@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-10-28
 title: "L’identification à deux facteurs (la sécurité de votre vie digitale en dépend)"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Imaginez un instant, l’étendu des dégâts si votre courriel était soudainement piraté et accessible à quelqu’un de mal intentionné. « En l’espace d’une..."
 ---

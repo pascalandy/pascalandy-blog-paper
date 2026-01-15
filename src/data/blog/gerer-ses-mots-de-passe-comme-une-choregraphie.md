@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-11-17
 title: "Gérer ses mots de passe comme une chorégraphie"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/gerer_ses_mots_de_passe_comme_une_choregraphie_en_deux_actes-1462900077996.jpg
 description: "Personne n’aime gérer ou bien se souvenir de ses mots de passe. Pour plusieurs d’entre nous, la partie de notre cerveau qui devait gérer ceux-ci est partie..."
 ---

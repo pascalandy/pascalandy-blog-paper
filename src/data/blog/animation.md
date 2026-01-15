@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-01-04
 title: "Animation"
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 description: "Rappel de la mission de #CryptoInMontreal"
 ---
 

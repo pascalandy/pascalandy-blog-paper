@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-10-23
 title: "Être à son compte c'est bien, construire une entreprise c'est mieux"
-tags: ["Repost"]
+tags:
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Les clients donnent des contrats. Le fruit de ce travail permet de payer les comptes et d’acheter ce qui nous passe par la tête quand il en reste."
 ---

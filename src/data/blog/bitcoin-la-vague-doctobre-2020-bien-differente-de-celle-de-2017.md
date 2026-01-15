@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2020-11-20
 title: "Bitcoin, la vague d'octobre 2020 bien différente de celle de 2017"
-tags: ["Crypto", "Repost"]
+tags:
+  - crypto
+  - repost
 ogImage: ../../assets/images/og-legacy/2021/01/pascalandy-bg-2021-01-06_23h42.jpg
 description: "Ceci est un repost du tweet de Ari David Paul qui semble bien expliquer la vague à la hausse sur les marchés du BTC depuis octobre 2020. Celle-ci est très..."
 ---

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2021-06-11
 title: "Je réactive ma liste d'envoi"
-tags: ["Random"]
+tags:
+  - random
 ogImage: ../../assets/images/og-legacy/2021/06/pascalandy-com_header_2020-07-16_10h11.jpg
 description: "Salut à toi,"
 ---

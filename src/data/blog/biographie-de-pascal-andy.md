@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2019-02-16
 title: "Biographie de Pascal Andy"
-tags: ["Biographie"]
+tags:
+  - biographie
 ogImage: ../../assets/images/og-legacy/2017/06/my_story-1462985245244.jpg
 description: "Version courte"
 ---

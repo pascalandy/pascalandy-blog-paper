@@ -1,5 +1,5 @@
 # marking them .PHONY ensures they always execute when called.
-.PHONY: dev build preview lint format format-check check clean ci
+.PHONY: dev build preview lint format format-check check check-tags clean ci qa
 
 # === Development ===
 
@@ -11,11 +11,11 @@ dev:
 # qa workflow for agent (without running server)
 # this autoformat issues
 qa:
-	bun run lint && bun run format && bun run format:check | tspin && bun run build | tspin
+	bun run lint && bun run format && bun run format:check | tspin && ./scripts/check-tags.sh && bun run build | tspin
 
 # this do NOT autoformat
 ci:
-	bun run lint && bun run format:check && bun run build | tspin
+	bun run lint && bun run format:check && ./scripts/check-tags.sh && bun run build | tspin
 
 preview:
 	bun run preview | tspin
@@ -38,6 +38,9 @@ format:
 
 format-check:
 	bun run format:check
+
+check-tags:
+	@./scripts/check-tags.sh
 
 # === Cleanup ===
 

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-10-10
 title: "Les Statistiques d’un Blogueur Après ses 7 Premiers Articles"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Dans cet article, je vous apprendrai ce que toutes les compagnies gardent ultra confidentiel : les données et le comportement général des internautes sur..."
 ---

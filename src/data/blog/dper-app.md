@@ -3,7 +3,8 @@ author: Pascal Andy
 date_created: 2014-09-27
 title: "Dper App"
 draft: true
-tags: ["Startups"]
+tags:
+  - startups
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Update June 2015 — I dropped this project to start another since."
 ---

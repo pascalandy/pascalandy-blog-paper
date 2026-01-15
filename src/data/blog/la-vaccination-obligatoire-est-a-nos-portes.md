@@ -3,7 +3,8 @@ author: Pascal Andy
 date_created: 2014-01-01
 title: "La vaccination obligatoire est à nos portes"
 draft: true
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 description: "À mes amis, voisins, et connaissances qui sont dans le système de santé, policiers, professeurs et autres qui travaillent « dans le publique », je m'engage..."
 ---
 

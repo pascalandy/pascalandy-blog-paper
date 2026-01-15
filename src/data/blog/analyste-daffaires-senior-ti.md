@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-10-27
 title: "Analyste d'Affaires Sénior T.I."
-tags: ["Consultation"]
+tags:
+  - consultation
 ogImage: ../../assets/images/og-legacy/2018/10/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Recommandations et témoignages"
 ---

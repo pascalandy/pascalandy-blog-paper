@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2019-05-25
 title: "Bypasser le système"
-tags: ["Du Fond Des Tripes"]
+tags:
+  - du-fond-des-tripes
 ogImage: ../../assets/images/og-legacy/2019/03/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "C'est en contribuant et en redonnant aux autres que toutes les portes s'ouvrent (et c'est pas juste une expression cute). Quand on contribue sans se..."
 ---

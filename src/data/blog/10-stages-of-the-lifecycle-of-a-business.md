@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2017-04-10
 title: "10 stages of the lifecycle of a business"
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Good morning Gladiators!"
 ---

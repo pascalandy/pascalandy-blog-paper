@@ -2,7 +2,10 @@
 author: Pascal Andy
 date_created: 2014-11-14
 title: "Comment le Bitcoin et le blockchain transforment le système financier (comme le MP3 a changé l’industrie de la musique)"
-tags: ["Technologie", "Repost", "Crypto"]
+tags:
+  - technologie
+  - repost
+  - crypto
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "La technologie du blockchain qui est derrière le Bitcoin, aura probablement un impact beaucoup plus grand que le MP3 a eu sur l’industrie du disque. Sauf..."
 ---

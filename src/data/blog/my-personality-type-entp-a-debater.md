@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2017-04-24
 title: "My personality type | ENTP-A DEBATER"
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "The Debater personality type is the ultimate devil’s advocate, thriving on the process of shredding arguments and beliefs and letting the ribbons drift in..."
 ---

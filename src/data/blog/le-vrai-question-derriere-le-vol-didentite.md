@@ -3,7 +3,8 @@ author: Pascal Andy
 date_created: 2014-01-01
 title: "Le vrai question derrière le vol d'identité"
 draft: true
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 description: "S'identifier avec sa date de naissance, son numéro de tel, son adresse n'est plus une façon fiable d'assurer son identité depuis plus 5 ans. C'est un fait..."
 ---
 

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-09-16
 title: "Comment reprendre le dessus quand le rythme accélère"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Je sais par expériences que les technologies nous simplifient la vie et que paradoxalement, elles la font accélérer. Prenons par exemple un étudiant qui est..."
 ---
