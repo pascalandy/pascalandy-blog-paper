@@ -87,14 +87,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      - uses: oven-sh/setup-bun@v2
+      - name: Run OSV Scanner
+        uses: google/osv-scanner-action@v2
         with:
-          bun-version: ${{ env.BUN_VERSION }}
-          cache: true
-          cache-dependency-path: bun.lock
-
-      - run: bun install --frozen-lockfile
-      - run: npm audit --audit-level=high
+          scan-args: --lockfile=bun.lock
 
   # Build depends on all checks passing
   build:
