@@ -2,13 +2,13 @@
 # Docs: https://github.com/evilmartians/lefthook
 
 pre-commit:
-  parallel: false
+  parallel: true
   jobs:
     - name: format
       run: bun run format
       fail_text: "Error while formatting"
 
-    - name: format
+    - name: format:check
       run: bun run format:check
       fail_text: "Formatting issues found. Run 'bun run format' to fix"
 
@@ -17,7 +17,12 @@ pre-commit:
       fail_text: "Linting errors found. Fix them before committing"
 
 pre-push:
+  parallel: true
   jobs:
     - name: check
       run: bun astro check | tspin
       fail_text: "TypeScript errors found. Fix them before pushing"
+
+    - name: build
+      run: bun astro build | tspin
+      fail_text: "Build failed. Check image paths or content errors"
