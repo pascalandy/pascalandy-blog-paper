@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2017-09-03
 title: "Traefik Demo, Docker stack and play with docker"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/10/pascalandy-com_header_2017-04-10_14h46-2.jpg
 description: "What is this? Traefik is a powerful layer 7 reverse-proxy. Once running, the proxy will give you access to 8 different webapps. I think this is a solid..."
 ---

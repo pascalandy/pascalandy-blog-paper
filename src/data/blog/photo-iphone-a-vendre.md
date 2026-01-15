@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2020-10-23
 title: "photo iphone à vendre"
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 description: "iPhone 11 Pro Max 256GB, Noir Space Gray, parfaite condition"
 ---
 

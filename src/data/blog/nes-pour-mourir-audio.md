@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-03-23
 title: "Nés pour Mourir (audio)"
-tags: ["Musique"]
+tags:
+  - musique
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Pour le vidéoclip et tous les détails de cette chanson : GHOSTURL__/nes-pour-mourir-le-video/"
 ---

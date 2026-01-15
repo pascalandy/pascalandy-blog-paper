@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-04-12
 title: "Une question de base pour les gens en IT"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2018/04/tech.jpg
 description: "Que tu le veilles ou non, le monde du logiciel devient de plus en plus ouvert et par conséquent, de moins en moins fermé."
 ---

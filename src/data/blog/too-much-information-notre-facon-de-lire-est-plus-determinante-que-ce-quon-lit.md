@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2015-04-11
 title: "Too much information ? Notre façon de lire est plus déterminante que ce qu’on lit."
-tags: ["Technologie", "Repost"]
+tags:
+  - technologie
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Toutes les semaines apparaît une nouvelle application, un nouveau service, qui promet de nous aider à filtrer la quantité d’information que l’on reçoit...."
 ---

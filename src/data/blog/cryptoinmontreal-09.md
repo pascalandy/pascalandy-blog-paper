@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-03-22
 title: "Blockchain et cryptomonnaies | 9e édition de #CryptoInMontreal"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/03/09-CryptoInMontreal-2.jpg
 description: "Le 9e événement de #CryptoInMontreal à lieu ce jeudi 5 avril 2018 à 18h15 (fin à 21h00). Le calendrier 2018 est disponible ici."
 ---

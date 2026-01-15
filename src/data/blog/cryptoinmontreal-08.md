@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-03-04
 title: "Une introduction aux cryptomonnaies | 8e édition de #CryptoInMontreal"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/03/08_CryptoInMontreal-c.jpg
 description: "Le 8e événement de #CryptoInMontreal à lieu ce jeudi 20 mars 2018 dès 18h15 au Centre-Ville de Montréal sur la rue Crescent. "
 ---

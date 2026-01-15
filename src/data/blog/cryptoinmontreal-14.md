@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-06-05
 title: "La rentabilité du mining et la guerre entre les ASICS et les GPU | CryptoInMontreal 14"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/05/014-CryptoInMontreal.jpg
 description: "Agenda de la soirée"
 ---

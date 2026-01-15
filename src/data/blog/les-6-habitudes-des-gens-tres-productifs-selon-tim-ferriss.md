@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2015-03-30
 title: "Les 6 habitudes des gens très productifs selon Tim Ferriss"
-tags: ["Repost"]
+tags:
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "As-tu parfois l’impression de ne pas réussir à accomplir assez de choses ? Selon toi, tu es réellement productif combien de jours par semaine ? Environ..."
 ---

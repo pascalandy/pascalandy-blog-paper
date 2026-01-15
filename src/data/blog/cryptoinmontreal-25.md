@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2019-01-01
 title: "Les institutions arrivent dans le monde des cryptos | CryptoInMontreal #25"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2019/01/025b-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg
 description: "Bonne année à toutes et à tous les enthousiastes! Reprenons où nous avons laisser en 2018."
 ---

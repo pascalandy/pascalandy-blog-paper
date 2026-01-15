@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2015-04-17
 title: "Où est la place des agences quand les marchés en ligne nous permettent de sous-traiter à travers le monde?"
-tags: ["Technologie", "Repost"]
+tags:
+  - technologie
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/115_O__EST_LA_PLACE_DES_AGENCES_QUAND_LES_MARCH_S_EN_LIGNE_NOUS_PERMETTENT_DE_SOUS_TRAITER___TRAVERS_LE_MONDE-1462910990445.jpg
 description: "Si les logiciels détruisent le monde, les places de marché en ligne font partie des acteurs de cette destruction. Lekt, tu as peut-être remarqué que des..."
 ---

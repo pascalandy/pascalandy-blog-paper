@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2015-04-03
 title: "Qu’est-ce que tu fais, au juste ?"
-tags: ["Repost"]
+tags:
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Fais-tu ton propre papier ? Prends-tu de la pâte de bois que tu mélanges et que tu blanchis pour produire les feuilles que tu utilises ? Ça me paraît clair..."
 ---

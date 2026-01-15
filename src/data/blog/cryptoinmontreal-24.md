@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-11-12
 title: "Le Bitcoin et les Altcoins, une introduction au monde des cryptos | CryptoInMontreal #24"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/11/024-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg
 description: "Voici le plan de match pour le 24e événement de #CryptoInMontreal qui sera un meetup d'introduction sur le sujet."
 ---

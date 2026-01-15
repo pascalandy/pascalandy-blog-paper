@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-04-07
 title: "Blockchain et cryptomonnaies | 10e édition de #CryptoInMontreal"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/04/010-CryptoInMontreal.jpg
 description: "Le 10e événement de #CryptoInMontreal aura lieu ce mardi 17 avril 2018 dès 18h15 à l'Anticafé Local sur la rue Crescent dans le Centre-Ville de Montréal. Le..."
 ---

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2015-03-24
 title: "Supprimer ou conserver son historique ?"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Lekt, si tous les gens autour de toi pouvaient observer en accéléré l’historique des pages web que tu as consultées depuis les trois dernières années,..."
 ---

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-02-26
 title: "Lekt, le lecteur"
-tags: ["Du Fond Des Tripes"]
+tags:
+  - du-fond-des-tripes
 ogImage: ../../assets/images/og-legacy/2017/06/Lekt__le_lecteur_maj_2014_03_09_23H51PM-1462841666515.jpg
 description: "Si tu lis ceci, je connais surement deux choses sur toi..."
 ---

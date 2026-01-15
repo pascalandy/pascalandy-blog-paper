@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-10-02
 title: "Privacy coins and the blockchain : are ZCash, Dash and Monero really private? | CryptoInMontreal #22"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/10/022-Crypto-In-Montre-al_CryptoInMontreal-par-Pascal-Andy.jpg
 description: "Voici le plan de match pour le 22e événement de #CryptoInMontreal."
 ---

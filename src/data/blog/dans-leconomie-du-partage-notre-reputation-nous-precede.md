@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-05-11
 title: "Dans l'économie du partage, notre réputation nous précède"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Je crois que d'ici 2030, avoir une excellente réputation sera beaucoup mieux qu'être riche. Voici pourquoi."
 ---

@@ -29,9 +29,23 @@ Atomic commits only. "and" in msg = split it.
 - Separate commits per logical change
 
 ## PR
-- use gh / follow github action build
-- via gihub actions: `@greptileai` triggers review | 👍=keep | 👎=stop | reply=teach
-- Deployment is automatic
+When user say "create a PR":
+
+  1. Run make qa (via background agent) before pushing
+  2. Push & create PR
+  3. Wait ~2 min, then check:
+    - gh pr checks <PR#> - CI status
+    - gh api repos/.../pulls/<PR#>/comments - Greptile feedback
+  4. Fix Greptile comments if any
+  5. Run make qa again before pushing fixes
+  6. Push fixes
+  7. Re-check CI until green
+  8. Report back with final status
+
+  Trigger phrases:
+  - "create a pr"
+  - "manage this pr"
+  - "pr please"
 
 ## Stack
 - Astro 5 | TS strict | Tailwind v4 | Pagefind

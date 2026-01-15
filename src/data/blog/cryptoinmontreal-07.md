@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-02-25
 title: "Blockchain et cryptomonnaies | La 7e édition de #CryptoInMontreal"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/02/07-banner-large-cyptoinmontreal.jpg
 description: "Le 7e événement de #CryptoInMontreal à lieu ce jeudi 8 mars 2018 à 18h15 (fin à 21h00). Le calendrier 2018 est disponible ici."
 ---

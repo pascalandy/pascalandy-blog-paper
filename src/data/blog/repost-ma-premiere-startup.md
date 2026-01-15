@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2015-02-11
 title: "repost — Ma première startup"
-tags: ["Biographie", "Startups"]
+tags:
+  - biographie
+  - startups
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Plateforme"
 ---

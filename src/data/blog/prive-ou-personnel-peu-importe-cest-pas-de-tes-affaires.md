@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-11-07
 title: "Privé ou personnel ? Peu importe... c'est pas de tes affaires."
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Depuis 2 ans, on sent un vent de conscientisation au niveau de notre droit à la vie privée sur Internet et nos communications en générales. Je veux..."
 ---

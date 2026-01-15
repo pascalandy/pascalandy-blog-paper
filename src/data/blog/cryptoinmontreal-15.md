@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-06-11
 title: "Comprendre l'algo trading et mettre en place un robot trader | 15e édition de #CryptoInMontreal"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/06/015-CryptoInMontreal.jpg
 description: "Cette soirée a pour but d'initier les invités qui désirent apprendre à mettre en place un robot (bot) qui fera du trading (ordre d'achats et de ventes) et..."
 ---

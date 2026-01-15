@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2017-11-16
 title: "When Bitcoin miners decide to mine something else"
-tags: ["Crypto"]
+tags:
+  - crypto
 ogImage: ../../assets/images/og-legacy/2017/11/miner.jpg
 description: "The Bitcoin VS Bitcoin Cash drama we witness 3-4 days ago shows how dangerous having few key Whales miners can be. "
 ---

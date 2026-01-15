@@ -12,7 +12,7 @@ description: "Commands and workflow for developing, testing, and building the bl
 
 ## tags
 
-I want to work on the front matter, more specifically the tags. Right now there's a lot of objects like this.
+I want to work on the frontmatter, more specifically the tags. Right now there's a lot of objects like this.
 
 ..
 tags: ["Personnel"]

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2019-05-16
 title: "Qui est Pascal Andy ?"
-tags: ["Biographie"]
+tags:
+  - biographie
 ogImage: ../../assets/images/og-legacy/2017/04/PascalAndy101-1462840663977.jpg
 description: "Salut Lekt,"
 ---

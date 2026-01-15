@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-09-12
 title: "Le blockchain, les cryptomonnaies et le mining, ce qu'il faut savoir | CryptoInMontreal #21"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/09/021-Crypto-In-Montre-al_CryptoInMontreal-par-Pascal-Andy.jpg
 description: "D'abord, pour ceux et celles qui désirent s'initier aux cryptomonnaies et au blockchain, l'introduction au monde des cryptos sera donnée par moi, Pascal Andy, dès 18h30. La présentation permettra d'introduire de façon très pratique ceux qui cherchent à faire"
 ---
