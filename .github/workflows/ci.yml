@@ -42,8 +42,6 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ env.BUN_VERSION }}
-          cache: true
-          cache-dependency-path: bun.lock
 
       - run: bun install --frozen-lockfile
       - run: bun run lint
@@ -60,8 +58,6 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ env.BUN_VERSION }}
-          cache: true
-          cache-dependency-path: bun.lock
 
       - run: bun install --frozen-lockfile
       - run: bun run format:check
@@ -78,15 +74,6 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ env.BUN_VERSION }}
-          cache: true
-          cache-dependency-path: bun.lock
-
-      - name: Cache Astro build
-        uses: actions/cache@v4
-        with:
-          path: node_modules/.astro
-          key: astro-${{ runner.os }}-${{ hashFiles('src/**/*.{astro,ts,tsx,js,css}', 'astro.config.ts', 'tsconfig.json') }}
-          restore-keys: astro-${{ runner.os }}-
 
       - run: bun install --frozen-lockfile
       - run: bun astro check
@@ -105,18 +92,17 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ env.BUN_VERSION }}
-          cache: true
-          cache-dependency-path: bun.lock
 
-      - name: Cache Astro build
+      - name: Cache Astro build artifacts
         uses: actions/cache@v4
         with:
-          path: node_modules/.astro
-          key: astro-${{ runner.os }}-${{ hashFiles('src/**/*.{astro,ts,tsx,js,css}', 'astro.config.ts', 'tsconfig.json') }}
-          restore-keys: astro-${{ runner.os }}-
+          path: .astro-cache
+          key: astro-cache-${{ runner.os }}-${{ hashFiles('src/assets/**/*', 'astro.config.ts') }}
+          restore-keys: |
+            astro-cache-${{ runner.os }}-
 
       - run: bun install --frozen-lockfile
-      - run: bun run build
+      - run: bun run build:ci
 
   deploy:
     name: Deploy to Sevalla
