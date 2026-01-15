@@ -23,7 +23,7 @@ Ce qui est particulièrement intéressant, c'est le fait que je donnerai un cont
 
 ## Comment appliquer ?
 
-Si tu sens que tu pourrais être la meilleure personne au monde pour cette position et que [mes attentes générales](/posts/travaillons-ensemble/) résonnent avec toi, je veux vraiment te connaître.
+Si tu sens que tu pourrais être la meilleure personne au monde pour cette position et que [mes attentes générales](/blog/travaillons-ensemble/) résonnent avec toi, je veux vraiment te connaître.
 
 Je sais que les courriels sont beaucoup plus personnels ou qu'écrire sur Facebook est plus rapide mais pour moi, ça devient vite trop difficile à gérer.
 

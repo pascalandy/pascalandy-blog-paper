@@ -20,7 +20,7 @@ Voici les faits saillants de la mésaventure de Matt:
 Les dommages collatéraux peuvent se produire à un rythme difficile à imaginer lorsqu’on se fait pirater son courriel.
 
 Avant de continuer plus loin, avez-vous lu la première partie de cette série ?
-[« Privé ou personnel ? C’est pas de tes affaires … (Part 1) »](/posts/prive-ou-personnel-peu-importe-cest-pas-de-tes-affaires/)
+[« Privé ou personnel ? C’est pas de tes affaires … (Part 1) »](/blog/prive-ou-personnel-peu-importe-cest-pas-de-tes-affaires/)
 
 Merveilleux ! Continuons dans ce cas.
 
@@ -94,6 +94,6 @@ Pascal
 Annotations
 
 1. http://www.wired.com/gadgetlab/2012/08/apple-amazon-mat-honan-hacking/all/ Version inaltérable: http://cl.ly/image/200T2G1E1K3o/o
-2. Vous ne connaissez pas encore Lekt ? /posts/lekt-le-lecteur/
+2. Vous ne connaissez pas encore Lekt ? /blog/lekt-le-lecteur/
 3. Le principe est simple. Lorsqu’une machine autre que la nôtre veut accéder à notre compte, une seconde confirmation est demandée après avoir entré son mot de passe. Cette confirmation est transmise sur un numéro de téléphone qui nous appartient par SMS ou vocale. Source : http://geekpauvre.com/comment-uiliser-identification-2-etapes-google/ ou sinon http://pnddesign.ca/wp-content/uploads/2013/02/Comment-fonctionne-lidentification-en-2-%C3%A9tapes-de-Google.jpg
 4. Pour https://clarity.fm/#/pascal.nguyen.deschenes

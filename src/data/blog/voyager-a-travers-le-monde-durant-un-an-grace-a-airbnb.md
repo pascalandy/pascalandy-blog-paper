@@ -13,7 +13,7 @@ Prerna Gupta est une entrepreneure en série qui a décidé de partir en voyage 
 
 Airbnb est une startup de San Francisco qui opère un marché entre particuliers qui permet de mettre en relation des personnes qui ont un logement ou une chambre disponible, avec d'autres gens qui recherchent un endroit où dormir. On peut aussi le voir comme un Ebay pour y louer sa chambre.
 
-Prerna Gupta nous raconte [son histoire](http://techcrunch.com/2014/10/03/airbnb-lifestyle-the-rise-of-the-hipster-nomad/) qui est de plus en plus répandue dans [l'économie de partage](/posts/dans-leconomie-du-partage-notre-reputation-nous-precede/). Voici la façon de voyager d'un mode de vie 2.0.
+Prerna Gupta nous raconte [son histoire](http://techcrunch.com/2014/10/03/airbnb-lifestyle-the-rise-of-the-hipster-nomad/) qui est de plus en plus répandue dans [l'économie de partage](/blog/dans-leconomie-du-partage-notre-reputation-nous-precede/). Voici la façon de voyager d'un mode de vie 2.0.
 
 Au cours de la dernière année, j’ai vécu exclusivement dans des logements à location temporaires que j’ai trouvés sur des sites internet comme Airbnb. Ce n’était pas vraiment prévu, mais maintenant que c’est fait, je me demande si j’ai envie de retrouver ma vie d’avant, ma vie pré-Airbnb.
 
@@ -71,4 +71,4 @@ Sérieux c'était un big deal! Bye bye les autobus à 60$.
 
 Aujourd'hui on accueille et on reçoit des étrangers chez soi grâce à Airbnb. Bye les hôtels. Voici le récit de Prerna Gupta, une femme d'affaires qui a voyagé durant un an d'un logement à l'autre.
 
-/posts/voyager-a-travers-le-monde-durant-un-an-grace-a-airbnb/
+/blog/voyager-a-travers-le-monde-durant-un-an-grace-a-airbnb/

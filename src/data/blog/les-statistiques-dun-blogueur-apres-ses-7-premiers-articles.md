@@ -10,7 +10,7 @@ description: "Dans cet article, je vous apprendrai ce que toutes les compagnies 
 
 Dans cet article, je vous apprendrai ce que toutes les compagnies gardent ultra confidentiel : les données et le comportement général des internautes sur leurs sites. Vous saurez quel réseau social génère le plus de cliques ( j’ai été surpris! ), d’où vient le trafic, quelles sont mes statistiques hebdomadaires, ce que j’aime en plus de ce qui me gêne à travers les chiffres que je peux observer.
 
-Note: Je voulais sincèrement écrire un article court, mais je suis incapable de simplement vous donner des chiffres sans mettre en contexte ce que nous mesurons ici. De plus, le premier article « [Lekt, le lecteur](/posts/lekt-le-lecteur/) » a été publié le 3 octobre 2012. Les statistiques débutent à ce moment sur une période échelonnée de six semaines jusqu’au 17 novembre 2012.
+Note: Je voulais sincèrement écrire un article court, mais je suis incapable de simplement vous donner des chiffres sans mettre en contexte ce que nous mesurons ici. De plus, le premier article « [Lekt, le lecteur](/blog/lekt-le-lecteur/) » a été publié le 3 octobre 2012. Les statistiques débutent à ce moment sur une période échelonnée de six semaines jusqu’au 17 novembre 2012.
 
 Pour la majorité, le succès en ligne est essentiellement considéré par le **nombre de clics total\*\*\*\*** d’un vidéo, d’une page web, etc. … Pourquoi ? Parce que c’est la mesure la plus facile à montrer et à regarder. Comme nous le verrons, ce n’est pas une mesure très pertinente. L’effet est le suivant.
 
@@ -140,6 +140,6 @@ Que pensez-vous de mon interprétation des données ci-haut. Suis-je dans le cha
 3. vanité, nom féminin. Sens #1. Caractère de ce qui n’a pas de sens, futilité [Littéraire]. Sens #2 Orgueil. Source: http://www.linternaute.com/dictionnaire/fr/definition/vanite/
 4. http://www.cria.ca/gold/0403_g.php
 5. http://f.cl.ly/items/0b283p3r0H0i2f3P0v1u/CRIA%20Gold%20&%20Platinum%20-%20April%202003.pdf
-6. Si vous ne connaissez pas qui est Lekt. /posts/lekt-le-lecteur/
+6. Si vous ne connaissez pas qui est Lekt. /blog/lekt-le-lecteur/
 7. “X” Knights Of Cydonia par Muse. https://www.youtube.com/watch?v=Q3Yc3HhSl1Q&feature=related. “Y” Hysteria par Muse. https://www.youtube.com/watch?v=3dm_5qWWDV8
 8. http://www.amazon.com/dp/0307887898?tag=lessolearn01-20&camp=213381&creative=390973&linkCode=as4&creativeASIN=0307887898&adid=004DZWTQ0HQTRCNYZJPD

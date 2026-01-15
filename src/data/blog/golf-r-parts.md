@@ -9,7 +9,7 @@ description: "My setup: Golf R 2018 MK75 6MT, CTS Downpipe, CTS intake, CTS turb
 
 My setup:  Golf R 2018 MK75 6MT, CTS **Downpipe**, CTS **intake**, CTS turbo inlet, RacingLine **intercooler**, A2B Brushless RS3 **LPFP**,  A2B **MPI** 925cc, A2B **5/4Bar Sensors**, Spark plugs NGK-R7437-9
 
-- [https://pascalandy.com/blog/golf-r-parts/](/posts/golf-r-parts/)
+- [https://pascalandy.com/blog/golf-r-parts/](/blog/golf-r-parts/)
 
 ![](../../assets/images/og-legacy/2022/10/golf-r-2022-10-15_10h40.jpg)
 

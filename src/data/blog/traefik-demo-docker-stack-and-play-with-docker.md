@@ -32,7 +32,7 @@ https://youtu.be/w3KM8yiC4d8 (90 seconds really!)
 
 ## Project source
 
-Original post on my blog > /posts/traefik-demo-docker-stack-and-play-with-docker/ and the [Github repo](https://github.com/pascalandy/docker-stack-this).
+Original post on my blog > /blog/traefik-demo-docker-stack-and-play-with-docker/ and the [Github repo](https://github.com/pascalandy/docker-stack-this).
 
 ## Something looks weird? Please let me know
 

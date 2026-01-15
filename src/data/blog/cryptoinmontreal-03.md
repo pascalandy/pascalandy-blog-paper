@@ -27,7 +27,7 @@ Sur [la page officielle](/tags/cryptoinmontreal/) de #CryptoInMontreal se trouve
 
 #### Informations générales
 
-J'ai regroupé les points ci-dessous sous la [page informations générales](/posts/cryptoinmontreal-informations-generales/).
+J'ai regroupé les points ci-dessous sous la [page informations générales](/blog/cryptoinmontreal-informations-generales/).
 
 1. Pré-requis
 2. Qui est l'organisateur de #CryptoInMontreal ?
@@ -85,4 +85,4 @@ L'admission est **gratuite** et les billets de cet événement [ se trouvent ici
 
 Au plaisir de se croiser au prochain événement de #CryptoInMontreal!
 
-Cheers!<br>[Pascal Andy](/posts/now/)
+Cheers!<br>[Pascal Andy](/now/)

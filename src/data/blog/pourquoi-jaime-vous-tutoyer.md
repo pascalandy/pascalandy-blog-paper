@@ -8,7 +8,7 @@ ogImage: ../../assets/images/og-legacy/2017/06/Ami_pascal_andy_maj_2014_03_09_23
 description: "Ce que j'écris, c'est de moi à toi. Je sais, on n’est pas habitué d'être tutoyé en tant que lecteur. Crois-moi Lekt, ce n’est pas de la lâcheté, mais plutôt..."
 ---
 
-Ce que j'écris, c'est de moi à toi. Je sais, on n’est pas habitué d'être tutoyé en tant que lecteur. Crois-moi [Lekt](/posts/lekt-le-lecteur/), ce n’est pas de la lâcheté, mais plutôt de l’humanisme. Simplement un humain qui s’adresse à un autre. C’est Pascal qui s’adresse à toi à travers ce dialecte qu’est la langue française. Que l’on se connaisse ou non, ne change rien à mon avis.
+Ce que j'écris, c'est de moi à toi. Je sais, on n’est pas habitué d'être tutoyé en tant que lecteur. Crois-moi [Lekt](/blog/lekt-le-lecteur/), ce n’est pas de la lâcheté, mais plutôt de l’humanisme. Simplement un humain qui s’adresse à un autre. C’est Pascal qui s’adresse à toi à travers ce dialecte qu’est la langue française. Que l’on se connaisse ou non, ne change rien à mon avis.
 
 Si je ne me trompe pas, tu brûles d’envie que quelqu’un te parle, directement à toi, sans bullshit et sans cette galanterie cheap qu’offre l’option impersonnelle de vouvoyer les autres.
 

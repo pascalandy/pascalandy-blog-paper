@@ -14,7 +14,7 @@ Shane est l’auteur du livre à succès [_Smartcuts : How Hackers, Innovators, 
 
 > « La pensée latérale consiste à avoir l’état d’esprit qu’il faut pour transgresser des règles qui n’en sont pas vraiment. Ces règles sont tout simplement la manière conventionnelle dont on faisait les choses dans le passé. La pensée latérale consiste à résoudre des problèmes en les considérant sous des angles différents de ceux auxquels on s’attendrait. Ça ne se produit pas lorsqu’on fait quelque chose qu’on a déjà fait. Il ne suffit donc pas de travailler plus fort pour atteindre son but, mais plutôt de repenser son approche. »
 
-Ce livre regorge de stratégies surprenantes et éprouvées pour t’aider à t’améliorer plus rapidement. Tu me vois venir [Lekt](/posts/lekt-le-lecteur/)… Prenons-les donc une par une.
+Ce livre regorge de stratégies surprenantes et éprouvées pour t’aider à t’améliorer plus rapidement. Tu me vois venir [Lekt](/blog/lekt-le-lecteur/)… Prenons-les donc une par une.
 
 ## 1. Inutile de faire ses preuves
 
@@ -56,7 +56,7 @@ Et la relation existe dans les deux sens. Si tu ne te sens pas lié à ton mento
 
 « Les relations de mentorat les plus organiques se construisent autour de l’amitié et de la vulnérabilité. Tu dois être disposé à parler de tes peurs et de la façon dont tu évolues. Les bons mentors ne te guident pas seulement dans ta pratique, ils te guident également le long du chemin que tu prends pour atteindre tes buts. C’est exactement ce qu’on voit dans des films comme _Star Wars_ et _Karate Kid_. »
 
-En passant, c'est ce que j’essaie de faire [à travers ce que je partage](/posts/pourquoi-se-donner-la-peine-decrire/) sur le blog.
+En passant, c'est ce que j’essaie de faire [à travers ce que je partage](/blog/pourquoi-se-donner-la-peine-decrire/) sur le blog.
 
 Alors oublie le « mentor » qu’on a désigné pour t’aider au bureau ou à l’école. Choisis-le! Trouve la personne que tu estimes et qui tient à toi. C’est certes un bon moyen de trouver le chemin vers une superbe carrière, mais c’est surtout la meilleure façon d’apprendre à vivre comme tu le désires.
 
@@ -147,4 +147,4 @@ Note de l'éditeur. Cet article est une adaptation et en quelque sorte un « mas
 
 Les meilleurs présidents des États-Unis ont en fait travaillé moins longtemps en politique que les pires présidents des États-Unis. Dans tous les domaines, on remarque que les gens qui connaissent l’ascension la plus rapide et qui réussissent le mieux ne sont souvent pas ceux qui ont le plus d’expérience.
 
-/posts/comment-assurer-et-arriver-plus-rapidement-a-ses-fins-grace-a-ces-6-smartcuts/
+/blog/comment-assurer-et-arriver-plus-rapidement-a-ses-fins-grace-a-ces-6-smartcuts/

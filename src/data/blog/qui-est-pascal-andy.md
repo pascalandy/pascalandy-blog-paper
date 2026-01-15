@@ -8,7 +8,7 @@ ogImage: ../../assets/images/og-legacy/2017/04/PascalAndy101-1462840663977.jpg
 description: "Salut Lekt,"
 ---
 
-Salut [Lekt](/posts/lekt-le-lecteur/),
+Salut [Lekt](/blog/lekt-le-lecteur/),
 
 J'ai toujours été un patenteux, une personne qui entreprend ses idées. Pour moi, c'est une façon de vivre. J'aime me questionner et simplifier ce qui nous parait complexe.
 
@@ -27,13 +27,13 @@ _ci-haut, ma face de cheese cake._
 
 ## Now
 
-Je mets régulièrement ma [page now](/posts/now/) à jour. Elle donne le ton sur ce qu'est ma vie depuis les quelques dernier mois. Je me suis [inspiré du projet](http://nownownow.com/about) de Derek Sivers.
+Je mets régulièrement ma [page now](/now/) à jour. Elle donne le ton sur ce qu'est ma vie depuis les quelques dernier mois. Je me suis [inspiré du projet](http://nownownow.com/about) de Derek Sivers.
 
 ## Du côté professionnel
 
 Je travaille sur FirePress une startup d'hébergement de site web basé sur Ghost. Le produit est en Beta et on peut voir la première ébauche sur <https://play-with-ghost.com/>
 
-Pour connaître ce que j'ai fait dans le passé, tu peux consulter [ma biographie](/posts/biographie-de-pascal-andy/)et mon [profil Linkedin](https://www.linkedin.com/in/pascalnguyendeschenes) qui demeure à jour et bien détaillé.
+Pour connaître ce que j'ai fait dans le passé, tu peux consulter [ma biographie](/blog/biographie-de-pascal-andy/)et mon [profil Linkedin](https://www.linkedin.com/in/pascalnguyendeschenes) qui demeure à jour et bien détaillé.
 
 ## Mon nom de famille
 
@@ -58,4 +58,4 @@ Quelques avantages en rafale :
 
 J'écris pour tous les « non-technos » qui souhaitent une meilleure relation avec les technologies. À travers ces articles, j'essaie de comprendre comment elles façonnent la vie de chacun d'entre nous.
 
-Je te propose de débuter avec [Mon Top 5](/posts/mon-top-5/).
+Je te propose de débuter avec [Mon Top 5](/blog/mon-top-5/).

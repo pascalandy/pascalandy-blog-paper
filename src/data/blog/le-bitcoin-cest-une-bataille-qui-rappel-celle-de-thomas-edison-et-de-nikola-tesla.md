@@ -9,7 +9,7 @@ ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_
 description: "J’ai parlé du Bitcoin auparavant ici et ici. Puisque c’est encore loin d’être clair pour la majorité, je viens de prendre le temps de faire une analogie qui..."
 ---
 
-J’ai parlé du Bitcoin auparavant [ici](/posts/comment-le-bitcoin-et-le-blockchain-transforment-le-systeme-financier-comme-le-mp3-a-change-lindustrie-de-la-musique/) et [ici](/posts/le-blockchain-a-la-rescousse-de-la-securite-sur-internet/). Puisque c’est encore loin d’être clair pour la majorité, je viens de prendre le temps de faire une analogie qui nous aidera à mieux comprendre où nous en sommes avec le Bitcoin et ses compétiteurs.
+J’ai parlé du Bitcoin auparavant [ici](/blog/comment-le-bitcoin-et-le-blockchain-transforment-le-systeme-financier-comme-le-mp3-a-change-lindustrie-de-la-musique/) et [ici](/blog/le-blockchain-a-la-rescousse-de-la-securite-sur-internet/). Puisque c’est encore loin d’être clair pour la majorité, je viens de prendre le temps de faire une analogie qui nous aidera à mieux comprendre où nous en sommes avec le Bitcoin et ses compétiteurs.
 
 À travers les époques, on a connu le troque, l’argent et le crédit. Aujourd’hui, le bitcoin et la technologie sur lequel il est conçu, le blockchain, prennent leurs places à feu doux. Près de 13 milliards sont transigés à travers le Bitcoin et les altcoins. Ça commence à être du sérieux (... sans joke).
 
@@ -17,7 +17,7 @@ Les [grandes banques](http://cointelegraph.com/news/113033/ing-other-major-dutch
 
 Ceux qui croient au Bitcoin comme moi pensent que d’une manière ou d’une autre, il nous fera entrer dans une nouvelle ère de commerce et d’argent programmable. Encore mieux, l’argent digital pourrait être une alternative aux tierces parties que sont les banques. Ceux qui croient _vrai-iiiiiment_ au Bitcoin pensent qu’il aura le même effet qu’a eu Internet sur les télécopieurs, les imprimantes et l’industrie de la musique.
 
-Ce dont tu ne te rends peut-être pas compte [Lekt](/posts/lekt-le-lecteur/), c’est qu’on approche sérieusement de ce scénario. Je tiens à préciser que le bitcoin et tous les autres altcoins sont tous basés sur la technologie du blockchain.
+Ce dont tu ne te rends peut-être pas compte [Lekt](/blog/lekt-le-lecteur/), c’est qu’on approche sérieusement de ce scénario. Je tiens à préciser que le bitcoin et tous les autres altcoins sont tous basés sur la technologie du blockchain.
 
 > Le Bitcoin est, à première vue, un système d’argent sur Internet, un _money-over-IP_… et comme le dit Forzley : « On a déjà entendu cette histoire, et on connaît la fin. »
 
@@ -71,4 +71,4 @@ Après la grosse news de PK... voici mon dernier post. J’y fais une analogie e
 
 OK, c’est intense et c’est loin des vidéos LOL cats mais je crois que cette image de style peut nous aider à comprendre l’enjeu d’un monde qui pourrait être sans frais bancaires et sans fraudes.
 
-/posts/le-bitcoin-cest-une-bataille-qui-rappel-celle-de-thomas-edison-et-de-nikola-tesla/
+/blog/le-bitcoin-cest-une-bataille-qui-rappel-celle-de-thomas-edison-et-de-nikola-tesla/

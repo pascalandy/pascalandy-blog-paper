@@ -18,14 +18,14 @@ Ensuite je laisserai le plancher à **Jérémy Kohl** de chez [Jekit](http://b.j
 
 Puis je ferai une **démo unique en son genre** qui démontre comment fonctionne le POW et la fonction de hashing SHA-256 qui est au coeur du protocole Bitcoin.
 
-**Détails** de cet événement sur le site officiel : /posts/cryptoinmontreal-18/
+**Détails** de cet événement sur le site officiel : /blog/cryptoinmontreal-18/
 
 ![flyer](../../assets/images/og-legacy/2018/08/018-CryptoInMontreal.jpg)
 
 ## Quand et où ?
 
 - **Quand**: Ce mardi 14 août dès 18h30
-- **Lieu**: [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal QC H3G 2C1 Montréal Quéebec Canada
+- **Lieu**: [Club Insiders](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal QC H3G 2C1 Montréal Quéebec Canada
 - **Coût**: 10$ à la porte. **Inclut**: les de cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs. _Il y a même des produits sans gluten et véganes_ (c'est pas de l'inclusion ça!).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -57,7 +57,7 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 - Le **deuxième** objectif est de **réunir les initiés** qui s'intéressent déjà au sujet des cryptomonnaies. Nous pourrons échanger et découvrir les différents enjeux de l’écosystème du blockchain et des cryptomonnaies altcoins.
 - Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades**, c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
 
-- **Calendrier 2018**: /posts/calendrier-2018-de-cryptoinmontreal/
+- **Calendrier 2018**: /blog/calendrier-2018-de-cryptoinmontreal/
 - **Teaser** de l'événement sur [YouTube](https://www.youtube.com/watch?v=2_rPjzXXfBA)
 
 ## Contacts

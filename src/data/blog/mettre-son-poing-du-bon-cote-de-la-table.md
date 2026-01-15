@@ -10,7 +10,7 @@ description: "C'est parfois profitable ou même plaisant de mettre son poing sur
 
 C'est parfois profitable ou même plaisant de mettre son poing sur la table pour avoir des clients, des partenaires, des étudiants, des médias ou même les ministères du gouvernement qui fassent ce qu'on lui demande de faire.
 
-Inévitablement, ceux qui mettent leur poing sur la table arrivent à [la croisée des chemins](/posts/lekt-le-lecteur/) : Est-ce que je fais ceci pour que les gens fassent quelque chose de bien pour eux-mêmes ou quelque chose de bien pour moi?
+Inévitablement, ceux qui mettent leur poing sur la table arrivent à [la croisée des chemins](/blog/lekt-le-lecteur/) : Est-ce que je fais ceci pour que les gens fassent quelque chose de bien pour eux-mêmes ou quelque chose de bien pour moi?
 
 Quand une professeure utilise son pouvoir pour faire en sorte que ses élèves étudient pour en faire d'eux des citoyens plus allumés et plus éduqués, elle leur rend un service.
 

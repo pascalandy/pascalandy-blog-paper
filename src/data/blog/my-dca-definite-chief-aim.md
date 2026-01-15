@@ -14,7 +14,7 @@ My mission is to touch most people with love and passion and help them realize t
 
 […] We are now March 2025. My personal net worth has already passed 100 million dollars and feel more and more fulfilled every day I live. I’m endlessly grateful for everything I experience and I enjoy every second of this gift we human likes to call life.
 
-It is done 😎. [March 7th, 2017](/posts/my-dca-definite-chief-aim/)
+It is done 😎. [March 7th, 2017](/blog/my-dca-definite-chief-aim/)
 Pascal Nguyen Deschênes
 
 [Here is my DCA](https://cl.ly/2k2Q2e023q0c) from 2010.

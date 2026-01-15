@@ -13,7 +13,7 @@ Nous le savons tous et nous l’avons entendu des centaines de fois. Nos parents
 
 ## La mobilité extrême de l’attention
 
-Nous mangeons devant la télé avec notre laptop et notre cellulaire sur les genoux. On navigue sur Facebook et sur YouTube en consultant ses courriels, le tout pendant que nous organisons notre prochaine soirée par SMS. Pourtant, nous devrions nous concentrer à faire une seule tâche. Soit écrire, soit lire ou soit planifier. Il y a une chose qui est certaine – nous sommes tous conscients que faire plusieurs choses à la fois nous rend moins efficaces et plus stressés. Plus [le rythme accélère](/posts/comment-reprendre-le-dessus-quand-le-rythme-accelere/), et pire c'est.
+Nous mangeons devant la télé avec notre laptop et notre cellulaire sur les genoux. On navigue sur Facebook et sur YouTube en consultant ses courriels, le tout pendant que nous organisons notre prochaine soirée par SMS. Pourtant, nous devrions nous concentrer à faire une seule tâche. Soit écrire, soit lire ou soit planifier. Il y a une chose qui est certaine – nous sommes tous conscients que faire plusieurs choses à la fois nous rend moins efficaces et plus stressés. Plus [le rythme accélère](/blog/comment-reprendre-le-dessus-quand-le-rythme-accelere/), et pire c'est.
 
 Devant cette évidence, pourquoi est-ce si difficile de focuser (1) sur une seule et unique tâche à la fois? La réponse est très simple. Parce que cela nous fait sentir bien et accompli. Les gens qui « multitâchent » (2) ne sont pas plus productifs, ils ont seulement ce sentiment gratifiant d’être satisfait de leur travail. Il semble que leur journée eu été « bien remplie ».
 
@@ -79,7 +79,7 @@ Et pour ceux qui gèrent tout seulement à partir de leur téléphone ? Je crois
 
 ## Écouter de la musique c'est bon ?
 
-Au cas où tu te poses la question [Lekt](/posts/lekt-le-lecteur/), écouter de la musique en travaillant n’est pas à proprement parler du multitâche. C’est ce qu’affirme le professeur Clifford Nass. « Dans le cas de la musique, c’est un peu différent. Nous avons une partie spéciale pour absorber la musique. Ainsi nous pouvons en écouter, tout en faisant autre chose. » Voici une bonne nouvelle.
+Au cas où tu te poses la question [Lekt](/blog/lekt-le-lecteur/), écouter de la musique en travaillant n’est pas à proprement parler du multitâche. C’est ce qu’affirme le professeur Clifford Nass. « Dans le cas de la musique, c’est un peu différent. Nous avons une partie spéciale pour absorber la musique. Ainsi nous pouvons en écouter, tout en faisant autre chose. » Voici une bonne nouvelle.
 
 ## Une piste pour arrêter le multitâche
 

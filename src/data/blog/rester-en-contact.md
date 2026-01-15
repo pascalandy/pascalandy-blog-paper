@@ -16,4 +16,4 @@ Voici le meilleur endroit où me contacter. À travers mes réseaux sociaux, je 
 - [Facebook](https://www.facebook.com/askpascalandy)
 - [YouTube](https://www.youtube.com/playlist?list=PL9epbd8UeXHtRu7WI4aK4RKDCThMf7-8Q)
 
-On trouve la politique de confidentialité [ici](/posts/politique-de-confidentialite/).
+On trouve la politique de confidentialité [ici](/blog/politique-de-confidentialite/).

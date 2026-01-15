@@ -30,7 +30,7 @@ ogImage: "../../assets/images/og-legacy/2017/11/CryptoInMontreal-c-1400-b.JPG"
 ## Information générales
 
 J'ai regroupé ces cinq sections sous une seule et même page:
-/posts/cryptoinmontreal-informations-generales/
+/blog/cryptoinmontreal-informations-generales/
 
 - Intention
 - Prérequis

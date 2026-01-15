@@ -33,11 +33,11 @@ As the host of CIM, I'll be one of the student once again. This keynote will be 
 ## Quand et où ?
 
 - **Quand**: Ce mardi **31 juillet** 2018 dès 18h30
-- **Lieu**: [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal Québec H3G 2C1 Canada
+- **Lieu**: [Club Insiders](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal Québec H3G 2C1 Canada
 - **Coût**: 10$ à la porte. **Ce prix inclut**: les de cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs. _Il y a même des produits sans gluten et véganes_ (c'est pas de l'inclusion ça!).
 
-* **Détails** de cet événement sur le site officiel : /posts/cryptoinmontreal-17/
-* **Calendrier 2018**: /posts/calendrier-2018-de-cryptoinmontreal/
+* **Détails** de cet événement sur le site officiel : /blog/cryptoinmontreal-17/
+* **Calendrier 2018**: /blog/calendrier-2018-de-cryptoinmontreal/
 * **Teaser** de l'événement sur [YouTube](https://www.youtube.com/watch?v=2_rPjzXXfBA)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>

@@ -97,6 +97,6 @@ Les photos que produit le iPhone (4) font en moyenne 2000 KO, alors que les phot
 
 Toutes les semaines, on prend des dizaines de photos avec notre téléphone. Le problème est justement le fait qu'elles sont sauvegardées uniquement dans notre téléphone…
 
-Voici comment transférer automatiquement ses photos de son téléphone à son ordinateur. /posts/comment-transferer-automatiquement-les-photos-de-son-telephone-a-son-ordinateur/
+Voici comment transférer automatiquement ses photos de son téléphone à son ordinateur. /blog/comment-transferer-automatiquement-les-photos-de-son-telephone-a-son-ordinateur/
 
 📷 [source](http://blog.iyogi.com/technology-today/tech-news/how-to-transfer-photos-from-your-digital-camera-to-instagram.html)

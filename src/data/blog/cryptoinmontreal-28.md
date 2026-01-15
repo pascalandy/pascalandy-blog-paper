@@ -12,7 +12,7 @@ Join us for the 28th edition of Crypto In Montreal. Our hosts will be **Tamara K
 
 All details about [#CryptoInMontreal](/tag/cryptoinmontreal/) and tickets:
 
-[https://pascalandy.com/blog/cryptoinmontreal-28](/posts/cryptoinmontreal-28)
+[https://pascalandy.com/blog/cryptoinmontreal-28](/blog/cryptoinmontreal-28)
 
 ## Agenda
 
@@ -38,7 +38,7 @@ Our Meetup is all about triads, genuine exchanges and learning. This is not your
 
 |
 ---|---
-**Où** : | Le [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders) 2067 rue Crescent, Montréal Québec H3G 2C1 (2e étage)
+**Où** : | Le [Club Insiders](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders) 2067 rue Crescent, Montréal Québec H3G 2C1 (2e étage)
 **Quand** : | mardi le 2 avril 2019 à 18h00
 **Prix** : | 10$
 

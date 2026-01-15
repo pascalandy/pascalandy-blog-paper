@@ -42,7 +42,7 @@ Sur papier c'est la fin de l'événement, sauf que si on se dit les vraies chose
 
 ## Informations générales
 
-J'ai regroupé les points ci-dessous sous la [page informations générales](/posts/cryptoinmontreal-informations-generales/).
+J'ai regroupé les points ci-dessous sous la [page informations générales](/blog/cryptoinmontreal-informations-generales/).
 
 1. Intention
 2. Prérequis
@@ -62,4 +62,4 @@ L'admission est **gratuite** et les billets de cet événement [ se trouvent ici
 
 [![image-rsvp](../../assets/images/og-legacy/2017/11/rsvp-2.jpg)](https://www.eventbrite.ca/e/cryptoinmontreal-02-tickets-41179846028)
 
-Cheers!<br>[Pascal Andy](/posts/now/)
+Cheers!<br>[Pascal Andy](/now/)

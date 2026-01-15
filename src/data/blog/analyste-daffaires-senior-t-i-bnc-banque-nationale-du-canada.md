@@ -9,7 +9,7 @@ description: "Analyste d'Affaires Sénior T.I. à la Banque Nationale du Canada 
 
 ![dispo-analyste-affaires-pascal](../../assets/images/og-legacy/2018/10/dispo-analyste-affaires-pascal.jpg)
 
-_Cette page est une sous-section de mon [offre en tant que Consultant](/posts/analyste-daffaires-senior-ti/)_.
+_Cette page est une sous-section de mon [offre en tant que Consultant](/blog/analyste-daffaires-senior-ti/)_.
 
 ---
 
@@ -191,11 +191,11 @@ Excellent travail exécuté par Pascal. Bravo !
 
 ---
 
-[Consulter mes disponibilités](/posts/analyste-daffaires-senior-ti/)
+[Consulter mes disponibilités](/blog/analyste-daffaires-senior-ti/)
 
 ![dispo-analyste-affaires-pascal](../../assets/images/og-legacy/2018/10/dispo-analyste-affaires-pascal.jpg)
 
-_Cette page est une sous-section de mon [offre en tant que Consultant](/posts/analyste-daffaires-senior-ti/)_.
+_Cette page est une sous-section de mon [offre en tant que Consultant](/blog/analyste-daffaires-senior-ti/)_.
 
 1. Analyste d’Affaires Sénior I.T. / Programme Gestion des Accès / SoD
 
@@ -362,6 +362,6 @@ Bravo !
 
 ---
 
-[Consulter mes disponibilités](/posts/analyste-daffaires-senior-ti/)
+[Consulter mes disponibilités](/blog/analyste-daffaires-senior-ti/)
 
 ---

@@ -12,13 +12,13 @@ Dans notre société du savoir, le « **Flux de Travail Digital** » fait la dif
 
 Puisque la vie est une **histoire de relations**, on fait naturellement l’effort d’améliorer ses relations au travail, ses relations interpersonnelles et amoureuses. Mais qu’en est-il de nos relations avec les technologies?
 
-À mon avis, un bon « Flux de Travail Digital » est aussi essentiel qu'un permis de conduire. [Lekt](/posts/lekt-le-lecteur/), t'arrive-t-il de te demander comment faire “quelque chose” avec les technologies et/ou comment arriver à tes fins avec les logiciels? Si oui, laisse-moi t'aider.
+À mon avis, un bon « Flux de Travail Digital » est aussi essentiel qu'un permis de conduire. [Lekt](/blog/lekt-le-lecteur/), t'arrive-t-il de te demander comment faire “quelque chose” avec les technologies et/ou comment arriver à tes fins avec les logiciels? Si oui, laisse-moi t'aider.
 
 Je peux t'aider concrètement à performer de deux à trois fois plus rapidement avec tes machines. Je suis plus que sérieux ici; sur une vie, ce sont des centaines et **des centaines d’heures gagnées**.
 
 > Combien vaut ton temps sur terre Lekt ?
 
-Un détail important avant de poursuivre. J’écris pour toi « Lekt », le lecteur de ce texte (et de tous les textes que je partage à travers ce blog). Ne sois pas surpris [que je te tutoie](/posts/pourquoi-jaime-vous-tutoyer/) de temps à autre.
+Un détail important avant de poursuivre. J’écris pour toi « Lekt », le lecteur de ce texte (et de tous les textes que je partage à travers ce blog). Ne sois pas surpris [que je te tutoie](/blog/pourquoi-jaime-vous-tutoyer/) de temps à autre.
 
 Alors… de quoi parlions-nous? Oui oui… du fameux « Flux de Travail Digital ». Poursuivons.
 
@@ -87,4 +87,4 @@ Une consultation débute à 2500$ pour une journée.
 
 ## Faisons un essai
 
-Maintenant, par où commencer? C’est ce que nous pouvons déterminer facilement par téléphone. [Contacte-moi ici](/posts/rester-en-contact/) et validons ensemble comment je peux t'aider.
+Maintenant, par où commencer? C’est ce que nous pouvons déterminer facilement par téléphone. [Contacte-moi ici](/blog/rester-en-contact/) et validons ensemble comment je peux t'aider.

@@ -14,7 +14,7 @@ Decentralized Finance (DeFi) has emerged as an alternative to the traditional fi
 
 ### Tous les détails :
 
-[https://pascalandy.com/blog/cryptoinmontreal-33](/posts/cryptoinmontreal-33/)
+[https://pascalandy.com/blog/cryptoinmontreal-33](/blog/cryptoinmontreal-33/)
 
 ### Agenda
 
@@ -44,7 +44,7 @@ Dans tous les cas, je vais m'assurer qu'on passe tous une belle soirée! Notre M
 
 ### À propos du présentateur
 
-[https://pascalandy.com/blog/qui-est-pascal-andy/](/posts/qui-est-pascal-andy/)
+[https://pascalandy.com/blog/qui-est-pascal-andy/](/blog/qui-est-pascal-andy/)
 
 ### À propos du Desjardins Lab
 

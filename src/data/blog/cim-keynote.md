@@ -66,12 +66,12 @@ Dans l’histoire de l’humanité on remarque qu’il existe quelque façon d'o
 ### Liens pertinents
 
 - [tradingview.com/chart/BTCUSD/mPfH1Qeu-Bitcoin-started-the-next-bull-cycle/](https://www.tradingview.com/chart/BTCUSD/mPfH1Qeu-Bitcoin-started-the-next-bull-cycle/)
-- [pascalandy.com/blog/cim-keynote](/posts/cim-keynote/)
-- [pascalandy.com/blog/satoshi-nakamoto-announce-the-creation-of-bitcoin-this-is-how-it-started](/posts/satoshi-nakamoto-announce-the-creation-of-bitcoin-this-is-how-it-started/)
+- [pascalandy.com/blog/cim-keynote](/blog/cim-keynote/)
+- [pascalandy.com/blog/satoshi-nakamoto-announce-the-creation-of-bitcoin-this-is-how-it-started](/blog/satoshi-nakamoto-announce-the-creation-of-bitcoin-this-is-how-it-started/)
 - [coinmarketcap.com/](https://coinmarketcap.com/)
 - [whattomine.com](https://whattomine.com/)
 - [tradingview.com/chart/khmmgLKb/](https://www.tradingview.com/chart/khmmgLKb/)
 - [ledger.com/products/ledger-nano-s](https://www.ledger.com/products/ledger-nano-s)
 - [coinberry.com/](https://coinberry.com/)
-- [pascalandy.com/blog/cryptoinmontreal-informations-generales/#accronymes](/posts/cryptoinmontreal-informations-generales/#accronymes)
+- [pascalandy.com/blog/cryptoinmontreal-informations-generales/#accronymes](/blog/cryptoinmontreal-informations-generales/#accronymes)
 - [passwordsgenerator.net/sha256-hash-generator/](https://passwordsgenerator.net/sha256-hash-generator/)

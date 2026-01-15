@@ -9,8 +9,8 @@ description: "Trucs à faire chez DM."
 
 Trucs à faire chez DM.
 
-- [https://pascalandy.com/blog/golf-r-parts/](/posts/golf-r-parts/)
-- [https://pascalandy.com/blog/dm-motorsport/](/posts/dm-motorsport/)
+- [https://pascalandy.com/blog/golf-r-parts/](/blog/golf-r-parts/)
+- [https://pascalandy.com/blog/dm-motorsport/](/blog/dm-motorsport/)
 
 ## Achat Clutch + trucs
 

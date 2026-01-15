@@ -24,17 +24,17 @@ I think a great social network needs four basic foundations. Chats must be: **Fu
 
 I believe the way we socialize online can be much better… more FAMO. That's why I decided to build Dper.
 
-If you are a believer, if you are looking to put your efforts into a game changing project, [please let me know](/posts/rester-en-contact/). Let's see how you can contribute making Dper happen. Until then, have a great time!
+If you are a believer, if you are looking to put your efforts into a game changing project, [please let me know](/blog/rester-en-contact/). Let's see how you can contribute making Dper happen. Until then, have a great time!
 
 P.S. Dper aims to disrupt not only the TSN, but also the forums and the way we comment online. Just think about the zoo we observe within the comments section of YouTube…
 
-P.P.S. You want to know how Dper is working, what is the user experience, what is the interaction between users or how the UI looks like? I will be glad to share the core of Dper with you soon. You just need to [present yourself first](/posts/rester-en-contact/).
+P.P.S. You want to know how Dper is working, what is the user experience, what is the interaction between users or how the UI looks like? I will be glad to share the core of Dper with you soon. You just need to [present yourself first](/blog/rester-en-contact/).
 
 ## 📢 Want some more?
 
-[The manifesto - Why did I decide to start Dper?](/posts/each-day-traditional-social-networks-are-disconnecting-from-you/)
+[The manifesto - Why did I decide to start Dper?](/blog/each-day-traditional-social-networks-are-disconnecting-from-you/)
 🏷️ [Search tag](/tags/dper/) about Dper
-🏛️ Go to Dper [homepage](/posts/dper-app/)
-📖 Key [definitions](/posts/definitions/) about startups
+🏛️ Go to Dper [homepage](/blog/dper-app/)
+📖 Key [definitions](/blog/definitions/) about startups
 
 📷 [source](https://unsplash.com/galymzhanabdugalimov)

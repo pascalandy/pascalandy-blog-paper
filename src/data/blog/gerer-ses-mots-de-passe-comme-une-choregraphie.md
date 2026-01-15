@@ -12,7 +12,7 @@ Personne n’aime gérer ou bien se souvenir de ses mots de passe. Pour plusieur
 
 L’histoire d’oublier ses mots de passe à débuté au secondaire. Deux combinaisons sont en causes. Celle du cadenas de notre casier et celle du cadenas pour aller dans le cours « d’éduc » (1). L’année scolaire se termine, les vacances passent, puis le 4 septembre on n’a plus idée … Deux cadenas aux poubelles tab\*&?ck ! Une histoire qui sent le déjà vu et qui se répète pour les mots de passe que nous devons gérer en ligne.
 
-Notre réaction naturelle pour résoudre ce problème a été de se choisir un seul et même mot de passe. Un mot qui représente quelque chose de tangible dans notre quotidien. Exemple : ma voiture est une Civic rouge, alors ça sera “civicrouge” (ou pire encore “civic”). On se tape dans les mains en se disant : « Quin! sti, une bonne affaire de faite mon [Lekt](/posts/lekt-le-lecteur/) ! »
+Notre réaction naturelle pour résoudre ce problème a été de se choisir un seul et même mot de passe. Un mot qui représente quelque chose de tangible dans notre quotidien. Exemple : ma voiture est une Civic rouge, alors ça sera “civicrouge” (ou pire encore “civic”). On se tape dans les mains en se disant : « Quin! sti, une bonne affaire de faite mon [Lekt](/blog/lekt-le-lecteur/) ! »
 
 Le problème quand nous utilisons le même mot de passe pour plusieurs sites est que nous compromettons notre sécurité en ligne sur le long terme. La dernière phrase était vraiment pénible à lire ... je sais. Mais il faut bien appeler un chat un chat même si on le déguise en crabe.
 
@@ -90,7 +90,7 @@ Bref, laisse aller ton imagination et pour ta santé digitale, crée ta propre c
 
 Voici une manière facile pour retenir tous ses différents mots de passes.
 
-/posts/gerer-ses-mots-de-passe-comme-une-choregraphie/
+/blog/gerer-ses-mots-de-passe-comme-une-choregraphie/
 
 #### ⚓ Annotations
 

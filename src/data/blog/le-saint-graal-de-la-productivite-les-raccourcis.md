@@ -69,7 +69,7 @@ En rafale …
 
 <iframe src="//player.vimeo.com/video/52366534" width="500" height="312" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 
-En ayant observé la mise en situation dans le vidéo “Le standard à atteindre: 60 secondes ou moins” sur la page de l’article [Le Rythme Accélère … Comment Reprendre le Dessus](/posts/comment-reprendre-le-dessus-quand-le-rythme-accelere/), on peut constater qu’il manque une pièce à notre casse-tête.
+En ayant observé la mise en situation dans le vidéo “Le standard à atteindre: 60 secondes ou moins” sur la page de l’article [Le Rythme Accélère … Comment Reprendre le Dessus](/blog/comment-reprendre-le-dessus-quand-le-rythme-accelere/), on peut constater qu’il manque une pièce à notre casse-tête.
 
 <iframe src="//player.vimeo.com/video/51370032" width="500" height="312" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 

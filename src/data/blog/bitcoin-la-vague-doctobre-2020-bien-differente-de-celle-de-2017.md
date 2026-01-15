@@ -32,9 +32,9 @@ Q2) On entend dire que l'exploitation minière est concentrée en Chine, est-ce 
 - Non et voici pour décentralisé veut dire décentralisé (...)
 - Oh nice! Comment puis-je acheter pour 100 millions de dollars et comment puis-je les stocker ?
 
-[Crypto In Montréal](/posts/cim/) est un événement au sujet des cryptomonnaies et du blockchain. Nos événements sont disponible [via notre groupe Meetup](https://www.meetup.com/CryptoInMontreal/).
+[Crypto In Montréal](/cim/) est un événement au sujet des cryptomonnaies et du blockchain. Nos événements sont disponible [via notre groupe Meetup](https://www.meetup.com/CryptoInMontreal/).
 
-Pour terminer, si tu souhaites recevoir les mise à jours de mon blog, [inscris-toi ici](/posts/signin/). Mon site est hébergé sur FirePress _(j'en suis le fondateur)_ et j'offre [21 jours d'essai gratuit](https://firepress.org/en/pricing/).
+Pour terminer, si tu souhaites recevoir les mise à jours de mon blog, [inscris-toi ici](/blog/signin/). Mon site est hébergé sur FirePress _(j'en suis le fondateur)_ et j'offre [21 jours d'essai gratuit](https://firepress.org/en/pricing/).
 
 Cheers!
 Pascal

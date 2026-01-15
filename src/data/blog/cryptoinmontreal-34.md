@@ -8,11 +8,11 @@ description: "Introduction au blockchain et aux cryptomonnaies lors de la 34e é
 ogImage: "../../assets/images/og-legacy/2019/08/034-cryptoinmontreal.jpg"
 ---
 
-La **34e édition** de [Crypto In Montreal](/posts/tag/cryptoinmontreal/) prendra le plancher du **Desjardins Lab** au centre-ville de Montréal.
+La **34e édition** de [Crypto In Montreal](/blog/tag/cryptoinmontreal/) prendra le plancher du **Desjardins Lab** au centre-ville de Montréal.
 
 Les détails sur #CryptoInMontreal et la billetterie:
 
-[Lire cet article](/posts/cryptoinmontreal-34/)
+[Lire cet article](/blog/cryptoinmontreal-34/)
 
 ### Le quand, le où, le prix
 
@@ -39,7 +39,7 @@ Dans tous les cas, je vais m'assurer qu'on passe tous une belle soirée! Notre M
 
 ### À propos de l'organisateur
 
-[Qui est Pascal Andy?](/posts/qui-est-pascal-andy/)
+[Qui est Pascal Andy?](/blog/qui-est-pascal-andy/)
 
 ### À propos du Desjardins Lab
 
