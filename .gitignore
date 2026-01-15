@@ -2,6 +2,9 @@
 dist/
 to_import/
 
+# caching
+.astro-cache/
+
 # generated types
 .astro/
 
