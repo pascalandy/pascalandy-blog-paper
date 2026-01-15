@@ -1,10 +1,6 @@
 ---
-title: Subscribe via RSS
-tags:
-  - random
-date_created: 2022-01-11
-author: Pascal Andy
-description: Stay updated with new posts by subscribing to the RSS feed.
+layout: ../layouts/AboutLayout.astro
+title: "Subscribe via RSS"
 ---
 
 Want to stay updated whenever I publish new content? Subscribe to the RSS feed!

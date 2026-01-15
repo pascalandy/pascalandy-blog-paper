@@ -1,18 +1,13 @@
 ---
-author: Pascal Andy
-date_created: 2017-10-22
+layout: ../layouts/AboutLayout.astro
 title: "Code of Conduct"
-tags:
-  - crypto-in-montreal
-ogImage: ../../assets/images/og-legacy/2017/10/pascalandy-com_header_2017-04-10_14h46-8.jpg
-description: "As members of this Community, we recognize that our behavior is our choice and this choice will result in our culture."
 ---
 
 As members of this Community, we recognize that our behavior is our choice and this choice will result in our culture.
 
 We are a mixture of professionals and volunteers from all over the world, working on every aspect of the mission - including mentorship, teaching, and connecting people. Because we come together from so many different places and positions, we would like a single document that sets communal expectations.
 
-This isn’t an exhaustive list of things that you can or can't do. Rather, take it in the spirit in which it’s intended - a guide to make it easier to enrich all of us and the technical communities in which we participate.
+This isn't an exhaustive list of things that you can or can't do. Rather, take it in the spirit in which it's intended - a guide to make it easier to enrich all of us and the technical communities in which we participate.
 
 ## Specific Conduct
 
@@ -28,12 +23,12 @@ Participants are responsible for knowing and abiding by the following:
 
 #### Contacts
 
-- Please contact one of the Slack admins, event organizers, or any member of the Community admin team via /posts/rester-en-contact/ or via Twitter https://twitter.com/askpascalandy
+- Please contact one of the Slack admins, event organizers, or any member of the Community admin team via /blog/rester-en-contact/ or via Twitter https://twitter.com/askpascalandy
 - If you believe someone is violating the code of conduct, we ask that you report it.
 
 ## Additional Community Beliefs
 
-This Code of Conduct presents a summary of the shared values and “common sense” thinking in our community. The basic social ingredients that hold our project together include:
+This Code of Conduct presents a summary of the shared values and "common sense" thinking in our community. The basic social ingredients that hold our project together include:
 
 - [Be considerate](#be-considerate)
 - [Be respectful](#be-respectful)
