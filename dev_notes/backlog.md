@@ -9,16 +9,59 @@ description: "BACKLOG, todo"
 
 # BACKLOG
 
-broken links
+Now, I would like to think about all the good utilities that are useful when managing any given project on GitHub. 
 
-On this page at the end, you see this link, which is plain. And of course, this is not what I want. I want to have like just an internal click, an internal link, sorry. Sorry. So I want you to find all those, I would say lost link in plain text and replace them with a regular link. 
+Here are the three ones I have in mind. 
 
-example sur http://localhost:4321/posts/combien-ca-te-coute-quand-des-machines-cliquent-sur-ta-pub/
+1)
+Renovate
 
-/blog/combien-ca-te-coute-quand-des-machines-cliquent-sur-ta-pub/
+For an Astro/TypeScript project, Renovate wins because:
+
+1. Grouped PRs - One PR for all ESLint plugins, one for Astro ecosystem, etc.
+2. Dependency Dashboard - Single issue showing all pending updates
+3. Better defaults - Community presets like config:recommended handle 90% of cases
+4. Automerge for patches - Can auto-merge patch updates that pass CI
+
+2)
+Release Drafter
+
+3)
+| pr-labeler | Auto-label PRs by file paths |
+
+Other Essential GitHub Utilities for OSS Maintainers ??
+
+4)
+GitHub Secret Scanning
+
+5)
+
+GitHub Actions Optimizations
+
+Caching (actions/cache) │ Cache node_modules, .astro build cache
+Parallel jobs           │ Split lint/test/build into separate jobs  
+Skip unchanged          │ paths filter to skip CI on docs-only changes
+Timeout limits      │ Prevent runaway jobs
+
+6)
+Dependency Security
+
+| Tool | Purpose |
+|------|---------|
+| OSSF Scorecard | Security health metrics for your repo |
+| Socket.dev | Supply chain security (detect malicious packages) |
+| Stale | Auto-close stale issues/PRs |
+| Lock Threads | Lock old resolved issues |
+| Codecov / Coveralls | Code coverage reports on PRs |
+| All Contributors | Recognize all contributors (not just code) |
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
+Sponsorships   Loading
+Sponsorships help your community know how to financially support this repository.
+
+Display a "Sponsor" button
+Add links to GitHub Sponsors or third-party methods your repository accepts for financial contributions to your project.
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
@@ -43,31 +86,6 @@ correct pattern for inline picture:
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
 
-Now, I would like to think about all the good utilities that are useful when managing any given project on GitHub. So the next one I have in mind is renovate or dependabot. So I don't know which one I should take. I should use actually. actually, and are there any other utilities that are heavily used on GitHub by OSS maintainers.
-So I'm open to your suggestions. We are only planning here.
-Good question! Let me research the current landscape of GitHub utilities for OSS maintainers to give you an informed comparison.
-⚙ exa_web_search_exa [query=Renovate vs Dependabot comparison 2024 2025 dependency management GitHub, numResults=5]
-⚙ exa_web_search_exa [query=essential GitHub tools utilities OSS maintainers 2024 2025, numResults=5]
-Based on my research, here's a comprehensive overview for your planning:
-Renovate vs Dependabot
-| Aspect | Dependabot | Renovate |
-|--------|---------------|--------------|
-| Setup | Built into GitHub, zero config | Requires app install or self-hosting |
-| Platforms | GitHub + Azure DevOps only | GitHub, GitLab, Bitbucket, Gitea, Forgejo |
-| Package managers | ~14 | 90+ |
-| Grouping updates | Manual groups only | Advanced, community presets available |
-| Monorepo support | Limited | Excellent |
-| Dependency Dashboard | No | Yes (tracks all updates in one issue) |
-| Auto-merge | Basic | Highly configurable |
-| Scheduling | daily/weekly/monthly | Fine-grained (cron-like) |
-My recommendation: Renovate
-For an Astro/TypeScript project, Renovate wins because:
-
-1. Grouped PRs - One PR for all ESLint plugins, one for Astro ecosystem, etc.
-2. Dependency Dashboard - Single issue showing all pending updates
-3. Better defaults - Community presets like config:recommended handle 90% of cases
-4. Automerge for patches - Can auto-merge patch updates that pass CI
-
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
 Tell me about this warning.
@@ -82,18 +100,6 @@ Tell me about this warning.
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-Other Essential GitHub Utilities for OSS Maintainers
-| Tool | Purpose |
-|------|---------|
-| Codecov / Coveralls | Code coverage reports on PRs |
-| semantic-release | Automated versioning + changelog from commits |
-| Release Drafter | Auto-draft release notes from PR labels |
-| All Contributors | Recognize all contributors (not just code) |
-| OSSF Scorecard | Security health metrics for your repo |
-| Socket.dev | Supply chain security (detect malicious packages) |
-| Stale | Auto-close stale issues/PRs |
-| Lock Threads | Lock old resolved issues |
-| pr-labeler | Auto-label PRs by file paths |
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
