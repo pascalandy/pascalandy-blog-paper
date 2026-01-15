@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-09-06
 title: "LinkedIn"
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 description: "Voici où me trouver sur Linkedin."
 ---
 

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-03-23
 title: "Nés pour Mourir (le vidéo)"
-tags: ["Musique"]
+tags:
+  - musique
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "I do speak english too so ... don't be shy to shoot me a high five in the comment section below :)"
 ---

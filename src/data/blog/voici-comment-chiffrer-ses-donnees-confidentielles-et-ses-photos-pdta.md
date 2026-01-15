@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-12-19
 title: "Voici comment chiffrer ses données confidentielles (et ses photos PDTA)"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "La catastrophe que vit Sony Picture pourrait tous nous arriver. Que ce soit au travail ou à la maison, nos données sensibles doivent être chiffrées. Voici..."
 ---

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-02-25
 title: "Pourquoi se donner la peine d'écrire"
-tags: ["Du Fond Des Tripes"]
+tags:
+  - du-fond-des-tripes
 ogImage: ../../assets/images/og-legacy/2017/06/Pourquoi_se_donner_la_peine_d_e_crire_maj_2014_03_09_23H05PMb-1462841308583.jpg
 description: "Plusieurs personnes m'ont demandé « Quo'cé que ça donne d'écrire? ». La question sous-entendue est probablement celle-ci: « Pascal, comment peux-tu..."
 ---

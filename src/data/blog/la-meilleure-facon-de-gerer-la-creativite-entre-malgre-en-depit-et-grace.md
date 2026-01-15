@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2015-04-13
 title: "La meilleure façon de gérer la créativité entre “malgré”, “en dépit” et “grâce”"
-tags: ["Repost"]
+tags:
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Lekt, saches que tu ne peux pas exiger des gens qu’ils soient créatifs comme tu ne peux pas demander qu’une personne tombe amoureuse de toi. Pas pour..."
 ---

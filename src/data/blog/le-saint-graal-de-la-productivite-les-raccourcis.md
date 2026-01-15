@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-12-08
 title: "Le Saint-Graal de la Productivité : les raccourcis"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Cette semaine, j’étais dans un resto-bar pour un souper tapas avec trois de mes amis et plusieurs bouteilles de vin rouge. C’était la fête, la vie était..."
 ---

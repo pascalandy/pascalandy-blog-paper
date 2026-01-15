@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2017-10-21
 title: "When crypto-currencies, smart contracts, IoT, AI sleep together"
-tags: ["Crypto"]
+tags:
+  - crypto
 ogImage: ../../assets/images/og-legacy/2017/10/pascalandy-com_header_2017-04-10_14h46-5.jpg
 description: "It’s November 16, 2024. I’m a Honky. A veggie-hotdog vendor machine. I'm just like a candy machine but with real healthy and yummy food."
 ---

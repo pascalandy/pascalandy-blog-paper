@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-02-14
 title: "Consultant en Relations Technologiques (CRT)"
-tags: ["Random"]
+tags:
+  - random
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Dans notre société du savoir, le « Flux de Travail Digital » fait la différence entre accomplir beaucoup facilement, ou peu difficilement. »"
 ---

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-08-11
 title: "Rôle de Tamara"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 description: "---"
 ---
 

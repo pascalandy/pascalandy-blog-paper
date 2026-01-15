@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-05-18
 title: "DPER"
-tags: ["Startups"]
+tags:
+  - startups
 ogImage: ../../assets/images/og-legacy/2016/May/lancer_une_startup_2014_09_26_22h03-1462844793432.jpg
 description: "Après [[repost]](GHOSTURL__/repost-ma-premiere-startup) et FollowFi, je commence les premiers élans de ma troisième startup. Cette fois-ci, tout sera en..."
 ---

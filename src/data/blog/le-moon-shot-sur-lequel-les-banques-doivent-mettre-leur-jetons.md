@@ -3,7 +3,8 @@ author: Pascal Andy
 date_created: 2014-01-01
 title: "Le moon shot sur lequel les banques doivent mettre leur jetons."
 draft: true
-tags: ["Crypto"]
+tags:
+  - crypto
 ogImage: ../../assets/images/og-legacy/2019/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: 'Si je suis le PDG de la BanqueZYX demain matin, notre "moon shot" est de faire en sorte que l’identité des gens soit sur un DLT (decentralized ledger...'
 ---

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-10-15
 title: "Mettre en place un stratégie pour mieux Trader (et éviter le FUD et le FOMO) | CryptoInMontreal #23"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/10/023-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg
 description: "Pour le 23e événement de #CryptoInMontreal , nous parlerons de trading et d'une façon de mettre en place un workflow systématique pour trader."
 ---

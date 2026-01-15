@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2015-06-16
 title: "Setup a Continuous Integration, Continuous Deployment environment (CI/CD)"
-tags: ["Emplois"]
+tags:
+  - emplois
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "The Task - I need to find someone that will setup a great Continuous Integration, Continuous Deployment (CI/CD) solution. Ansible and Jenkins is expected."
 ---

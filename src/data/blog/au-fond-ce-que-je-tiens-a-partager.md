@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-06-18
 title: "Au fond, ce que je tiens à partager"
-tags: ["Du Fond Des Tripes"]
+tags:
+  - du-fond-des-tripes
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Je souhaite inspirer tous ceux et celles qui peuvent parfois se sentir dépassés, frustrés ou prisonniers:"
 ---

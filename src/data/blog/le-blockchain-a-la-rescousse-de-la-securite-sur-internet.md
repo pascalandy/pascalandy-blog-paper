@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2015-05-27
 title: "Le blockchain à la rescousse de la sécurité sur Internet"
-tags: ["Technologie", "Repost"]
+tags:
+  - technologie
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/118_Le_blockchain_a__la_recousse_de_la_se_curite__sur_Internet_1-1462912612185.jpg
 description: "Internet est une cour à scrap. Tout semble fonctionner comme par magie ... jusqu'au jour où les systèmes en place se font défoncer. C'est le temps de faire..."
 ---

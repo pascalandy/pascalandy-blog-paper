@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2020-12-05
 title: "Configurer un gym maison avec une seule paire de dumbbells"
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 ogImage: ../../assets/images/og-legacy/2021/01/gym-maison-2021-01-02_12h18_11.jpg
 description: "Avant la fermeture des gyms, je n'avais jamais considéré avec un gym maison. Mais avec les règles gouvernementales en place, et la non-action de la bannière..."
 ---

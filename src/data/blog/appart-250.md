@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2021-07-16
 title: "appart 250"
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 description: "Divers"
 ---
 

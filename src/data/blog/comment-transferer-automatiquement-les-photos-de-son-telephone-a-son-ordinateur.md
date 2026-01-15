@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-10-19
 title: "Comment Transférer Automatiquement les Photos de son Téléphone à son Ordinateur ?"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/Comment_transferer_automatiquement_les_photos_de_son_telephone_a__son_ordinateur-1462883684496.jpg
 description: "Combien de temps sauveriez-vous si toutes les photos que vous prenez avec votre téléphone pouvaient aussi se retrouver automatiquement sur votre ordinateur?..."
 ---

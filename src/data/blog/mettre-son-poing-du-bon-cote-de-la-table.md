@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-07-19
 title: "Mettre son poing (du bon côté) de la table"
-tags: ["Repost"]
+tags:
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "C'est parfois profitable ou même plaisant de mettre son poing sur la table pour avoir des clients, des partenaires, des étudiants, des médias ou même les..."
 ---

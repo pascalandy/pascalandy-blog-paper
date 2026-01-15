@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-05-15
 title: "Ethereum & Bitcoin: une introduction au monde des cryptos | #CryptoInMontreal 13"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/05/013-CryptoInMontreal.jpg
 description: "Ethereum & Bitcoin: une introduction au monde des cryptos | #CryptoInMontreal 13"
 ---

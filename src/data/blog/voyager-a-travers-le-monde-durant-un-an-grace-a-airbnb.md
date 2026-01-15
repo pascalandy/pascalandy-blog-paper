@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2014-10-30
 title: "Voyager à travers le monde durant un an grâce à Airbnb"
-tags: ["Technologie", "Repost"]
+tags:
+  - technologie
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Prerna Gupta est une entrepreneure en série qui a décidé de partir en voyage durant une année tout en évitant les hôtels. Ce qui est particulier, c'est..."
 ---

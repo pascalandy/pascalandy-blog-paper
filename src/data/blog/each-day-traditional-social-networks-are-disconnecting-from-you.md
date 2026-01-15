@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-10-03
 title: "Each day traditional social networks are disconnecting from you"
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 ogImage: ../../assets/images/og-legacy/2017/04/lancer_une_startup_2014_09_26_22h03-1462883022756.jpg
 description: "A manifesto for Dper (and why I'm building it)"
 ---

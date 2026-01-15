@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-08-14
 title: "Comprendre ce qu'est la CryptoÉconomie + les cas d'utilisations du blockchains | #CryptoInMontreal 19"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/08/019-Comprendre-ce-quest-la-CryptoE-conomie-les-cas-d-utilisations-du-blockchains-CryptoInMontreal-19.jpg
 description: "Agenda de la soirée"
 ---

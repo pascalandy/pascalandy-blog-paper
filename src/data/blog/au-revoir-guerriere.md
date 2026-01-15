@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-09-04
 title: "Au revoir guerrière"
-tags: ["Repost"]
+tags:
+  - repost
 description: "Originalement publié sur le wall de Julie Marchand."
 ---
 

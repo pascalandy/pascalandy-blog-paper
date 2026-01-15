@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-07-04
 title: "Privacy coins: how ZenCash & ZCash can lead businesses and individuals to freedom | Crypto In Montreal 17"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/07/017-CryptoInMontreal.jpg
 description: "For this event (Crypto In Montreal #17) we will go deeper. Once you realize the power of cryptocurrencies and smart contracts, at some point you start thinking about privacy. So many questions, so many possibilities."
 ---

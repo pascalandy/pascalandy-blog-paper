@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2021-11-23
 title: "audiophile"
-tags: ["Random"]
+tags:
+  - random
 ogImage: ../../assets/images/og-legacy/2021/11/turntable.jpg
 description: "Ci-dessous sont des recherches en cours en lien avec l'un des mes passions."
 ---

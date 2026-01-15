@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2014-12-02
 title: "Être pigiste : le meilleur des deux mondes"
-tags: ["Technologie", "Repost"]
+tags:
+  - technologie
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Le travail à la pige est un phénomène bien établi. Selon l’entreprise de conseils en gestion Accenture, la main-d’œuvre globale se compose de 20 % à 33 % de..."
 ---

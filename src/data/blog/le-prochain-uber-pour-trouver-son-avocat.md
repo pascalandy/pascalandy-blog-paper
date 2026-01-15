@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2015-05-12
 title: "Le prochain Uber pour trouver son avocat"
-tags: ["Technologie", "Repost"]
+tags:
+  - technologie
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/120_Le_prochain_Uber_pour_trouver_son_avocat_b-1462912147160.jpg
 description: "Faire affaire avec un cabinet d'avocat coûte la totale. À l'image de Uber et de Lyft qui frappent le monde du taxi, des entrepreneurs veulent changer la..."
 ---

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2017-10-21
 title: "Studio Transology inc."
-tags: ["Biographie"]
+tags:
+  - biographie
 ogImage: ../../assets/images/og-legacy/2017/10/header.JPG
 description: "Ingénieur Sonore & CEO Studio Transology inc. | 2003-2010"
 ---

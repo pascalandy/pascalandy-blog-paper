@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2023-05-17
 title: "Anneau de stabilisation de Wayne's Audio"
-tags: ["HiFi"]
+tags:
+  - hifi
 description: "Un compte rendu de mon expérience avec l'anneau de stabilisation de Wayne's Audio. Tout d'abord, l'utilisation de cet anneau nécessite une certaine..."
 ---
 

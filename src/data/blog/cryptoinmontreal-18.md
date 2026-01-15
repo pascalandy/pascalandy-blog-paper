@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-08-13
 title: "Le blockchain, les cryptomonnaies et le mining, ce qu'il faut savoir | #CryptoInMontreal 18"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/08/018-CryptoInMontreal.jpg
 description: "Agenda de la soirée"
 ---

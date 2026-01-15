@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-11-25
 title: "Les médias et le syndrome de Münchausen"
-tags: ["Repost"]
+tags:
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/The_Newsroom_Season_31-1462900499075.jpg
 description: "Le syndrome de Münchausen est une forme grave et tragique de maltraitance de l'enfant. Le parent ou la personne qui s'en occupe, le rend volontairement..."
 ---

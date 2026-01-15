@@ -3,7 +3,8 @@ author: Pascal Andy
 date_created: 2014-01-01
 title: "Dossier Julian"
 draft: true
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 description: "La semaine dernière les procureurs américains ont annoncé 17 nouvelles accusations contre Julian Assange pour avoir publié des centaines de milliers de..."
 ---
 

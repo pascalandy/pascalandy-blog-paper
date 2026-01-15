@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-10-10
 title: "Chiffrer ses données tout comme tirer ses rideaux dans ses fenêtres"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Quand je demande l’avis des gens autour de moi à propos de leurs vies privées en ligne, ils me répondent souvent un truc léger du genre : « moi de toute..."
 ---

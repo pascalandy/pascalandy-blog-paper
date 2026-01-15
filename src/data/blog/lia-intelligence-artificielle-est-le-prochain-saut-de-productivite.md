@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2022-11-24
 title: "L'IA (intelligence artificielle) est le prochain saut de productivité"
-tags: ["Repost"]
+tags:
+  - repost
 description: "Je ne pense pas que les gens comprennent les changements monumentaux à venir dans les logiciels au cours de cette décennie.
 Qu'en est-il pour le gens non-technique?"
 ---

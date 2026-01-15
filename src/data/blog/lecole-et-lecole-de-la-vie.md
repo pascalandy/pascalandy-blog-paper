@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-06-01
 title: "L'école ... et l'école de la vie"
-tags: ["Repost"]
+tags:
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: 'Sans doute, tes efforts pour préparer tes examens t''ont aidé à avoir une bonne cote "R", qui en retour, t''a fait entrer dans le programme de ton choix. Ce...'
 ---

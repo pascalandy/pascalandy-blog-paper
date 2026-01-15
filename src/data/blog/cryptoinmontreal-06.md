@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-02-14
 title: "#CryptoInMontreal 06 — Miner ou acheter ses coins ?"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/02/banner-large-cyptoinmontreal-1.JPG
 description: "Le 5e événement de #CryptoInMontreal à lieu le mardi 20 février 2018. Nous parlerons spécialement de sujets liés au mining 🛠🛠🛠. Miners, je vous attends!"
 ---

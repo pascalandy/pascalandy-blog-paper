@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2015-03-27
 title: "Les technologies mangent nos emplois. Soigner les symptômes ou les causes ?"
-tags: ["Technologie", "Repost"]
+tags:
+  - technologie
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "La plupart des gens trouvent que leur emploi est poche. Ce n’est probablement pas ton cas… mais par définition, ou presque, la plupart des postes sont..."
 ---

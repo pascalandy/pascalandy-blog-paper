@@ -7,13 +7,30 @@ author: Pascal Andy
 description: "Commands and workflow for developing, testing, and building the blog"
 ---
 
+
 # BACKLOG
 
-//
+## tags
 
-@dev_notes/prompts/fix_posts.md
+I want to work on the frontmatter, more specifically the tags. Right now there's a lot of objects like this.
 
-=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
+..
+tags: ["Personnel"]
+..
+
+So I never want to see these blocks. And why is that? is that because I prefer to have tags as bullet points:
+
+tags:
+  - technologie
+  - crypto
+
+While at it, I would like to make sure that every tags respect the format kebab case. So no capital, no underscore, only hyphen
+
+And of course, once things are converted, I want to have a rule where I don't see any brackets. So that should be part of, I don't know how to enforce this. I guess it will not be the astro by itself.
+
+plan think
+
+
 
 reformat tags
 as bullet point

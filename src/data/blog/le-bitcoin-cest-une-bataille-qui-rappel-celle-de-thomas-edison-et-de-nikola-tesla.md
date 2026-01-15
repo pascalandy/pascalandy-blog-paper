@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2016-06-29
 title: "Le Bitcoin c'est une bataille qui rappel celle de Thomas Edison et de Nikola Tesla"
-tags: ["Technologie", "Crypto"]
+tags:
+  - technologie
+  - crypto
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "J’ai parlé du Bitcoin auparavant ici et ici. Puisque c’est encore loin d’être clair pour la majorité, je viens de prendre le temps de faire une analogie qui..."
 ---

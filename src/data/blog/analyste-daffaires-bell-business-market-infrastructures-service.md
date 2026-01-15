@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2016-10-29
 title: "Analyste d'affaires T.I. @ Bell Business Market | Infrastructures"
-tags: ["Consultation"]
+tags:
+  - consultation
 ogImage: ../../assets/images/og-legacy/2018/10/pascalandy-com_header_2017-04-10_14h46-2.jpg
 description: "om/blog/analyste-daffaires-senior-ti/)"
 ---

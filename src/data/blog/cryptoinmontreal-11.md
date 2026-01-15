@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-04-27
 title: "CryptoInMontreal #11: Comprendre les cas d'utilisations du Blockchain."
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/04/011-CryptoInMontreal.jpg
 description: "Agenda de la soirée"
 ---

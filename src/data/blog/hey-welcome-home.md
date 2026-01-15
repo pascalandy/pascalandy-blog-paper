@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2015-05-11
 title: "Hey, welcome home!"
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 ogImage: ../../assets/images/og-legacy/2017/04/welcome_home-1462911358495.jpg
 description: "Hello,"
 ---

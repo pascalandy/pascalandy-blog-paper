@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-06-13
 title: "Copywriter recherché pour communiquer l’essence d'une nouvelle startup"
-tags: ["consultation"]
+tags:
+  - consultation
 ogImage: ../../assets/images/og-legacy/2018/06/pascalandy-com_header_2017-04-10_14h46-2.jpg
 description: "Offre d'emploi pour copywriter anglophone afin de rédiger et reformuler les textes d'une nouvelle startup."
 ---

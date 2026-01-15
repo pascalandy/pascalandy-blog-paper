@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-10-01
 title: "Souscrire au blog de Pascal Andy"
-tags: ["Random"]
+tags:
+  - random
 ogImage: ../../assets/images/og-legacy/2017/06/souscrire_au_blog_de_Pascal_Andy-1467085572429.gif
 description: "Je suis en transition pour la gestion de mon « mailing list ». Pour le moment, j'ajoute les gens manuellement. Si tu veux que je t'ajoute, envoie-moi un..."
 ---

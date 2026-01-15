@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2017-06-25
 title: "The blockchain impact by Naval Ravikant"
-tags: ["Technologie"]
+tags:
+  - technologie
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "In June 2017, Naval Ravikant made some important statements. He describes with a great clarity what will be the impacts of world running on blockchains."
 ---

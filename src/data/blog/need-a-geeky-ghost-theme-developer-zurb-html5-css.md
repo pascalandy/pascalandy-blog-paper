@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2015-10-04
 title: "Need A Geeky Ghost Theme Developer - Zurb, HTML5, CSS"
-tags: ["Emplois"]
+tags:
+  - emplois
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "If you have an issue with the embed video above, you can also watch it here."
 ---

@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2017-11-08
 title: "Les endroits qui acceillent #CryptoInMontreal"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/03/banner-large-cyptoinmontreal-1.JPG
 description: "Voici la liste des endroits qui accueillent généreusement l'événement #CryptoInMontreal depuis le jour un. "
 ---

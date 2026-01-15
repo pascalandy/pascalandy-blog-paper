@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-06-07
 title: "Thermodynamic neutrality"
-tags: ["Crypto"]
+tags:
+  - crypto
 ogImage: ../../assets/images/og-legacy/2018/06/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Thermodynamic neutrality is a principle that states that anyone who wants to leverage electricity to do mining (or any other heavy processing tasks) on blockchains should have the same right and the same pricing deal than other (bigger) competitors."
 ---

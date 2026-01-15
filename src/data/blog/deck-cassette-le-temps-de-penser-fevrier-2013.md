@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2013-02-01
 title: "Deck Cassette: Le temps de penser (février 2013)"
-tags: ["Deck Cassette"]
+tags:
+  - deck-cassette
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Dans le Deck Cassette du mois de février, quelques chansons pour prendre le temps de penser. Une activité qui semble être en voie de disparition...."
 ---

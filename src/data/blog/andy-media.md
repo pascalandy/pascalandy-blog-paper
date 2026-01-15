@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-02-17
 title: "Andy Media"
-tags: ["Startups"]
+tags:
+  - startups
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Nous vivons un mode de vie résolument digital. Être « nul avec les technos », c'était drôle en 2010, mais aujourd'hui, c'est un frein au développement de..."
 ---

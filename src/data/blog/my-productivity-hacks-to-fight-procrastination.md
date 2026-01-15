@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2019-01-06
 title: "My productivity hacks to fight procrastination"
-tags: ["Random"]
+tags:
+  - random
 ogImage: ../../assets/images/og-legacy/2019/01/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "This tweet has forced me to think about the way I work in my most productive way."
 ---

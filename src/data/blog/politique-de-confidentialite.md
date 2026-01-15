@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-01-13
 title: "Politique de confidentialité"
-tags: ["Random"]
+tags:
+  - random
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Responsable des Données et Propriétaire"
 ---

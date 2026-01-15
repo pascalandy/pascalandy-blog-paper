@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2020-09-29
 title: "Pèse tes mots, je pèserai les miens"
-tags: ["uncategorized"]
+tags:
+  - uncategorized
 ogImage: ../../assets/images/og-legacy/2021/01/pascalandy-bg-2021-01-06_23h42-2.jpg
 description: "Je ne vais pas repartagé des dizaines de vidéos, articles, etc. au niveau du comment je devrais réagir face aux consignes du gouvernement du Québec face à..."
 ---

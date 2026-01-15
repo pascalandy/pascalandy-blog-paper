@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-09-16
 title: "Traducteur ou Traductrice passionné(e) des mots (et Geek de préférence) - Anglais vers le français"
-tags: ["Emplois"]
+tags:
+  - emplois
 ogImage: ../../assets/images/og-legacy/2018/06/pascalandy-com_header_2017-04-10_14h46-1.jpg
 description: "Mise à jour: Comblé"
 ---

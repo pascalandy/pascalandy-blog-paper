@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-11-14
 title: "I made this background for my iPhone 7+"
-tags: ["Random"]
+tags:
+  - random
 description: "Feel free to download it and to use it as well :)"
 ---
 

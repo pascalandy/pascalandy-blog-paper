@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2015-04-06
 title: "Le pigiste, l’employé, le contracteur et le PDG"
-tags: ["Repost"]
+tags:
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Peut-être que ça fonctionne, finalement. Peut-être que la demande est en hausse, que les possibilités d’affaires ne cessent de se présenter et les gens..."
 ---

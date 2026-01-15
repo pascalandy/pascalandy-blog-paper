@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2015-03-21
 title: "Combien ça te coûte quand des machines cliquent sur ta pub ?"
-tags: ["Technologie", "Repost"]
+tags:
+  - technologie
+  - repost
 ogImage: ../../assets/images/og-legacy/2017/04/107_Combien_c_a_te_cou_te_quand_des_machines_cliquent_sur_ta_pub_1-1462908555109.jpg
 description: "La fraude publicitaire est un secret de polichinelle dans le monde du marketing en ligne. Elle a cours depuis que la publicité existe sur internet. Les..."
 ---

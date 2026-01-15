@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2018-08-15
 title: "Crypto fiscality, because your coins get taxed too! | #CryptoInMontreal 20e"
-tags: ["Crypto In Montreal"]
+tags:
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/08/020-Crypto-In-Montre-al_CryptoInMontreal-par-Pascal-Andy.jpg
 description: "Voici le plan de match pour le **20e événement** de #CryptoInMontreal. La présentation principale sera en anglais.
 

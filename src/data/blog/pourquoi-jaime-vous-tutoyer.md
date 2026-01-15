@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2014-02-27
 title: "Pourquoi j'aime vous tutoyer"
-tags: ["Du Fond Des Tripes"]
+tags:
+  - du-fond-des-tripes
 ogImage: ../../assets/images/og-legacy/2017/06/Ami_pascal_andy_maj_2014_03_09_23H49PM-1462842199568.jpg
 description: "Ce que j'écris, c'est de moi à toi. Je sais, on n’est pas habitué d'être tutoyé en tant que lecteur. Crois-moi Lekt, ce n’est pas de la lâcheté, mais plutôt..."
 ---

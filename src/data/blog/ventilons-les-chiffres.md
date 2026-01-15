@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2022-01-11
 title: "Ventilons les chiffres (c19)"
-tags: ["Repost", "Random"]
+tags:
+  - repost
+  - random
 description: "Tout le crédit à Michaël Chagnon pour ce post."
 ---
 

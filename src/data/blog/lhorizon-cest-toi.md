@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2023-08-14
 title: "L'horizon, c'est toi"
-tags: ["Personnel"]
+tags:
+  - personnel
 ogImage: ../../assets/images/og-legacy/2023/08/DreamShaper_v7_A_closeup_of_a_persons_hands_holding_a_glowing_3.webp
 description: "C'est pas ton cœur qui bat, c'est l'enfant qui est en toi qui frappe. C'est l'temps d'ouvrir ! De quoi t'as envie ?"
 ---

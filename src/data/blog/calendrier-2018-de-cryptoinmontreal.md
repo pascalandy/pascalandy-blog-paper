@@ -2,7 +2,9 @@
 author: Pascal Andy
 date_created: 2018-02-20
 title: "Le calendrier 2018 de Crypto In Montreal"
-tags: ["Crypto In Montreal", "Crypto"]
+tags:
+  - crypto-in-montreal
+  - crypto
 description: "Les événements de #CryptoInMontreal ont lieux à toutes les deux semaines! Tous les détails se trouvent sur la page informations générales."
 ---
 
