@@ -13,7 +13,10 @@ import { SITE } from "@/config";
 export const getStaticPaths = (async ({ paginate }) => {
   const posts = await getCollection(
     "blog",
-    ({ data }) => !data.draft && !data.tags.includes("dev-notes")
+    ({ data }) =>
+      !data.draft &&
+      !data.tags.includes("dev-notes") &&
+      !data.tags.includes("crypto-in-montreal")
   );
   return paginate(getSortedPosts(posts), { pageSize: SITE.postPerPage });
 }) satisfies GetStaticPaths;

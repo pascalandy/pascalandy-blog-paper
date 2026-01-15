@@ -56,14 +56,13 @@ Réserve ta place parce que ça demande beaucoup d'organisation :
 
 ### Teaser
 
-### EN GROS (TL;DR)
+### 🙌 (TL;DR), en gros
 
-— 🍹 🍺 de la boisson
-— 🍔 🍕 de la bouffe
-— 💡 du monde intéressé et intéressant
-— ❤️ un sujet passionnant
-— 🏒 un présentateur qui n'a pas peur d'aller dans les coins
-— 🙌 le tout offert gratuitement @ #CryptoInMontreal
+- 🍺 de la boisson
+- 🍕 de la bouffe (parfois oui, parfois non)
+- 💡 du monde intéressé et intéressant
+- ❤️ un sujet passionnant
+- 🏒 un présentateur qui n'a pas peur d'aller dans les coins
 
 ![banner](../../assets/images/og-legacy/2019/11/038b-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg)
 

@@ -54,13 +54,13 @@ Réserve ta place sur **Meetup** en [cliquant ici](https://www.meetup.com/Crypto
 
 <https://www.youtube.com/embed/2_rPjzXXfBA>
 
-### EN GROS (TL;DR)
+### 🙌 (TL;DR), en gros
 
-— 🍹 🍺 bière, vin, du café, thé
-— 🍔 🍕 bouchées, fruits, des goodies
-— 💡 du monde intéressé et intéressant
-— ❤️ un sujet passionnant
-— 🏒 des présentateurs qui n'ont pas peur d'aller dans les coins
+- 🍺 de la boisson
+- 🍕 de la bouffe (parfois oui, parfois non)
+- 💡 du monde intéressé et intéressant
+- ❤️ un sujet passionnant
+- 🏒 un présentateur qui n'a pas peur d'aller dans les coins
 
 ![028a-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy](../../assets/images/og-legacy/2019/03/028a-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg)
 

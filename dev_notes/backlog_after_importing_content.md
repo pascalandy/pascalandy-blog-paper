@@ -9,6 +9,11 @@ description: "BACKLOG, todo"
 
 # BACKLOG
 
+
+https://docs.astro.build/en/guides/content-collections/
+
+I'm still trying to understand how content collection could help me. So this is what I do understand. When we click on a tag, we see a whole bunch of posts related to this tag. and in my mind, this is a collection grouped by tag. is there something else I need to know about this function manage in astro. 
+
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
 comment taguer un post comme une page

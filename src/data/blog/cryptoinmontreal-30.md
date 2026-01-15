@@ -83,14 +83,13 @@ _C'est problématique quand les gens **confirment leurs présences**, **mais** q
 
 ![banner](../../assets/images/og-legacy/2019/04/030a-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg)
 
-### EN GROS (TL;DR)
+### 🙌 (TL;DR), en gros
 
-— 🍹 🍺 de la boisson
-— 🍔 🍕 de la bouffe
-— 💡 du monde intéressé et intéressant
-— ❤️ un sujet passionnant
-— 🏒 un présentateur qui n'a pas peur d'aller dans les coins
-— 🙌 le tout offert gratuitement @ #CryptoInMontreal
+- 🍺 de la boisson
+- 🍕 de la bouffe (parfois oui, parfois non)
+- 💡 du monde intéressé et intéressant
+- ❤️ un sujet passionnant
+- 🏒 un présentateur qui n'a pas peur d'aller dans les coins
 
 ![banner](/og-legacy/2019/04/030a-cryptoinmontreal.jpg)
 
