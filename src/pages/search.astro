@@ -53,6 +53,12 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
         },
       });
 
+      // Focus the search input for immediate typing
+      const searchInputEl = document.querySelector<HTMLInputElement>(
+        ".pagefind-ui__search-input"
+      );
+      searchInputEl?.focus();
+
       // If search param exists (eg: search?q=astro), trigger search
       const query = params.get("q");
       if (query) {
