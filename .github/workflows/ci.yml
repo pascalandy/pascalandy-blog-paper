@@ -81,16 +81,16 @@ jobs:
   audit:
     name: Security Audit
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 3
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Run OSV Scanner
-        uses: google/osv-scanner-action@v1.9.1
-        with:
-          scan-args: --lockfile=bun.lock
+      - name: Install and run OSV Scanner
+        run: |
+          go install github.com/google/osv-scanner/cmd/osv-scanner@latest
+          osv-scanner --lockfile=bun.lock
 
   # Build depends on all checks passing
   build:
