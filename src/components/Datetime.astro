@@ -19,14 +19,14 @@ const { date_created, size = "sm", class: className = "" } = Astro.props;
 /* ========== Formatted Datetime ========== */
 const datetime = dayjs(date_created).tz(SITE.timezone);
 
-const date = datetime.format("D MMM, YYYY"); // e.g., '22 Mar, 2025'
+const date = datetime.format("D MMM YYYY"); // e.g., '22 Mar 2025'
 ---
 
 <div class:list={["flex items-center gap-x-2 opacity-80", className]}>
   <IconCalendar
     class:list={[
-      "inline-block size-6 min-w-5.5",
-      { "scale-90": size === "sm" },
+      "inline-block min-w-4 -translate-y-px",
+      size === "sm" ? "size-4" : "size-5",
     ]}
   />
   <time
