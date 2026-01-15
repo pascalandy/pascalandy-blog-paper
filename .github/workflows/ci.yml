@@ -90,7 +90,7 @@ jobs:
       - name: Install and run OSV Scanner
         run: |
           go install github.com/google/osv-scanner/cmd/osv-scanner@latest
-          osv-scanner --lockfile=bun.lock
+          ~/go/bin/osv-scanner --lockfile=bun.lock
 
   # Build depends on all checks passing
   build:
