@@ -76,4 +76,4 @@ description: "Brief description for SEO and cards"
 - **`slug`** is NOT in the schema — derived from filename/path automatically
 - **Files prefixed with `_`** are excluded from the collection (e.g., `_draft-post.md`)
 - **Subdirectories starting with `_`** are NOT excluded — only filenames matter
-- **Subdirectories** affect the URL path (e.g., `blog/2025/post.md` -> `/posts/2025/post/`)
+- **Subdirectories** affect the URL path (e.g., `blog/2025/post.md` -> `/blog/2025/post/`)

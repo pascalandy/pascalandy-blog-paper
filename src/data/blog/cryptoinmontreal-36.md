@@ -16,7 +16,7 @@ Tech companies are announcing their crypto to compete with banks. During this ti
 
 ### Tous les détails :
 
-[https://pascalandy.com/blog/cryptoinmontreal-36](/posts/cryptoinmontreal-36)
+[https://pascalandy.com/blog/cryptoinmontreal-36](/blog/cryptoinmontreal-36)
 
 ### Le quand, le où, le prix
 
@@ -56,7 +56,7 @@ Cet événement est possible grâce à l'appuie de [FirePress](https://firepress
 
 Salut Gang c'est Pascal. Dans tous les cas, je vais m'assurer qu'on passe tous une belle soirée! Notre Meetup favorise les triades, les échanges authentiques et l’apprentissage. C'est pas ta classe boring. C'est du réseautage comme le réseautage devrait être fait. See ya 👩‍⚕️ 👨‍⚕️ 👩‍🌾 👨‍🌾 👩‍🍳 👨‍🍳 👩‍🎓 👨‍🎓 👩‍🎤 👨‍🎤.
 
-[https://pascalandy.com/blog/qui-est-pascal-andy/](/posts/qui-est-pascal-andy/)
+[https://pascalandy.com/blog/qui-est-pascal-andy/](/blog/qui-est-pascal-andy/)
 
 ### Billetterie
 

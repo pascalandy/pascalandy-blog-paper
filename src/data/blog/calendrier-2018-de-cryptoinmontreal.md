@@ -8,10 +8,10 @@ tags:
 description: "Les événements de #CryptoInMontreal ont lieux à toutes les deux semaines! Tous les détails se trouvent sur la page informations générales."
 ---
 
-Les événements de #CryptoInMontreal ont lieux à toutes les deux semaines! Tous les détails se trouvent sur la page [informations générales](/posts/cryptoinmontreal-informations-generales/).
+Les événements de #CryptoInMontreal ont lieux à toutes les deux semaines! Tous les détails se trouvent sur la page [informations générales](/blog/cryptoinmontreal-informations-generales/).
 
-The content on: /posts/calendrier-2018-de-cryptoinmontreal/
-now live here: /posts/calendrier-crypto-in-montreal/
+The content on: /blog/calendrier-2018-de-cryptoinmontreal/
+now live here: /blog/calendrier-crypto-in-montreal/
 
 (You will be redirected automatically in few seconds.)
 

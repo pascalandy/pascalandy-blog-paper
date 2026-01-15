@@ -46,7 +46,7 @@ Nous avions la certitude que nos courriels étaient privés et que les photos qu
 
 En l’espace de six mois, ces deux certitudes sont passées dans le camp de l’incertitude. Notre vie privée et personnelle est depuis sur le banc des coupes budgétaires de la liberté individuelle.
 
-Peut-on détruire la carrière des gens parce qu’ont découvre qu’ils sont hétéros ou non, mariés ou non, pratiquant ou non, en parfaite santé ou non ? J’imagine que tu vois le « pattern » [Lekt](/posts/lekt-le-lecteur/) ? C’est la même histoire pour les aventures sexuelles consentantes. On parle bien d’aventures et non pas de crimes ici hein ?
+Peut-on détruire la carrière des gens parce qu’ont découvre qu’ils sont hétéros ou non, mariés ou non, pratiquant ou non, en parfaite santé ou non ? J’imagine que tu vois le « pattern » [Lekt](/blog/lekt-le-lecteur/) ? C’est la même histoire pour les aventures sexuelles consentantes. On parle bien d’aventures et non pas de crimes ici hein ?
 
 Qu’on s’appelle la rockstar de l’heure, le quidam sans histoire, le premier ministre d’un pays, il n’y a pas de différence. La vie privée est un droit.
 
@@ -84,4 +84,4 @@ Peut-on détruire la carrière des gens parce qu’ont découvre qu’ils sont h
 
 Qu’on s’appelle la rockstar de l’heure, le quidam sans histoire, le premier ministre d’un pays, il n’y a pas de différence. La vie privée est un droit.
 
-/posts/prive-ou-personnel-peu-importe-cest-pas-de-tes-affaires/
+/blog/prive-ou-personnel-peu-importe-cest-pas-de-tes-affaires/

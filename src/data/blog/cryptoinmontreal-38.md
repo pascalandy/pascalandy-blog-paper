@@ -8,7 +8,7 @@ description: "CryptoInMontreal #38 au Desjardins Lab : introduction au blockchai
 ogImage: ../../assets/images/og-legacy/2021/01/cim38-2021-01-06_23h05.jpg
 ---
 
-La **38e édition** de [Crypto In Montreal](/posts/tag/cryptoinmontreal/) prendra le plancher du **Desjardins Lab** au centre-ville de Montréal.
+La **38e édition** de [Crypto In Montreal](/blog/tag/cryptoinmontreal/) prendra le plancher du **Desjardins Lab** au centre-ville de Montréal.
 
 Les détails sur #CryptoInMontreal et la billetterie:
 

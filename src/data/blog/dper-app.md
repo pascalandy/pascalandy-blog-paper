@@ -11,7 +11,7 @@ description: "Update June 2015 — I dropped this project to start another since
 
 **Update June 2015** — I dropped this project to start another since.
 
-[The manifesto - Why did I decide to start Dper?](/posts/each-day-traditional-social-networks-are-disconnecting-from-you/)
+[The manifesto - Why did I decide to start Dper?](/blog/each-day-traditional-social-networks-are-disconnecting-from-you/)
 
 I don't know exactly how you stumbled upon this page, but I'll do my best to make it easy for you to follow what is going on with Dper's project.
 
@@ -33,27 +33,27 @@ Dper is a social networking app, topic driven where FAMO chats (Fun, Authentic, 
 
 ## Goal
 
-Let's start with the end in mind: the goal is to build a solid business. Dper is the third [startup](/posts/definitions/) I'm bootstrapping, and I feel confident to deliver the vision, the guidance and the level of execution needed to make it happen. The route is simple, but hard to execute. I'm not kidding myself here... I will suffer.
+Let's start with the end in mind: the goal is to build a solid business. Dper is the third [startup](/blog/definitions/) I'm bootstrapping, and I feel confident to deliver the vision, the guidance and the level of execution needed to make it happen. The route is simple, but hard to execute. I'm not kidding myself here... I will suffer.
 
 ## Roadmap
 
 I track the high-level steps to accomplish (and almost everything) in Trello. It looks like this:
 
 - Put some high-level concepts on paper (this blog)
-- Find the right people that [share the same vision](/posts/each-day-traditional-social-networks-are-disconnecting-from-you/) about traditional social networks
-- Of all ideas and possibilities, define things that are in-scope (therefore out of scope) for the [MVP](/posts/definitions/)
+- Find the right people that [share the same vision](/blog/each-day-traditional-social-networks-are-disconnecting-from-you/) about traditional social networks
+- Of all ideas and possibilities, define things that are in-scope (therefore out of scope) for the [MVP](/blog/definitions/)
 - Execute the MVP 0.1
-- Learn [the lean way](/posts/the-lean-way-to-start-something/)
+- Learn [the lean way](/blog/the-lean-way-to-start-something/)
 - Grow the user base
 - Learn, readjust, focus and release the next MVP
 - All of this while having fun doing it :)
 
 ## 📢 Want some more?
 
-[The manifesto - Why did I decide to start Dper?](/posts/each-day-traditional-social-networks-are-disconnecting-from-you/)
+[The manifesto - Why did I decide to start Dper?](/blog/each-day-traditional-social-networks-are-disconnecting-from-you/)
 🏷️ [Search tag](/tags/dper/) about Dper
-🏛️ Go to Dper [homepage](/posts/dper-app/)
-📖 Key [definitions](/posts/definitions/) about startups
+🏛️ Go to Dper [homepage](/blog/dper-app/)
+📖 Key [definitions](/blog/definitions/) about startups
 
 ## Note pour les francophones
 

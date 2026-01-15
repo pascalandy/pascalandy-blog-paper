@@ -12,7 +12,7 @@ C'est notre dernier Meetup de 2019! La 39e édition de Crypto In Montreal prendr
 
 Les détails sur #CryptoInMontreal et la billetterie:
 
-[https://pascalandy.com/blog/cryptoinmontreal-39](/posts/cryptoinmontreal-39)
+[https://pascalandy.com/blog/cryptoinmontreal-39](/blog/cryptoinmontreal-39)
 
 ### Agenda
 
@@ -47,7 +47,7 @@ Cet événement est possible grâce à l'appuie de [FirePress](https://firepress
 
 Salut Gang c'est Pascal. Dans tous les cas, je vais m'assurer qu'on passe tous une belle soirée! Notre Meetup favorise les triades, les échanges authentiques et l’apprentissage. C'est pas ta classe boring. C'est du réseautage comme le réseautage devrait être fait. See ya 👩‍⚕️ 👨‍⚕️ 👩‍🌾 👨‍🌾 👩‍🍳 👨‍🍳 👩‍🎓 👨‍🎓 👩‍🎤 👨‍🎤.
 
-[https://pascalandy.com/blog/qui-est-pascal-andy/](/posts/qui-est-pascal-andy/)
+[https://pascalandy.com/blog/qui-est-pascal-andy/](/blog/qui-est-pascal-andy/)
 
 ### Billetterie
 

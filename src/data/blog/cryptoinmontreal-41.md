@@ -8,13 +8,13 @@ description: "Introduction au Bitcoin, aux cryptomonnaies et à la blockchain lo
 ogImage: ../../assets/images/og-legacy/2021/01/cim-41-2021-01-06_21h26.jpg
 ---
 
-Après une longue pause, on se prépare pour la **41e édition** de [Crypto In Montreal](/posts/tag/cryptoinmontreal/)!! Cette introduction au monde des cryptos s'adresse à ceux et celles qui désirent s'initier au Bitcoin, aux cryptomonnaies et au blockchain. La présentation « **Comprendre la blockchain et ses cas d'utilisations** » permettra d'introduire de façon très pratique ceux qui cherchent à faire leur premier pas dans le monde des cryptomonnaies.
+Après une longue pause, on se prépare pour la **41e édition** de [Crypto In Montreal](/blog/tag/cryptoinmontreal/)!! Cette introduction au monde des cryptos s'adresse à ceux et celles qui désirent s'initier au Bitcoin, aux cryptomonnaies et au blockchain. La présentation « **Comprendre la blockchain et ses cas d'utilisations** » permettra d'introduire de façon très pratique ceux qui cherchent à faire leur premier pas dans le monde des cryptomonnaies.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/h8gPzslZTzk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Tous les détails sur la page officielle de l'événement:
 
-[Lire cet article](/posts/cryptoinmontreal-41/)
+[Lire cet article](/blog/cryptoinmontreal-41/)
 
 ### Liens
 
@@ -36,7 +36,7 @@ Tous les détails sur la page officielle de l'événement:
 
 ![Pascal Andy](../../assets/images/og-legacy/2020/03/2019-04-24_CIM29_16-6.jpg)
 
-Je suis Pascal Andy et je suis fasciné par la décentralisation de notre monde. Ça m'a emmené à organiser plus d'une quarantaine de Meetup « [CryptoInMontreal](/posts/cim/) » depuis 2017. En 2020, j'ai aussi été chargé de cours durant [le programme blockchain](https://www.linkedin.com/feed/update/urn:li:activity:6635922763167084544/) offert à ESG+ UQAM durant pour la session d'hiver 2020. Je suis également le fondateur de FirePress.org, une plateforme qui permet aux entrepreneurs et aux PME de créer leurs sites internet sur la plateforme Ghost (CMS). Pour en savoir plus sur moi: [pascalandy.com/blog/qui-est-pascal-andy](/posts/qui-est-pascal-andy/)
+Je suis Pascal Andy et je suis fasciné par la décentralisation de notre monde. Ça m'a emmené à organiser plus d'une quarantaine de Meetup « [CryptoInMontreal](/cim/) » depuis 2017. En 2020, j'ai aussi été chargé de cours durant [le programme blockchain](https://www.linkedin.com/feed/update/urn:li:activity:6635922763167084544/) offert à ESG+ UQAM durant pour la session d'hiver 2020. Je suis également le fondateur de FirePress.org, une plateforme qui permet aux entrepreneurs et aux PME de créer leurs sites internet sur la plateforme Ghost (CMS). Pour en savoir plus sur moi: [pascalandy.com/blog/qui-est-pascal-andy](/blog/qui-est-pascal-andy/)
 
 ### 🎟️ Billetterie >> 🙋 RSVP 🙋‍♂️
 

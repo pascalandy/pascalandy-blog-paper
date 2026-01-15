@@ -68,4 +68,4 @@ Cet article est une adaptation de [ce texte](http://techcrunch.com/2014/10/03/ar
 
 Voici le sujet le plus TABOO qui guète le monde de la publicité en 2015.
 
-/posts/combien-ca-te-coute-quand-des-machines-cliquent-sur-ta-pub/
+/blog/combien-ca-te-coute-quand-des-machines-cliquent-sur-ta-pub/

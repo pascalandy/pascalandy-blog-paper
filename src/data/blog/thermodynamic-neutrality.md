@@ -64,7 +64,7 @@ http://www.hydroquebec.com/residential/customer-space/moving/change-address.html
 18/ Some prefer to run a SPA in their backward, some prefer to run miners.
 
 Read my conclusion here:
-/posts/thermodynamic-neutrality/
+/blog/thermodynamic-neutrality/
 
 19/ Going back to present, it's June 2018.
 
@@ -83,4 +83,4 @@ FR - *http://nouvelles.hydroquebec.com/fr/communiques-de-presse/1366/secteur-des
 Your humble miner enthusiast,
 Pascal Andy
 
-_P.S. Here is another post called [When crypto-currencies, smart contracts, IoT, AI sleep together](/posts/when-crypto-currencies-smart-contracts-iot-ai-sleep-together/) you might enjoy._
+_P.S. Here is another post called [When crypto-currencies, smart contracts, IoT, AI sleep together](/blog/when-crypto-currencies-smart-contracts-iot-ai-sleep-together/) you might enjoy._

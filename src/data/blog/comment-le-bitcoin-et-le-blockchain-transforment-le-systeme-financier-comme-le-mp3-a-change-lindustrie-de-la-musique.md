@@ -14,7 +14,7 @@ La technologie du blockchain qui est derrière le Bitcoin, aura probablement un 
 
 > C'est tout comme si Poste Canada et Fedex voudraient nous vendre des timbres pour envoyer nos courriels.
 
-En fait, l’histoire se répète. L’efficacité des technologies bouscule toutes les industries. Les robots ont transformé l’industrie du textile et de l’automobile. Les hôtels grincent des dents à cause d’[Airbnb](/posts/voyager-a-travers-le-monde-durant-un-an-grace-a-airbnb/) et les chauffeurs de Taxi [crient à l’injustice](http://www.lapresse.ca/actualites/montreal/201410/29/01-4813697-les-taxis-sans-licence-arrivent-a-montreal.php) par l’arrivé de UBER-X.
+En fait, l’histoire se répète. L’efficacité des technologies bouscule toutes les industries. Les robots ont transformé l’industrie du textile et de l’automobile. Les hôtels grincent des dents à cause d’[Airbnb](/blog/voyager-a-travers-le-monde-durant-un-an-grace-a-airbnb/) et les chauffeurs de Taxi [crient à l’injustice](http://www.lapresse.ca/actualites/montreal/201410/29/01-4813697-les-taxis-sans-licence-arrivent-a-montreal.php) par l’arrivé de UBER-X.
 
 Essayons d’entrevoir l’impact qu’aura une devise cryptée (cryto-currency) sur notre monde.
 
@@ -93,7 +93,7 @@ Comme l’a raconté l’économiste Kevin Dowd dans un essai sur l’avenir de 
 
 Cet article est une adaptation de [l'excellent texte](http://www.rationaloptimist.com/blog/bitcoin-and-block-chain-could-transform-the-world.aspx) de [Matt Ridley](https://twitter.com/mattwridley).
 
-Je reviendrai sur le Bitcoin. Je fais actuellement mes premiers pas avec les marchés d’échanges et les portefeuilles digitaux. L’Internet des choses, la sécurité en ligne, les micro-paiements, aucuns frais de transactions, tout ça est possible avec le blockchain. Attaches ta tuque mon [Lekt](/posts/lekt-le-lecteur/), le meilleur s’en vient.
+Je reviendrai sur le Bitcoin. Je fais actuellement mes premiers pas avec les marchés d’échanges et les portefeuilles digitaux. L’Internet des choses, la sécurité en ligne, les micro-paiements, aucuns frais de transactions, tout ça est possible avec le blockchain. Attaches ta tuque mon [Lekt](/blog/lekt-le-lecteur/), le meilleur s’en vient.
 
 **📤 À partager**
 
@@ -101,4 +101,4 @@ De l'Internet aux courriels et jusqu'aux réseaux sociaux, je crois que l'éco-s
 
 Voici comment le phénomène du Bitcoin est en train de transformer notre monde (et non seulement le système financier).
 
-/posts/comment-le-bitcoin-et-le-blockchain-transforment-le-systeme-financier-comme-le-mp3-a-change-lindustrie-de-la-musique/
+/blog/comment-le-bitcoin-et-le-blockchain-transforment-le-systeme-financier-comme-le-mp3-a-change-lindustrie-de-la-musique/

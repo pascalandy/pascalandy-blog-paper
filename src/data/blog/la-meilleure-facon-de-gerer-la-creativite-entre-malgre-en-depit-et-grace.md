@@ -8,7 +8,7 @@ ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_
 description: "Lekt, saches que tu ne peux pas exiger des gens qu’ils soient créatifs comme tu ne peux pas demander qu’une personne tombe amoureuse de toi. Pas pour..."
 ---
 
-[Lekt](/posts/lekt-le-lecteur/), saches que tu ne peux pas exiger des gens qu’ils soient créatifs comme tu ne peux pas demander qu’une personne tombe amoureuse de toi. Pas pour longtemps, en tout cas.
+[Lekt](/blog/lekt-le-lecteur/), saches que tu ne peux pas exiger des gens qu’ils soient créatifs comme tu ne peux pas demander qu’une personne tombe amoureuse de toi. Pas pour longtemps, en tout cas.
 
 Les gens que tu engages peuvent parfois te donner un travail créatif **malgré** ton style de gestion.
 

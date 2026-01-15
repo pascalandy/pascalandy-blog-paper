@@ -8,7 +8,7 @@ ogImage: ../../assets/images/og-legacy/2018/03/banner-large-cyptoinmontreal-1.JP
 description: "Voici la liste des endroits qui accueillent généreusement l'événement #CryptoInMontreal depuis le jour un. "
 ---
 
-Voici la liste des endroits qui accueillent généreusement l'événement #CryptoInMontreal depuis le jour un. La page officielle et les informations générales [se trouvent ici](/posts/cryptoinmontreal-informations-generales/).
+Voici la liste des endroits qui accueillent généreusement l'événement #CryptoInMontreal depuis le jour un. La page officielle et les informations générales [se trouvent ici](/blog/cryptoinmontreal-informations-generales/).
 
 <a id="club-insiders"></a>
 

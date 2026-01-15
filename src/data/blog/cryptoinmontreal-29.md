@@ -15,7 +15,7 @@ La **29e édition** de [Crypto In Montreal](/tags/crypto-in-montreal/) prendra l
 
 Les détails sur #CryptoInMontreal et la billetterie:
 
-[Lire cet article](/posts/cryptoinmontreal-29)
+[Lire cet article](/blog/cryptoinmontreal-29)
 
 Vous avez aussi l'option de commander en ligne (à vos frais) chez buddha-station.com/desjardinslab24. La livraison aura lieu à 16 h 30.
 
@@ -37,7 +37,7 @@ Dans tous les cas, je vais m'assurer qu'on passe tous une belle soirée! Notre M
 
 ### À propos du présentateur
 
-[Lire cet article](/posts/qui-est-pascal-andy/)
+[Lire cet article](/blog/qui-est-pascal-andy/)
 
 ### Le quand, le où, le prix
 

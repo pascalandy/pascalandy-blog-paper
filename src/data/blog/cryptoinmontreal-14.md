@@ -36,11 +36,11 @@ Pour cet événement **Pascal Andy** laissera place à **Jérémy Kohl** de chez
 ## Quand et où ?
 
 - **Date** & **heure**: mardi 5 juin 2018 à 18h45
-- **Lieu**: [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal QC H3G 2C1 Montréal Quéebec Canada
+- **Lieu**: [Club Insiders](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal QC H3G 2C1 Montréal Quéebec Canada
 - **Prix**: 10$ payable sur place. Le prix inclut —> _cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs et des produits sans gluten et véganes_.
 
-* **Détails** de cet événement: /posts/cryptoinmontreal-14/
-* **Calendrier 2018**: /posts/calendrier-2018-de-cryptoinmontreal/
+* **Détails** de cet événement: /blog/cryptoinmontreal-14/
+* **Calendrier 2018**: /blog/calendrier-2018-de-cryptoinmontreal/
 * **Teaser** de l'événement sur [YouTube](https://www.youtube.com/watch?v=2_rPjzXXfBA)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>

@@ -19,14 +19,14 @@ B) Je ferai une **démo unique en son genre** qui démontre comment fonctionne l
 C) Selon le niveau de maturité des gens sur place, je ferai ma présentation « **Introduction au monde des cryptos** ». C’est pour ceux et celle qui cherchent à faire leur premier pas dans le monde des cryptomonnaies.
 
 Pour les détails de cet événement et l'accès à la billetterie :
-/posts/cryptoinmontreal-25/
+/blog/cryptoinmontreal-25/
 
 ![flyer de l'événement](../../assets/images/og-legacy/2019/01/025b-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy.jpg)
 
 ## Quand, où, combien?
 
 - **Quand**: Ce mardi 8 janvier 2019 dès **18h45** (_ouverture des portes à 18h30_)
-- **Lieu**: Le [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders) au 2067 rue Crescent, Montréal Québec H3G 2C1 (2e étage)
+- **Lieu**: Le [Club Insiders](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders) au 2067 rue Crescent, Montréal Québec H3G 2C1 (2e étage)
 - Le coût est de **10$ payable à l'entrée**
   - **Le prix inclut**: les cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs. _Il y a même des produits sans gluten et véganes_.
   - Il faut savoir que le prix d'entrée est chargé par le Club Insiders qui est un espace de co-working. Ainsi, **je produis cet événement gratuitement pour la bonne cause**. Ils s'assurent que toute la logistique de la soirée soit impeccable.
@@ -75,4 +75,4 @@ Personnellement, je suis très actif sur [Twitter](https://twitter.com/askpascal
 - [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - [Twitter](https://twitter.com/askpascalandy)
 - [Page Facebook](https://www.facebook.com/cryptoinmontreal/)
-- [Site web officiel](/tags/cryptoinmontreal/) | 📅 [Calendrier 2018](/posts/calendrier-2018-de-cryptoinmontreal/) | [Information générales](/posts/cryptoinmontreal-informations-generales/)
+- [Site web officiel](/tags/cryptoinmontreal/) | 📅 [Calendrier 2018](/blog/calendrier-2018-de-cryptoinmontreal/) | [Information générales](/blog/cryptoinmontreal-informations-generales/)

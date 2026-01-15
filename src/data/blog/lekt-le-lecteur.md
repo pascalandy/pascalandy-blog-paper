@@ -59,7 +59,7 @@ Peut-être qu’en ces temps fous, il t’arrive à toi aussi de ne plus savoir 
 
 Si tu lis ces dernières lignes Lekt, je te remercie. Je te dis un gros merci sincère. Merci d'entrer dans mon monde, dans mes délires, dans mes trouvailles et mes doutes. Je me suis donné la mission d'aider tous les Lekt qui sentent qu'il doivent être plus agiles avec les technologies qui nous entourent. C'est pourquoi j'ai intitulé ce blog « L'homme et les relations technologiques ».
 
-Si tu souhaites faire le premier pas, je t'invite à le faire avec moi à travers ce que je partage. Si tu demandes pourquoi je tiens à t'écrire [voici la réponse](/posts/pourquoi-se-donner-la-peine-decrire/).
+Si tu souhaites faire le premier pas, je t'invite à le faire avec moi à travers ce que je partage. Si tu demandes pourquoi je tiens à t'écrire [voici la réponse](/blog/pourquoi-se-donner-la-peine-decrire/).
 
 À bientôt,
 Pascal

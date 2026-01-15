@@ -8,7 +8,7 @@ description: "Rejoignez CryptoInMontreal #40 pour une introduction pratique au b
 ogImage: "../../assets/images/og-legacy/2021/01/cim40-2021-01-06_23h03.jpg"
 ---
 
-Nous sommes déjà à la **40e édition** de [Crypto In Montreal](/posts/tag/cryptoinmontreal/) !!
+Nous sommes déjà à la **40e édition** de [Crypto In Montreal](/blog/tag/cryptoinmontreal/) !!
 
 Assurez-vous de lire tous les détails sur la page officielle de l'événement:
 
@@ -32,7 +32,7 @@ Dans tous les cas, je vais m'assurer qu'on passe tous une belle soirée! Notre M
 
 ### 🕺 À propos de l'organisateur
 
-[Lire cet article](/posts/qui-est-pascal-andy/)
+[Lire cet article](/blog/qui-est-pascal-andy/)
 
 ### 🗓️ Où, quand, combien?
 

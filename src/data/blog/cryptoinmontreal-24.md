@@ -11,7 +11,7 @@ description: "Voici le plan de match pour le 24e événement de #CryptoInMontrea
 Voici le plan de match pour le **24e événement** de [#CryptoInMontreal](/tags/cryptoinmontreal/) qui sera un meetup d'introduction sur le sujet.
 
 Pour les détails de cet événement et l'accès à la billeterie :
-/posts/cryptoinmontreal-24/
+/blog/cryptoinmontreal-24/
 
 ## AGENDA DE LA SOIRÉE
 
@@ -28,7 +28,7 @@ Tous les gens présents à l'événement obtiendront un crédit de 20$ valable s
 ## Quand, où, combien?
 
 - **Quand**: Ce mardi 20 novembre dès **18h45** (_ouverture des portes à 18h30_)
-- **Lieu**: Le [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders) au 2067 rue Crescent, Montréal Québec H3G 2C1 (2e étage)
+- **Lieu**: Le [Club Insiders](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders) au 2067 rue Crescent, Montréal Québec H3G 2C1 (2e étage)
 - Le coût est de **10$ payable à l'entrée**
   - **Le prix inclut**: les cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs. _Il y a même des produits sans gluten et véganes_ (c'est pas de l'inclusion ça!).
   - **Je produis cet événement gratuitement pour la bonne cause**. Il faut savoir que le prix d'entré est chargé par le Club Insiders qui est un espace de co-working. Ils s'assurent que toute la logistique de la soirée soit impeccable.
@@ -73,4 +73,4 @@ Personnellement, je suis très actif sur [Twitter](https://twitter.com/askpascal
 - [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - [Twitter](https://twitter.com/askpascalandy)
 - [Page Facebook](https://www.facebook.com/cryptoinmontreal/)
-- [Site web officiel](/tags/cryptoinmontreal/) | 📅 [Calendrier 2018](/posts/calendrier-2018-de-cryptoinmontreal/) | [Information générales](/posts/cryptoinmontreal-informations-generales/)
+- [Site web officiel](/tags/cryptoinmontreal/) | 📅 [Calendrier 2018](/blog/calendrier-2018-de-cryptoinmontreal/) | [Information générales](/blog/cryptoinmontreal-informations-generales/)

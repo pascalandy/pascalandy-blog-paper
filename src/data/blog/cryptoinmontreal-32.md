@@ -8,7 +8,7 @@ description: "Introduction pratique aux cryptomonnaies et démo proof-of-work au
 ogImage: ../../assets/images/og-legacy/2019/06/032b-cryptoinmontreal.jpg
 ---
 
-La **32e édition** de [Crypto In Montreal](/posts/tag/cryptoinmontreal/) aura lieu sur les planchers du **Desjardins Lab** au centre-ville de Montréal. L'ordre du jour:
+La **32e édition** de [Crypto In Montreal](/blog/tag/cryptoinmontreal/) aura lieu sur les planchers du **Desjardins Lab** au centre-ville de Montréal. L'ordre du jour:
 
 - D'abord, pour ceux et celles qui désirent s'initier aux cryptomonnaies et au blockchain, **l'introduction au monde des cryptos** sera donnée par moi, Pascal Andy, dès 17h30. La présentation permettra d'introduire de façon très pratique ceux qui cherchent à faire leur premier pas dans le monde des cryptomonnaies.
 - **What the heck do miners mine?** Je ferai une démo unique en son genre qui démontre comment fonctionne le proof-of-work (PoW) qui sécurise le protocole Bitcoin.
@@ -17,7 +17,7 @@ La **32e édition** de [Crypto In Montreal](/posts/tag/cryptoinmontreal/) aura l
 
 **À boire** : Pour l'occasion, notre hôte nous offrira gracieusement la bière.
 **À manger** : fruits, chips. Arrivez tôt!
-**Tous les détails** : [https://pascalandy.com/blog/cryptoinmontreal-32](/posts/cryptoinmontreal-32)
+**Tous les détails** : [https://pascalandy.com/blog/cryptoinmontreal-32](/blog/cryptoinmontreal-32)
 
 **Un gros merci à FirePress** : Cet événement est possible grâce à l'appuie de [FirePress.org](https://firepress.org/). Chez FirePress, ils se donnent à 100% afin de permettre aux entrepreneurs et aux petites organisations de créer leurs sites Web. Ils font l'**hébergement de sites web** en plus d'aider leurs clients à se familiariser avec la plate-forme [Ghost](https://play-with-ghost.com/).
 

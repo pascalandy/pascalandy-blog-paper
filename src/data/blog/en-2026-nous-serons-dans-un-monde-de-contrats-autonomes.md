@@ -56,4 +56,4 @@ Le lendemain...
 
 Je suis en congé aujourd'hui. Je prête mes tokens durement gagnés à un marché à change. Pendant cette pause je reçois 0,045% en retour. C'est ce que j'appelle un bon dimanche.
 
-[Originalement écrit en anglais](/posts/when-crypto-currencies-smart-contracts-iot-ai-sleep-together/).
+[Originalement écrit en anglais](/blog/when-crypto-currencies-smart-contracts-iot-ai-sleep-together/).

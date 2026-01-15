@@ -41,7 +41,7 @@ Ce concept ressemble à celui du TPI, (Tâches les Plus Importantes), mais à l�
 
 Comment cette méthode rend-elle plus productif ? La productivité n’a rien à voir avec la quantité de tâches à accomplir. Il s’agit plutôt d’achever les plus importantes dans la bonne séquence. Si tu passes ton temps à entreprendre des petites tâches, tu auras fait beaucoup de choses. Tu auras été très occupé, mais qu’auras-tu réellement accompli ? Le piège des petites tâches est qu’elles sont souvent les plus faciles à entreprendre. Il faut revenir à la séquence pour arrêter de tomber dans le piège de se tenir occupé.
 
-Notre stress est grandement associé au fait que nous aimons « multitâcher ». Il n’est pas rare de jeter un regard rétrospectif sur la semaine qui vient de se terminer en se disant que nous n’en avons pas fait grand-chose. Pourtant, nous étions « dans le jus ». Où est passé notre temps ? En se concentrant sur une seule tâche à la fois, on demeure beaucoup plus calme et conscient de notre horaire. C’est pour cette raison que j’évite de « [multitâcher](/posts/le-multitache-une-legende-urbaine-qui-a-trop-dure/) ».
+Notre stress est grandement associé au fait que nous aimons « multitâcher ». Il n’est pas rare de jeter un regard rétrospectif sur la semaine qui vient de se terminer en se disant que nous n’en avons pas fait grand-chose. Pourtant, nous étions « dans le jus ». Où est passé notre temps ? En se concentrant sur une seule tâche à la fois, on demeure beaucoup plus calme et conscient de notre horaire. C’est pour cette raison que j’évite de « [multitâcher](/blog/le-multitache-une-legende-urbaine-qui-a-trop-dure/) ».
 
 Plusieurs grands auteurs tels que Steven Covey (les sept habitudes des gens efficaces) ont appuyé l’idée. Il fait référence à l’histoire des gros cailloux comme celle qu’un de ses associé aurait entendue lors d’un séminaire.
 
@@ -51,4 +51,4 @@ Savoir comment glisser ses petites roches à travers les plus grosses dans la bo
 
 Prendre l'habitude de me faire des « To-Do list » m'a vraiment aidé à être plus productif. Avec le temps, je me suis rendu compte qu'il me manquait un ingrédient essentiel ... la bonne séquence.
 
-/posts/comment-doubler-sa-productivite-cette-semaine-avec-la-bonne-sequence/
+/blog/comment-doubler-sa-productivite-cette-semaine-avec-la-bonne-sequence/

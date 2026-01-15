@@ -1,18 +1,13 @@
 ---
-author: Pascal Andy
-date_created: 2017-10-22
+layout: ../layouts/AboutLayout.astro
 title: "Code of Conduct"
-tags:
-  - crypto-in-montreal
-ogImage: ../../assets/images/og-legacy/2017/10/pascalandy-com_header_2017-04-10_14h46-8.jpg
-description: "As members of this Community, we recognize that our behavior is our choice and this choice will result in our culture."
 ---
 
 As members of this Community, we recognize that our behavior is our choice and this choice will result in our culture.
 
 We are a mixture of professionals and volunteers from all over the world, working on every aspect of the mission - including mentorship, teaching, and connecting people. Because we come together from so many different places and positions, we would like a single document that sets communal expectations.
 
-This isn’t an exhaustive list of things that you can or can't do. Rather, take it in the spirit in which it’s intended - a guide to make it easier to enrich all of us and the technical communities in which we participate.
+This isn't an exhaustive list of things that you can or can't do. Rather, take it in the spirit in which it's intended - a guide to make it easier to enrich all of us and the technical communities in which we participate.
 
 ## Specific Conduct
 
@@ -22,18 +17,18 @@ Participants are responsible for knowing and abiding by the following:
 - Whether you're a regular contributor or a newcomer, all members care about making this community a safe place for you and we've got your back.
 - We are committed to providing a friendly, safe, and welcoming environment for all, regardless of gender, sexual orientation, disability, ethnicity, religion, or similar personal characteristic.
 - We will exclude you from interaction if you insult, demean, or harass anyone. That is not welcome behavior. We interpret the term "harassment" as including the definition in the [Citizen Code of Conduct](http://citizencodeofconduct.org/); if you have any lack of clarity about what might be included in that concept, please read their definition. In particular, we don't tolerate behavior that excludes people in socially marginalized groups.
-- Private harassment is also unacceptable. No matter who you are, if you feel you have been or are being harassed or made uncomfortable by a community member
-- - Respect that people have differences of opinion and that every design or implementation choice carries a trade-off and numerous costs. There is seldom a right answer.
+- Private harassment is also unacceptable. No matter who you are, if you feel you have been or are being harassed or made uncomfortable by a community member, please reach out.
+- Respect that people have differences of opinion and that every design or implementation choice carries a trade-off and numerous costs. There is seldom a right answer.
 - We respect data and findings. If you have solid ideas you want to experiment with, make a fork and see how it works.
 
 #### Contacts
 
-- Please contact one of the Slack admins, event organizers, or any member of the Community admin team via /posts/rester-en-contact/ or via Twitter https://twitter.com/askpascalandy
+- Please contact one of the Slack admins, event organizers, or any member of the Community admin team via [contact page](/blog/rester-en-contact/) or via [Twitter](https://twitter.com/askpascalandy)
 - If you believe someone is violating the code of conduct, we ask that you report it.
 
 ## Additional Community Beliefs
 
-This Code of Conduct presents a summary of the shared values and “common sense” thinking in our community. The basic social ingredients that hold our project together include:
+This Code of Conduct presents a summary of the shared values and "common sense" thinking in our community. The basic social ingredients that hold our project together include:
 
 - [Be considerate](#be-considerate)
 - [Be respectful](#be-respectful)

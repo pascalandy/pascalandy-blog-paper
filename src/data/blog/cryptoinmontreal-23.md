@@ -26,7 +26,7 @@ Je favoriserai les échanges et les discussions de groupes. Donc profitez-en pou
 - Du café et beacuoup de fun
 
 Les détails de cet événement et l'accès à la billeterie :
-/posts/cryptoinmontreal-23/
+/blog/cryptoinmontreal-23/
 
 ### CRÉDIT DE 20$
 
@@ -37,7 +37,7 @@ Tous les gens présents à l'événement obtiendront un crédit de 20$ valable s
 ## Quand et où ?
 
 - **Quand**: Ce mardi 23 octobre dès 18h30
-- **Lieu**: [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal QC H3G 2C1 Montréal Quéebec Canada
+- **Lieu**: [Club Insiders](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal QC H3G 2C1 Montréal Quéebec Canada
 - Le coût est de **10$ payable à l'entrée**. Le prix inclut: les de cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs. _Il y a même des produits sans gluten et véganes_ (c'est pas de l'inclusion ça!).
 - Le prix d'entré est chargé par le Club Insiders. C'est un espace de co-working. Ils s'assurent que toute la logistique de la soirée soit impeccable. En d'autres mots, **je produis cet événement gratuitement pour la bonne cause**.
 
@@ -81,4 +81,4 @@ Personnellement, je suis très actif sur [Twitter](https://twitter.com/askpascal
 - [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - [Twitter](https://twitter.com/askpascalandy)
 - [Page Facebook](https://www.facebook.com/cryptoinmontreal/)
-- [Site web officiel](/tags/cryptoinmontreal/) | 📅 [Calendrier 2018](/posts/calendrier-2018-de-cryptoinmontreal/) | [Information générales](/posts/cryptoinmontreal-informations-generales/)
+- [Site web officiel](/tags/cryptoinmontreal/) | 📅 [Calendrier 2018](/blog/calendrier-2018-de-cryptoinmontreal/) | [Information générales](/blog/cryptoinmontreal-informations-generales/)

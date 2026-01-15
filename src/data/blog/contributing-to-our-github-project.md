@@ -10,7 +10,7 @@ ogImage: "../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10
 
 Please take a moment to review this document to make the contribution process easy and useful for everyone involved!
 
-By contributing to this project, you agree to the [Contributor Code of Conduct on GitHub](/posts/contributor-code-of-conduct-on-github/).
+By contributing to this project, you agree to the [Contributor Code of Conduct on GitHub](/blog/contributor-code-of-conduct-on-github/).
 
 ## Using the issue tracker
 

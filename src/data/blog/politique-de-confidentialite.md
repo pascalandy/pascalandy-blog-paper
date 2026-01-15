@@ -10,7 +10,7 @@ description: "Responsable des Données et Propriétaire"
 
 ### Responsable des Données et Propriétaire
 
-Pour recevoir des informations sur les **Données Personnelles**, les objectifs et les parties avec qui elles sont partagées, veuillez [contacter](/posts/rester-en-contact/) le **Propriétaire**.
+Pour recevoir des informations sur les **Données Personnelles**, les objectifs et les parties avec qui elles sont partagées, veuillez [contacter](/blog/rester-en-contact/) le **Propriétaire**.
 
 ### Type de données collectées
 

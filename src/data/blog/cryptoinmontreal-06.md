@@ -27,9 +27,9 @@ Do you speak **English**? You're welcome as well! I just don't have the time to 
 - **Adresse**: 10719 Rue Lajeunesse, Montréal, QC H3L 2E7 · Montréal, QC
 
 Tous les détails de l'événement:
-/posts/cryptoinmontreal-06/
+/blog/cryptoinmontreal-06/
 
-Cheers!<br>[Pascal Andy](/posts/now/)
+Cheers!<br>[Pascal Andy](/now/)
 
 ## Est-ce pour moi ?
 
@@ -73,10 +73,10 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 ## Informations générales
 
 - [Site officiel](/tags/cryptoinmontreal/) de #CryptoInMontreal
-- [Pré-requis](/posts/cryptoinmontreal-informations-generales/#prerequis)
-- [Qui est l'organisateur](/posts/cryptoinmontreal-informations-generales/#organisateur) de #CryptoInMontreal ?
-- [FAQ](/posts/cryptoinmontreal-informations-generales/#faq) (questions et réponses)
-- [Le calendrier 2018](/posts/cryptoinmontreal-informations-generales/#calendrier).
+- [Pré-requis](/blog/cryptoinmontreal-informations-generales/#prerequis)
+- [Qui est l'organisateur](/blog/cryptoinmontreal-informations-generales/#organisateur) de #CryptoInMontreal ?
+- [FAQ](/blog/cryptoinmontreal-informations-generales/#faq) (questions et réponses)
+- [Le calendrier 2018](/blog/cryptoinmontreal-informations-generales/#calendrier).
 
 ## Contacts
 

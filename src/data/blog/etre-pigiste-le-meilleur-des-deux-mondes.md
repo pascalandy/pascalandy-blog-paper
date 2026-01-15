@@ -61,7 +61,7 @@ Au Royaume-Uni, **87%** des diplômés les plus performants perçoivent le trava
 
 **69%** de tous les diplômés affirment que le travail indépendant leur permet d’atteindre un meilleur équilibre entre leur vie professionnelle et leur vie personnelle. **38%** affirment que la variété est l’un des attraits du travail à la pige.
 
-Voici une statistique plus subtile à saisir. **38%** des étudiants affirment avoir l’impression qu’ils peuvent gagner autant, voire plus d’argent qu’en obtenant un emploi traditionnel. La différence se trouve certainement dans l’avantage fiscal de [gérer sa propre entreprise](/posts/etre-a-son-compte-cest-bien-construire-une-entreprise-cest-mieux/). Gagner 100 000$ par année comme employé ou bien gagner 100 000$ en tant qu’entrepreneur est deux mondes. La vie d’un entrepreneur est une dépense. Sa voiture, son téléphone, sa connexion Internet, les diners au restaurant, ce sont des dépenses qui lui permettent de gagner sa vie. C’est n’est pas le cas des employés.
+Voici une statistique plus subtile à saisir. **38%** des étudiants affirment avoir l’impression qu’ils peuvent gagner autant, voire plus d’argent qu’en obtenant un emploi traditionnel. La différence se trouve certainement dans l’avantage fiscal de [gérer sa propre entreprise](/blog/etre-a-son-compte-cest-bien-construire-une-entreprise-cest-mieux/). Gagner 100 000$ par année comme employé ou bien gagner 100 000$ en tant qu’entrepreneur est deux mondes. La vie d’un entrepreneur est une dépense. Sa voiture, son téléphone, sa connexion Internet, les diners au restaurant, ce sont des dépenses qui lui permettent de gagner sa vie. C’est n’est pas le cas des employés.
 
 Essentiellement, cette statistique démontre que le **1/3** des gens ont la graine de l’entrepreneuriat.
 
@@ -91,7 +91,7 @@ Les horaires flexibles sont également très valorisés, car la génération Y r
 
 ## Tout est en place
 
-Avec toute la panoplie de logiciels conçus pour travailler de façon collaborative, il est de plus en plus facile de travailler de partout. Il suffit de penser à Trello, Skype, Team Viewer, Dropbox, Google Docs, les CRM tel que Podio, les marchés d’échanges (marketplace) tel qu’Elance, Freelancer, oDesk, Etsy ou [Airbnb](/posts/voyager-a-travers-le-monde-durant-un-an-grace-a-airbnb/) pour en faire sa propre idée.
+Avec toute la panoplie de logiciels conçus pour travailler de façon collaborative, il est de plus en plus facile de travailler de partout. Il suffit de penser à Trello, Skype, Team Viewer, Dropbox, Google Docs, les CRM tel que Podio, les marchés d’échanges (marketplace) tel qu’Elance, Freelancer, oDesk, Etsy ou [Airbnb](/blog/voyager-a-travers-le-monde-durant-un-an-grace-a-airbnb/) pour en faire sa propre idée.
 
 Je tiens à mentionner que [Trello](https://trello.com/) est de loin l’outil que j’utilise le plus souvent dans ma vie professionnelle et personnelle. Je parle de Trello comme on parlait de religion il y a 100 ans. C’est pas peu dire.
 
@@ -101,4 +101,4 @@ Cet article est une adaptation de ce [texte](https://econsultancy.com/blog/64320
 
 Le travail n’est plus un lieu, le bureau est désuet et le concept d’emploi traditionnel semble de plus en plus anachronique. Avec toute la panoplie de logiciels conçus pour travailler de façon collaborative, il est de plus en plus facile de travailler de partout. Un concept qui devient de plus en plus concret.
 
-/posts/etre-pigiste-le-meilleur-des-deux-mondes/
+/blog/etre-pigiste-le-meilleur-des-deux-mondes/

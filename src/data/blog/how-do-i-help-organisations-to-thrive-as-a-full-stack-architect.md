@@ -10,7 +10,7 @@ description: "om/blog/analyste-daffaires-senior-ti/)"
 
 [![dispo-analyste-affai![dispo-analyste-affaires-pascal](../../assets/images/og-legacy/2018/10/dispo-analyste-affaires-pascal.jpg)om/blog/analyste-daffaires-senior-ti/)
 
-_Cette page est une sous-section de mon [offre en tant que Consultant](/posts/analyste-daffaires-senior-it/)_.
+_Cette page est une sous-section de mon [offre en tant que Consultant](/blog/analyste-daffaires-senior-it/)_.
 
 If you're reading this, it's probably because you want to know more about me. If we ever work together, what can you to expect from me? Am I the best candidate for this opportunity? So here is the deal: let me help you to do the hard work. I guarantee that you will have a clear answer at the end of this essay or else I'm paying for the next coffee round. Deal?
 
@@ -64,13 +64,13 @@ Despite the challenges and the energy it takes to be a Full Stack IT Architect, 
 4. Do you provide flexible work hours, or support for alternative scheduling options?
 5. Do you support health and wellness or family time?
 
-This leaves us to **one simple question**: Do you trust me? Do you believe that me, Pascal Andy, can ship and deliver my promise? If your heart is telling you I can, [please let me know](/posts/rester-en-contact/).
+This leaves us to **one simple question**: Do you trust me? Do you believe that me, Pascal Andy, can ship and deliver my promise? If your heart is telling you I can, [please let me know](/blog/rester-en-contact/).
 
 ## tl;dr (too long; didn't read)
 
 **► WHAT YOU CAN EXPECT FROM ME**
 
-1. Labeled me as [The Bridge Maker](/posts/i-am-the-bridge-maker/)
+1. Labeled me as [The Bridge Maker](/blog/i-am-the-bridge-maker/)
 2. Trustworthy and reliable
 3. Insatiable learner
 4. Great communicator
@@ -86,7 +86,7 @@ This leaves us to **one simple question**: Do you trust me? Do you believe that 
 
 ![](../../assets/images/og-legacy/2017/04/expectation-1462884219627.jpg)
 
-<a href="/posts/analyste-daffaires-senior-ti/" class="button button-block button-primary button-rounded">Voir mes disponibilités 📅</a>
+<a href="/blog/analyste-daffaires-senior-ti/" class="button button-block button-primary button-rounded">Voir mes disponibilités 📅</a>
 
 📷 [source](https://unsplash.com/photos/Y7y7fe8hrh0)
 

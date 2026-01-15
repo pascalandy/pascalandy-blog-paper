@@ -30,7 +30,7 @@ La version gratuite de Boxcryptor laissera le dossier nommé “Nos photos PDTA�
 
 **4. Les Plateformes** — L’application fonctionne sous toutes les plateformes populaires : Windows, Windows RT, Mac, Linux, iPhone/iPad, Android. Ici, l’avantage c’est que nous avons accès à nos données chiffrées même sur nos appareils mobiles.
 
-**5. Dans les Nuages** — C’est aussi une solution très puissante pour crypter ses données dans les nuages, que ce soit avec Dropbox, SugarSync ou Box. J’ai déjà souligné l’importance de se soucier de sa [vie privée en ligne dans cet article](/posts/prive-ou-personnel-peu-importe-cest-pas-de-tes-affaires/).
+**5. Dans les Nuages** — C’est aussi une solution très puissante pour crypter ses données dans les nuages, que ce soit avec Dropbox, SugarSync ou Box. J’ai déjà souligné l’importance de se soucier de sa [vie privée en ligne dans cet article](/blog/prive-ou-personnel-peu-importe-cest-pas-de-tes-affaires/).
 
 <iframe width="560" height="315" src="//www.youtube.com/embed/yT69UodLSxs" frameborder="0" allowfullscreen></iframe>
 
@@ -42,4 +42,4 @@ En écrivant cet article, j’ai remarqué qu’il y a deux versions de Boxcrypt
 
 Sony Picture aurait pu sauver les meubles, sa réputation et la vie privée de ses employés en chiffrant toutes leurs données sensibles. Toujours surprenant de réaliser que tant d’entreprises ne cryptent pas leurs ce qui est si précieux.
 
-Voici la façon la plus facile de se protéger: /posts/voici-comment-chiffrer-ses-donnees-confidentielles-et-ses-photos-pdta/
+Voici la façon la plus facile de se protéger: /blog/voici-comment-chiffrer-ses-donnees-confidentielles-et-ses-photos-pdta/

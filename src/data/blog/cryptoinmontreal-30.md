@@ -14,7 +14,7 @@ Pour la **30e édition** de Crypto In Montreal, nous aurons deux présentations 
 **À manger** : fruits, chips et goodies. Arrivez tôt!
 
 **Billetterie** et autres détails:
-[https://pascalandy.com/blog/cryptoinmontreal-30](/posts/cryptoinmontreal-30)
+[https://pascalandy.com/blog/cryptoinmontreal-30](/blog/cryptoinmontreal-30)
 
 ## L'ordre du jour
 
@@ -50,7 +50,7 @@ Dans tous les cas, je vais m'assurer qu'on passe tous une belle soirée! Notre M
 
 ### À propos de l'organisateur
 
-[https://pascalandy.com/blog/qui-est-pascal-andy/](/posts/qui-est-pascal-andy/)
+[https://pascalandy.com/blog/qui-est-pascal-andy/](/blog/qui-est-pascal-andy/)
 
 ### Le quand, le où, le prix
 

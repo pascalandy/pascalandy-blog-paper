@@ -9,7 +9,7 @@ ogImage: ../../assets/images/og-legacy/2017/04/115_O__EST_LA_PLACE_DES_AGENCES_Q
 description: "Si les logiciels détruisent le monde, les places de marché en ligne font partie des acteurs de cette destruction. Lekt, tu as peut-être remarqué que des..."
 ---
 
-Si les logiciels [détruisent le monde](/posts/les-technologies-mangent-nos-emplois-soigner-les-symptomes-ou-les-causes/), les places de marché en ligne font partie des acteurs de cette destruction. [Lekt](/posts/lekt-le-lecteur/), tu as peut-être remarqué que des firmes de toutes sortes sont en train de disparaître, partout dans le monde. Jetons un coup d’œil sur les lieux du carnage.
+Si les logiciels [détruisent le monde](/blog/les-technologies-mangent-nos-emplois-soigner-les-symptomes-ou-les-causes/), les places de marché en ligne font partie des acteurs de cette destruction. [Lekt](/blog/lekt-le-lecteur/), tu as peut-être remarqué que des firmes de toutes sortes sont en train de disparaître, partout dans le monde. Jetons un coup d’œil sur les lieux du carnage.
 
 En donnant de plus en plus de travail directement aux pigistes plutôt qu’à des agences qui font affaire de façon très locale, [oDesk](https://www.odesk.com/), [Elance](https://www.elance.com/), [Freelancer](https://www.freelancer.ca/) et [Fiverr](https://www.fiverr.com) éliminent les entreprises traditionnelles de sous-traitance.
 
@@ -47,7 +47,7 @@ La firme [99design](http://99designs.ca/) offre même un remboursement complet d
 
 **Une réputation établie.** La firme McKinsey jouit d’une excellente réputation. Dans le milieu, on se passe le mot : « On n’a jamais renvoyé qui que ce soit pour avoir fait affaire avec McKinsey. » Quand une entreprise a sa propre expression consacrée, c’est que sa réputation n’est plus à faire. C’est le résultat de plusieurs décennies de prestation de qualité. C’est ainsi que se crée une image de marque.
 
-Jusqu’à tout récemment, il était assez difficile de se forger une réputation individuelle. Mais grâce à LinkedIn et au système d’évaluation dont disposent toutes les places de marché en ligne, [l’économie de réputation](/posts/dans-leconomie-du-partage-notre-reputation-nous-precede/) est de plus en plus concrète.
+Jusqu’à tout récemment, il était assez difficile de se forger une réputation individuelle. Mais grâce à LinkedIn et au système d’évaluation dont disposent toutes les places de marché en ligne, [l’économie de réputation](/blog/dans-leconomie-du-partage-notre-reputation-nous-precede/) est de plus en plus concrète.
 
 > jusqu’à tout récemment, il était assez difficile de se forger une réputation individuelle
 

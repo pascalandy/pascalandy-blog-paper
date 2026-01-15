@@ -28,7 +28,7 @@ Kate will break down Smart Contracts, Solidity and give you all the tools you ne
 
 ### Tous les détails :
 
-[https://pascalandy.com/blog/cryptoinmontreal-37](/posts/cryptoinmontreal-37)
+[https://pascalandy.com/blog/cryptoinmontreal-37](/blog/cryptoinmontreal-37)
 
 ### Le quand, le où, le prix
 
@@ -53,7 +53,7 @@ Cet événement est possible grâce à l'appuie de [FirePress](https://firepress
 
 Salut Gang c'est Pascal. Dans tous les cas, je vais m'assurer qu'on passe tous une belle soirée! Notre Meetup favorise les triades, les échanges authentiques et l’apprentissage. C'est pas ta classe boring. C'est du réseautage comme le réseautage devrait être fait. See ya 👩‍⚕️ 👨‍⚕️ 👩‍🌾 👨‍🌾 👩‍🍳 👨‍🍳 👩‍🎓 👨‍🎓 👩‍🎤 👨‍🎤.
 
-[https://pascalandy.com/blog/qui-est-pascal-andy/](/posts/biographie-de-pascal-andy)
+[https://pascalandy.com/blog/qui-est-pascal-andy/](/blog/biographie-de-pascal-andy)
 
 ### Billetterie
 

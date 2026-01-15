@@ -12,7 +12,7 @@ Le **26e événement** de Crypto In Montreal aura lieu chez **Ernst & Young** Mo
 
 Pour les détails sur [#CryptoInMontreal](/tag/cryptoinmontreal/) et la billetterie:
 
-[Lire cet article](/posts/cryptoinmontreal-26/)
+[Lire cet article](/blog/cryptoinmontreal-26/)
 
 ### L'ordre du jour
 
@@ -42,7 +42,7 @@ Dans tout les cas, je vais m'assurer qu'on passe tous une belle soirée! Ce meet
 
 ### Billetterie sur Meetup
 
-[Lire cet article](/posts/billetterie-cim/)
+[Lire cet article](/blog/billetterie-cim/)
 
 ### **Niveau de connaissance**
 

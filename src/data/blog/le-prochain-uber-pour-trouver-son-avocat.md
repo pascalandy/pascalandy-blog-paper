@@ -16,7 +16,7 @@ Le monde des start-up juridiques est en feu. Certaines [évaluations](http://leg
 
 Le domaine juridique est un casse-tête en raison des intervenants frileux et divisés et du nombre considérable de règlementations non uniformes. Ces facteurs ont ralenti les bouleversements, mais les changements sont imminents. Les consommateurs exigent des services juridiques plus efficaces, plus transparents et plus abordables. De leur côté, les avocats sont à la recherche de moyens à la fine pointe de la technologie pour offrir des services concurrentiels dans un marché sursaturé.
 
-Trois zones de l’espace juridique sont sur le point de basculer vers des perturbations majeures en 2015. [Lekt](/posts/lekt-le-lecteur/), je te propose un petit tour d’horizon des tendances à surveiller.
+Trois zones de l’espace juridique sont sur le point de basculer vers des perturbations majeures en 2015. [Lekt](/blog/lekt-le-lecteur/), je te propose un petit tour d’horizon des tendances à surveiller.
 
 ## Le droit de plus en plus accessible
 

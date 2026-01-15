@@ -8,7 +8,7 @@ ogImage: ../../assets/images/og-legacy/2018/04/010-CryptoInMontreal.jpg
 description: "Le 10e événement de #CryptoInMontreal aura lieu ce mardi 17 avril 2018 dès 18h15 à l'Anticafé Local sur la rue Crescent dans le Centre-Ville de Montréal. Le..."
 ---
 
-Le 10e événement de #CryptoInMontreal aura lieu ce **mardi 17 avril 2018** dès 18h15 à l'Anticafé Local sur la rue Crescent dans le Centre-Ville de Montréal. Le calendrier pour l'année 2018 est [disponible ici](/posts/cryptoinmontreal-informations-generales/#calendrier).
+Le 10e événement de #CryptoInMontreal aura lieu ce **mardi 17 avril 2018** dès 18h15 à l'Anticafé Local sur la rue Crescent dans le Centre-Ville de Montréal. Le calendrier pour l'année 2018 est [disponible ici](/blog/cryptoinmontreal-informations-generales/#calendrier).
 
 **Introduction** — Pour ceux et celles qui désirent s'initier aux cryptomonnaies et au blockchain, **l'introduction au monde des cryptos** sera donnée par Pascal Andy. La présentation permettra d'introduire de façon très pratique ceux qui cherchent à faire leur premier pas dans le monde des cryptomonnaies.
 
@@ -22,17 +22,17 @@ Do you speak **English**? You're welcome as well! I just don't have the time to 
 
 - **Prix**: 6.50$ payable sur place
 - **Date** et **heure**: jeudi 17 avril 2018 à 18h15 (fin à 21h00)
-- **Lieu**: [Anticafé Local Crescent](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#anticafe)
+- **Lieu**: [Anticafé Local Crescent](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#anticafe)
 - **Adresse**: 2067 Crescent St #205, Montreal QC H3G 2C1 Montréal Quéebec Canada
 
-Le **prix inclut** — les cafés gourmands de torréfaction locale, les thés et tisanes, les pains haut gamme, les biscuits, le caramel, les légumes et fruits sec, nous avons même des produits sans gluten et véganes. Pour plus de détails --> [Anticafé Local Crescent](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#anticafe)
+Le **prix inclut** — les cafés gourmands de torréfaction locale, les thés et tisanes, les pains haut gamme, les biscuits, le caramel, les légumes et fruits sec, nous avons même des produits sans gluten et véganes. Pour plus de détails --> [Anticafé Local Crescent](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#anticafe)
 
 ![anticafe](../../assets/images/og-legacy/2018/03/anticafe.png)
 
 Tous les détails de l'événement:
-/posts/cryptoinmontreal-10/
+/blog/cryptoinmontreal-10/
 
-Cheers!<br>[Pascal Andy](/posts/now/)
+Cheers!<br>[Pascal Andy](/now/)
 
 ## Est-ce pour moi ?
 
@@ -76,10 +76,10 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 ## Informations générales
 
 - [Site officiel](/tags/cryptoinmontreal/) de #CryptoInMontreal
-- [Pré-requis](/posts/cryptoinmontreal-informations-generales/#prerequis)
-- [Qui est l'organisateur](/posts/cryptoinmontreal-informations-generales/#organisateur) de #CryptoInMontreal ?
-- [FAQ](/posts/cryptoinmontreal-informations-generales/#faq) (questions et réponses)
-- [Le calendrier 2018](/posts/cryptoinmontreal-informations-generales/#calendrier).
+- [Pré-requis](/blog/cryptoinmontreal-informations-generales/#prerequis)
+- [Qui est l'organisateur](/blog/cryptoinmontreal-informations-generales/#organisateur) de #CryptoInMontreal ?
+- [FAQ](/blog/cryptoinmontreal-informations-generales/#faq) (questions et réponses)
+- [Le calendrier 2018](/blog/cryptoinmontreal-informations-generales/#calendrier).
 
 ## Contacts
 

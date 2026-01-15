@@ -39,7 +39,7 @@ Lorsqu’on lit sur le web, on peut faire face à un gouffre sans fond d’histo
 
 Le fait de se considérer comme accro à l’actualité ou non pourrait constituer une explication potentielle. Dans l’enquête, on demandait aux répondants de rapporter à quel point ils aimaient se tenir au courant de l’actualité. Les gens qui ont affirmé que c’était leur cas avaient une perception plus faible de la surcharge d’information.
 
-[Lekt](/posts/lekt-le-lecteur/), si tu es le genre de personne qui souhaite suivre l’actualité au cours de la journée, tu as probablement [une routine préétablie](http://www.niemanlab.org/2012/10/let-me-guess-you-sleep-with-your-ipad-dont-you/) et tu consultes sans doute régulièrement les mêmes sites. Tu connais aussi déjà le contexte de la plupart des nouvelles que tu lis. Pour toutes ces raisons, Twitter serait peut-être une plateforme idéale pour toi.
+[Lekt](/blog/lekt-le-lecteur/), si tu es le genre de personne qui souhaite suivre l’actualité au cours de la journée, tu as probablement [une routine préétablie](http://www.niemanlab.org/2012/10/let-me-guess-you-sleep-with-your-ipad-dont-you/) et tu consultes sans doute régulièrement les mêmes sites. Tu connais aussi déjà le contexte de la plupart des nouvelles que tu lis. Pour toutes ces raisons, Twitter serait peut-être une plateforme idéale pour toi.
 
 À l’inverse, si tu es un lecteur de nouvelles plus passif, tu dois probablement fournir un effort supplémentaire pour trouver les bonnes sources ou pour trouver de l’information sur le contexte de la nouvelle. Ces éléments peuvent mener au sentiment d’être submergé, selon Holton. « Savoir ce que l’on cherche peut réduire la surcharge ou l’impression de surcharge. Une implication constante aussi », affirme-t-il.
 
@@ -53,6 +53,6 @@ Cet article est une adaptation de [ce texte](http://www.niemanlab.org/2012/11/ho
 
 Des fois, on se sent rushé par toute la quantité d’information existante. Voici comment les interfaces, en particulier, influencent cette impression d’être submergé de contenu.
 
-/posts/too-much-information-notre-facon-de-lire-est-plus-determinante-que-ce-quon-lit/
+/blog/too-much-information-notre-facon-de-lire-est-plus-determinante-que-ce-quon-lit/
 
 📷 [#1](https://stocksnap.io/photo/AU9LJF62Y8/), [#2](http://availabilityadvisor.com/2010/03/25/the-truth-about-virtual-machine-overload/)

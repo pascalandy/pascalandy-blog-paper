@@ -13,7 +13,7 @@ If you are already into crypto this question can’t be avoided. How much Canada
 Pour le **20e événement** de #CryptoInMontreal, la présentation principale sera en anglais.
 
 Les détails de cet événement se trouvent au:
-/posts/cryptoinmontreal-20/
+/blog/cryptoinmontreal-20/
 
 **Video**: available soon!
 
@@ -50,7 +50,7 @@ Tous les gens présents à l'événement obtiendront un crédit de 20$ valable s
 ## Quand et où ?
 
 - **Quand**: Ce mardi 11 septembre dès 18h40
-- **Lieu**: [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal QC H3G 2C1 Montréal Quéebec Canada
+- **Lieu**: [Club Insiders](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal QC H3G 2C1 Montréal Quéebec Canada
 - Le coût est de 10$ payable à l'entrée. Ce montant est chargé pour le Club Insiders qui est un espace de co-working et qui s'assure que toute la logistique de la soirée soit impeccable. En d'autres mots, aucun revenu ne va dans mes poches lol. **Le prix inclut**: les de cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs. _Il y a même des produits sans gluten et véganes_ (c'est pas de l'inclusion ça!).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -82,7 +82,7 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 - Le **deuxième** objectif est de **réunir les initiés** qui s'intéressent déjà au sujet des cryptomonnaies. Nous pourrons échanger et découvrir les différents enjeux de l’écosystème du blockchain et des cryptomonnaies altcoins.
 - Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades**, c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
 
-- **Calendrier 2018**: /posts/calendrier-2018-de-cryptoinmontreal/
+- **Calendrier 2018**: /blog/calendrier-2018-de-cryptoinmontreal/
 - **Teaser** de l'événement sur [YouTube](https://www.youtube.com/watch?v=2_rPjzXXfBA)
 
 ## Un petit geste qui nous aide grandement

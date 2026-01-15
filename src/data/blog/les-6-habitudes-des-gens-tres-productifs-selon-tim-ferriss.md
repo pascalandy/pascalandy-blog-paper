@@ -97,7 +97,7 @@ Selon Tim :
 
 « La concentration consiste avant tout à limiter la quantité d’options qui te permettent de procrastiner. Je crois que la concentration est perçue comme un don extraordinaire. Ce n’est pas un don extraordinaire. C’est tout simplement le fait d’aller dans une chambre capitonnée avec le problème que tu dois résoudre et de fermer la porte derrière toi. C’est tout. L’étendue de ta concentration équivaut au nombre de fois où tu pourras reproduire cette activité et la systématiser. »
 
-Une autre façon de résumer cette recherche est que nous devons [protéger notre attention](/posts/le-multitache-une-legende-urbaine-qui-a-trop-dure/). On est inondés d’études qui prouvent que [changer d’environnement](http://www.bakadesuyo.com/2012/04/whats-the-most-effective-way-to-change-you-be/) est le moyen le plus simple et le plus efficace de changer de comportement.
+Une autre façon de résumer cette recherche est que nous devons [protéger notre attention](/blog/le-multitache-une-legende-urbaine-qui-a-trop-dure/). On est inondés d’études qui prouvent que [changer d’environnement](http://www.bakadesuyo.com/2012/04/whats-the-most-effective-way-to-change-you-be/) est le moyen le plus simple et le plus efficace de changer de comportement.
 
 Les PDG des grandes entreprises se font interrompre toutes les 20 minutes. Comment font-ils pour effectuer toutes leurs tâches ? En travaillant à la maison, là où [personne ne peut les déranger](http://www.bakadesuyo.com/2013/05/spend-time-wisely/), pendant 90 minutes le matin :
 

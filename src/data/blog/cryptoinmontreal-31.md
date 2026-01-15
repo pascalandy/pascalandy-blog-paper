@@ -18,8 +18,8 @@ Vivre au jour le jour versus vivre une catastrophe naturelle, crise économique,
 
 **Tous les détails :**
 
-- [pascalandy.com/blog/cryptoinmontreal-31](/posts/cryptoinmontreal-31)
-- [pascalandy.com/blog/cim](/posts/cim/) (notre site web)
+- [pascalandy.com/blog/cryptoinmontreal-31](/blog/cryptoinmontreal-31)
+- [pascalandy.com/blog/cim](/cim/) (notre site web)
 
 ### Qui est le présentateur ?
 
@@ -29,7 +29,7 @@ La présentation sera donnée par **Thierry Brégaint** , cofondateur de [Equiby
 
 Dans tous les cas, je vais m'assurer qu'on passe tous une belle soirée! Notre Meetup favorise les triades, les échanges authentiques et l’apprentissage. C'est pas ta classe boring. C'est du réseautage comme le réseautage devrait être fait. See ya 👩‍⚕️ 👨‍⚕️ 👩‍🌾 👨‍🌾 👩‍🍳 👨‍🍳 👩‍🎓 👨‍🎓 👩‍🎤 👨‍🎤.
 
-[https://pascalandy.com/blog/qui-est-pascal-andy/](/posts/qui-est-pascal-andy/)
+[https://pascalandy.com/blog/qui-est-pascal-andy/](/blog/qui-est-pascal-andy/)
 
 ### Le quand, le où, le prix ?
 

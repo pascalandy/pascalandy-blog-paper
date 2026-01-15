@@ -11,7 +11,7 @@ description: "Good morning Gladiators!"
 Good morning Gladiators!
 
 - Please look at what I prepared for you tomorrow:
-  /posts/10-stages-of-the-lifecycle-of-a-business/
+  /blog/10-stages-of-the-lifecycle-of-a-business/
 - Starting at 8h30, duration 60 min
 
 ### 1) Chit-chat

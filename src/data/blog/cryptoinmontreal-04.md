@@ -11,7 +11,7 @@ Le premier objectif est de démocratiser les cryto-monnaies (cryptocurrency). No
 
 ## Lieu et date
 
-Le 4e événement de #CryptoInMontreal à lieu le 23 janvier 2018 (aussi -> [calendrier 2018](/posts/cryptoinmontreal-informations-generales/#calendrier)).
+Le 4e événement de #CryptoInMontreal à lieu le 23 janvier 2018 (aussi -> [calendrier 2018](/blog/cryptoinmontreal-informations-generales/#calendrier)).
 
 Pour ceux et celles qui désirent s'initier aux cryptomonnaie et au blockchain, **ne manquez pas l'introduction** qui sera donnée par Pascal Andy à **18h30** tappant. La présentation permettra d'introduire de façon très pratique ceux qui cherchent à faire leur premier pas dans le monde des cryptomonnaies.
 
@@ -42,10 +42,10 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 ## Informations générales
 
 1. Le **site officiel** de #CryptoInMontreal se trouve sur mon blog au: /tags/cryptoinmontreal/
-2. [Pré-requis](/posts/cryptoinmontreal-informations-generales/#prerequis) (ouvrir son compte sur un marché de change)
-3. [Qui est l'organisateur](/posts/cryptoinmontreal-informations-generales/#organisateur) de #CryptoInMontreal ?
-4. [FAQ](/posts/cryptoinmontreal-informations-generales/#faq) (questions et réponses)
-5. [Le calendrier 2018](/posts/cryptoinmontreal-informations-generales/#calendrier). Les événements #CryptoInMontreal auront à tous les deux semaines.
+2. [Pré-requis](/blog/cryptoinmontreal-informations-generales/#prerequis) (ouvrir son compte sur un marché de change)
+3. [Qui est l'organisateur](/blog/cryptoinmontreal-informations-generales/#organisateur) de #CryptoInMontreal ?
+4. [FAQ](/blog/cryptoinmontreal-informations-generales/#faq) (questions et réponses)
+5. [Le calendrier 2018](/blog/cryptoinmontreal-informations-generales/#calendrier). Les événements #CryptoInMontreal auront à tous les deux semaines.
 
 ## Agenda et déroulement de la soirée
 
@@ -102,4 +102,4 @@ https://www.meetup.com/CryptoInMontreal/events/dwwjfpyxcbfc/
 
 Au plaisir de se croiser au prochain événement de #CryptoInMontreal!
 
-Cheers!<br>[Pascal Andy](/posts/now/)
+Cheers!<br>[Pascal Andy](/now/)

@@ -10,8 +10,8 @@ description: "Recommandations et témoignages"
 
 ### Recommandations et témoignages
 
-- J’ai reçu [sept recommandations](/posts/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada/#recommandations-et-t-moignages) lors mon passage à la Banque Nationale du Canada. [Les voici](/posts/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada/#recommandations-et-t-moignages).
-- Après mon passage à chez **Bell Canada**, voici les **recommandations** [qu'ils m'ont partagés](/posts/analyste-daffaires-bell-business-market-infrastructures-service/#recommandationsettmoignages)
+- J’ai reçu [sept recommandations](/blog/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada/#recommandations-et-t-moignages) lors mon passage à la Banque Nationale du Canada. [Les voici](/blog/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada/#recommandations-et-t-moignages).
+- Après mon passage à chez **Bell Canada**, voici les **recommandations** [qu'ils m'ont partagés](/blog/analyste-daffaires-bell-business-market-infrastructures-service/#recommandationsettmoignages)
 
 ### En deux questions
 
@@ -28,18 +28,18 @@ _Deux ans auparavant, j'avais fait un **exercice similaire**. On retrouve une ar
 
 Voici **deux articles** que j'ai écrits dans le but de mieux exprimer la façon que je perçois mon rôle d'Analyste d'Affaires et de consultant.
 
-- [I Am The Bridge Maker](/posts/i-am-the-bridge-maker/)
-- [How do I help organisations to thrive as a Full Stack Architect](/posts/how-do-i-help-organisations-to-thrive-as-a-full-stack-architect/)
+- [I Am The Bridge Maker](/blog/i-am-the-bridge-maker/)
+- [How do I help organisations to thrive as a Full Stack Architect](/blog/how-do-i-help-organisations-to-thrive-as-a-full-stack-architect/)
 
 ### Mon profil (version courte)
 
 Je suis un Analyste d’Affaires Sénior avec plus de 8 ans d’expérience. Je possède un **fort background technique** ayant terminé ma **formation comme programmeur-analyste** en plus d’un certificat en Administration des Affaires obtenu à l’École des Sciences de la Gestion de l’Université (ETS) du Québec à Montréal. En janvier 2016, j’ai terminé la formation « Business Mastery » donnée par Tony Robbins dans le but de mieux cerner les enjeux des entreprises.
 
-Mon type de **personnalité Myers Briggs** : [ENTP-A DEBATER](/posts/my-personality-type-entp-a-debater/)
+Mon type de **personnalité Myers Briggs** : [ENTP-A DEBATER](/blog/my-personality-type-entp-a-debater/)
 
 **► WHAT YOU CAN EXPECT FROM ME**
 
-1. Labeled me as [The Bridge Maker](/posts/i-am-the-bridge-maker/)
+1. Labeled me as [The Bridge Maker](/blog/i-am-the-bridge-maker/)
 2. Trustworthy and reliable
 3. Insatiable learner
 4. Great communicator
@@ -81,5 +81,5 @@ En somme, j’adore connecter les points qui semblent disparates pour en faire a
 ### Contact
 
 [Linkedin](https://www.linkedin.com/in/pascalnguyendeschenes)
-[M'écrire](/posts/rester-en-contact/)
+[M'écrire](/blog/rester-en-contact/)
 Pascal Nguyen Deschênes

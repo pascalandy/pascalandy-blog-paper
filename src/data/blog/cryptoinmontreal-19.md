@@ -28,14 +28,14 @@ Voici les grands thèmes de cette présentation:
 
 Ensuite, dans le 2ième bloque de la soirée, **Pascal Andy** prendera le plancher pour échanger sur les **cas d'utilisations** du blockchain. Nous démystifierons les raisons qui feront du blockchain un "game changer". Les impacts sont immenses. Notre société à vécu l’avant et l’après la venue de l’Internet. Nous verrons pourquoi il en sera de même avec les DLT (distributed ledger technologies).
 
-**Détails** de cet événement sur le site officiel : /posts/cryptoinmontreal-19/
+**Détails** de cet événement sur le site officiel : /blog/cryptoinmontreal-19/
 
 ![flyer de l'événement](../../assets/images/og-legacy/2018/08/019-Comprendre-ce-quest-la-CryptoE-conomie-les-cas-d-utilisations-du-blockchains-CryptoInMontreal-19.jpg)
 
 ## Quand et où ?
 
 - **Quand**: Ce mardi 28 août dès 18h40
-- **Lieu**: [Club Insiders](/posts/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal QC H3G 2C1 Montréal Quéebec Canada
+- **Lieu**: [Club Insiders](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders), 2067 Crescent St 2e étage, Montréal QC H3G 2C1 Montréal Quéebec Canada
 - **Coût**: 10$ à la porte. **Le prix inclut**: les de cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs. _Il y a même des produits sans gluten et véganes_ (c'est pas de l'inclusion ça!).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -67,7 +67,7 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 - Le **deuxième** objectif est de **réunir les initiés** qui s'intéressent déjà au sujet des cryptomonnaies. Nous pourrons échanger et découvrir les différents enjeux de l’écosystème du blockchain et des cryptomonnaies altcoins.
 - Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades**, c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
 
-- **Calendrier 2018**: /posts/calendrier-2018-de-cryptoinmontreal/
+- **Calendrier 2018**: /blog/calendrier-2018-de-cryptoinmontreal/
 - **Teaser** de l'événement sur [YouTube](https://www.youtube.com/watch?v=2_rPjzXXfBA)
 
 ## Un petit geste qui nous aide grandement

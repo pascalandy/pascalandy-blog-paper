@@ -7,7 +7,7 @@
 ## Browser, esign/Style
 - the user will ask you to test something on the website, like:
   - http://localhost:4321/
-  - http://localhost:4321/posts/lhorizon-cest-toi
+  - http://localhost:4321/blog/lhorizon-cest-toi
   - http://localhost:4321/tags
 - run` agent-browser --help` to see avail cmd, go!
 
@@ -63,7 +63,7 @@ astro.config.ts → src/config.ts + content.config + src/constants
 ```
 
 ## Routes
-`/` home | `/posts/[...page]` list | `/posts/[...slug]/` post | `/tags/[tag]/` filter | `/search/` | `/rss.xml`
+`/` home | `/blog/[...page]` list | `/blog/[...slug]/` post | `/tags/[tag]/` filter | `/search/` | `/rss.xml`
 
 ## Post Visibility
 - Drafts: dev only | Scheduled: visible after pubDatetime-15min

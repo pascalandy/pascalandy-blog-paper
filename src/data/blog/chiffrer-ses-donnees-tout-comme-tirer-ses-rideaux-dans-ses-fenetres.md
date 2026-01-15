@@ -18,7 +18,7 @@ Selon moi, chiffrer ses données, tirer ses rideaux le soir, dresser une haie de
 
 > _Spiderman avait tellement raison « Avec de grands pouvoirs viennent de grandes responsabilités. » La puissance du partage d’information vient avec son lot de défis._
 
-Plusieurs d’entre nous se disent « je sais … je devrais protéger mes photos, mes vidéos … ». Puis la seconde d’après, la vie nous rattrape et on passe à un autre appel. J’ai abordé le sujet en détail dans le premier article de cette série [« Privé ou personnel ? C’est pas de tes affaires … »](/posts/prive-ou-personnel-peu-importe-cest-pas-de-tes-affaires/).
+Plusieurs d’entre nous se disent « je sais … je devrais protéger mes photos, mes vidéos … ». Puis la seconde d’après, la vie nous rattrape et on passe à un autre appel. J’ai abordé le sujet en détail dans le premier article de cette série [« Privé ou personnel ? C’est pas de tes affaires … »](/blog/prive-ou-personnel-peu-importe-cest-pas-de-tes-affaires/).
 
 Quand on s’y arrête, il y a relativement beaucoup de données que nous voulons tous garder privées. En voici quelques exemples :
 

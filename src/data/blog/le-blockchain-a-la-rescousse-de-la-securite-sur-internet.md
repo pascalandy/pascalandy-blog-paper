@@ -13,9 +13,9 @@ Internet est une cour à scrap. Tout semble fonctionner comme par magie ... jusq
 
 La réalité est qu'une bonne partie de l'infrastructure qui compose l'Internet est faite de solutions [broche à foin](http://techcrunch.com/2014/03/29/the-internet-is-held-together-with-bubble-gum-and-baling-wire/). Nous avons collectivement accumulé une [dette technique](https://medium.com/@joaomilho/festina-lente-e29070811b84) gigantesque. Une dette technique se résume par les coûts engendrés dans le futur pour le maintien des technologies actuelles. Le seul moyen de rembourser cette dette technique est de réparer les dégâts.
 
-Reste avec moi [Lekt](/posts/lekt-le-lecteur/), le sujet n'est pas si geek que ça. La bonne nouvelle, c’est qu’on est finalement en train de réparer les dégâts. La plupart d’entre eux sont subtils pour l’utilisateur moyen, mais les répercussions potentielles pourraient éventuellement s’étendre aux moindres recoins de notre existence.
+Reste avec moi [Lekt](/blog/lekt-le-lecteur/), le sujet n'est pas si geek que ça. La bonne nouvelle, c’est qu’on est finalement en train de réparer les dégâts. La plupart d’entre eux sont subtils pour l’utilisateur moyen, mais les répercussions potentielles pourraient éventuellement s’étendre aux moindres recoins de notre existence.
 
-Commençons par le [Bitcoin](/posts/comment-le-bitcoin-et-le-blockchain-transforment-le-systeme-financier-comme-le-mp3-a-change-lindustrie-de-la-musique/). La technologie blockchain, sur laquelle le Bitcoin est basée, est une [percée technique majeure](http://techcrunch.com/2014/03/22/enter-the-blockchain-how-bitcoin-can-turn-the-cloud-inside-out/) qui pourrait, avec le temps, révolutionner le secteur financier tel qu’on le connaît. Les premiers pas de cette [révolution](/posts/comment-le-bitcoin-et-le-blockchain-transforment-le-systeme-financier-comme-le-mp3-a-change-lindustrie-de-la-musique/) sont bel et bien réels. Je tiens à préciser que certains marchés d'échanges ont eu des problèmes de failles de sécurité. Par contre, il ne faut pas confondre les problèmes des entreprises qui exploitent le protocole **blockchain** et le protocole lui-même. Le blockchain demeure infaillible jusqu'à ce jour.
+Commençons par le [Bitcoin](/blog/comment-le-bitcoin-et-le-blockchain-transforment-le-systeme-financier-comme-le-mp3-a-change-lindustrie-de-la-musique/). La technologie blockchain, sur laquelle le Bitcoin est basée, est une [percée technique majeure](http://techcrunch.com/2014/03/22/enter-the-blockchain-how-bitcoin-can-turn-the-cloud-inside-out/) qui pourrait, avec le temps, révolutionner le secteur financier tel qu’on le connaît. Les premiers pas de cette [révolution](/blog/comment-le-bitcoin-et-le-blockchain-transforment-le-systeme-financier-comme-le-mp3-a-change-lindustrie-de-la-musique/) sont bel et bien réels. Je tiens à préciser que certains marchés d'échanges ont eu des problèmes de failles de sécurité. Par contre, il ne faut pas confondre les problèmes des entreprises qui exploitent le protocole **blockchain** et le protocole lui-même. Le blockchain demeure infaillible jusqu'à ce jour.
 
 Je pense aussi à [Ethereum](https://www.ethereum.org/), « une plate-forme et un langage de programmation qui permet à tous les développeurs de concevoir et de publier des applications distribuées ». Cette plate-forme a recueilli 15 millions de dollars non pas en capital-risque, mais en vendant des « Ethers coins ».
 
@@ -61,6 +61,6 @@ _Note de l’éditeur_ - Cet article est une adaptation et un « mashup » de me
 
 Cher Internet, tout semble fonctionner comme par magie... jusqu'au jour où les systèmes en place se font défoncer. Donne-moi des solutions.
 
-/posts/le-blockchain-a-la-rescousse-de-la-securite-sur-internet/
+/blog/le-blockchain-a-la-rescousse-de-la-securite-sur-internet/
 
 📷 [source](http://www.codecnetworks.com/services.php)
