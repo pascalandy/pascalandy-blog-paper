@@ -2,7 +2,8 @@
 author: Pascal Andy
 date_created: 2015-10-19
 title: "Poste d'Analyste d'Affaires Système (2015-10-19)"
-tags: [consultation"]
+tags:
+  - consultation
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Bon matin, Il y a une ouverture pour un poste permanent dans l'équipe dans laquelle je suis."
 ---
