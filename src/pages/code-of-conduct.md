@@ -17,13 +17,13 @@ Participants are responsible for knowing and abiding by the following:
 - Whether you're a regular contributor or a newcomer, all members care about making this community a safe place for you and we've got your back.
 - We are committed to providing a friendly, safe, and welcoming environment for all, regardless of gender, sexual orientation, disability, ethnicity, religion, or similar personal characteristic.
 - We will exclude you from interaction if you insult, demean, or harass anyone. That is not welcome behavior. We interpret the term "harassment" as including the definition in the [Citizen Code of Conduct](http://citizencodeofconduct.org/); if you have any lack of clarity about what might be included in that concept, please read their definition. In particular, we don't tolerate behavior that excludes people in socially marginalized groups.
-- Private harassment is also unacceptable. No matter who you are, if you feel you have been or are being harassed or made uncomfortable by a community member
-- - Respect that people have differences of opinion and that every design or implementation choice carries a trade-off and numerous costs. There is seldom a right answer.
+- Private harassment is also unacceptable. No matter who you are, if you feel you have been or are being harassed or made uncomfortable by a community member, please reach out.
+- Respect that people have differences of opinion and that every design or implementation choice carries a trade-off and numerous costs. There is seldom a right answer.
 - We respect data and findings. If you have solid ideas you want to experiment with, make a fork and see how it works.
 
 #### Contacts
 
-- Please contact one of the Slack admins, event organizers, or any member of the Community admin team via /blog/rester-en-contact/ or via Twitter https://twitter.com/askpascalandy
+- Please contact one of the Slack admins, event organizers, or any member of the Community admin team via [contact page](/blog/rester-en-contact/) or via [Twitter](https://twitter.com/askpascalandy)
 - If you believe someone is violating the code of conduct, we ask that you report it.
 
 ## Additional Community Beliefs

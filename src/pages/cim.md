@@ -38,11 +38,11 @@ Crypto In Montreal a pour mission:
 
 ### Teaser 2019
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/f3zyNnqi8gg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/f3zyNnqi8gg" style="border:none" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### Teaser 2018
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" style="border:none" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 ---
 
