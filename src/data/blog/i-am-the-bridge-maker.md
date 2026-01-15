@@ -5,10 +5,10 @@ title: "I Am The Bridge Maker"
 tags:
   - consultation
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
-description: "om/blog/analyste-daffaires-senior-ti/)"
+description: "I consider myself as The Bridge Maker - ensuring business requirements are captured while communicating system requirements to development teams."
 ---
 
-[![dispo-analyste-affai![dispo-analyste-affaires-pascal](../../assets/images/og-legacy/2018/10/dispo-analyste-affaires-pascal.jpg)om/blog/analyste-daffaires-senior-ti/)
+![dispo-analyste-affaires-pascal](../../assets/images/og-legacy/2018/10/dispo-analyste-affaires-pascal.jpg)
 
 _Cette page est une sous-section de mon [offre en tant que Consultant](/blog/analyste-daffaires-senior-ti/)_.
 

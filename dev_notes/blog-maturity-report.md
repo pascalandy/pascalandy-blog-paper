@@ -1,154 +1,173 @@
-# Blog maturity report
+# Blog Maturity Report
 
-## Great (flagship / evergreen)
-- `src/data/blog/analyste-daffaires-senior-ti.md` — core positioning page.
-- `src/data/blog/au-fond-ce-que-je-tiens-a-partager.md` — mission anchor.
-- `src/data/blog/biographie-de-pascal-andy.md` — strong personal narrative.
-- `src/data/blog/comment-assurer-et-arriver-plus-rapidement-a-ses-fins-grace-a-ces-6-smartcuts.md` — long-form, actionable.
-- `src/data/blog/consultant-en-relations-technologiques-crt.md` — service manifesto.
-- `src/data/blog/en-2026-nous-serons-dans-un-monde-de-contrats-autonomes.md` — strong visionary piece.
-- `src/data/blog/etre-a-son-compte-cest-bien-construire-une-entreprise-cest-mieux.md` — evergreen business model.
-- `src/data/blog/le-bitcoin-cest-une-bataille-qui-rappel-celle-de-thomas-edison-et-de-nikola-tesla.md` — strong analogical essay.
-- `src/data/blog/le-blockchain-a-la-rescousse-de-la-securite-sur-internet.md` — deep technical essay.
-- `src/data/blog/le-multitache-une-legende-urbaine-qui-a-trop-dure.md` — timeless productivity topic.
-- `src/data/blog/le-saint-graal-de-la-productivite-les-raccourcis.md` — comprehensive guide.
-- `src/data/blog/lekt-le-lecteur.md` — foundational voice piece.
-- `src/data/blog/les-statistiques-dun-blogueur-apres-ses-7-premiers-articles.md` — original long-form.
-- `src/data/blog/pourquoi-jaime-vous-tutoyer.md` — strong brand voice.
-- `src/data/blog/what-is-a-now-page.md` — classic concept, evergreen.
+> Generated: 2025-01-15
+> Evaluated on: Content depth/completeness + Writing quality/polish
 
-## Okay / Solid
-- `src/data/blog/analyste-daffaires-bell-business-market-infrastructures-service.md` — good case study, minor formatting.
-- `src/data/blog/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada.md` — strong but duplicated.
-- `src/data/blog/andy-media.md` — good but short.
-- `src/data/blog/anneau-de-stabilisation-de-waynes-audio.md` — focused product write-up.
-- `src/data/blog/assetv-my-new-blockchain-project-idea.md` — clear pitch, short.
-- `src/data/blog/bypasser-le-systeme.md` — inspiring, concise.
-- `src/data/blog/bitcoin-la-vague-doctobre-2020-bien-differente-de-celle-de-2017.md` — solid analysis, dated context.
-- `src/data/blog/chiffrer-ses-donnees-tout-comme-tirer-ses-rideaux-dans-ses-fenetres.md` — good privacy framing.
-- `src/data/blog/comment-doubler-sa-productivite-cette-semaine-avec-la-bonne-sequence.md` — solid repost.
-- `src/data/blog/dans-leconomie-du-partage-notre-reputation-nous-precede.md` — clear and relevant.
-- `src/data/blog/definitions.md` — useful reference.
-- `src/data/blog/each-day-traditional-social-networks-are-disconnecting-from-you.md` — relevant critique.
-- `src/data/blog/etre-pigiste-le-meilleur-des-deux-mondes.md` — strong, dated stats.
-- `src/data/blog/followfi-permet-aux-patients-dattendre-a-distance-avec-leur-telephone-intelligent.md` — solid case study.
-- `src/data/blog/les-6-habitudes-des-gens-tres-productifs-selon-tim-ferriss.md` — evergreen advice.
-- `src/data/blog/les-medias-et-le-syndrome-de-munchausen.md` — concise and relevant.
-- `src/data/blog/les-technologies-mangent-nos-emplois-soigner-les-symptomes-ou-les-causes.md` — strong analysis.
-- `src/data/blog/lidentification-a-deux-facteurs-la-securite-de-votre-vie-digitale-en-depend.md` — good, needs refresh.
-- `src/data/blog/moderation-des-commentaires.md` — solid policy page.
-- `src/data/blog/mon-top-5.md` — good orientation page.
-- `src/data/blog/my-productivity-hacks-to-fight-procrastination.md` — helpful advice.
-- `src/data/blog/ou-est-la-place-des-agences-quand-les-marches-en-ligne-nous-permettent-de-sous-traiter-a-travers-le-monde.md` — strong analysis.
-- `src/data/blog/pourquoi-se-donner-la-peine-decrire.md` — clear purpose.
-- `src/data/blog/prive-ou-personnel-peu-importe-cest-pas-de-tes-affaires.md` — solid privacy essay.
-- `src/data/blog/quest-ce-que-tu-fais-au-juste.md` — clear, evergreen.
-- `src/data/blog/studio-transology-inc.md` — solid portfolio content.
-- `src/data/blog/thermodynamic-neutrality.md` — coherent concept piece.
-- `src/data/blog/too-much-information-notre-facon-de-lire-est-plus-determinante-que-ce-quon-lit.md` — relevant adaptation.
-- `src/data/blog/traefik-demo-docker-stack-and-play-with-docker.md` — strong technical tutorial.
-- `src/data/blog/vinyl.md` — useful resource list.
-- `src/data/blog/voyager-a-travers-le-monde-durant-un-an-grace-a-airbnb.md` — solid narrative.
-- `src/data/blog/when-crypto-currencies-smart-contracts-iot-ai-sleep-together.md` — creative, readable.
-- `src/data/blog/la-meilleure-facon-de-gerer-la-creativite-entre-malgre-en-depit-et-grace.md` — good repost.
-- `src/data/blog/la-vision-de-dominick-gauthier-et-lhomme-derriere-nos-skieurs-quebecois.md` — niche but good.
+**Total Posts:** 194 in `src/data/blog/`
+**Languages:** French & English mix
+**Date Range:** 2013-2026
 
-## Needs Attention (incomplete / broken / thin)
-- `src/data/blog/10-stages-of-the-lifecycle-of-a-business.md` — internal notes.
-- `src/data/blog/account.md` — empty.
-- `src/data/blog/appart-250.md` — private notes.
-- `src/data/blog/audiophile.md` — raw link dump.
-- `src/data/blog/charge-de-cours-a-lesg-uqam.md` — mostly screenshots.
-- `src/data/blog/ci-cd-scenario.md` — rough notes.
-- `src/data/blog/comment-le-bitcoin-et-le-blockchain-transforment-le-systeme-financier-comme-le-mp3-a-change-lindustrie-de-la-musique.md` — dated claims.
-- `src/data/blog/comment-reprendre-le-dessus-quand-le-rythme-accelere.md` — diffuse, weak close.
-- `src/data/blog/comment-transferer-automatiquement-les-photos-de-son-telephone-a-son-ordinateur.md` — obsolete workflow.
-- `src/data/blog/contributor-code-of-conduct-on-github.md` — placeholder email.
-- `src/data/blog/configurer-un-gym-maison-avec-une-seule-paire-de-dumbbells.md` — broken images.
-- `src/data/blog/cryptoinmontreal-12.md` — cancelled stub.
-- `src/data/blog/cryptoinmontreal-24.md` — wrong og image.
-- `src/data/blog/cryptoinmontreal-29.md` — formatting glitch.
-- `src/data/blog/cryptoinmontreal-30.md` — duplicate media / rough bullets.
-- `src/data/blog/cryptoinmontreal-31.md` — missing promised content.
-- `src/data/blog/cryptoinmontreal-36.md` — truncated frontmatter.
-- `src/data/blog/dm-motorsport.md` — personal todo list.
-- `src/data/blog/dossier-julian.md` — draft, incomplete.
-- `src/data/blog/fake-innovation.md` — too short.
-- `src/data/blog/favoris.md` — private bookmarks.
-- `src/data/blog/firepress-cest-devenir-proprietaire-de-sa-maison-digitale.md` — outdated pitch.
-- `src/data/blog/gerer-ses-mots-de-passe-comme-une-choregraphie.md` — security guidance risky today.
-- `src/data/blog/googler-comme-si-ta-vie-depend.md` — raw notes.
-- `src/data/blog/hey-welcome-home.md` — private guest info.
-- `src/data/blog/how-do-i-help-organisations-to-thrive-as-a-full-stack-architect.md` — broken markdown.
-- `src/data/blog/i-am-the-bridge-maker.md` — broken markdown.
-- `src/data/blog/la-maturite-du-grand-publique-face-a-la-blockchain.md` — one-liner.
-- `src/data/blog/lai-ne-va-pas-remplacer-les-humains-mais-les-humains-qui-utilisent-lai-le-feront.md` — too short.
-- `src/data/blog/les-endroits-qui-acceillent-cryptoinmontreal.md` — outdated listing.
-- `src/data/blog/lhorizon-cest-toi.md` — very short, typos.
-- `src/data/blog/lia-intelligence-artificielle-est-le-prochain-saut-de-productivite.md` — thin content.
-- `src/data/blog/liste-denvoi.md` — incomplete copy.
-- `src/data/blog/pese-tes-mots-je-vais-peser-les-miens.md` — inflammatory draft.
-- `src/data/blog/qui-est-pascal-andy.md` — outdated links.
-- `src/data/blog/repost-ma-premiere-startup.md` — placeholder + image dump.
-- `src/data/blog/rester-en-contact.md` — stale channels.
-- `src/data/blog/role-de-tamara.md` — internal checklist.
-- `src/data/blog/shady-twitter.md` — rant + stale promo.
-- `src/data/blog/souscrire-au-blog-de-pascal-andy.md` — outdated CTA.
-- `src/data/blog/supprimer-ou-conserver-son-historique.md` — incomplete.
-- `src/data/blog/the-lean-way-to-start-something.md` — image-only.
-- `src/data/blog/voici-comment-chiffrer-ses-donnees-confidentielles-et-ses-photos-pdta.md` — deprecated tools.
-- `src/data/blog/what-is-the-gnu-gpl-license.md` — too thin.
+## Executive Summary
 
-## Archive (time-bound / historical)
-- All `src/data/blog/cryptoinmontreal-01.md` … `cryptoinmontreal-41.md` except `20`, `22`, `26`, `28`, `33`, `35`, `37` (those are stronger/solid).
-- `src/data/blog/10-ans-apres-star-academie-1-2003-les-retrouvailles.md` — time-bound anecdote.
-- `src/data/blog/animation.md` — internal checklist.
-- `src/data/blog/appartement-a-louer-verdun.md` — rental listing.
-- `src/data/blog/au-revoir-guerriere.md` — external repost.
-- `src/data/blog/bitcoin-and-canadian-taxation-of-cryptocurrencies-full-video.md` — event promo.
-- `src/data/blog/blog-ou-blogue.md` — trivial opinion.
-- `src/data/blog/bloquer-les-gens-de-ses-reseaux-sociaux.md` — personal rant.
-- `src/data/blog/bmw-135i-m-package-2011.md` — sales listing.
-- `src/data/blog/calendrier-crypto-in-montreal.md` — event calendar.
-- `src/data/blog/chauffeurs-de-taxi.md` — dated opinion.
-- `src/data/blog/cim-keynote.md` — internal notes.
-- `src/data/blog/code-de-conduite-de-crypto-in-montreal.md` — boilerplate.
-- `src/data/blog/comment-soumettre-sa-presentation-pour-cryptoinmontreal.md` — process doc.
-- `src/data/blog/comprendre-la-blockchain-et-ses-cas-dutilisations-a-levis-ce-19-mars-2020.md` — event announcement.
-- `src/data/blog/copywriter-recherche-pour-communiquer-lessence-dune-nouvelle-startup.md` — job posting.
-- `src/data/blog/cryptoinmontreal-est-maintenant-sur-youtube.md` — announcement.
-- `src/data/blog/cryptoinmontreal-photo.md` — photo gallery.
-- `src/data/blog/deck-cassette-le-temps-de-penser-fevrier-2013.md` — playlist post.
-- `src/data/blog/deck-cassette-un-hommage-aux-artistes-mai-2013.md` — playlist post.
-- `src/data/blog/dper-app.md` — dropped project.
-- `src/data/blog/dper.md` — historical teaser.
-- `src/data/blog/golf-r-parts.md` — personal notes.
-- `src/data/blog/i-made-this-background-for-my-iphone-7.md` — minimal asset share.
-- `src/data/blog/iphone-home-page.md` — single image.
-- `src/data/blog/la-generation-pas-de-casque-celle-nee-avant-1990.md` — meme repost.
-- `src/data/blog/la-vaccination-obligatoire-est-a-nos-portes.md` — draft, dated.
-- `src/data/blog/le-prochain-evenement-je-le-ferai-sans-masque.md` — dated update.
-- `src/data/blog/le-trou-noir-supermassif-bitcoin-mange-le-monde.md` — market-timed.
-- `src/data/blog/linkedin.md` — profile link page.
-- `src/data/blog/looking-for-a-geeky-node-developer-ghost.md` — job posting.
-- `src/data/blog/merci.md` — transactional page.
-- `src/data/blog/mettre-son-poing-du-bon-cote-de-la-table.md` — dated links.
-- `src/data/blog/musique.md` — embed-only.
-- `src/data/blog/my-dca-definite-chief-aim.md` — incomplete artifact.
-- `src/data/blog/my-personality-type-entp-a-debater.md` — external copy.
-- `src/data/blog/need-a-geeky-ghost-theme-developer-zurb-html5-css.md` — job posting.
-- `src/data/blog/nes-pour-mourir-audio.md` — redirect.
-- `src/data/blog/nes-pour-mourir-le-video.md` — legacy creative.
-- `src/data/blog/photo-iphone-a-vendre.md` — sales listing.
-- `src/data/blog/photos-pneus-a-vendre.md` — sales listing.
-- `src/data/blog/play-offence-or-play-defense.md` — brief historical note.
-- `src/data/blog/politique-de-confidentialite.md` — legal boilerplate.
-- `src/data/blog/poste-danalyste-daffaires-systeme-2015-10-19.md` — job posting.
-- `src/data/blog/satoshi-nakamoto-announce-the-creation-of-bitcoin-this-is-how-it-started.md` — raw archive.
-- `src/data/blog/setup-a-continuous-integration-continuous-deployment-environment.md` — old hiring post.
-- `src/data/blog/the-blockchain-impact-by-naval-ravikant.md` — tweet thread repost.
-- `src/data/blog/traducteur-ou-traductrice-passionne-e-des-mots-et-geek-de-preference-anglais-vers-le-francais.md` — job posting.
-- `src/data/blog/travaillons-ensemble.md` — job posting.
-- `src/data/blog/une-question-de-base-pour-les-gens-en-it.md` — very short.
-- `src/data/blog/ventilons-les-chiffres.md` — dated political stats.
-- `src/data/blog/when-bitcoin-miners-decide-to-mine-something-else.md` — dated speculation.
+| Tier | Count | % |
+|------|-------|---|
+| **Flagship** | ~15 | 8% |
+| **Solid** | ~35 | 18% |
+| **Needs Attention** | ~45 | 23% |
+| **Should Remove/Archive** | ~99 | 51% |
+
+Strong core of ~50 quality posts buried under ~100 posts that aren't really blog content (event archives, classified ads, utility pages, incomplete drafts).
+
+---
+
+## TIER 1: FLAGSHIP (Keep & Promote)
+
+Best work - comprehensive, well-written, valuable to readers.
+
+| Post | Why It's Great |
+|------|----------------|
+| `how-do-i-help-organisations-to-thrive-as-a-full-stack-architect.md` | Professional manifesto. 1200+ words, clear value proposition, strong TL;DR. |
+| `les-6-habitudes-des-gens-tres-productifs-selon-tim-ferriss.md` | 1500 words, 6 numbered sections, actionable advice with citations. |
+| `le-saint-graal-de-la-productivite-les-raccourcis.md` | Comprehensive shortcuts guide with 3 tutorial videos. |
+| `lekt-le-lecteur.md` | Excellent narrative structure, personal storytelling with proper annotations. |
+| `pourquoi-jaime-vous-tutoyer.md` | Engaging philosophical essay, good quotes and video embeds. |
+| `gerer-ses-mots-de-passe-comme-une-choregraphie.md` | Clear step-by-step tutorial with creative approach. |
+| `lidentification-a-deux-facteurs-la-securite-de-votre-vie-digitale-en-depend.md` | Well-structured security guide with practical examples. |
+| `traefik-demo-docker-stack-and-play-with-docker.md` | Complete technical tutorial with code blocks and video. |
+| `thermodynamic-neutrality.md` | Original thought leadership on blockchain decentralization. |
+| `satoshi-nakamoto-announce-the-creation-of-bitcoin-this-is-how-it-started.md` | 5000+ word archive of original Satoshi emails - historical value. |
+| `le-prochain-uber-pour-trouver-son-avocat.md` | Long-form with excellent structure, good blockquotes. |
+| `les-medias-et-le-syndrome-de-munchausen.md` | Well-researched essay with proper citations. |
+| `followfi-permet-aux-patients-dattendre-a-distance.md` | Well-documented startup story with clear timeline. |
+| `dev_notes/setting-dates-via-git-hooks.md` | Excellent technical docs with code examples. |
+| `dev_notes/shadcn-theme-system.md` | Professional technical documentation. |
+
+---
+
+## TIER 2: SOLID (Good, Minor Polish Needed)
+
+Good content that could be great with some attention.
+
+| Post | What's Good | What's Missing |
+|------|-------------|----------------|
+| `my-productivity-hacks-to-fight-procrastination.md` | Practical tips | Could use more depth |
+| `chiffrer-ses-donnees-tout-comme-tirer-ses-rideaux-dans-ses-fenetres.md` | Good analogy | Tutorial incomplete |
+| `pourquoi-se-donner-la-peine-decrire.md` | Good content | Paragraphs run long, needs subheadings |
+| `play-offence-or-play-defense.md` | Authentic moment | Grammar: "is you ask" -> "if you ask" |
+| `la-generation-pas-de-casque.md` | Nostalgic, good flow | Minor formatting issues |
+| `mon-top-5.md` | Useful curated list | Brief descriptions |
+| `definitions.md` | Useful startup glossary | Too brief |
+| `my-personality-type-entp-a-debater.md` | Good profile | Job pitch at end feels tacked on |
+| `biographie-de-pascal-andy.md` | Strong personal narrative | Could be expanded |
+| `consultant-en-relations-technologiques-crt.md` | Service manifesto | Needs refresh |
+| `en-2026-nous-serons-dans-un-monde-de-contrats-autonomes.md` | Visionary piece | Dated predictions |
+| `le-bitcoin-cest-une-bataille-qui-rappel-celle-de-thomas-edison-et-de-nikola-tesla.md` | Strong analogy | Minor edits needed |
+| `le-blockchain-a-la-rescousse-de-la-securite-sur-internet.md` | Deep technical essay | Could use update |
+| `le-multitache-une-legende-urbaine-qui-a-trop-dure.md` | Timeless topic | Minor polish |
+| `les-statistiques-dun-blogueur-apres-ses-7-premiers-articles.md` | Original long-form | Dated stats |
+| `what-is-a-now-page.md` | Classic concept | Evergreen |
+| `CryptoInMontreal #20, 22, 26, 28, 33, 35, 37` | Well-structured agendas | Repetitive template |
+
+---
+
+## TIER 3: NEEDS ATTENTION (Fix or Expand)
+
+Posts with potential but significant issues.
+
+| Post | Issue | Action Needed |
+|------|-------|---------------|
+| `i-am-the-bridge-maker.md` | **Broken frontmatter** - truncated URL in description, broken image markdown | Fix metadata urgently |
+| `la-maturite-du-grand-publique-face-a-la-blockchain.md` | Only 2 lines of content | Expand to 500+ words or draft |
+| `lai-ne-va-pas-remplacer-les-humains.md` | Single sentence | Expand or delete |
+| `le-prochain-evenement-je-le-ferai-sans-masque.md` | Very brief announcement | Expand or archive |
+| `nes-pour-mourir-audio.md` | Contains "GHOSTURL__" placeholder | Fix placeholder text |
+| `le-vrai-question-derriere-le-vol-didentite.md` | Grammar issues, draft flag | Fix title ("vraie question"), complete or remove |
+| `la-vaccination-obligatoire-est-a-nos-portes.md` | Repeated content, broken images | Clean up or remove |
+| `fake-innovation.md` | ~50 words only | Expand or delete |
+| `liste-denvoi.md` | Incomplete newsletter announcement | Update or remove |
+| `deck-cassette-un-hommage-aux-artistes-mai-2013.md` | Broken GrooveShark link | Update or note obsolete |
+| `lhorizon-cest-toi.md` | Very short, typos | Expand or fix |
+| `configurer-un-gym-maison-avec-une-seule-paire-de-dumbbells.md` | Broken images | Fix or remove |
+| `contributor-code-of-conduct-on-github.md` | Placeholder email | Complete or remove |
+| `repost-ma-premiere-startup.md` | Placeholder + image dump | Complete or remove |
+| `voici-comment-chiffrer-ses-donnees-confidentielles-et-ses-photos-pdta.md` | Deprecated tools | Update or archive |
+
+---
+
+## TIER 4: SHOULD REMOVE OR ARCHIVE
+
+Not really blog posts - clutter that dilutes quality.
+
+### Classified Ads (delete or move)
+- `photo-iphone-a-vendre.md` - Phone number exposed
+- `bmw-135i-m-package-2011.md` - Vehicle listing
+- `appart-250.md` - Apartment listing
+- `appartement-a-louer-verdun.md` - Apartment listing
+- `golf-r-parts.md` - Parts list
+- `dm-motorsport.md` - Personal notes
+- `photos-pneus-a-vendre.md` - Sales listing
+
+### Personal Notes (not content)
+- `favoris.md` - Raw bookmarks with placeholder text "0o0o"
+- `audiophile.md` - Equipment list
+- `anneau-de-stabilisation-de-waynes-audio.md` - Product notes
+- `dossier-julian.md` - Personal reference
+- `dper.md` - Unclear internal content
+- `role-de-tamara.md` - Internal checklist
+- `animation.md` - Internal checklist
+- `cim-keynote.md` - Internal notes
+
+### Utility Pages (should be Astro pages, not posts)
+- `account.md` - Completely empty
+- `merci.md` - Thank you page
+- `billetterie-cim.md` - Ticket booking
+- `moderation-des-commentaires.md` - Comment policy
+- `politique-de-confidentialite.md` - Privacy policy
+- `linkedin.md` - Profile link page
+- `rester-en-contact.md` - Stale channels
+- `souscrire-au-blog-de-pascal-andy.md` - Outdated CTA
+
+### Cancelled/Empty Events
+- `cryptoinmontreal-12.md` - Just "Annule" (Cancelled)
+- `cryptoinmontreal-est-maintenant-sur-youtube.md` - Broken image
+
+### Single Image/Embed Posts (no real content)
+- `i-made-this-background-for-my-iphone-7.md`
+- `iphone-home-page.md`
+- `musique.md` - Single SoundCloud embed
+- `the-lean-way-to-start-something.md` - Image only
+
+### Old Job Postings (dated 2015-2017)
+- `looking-for-a-geeky-node-developer-ghost.md`
+- `need-a-geeky-ghost-theme-developer-zurb-html5-css.md`
+- `poste-danalyste-daffaires-systeme-2015-10-19.md`
+- `copywriter-recherche-pour-communiquer-lessence-dune-nouvelle-startup.md`
+- `traducteur-ou-traductrice-passionne-e-des-mots-et-geek-de-preference-anglais-vers-le-francais.md`
+- `travaillons-ensemble.md`
+- `setup-a-continuous-integration-continuous-deployment-environment.md`
+
+### CryptoInMontreal Events (41 posts)
+Consider consolidating into a single timeline/archive page rather than 41 separate posts.
+Keep stronger ones: #20, 22, 26, 28, 33, 35, 37
+
+---
+
+## Recommended Actions
+
+### Immediate (broken things)
+1. Fix `i-am-the-bridge-maker.md` frontmatter
+2. Fix "GHOSTURL__" placeholder in `nes-pour-mourir-audio.md`
+3. Delete or draft `account.md` (empty)
+
+### Short-term (content cleanup)
+4. Move classified ads out of blog (delete or archive folder)
+5. Convert utility pages to proper Astro pages
+6. Mark incomplete posts as `draft: true`
+
+### Medium-term (content improvement)
+7. Expand 2-3 thin posts with potential (blockchain maturity, AI posts)
+8. Consolidate CryptoInMontreal events into timeline page
+9. Update broken embeds (GrooveShark, old images)
+
+### Long-term (content strategy)
+10. Focus new writing on topics that match Flagship posts: productivity, security, technical tutorials, thought leadership
