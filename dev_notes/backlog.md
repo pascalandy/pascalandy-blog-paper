@@ -77,14 +77,28 @@ https://docs.astro.build/en/guides/build-with-ai/
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-correct pattern for inline picture:
+about: img url
+
+I have a question about the links. what's the correct way of linking to an image because sometimes I see this
 
 ```md
 ![image-rsvp](../../assets/images/og-legacy/2017/11/rsvp-2.jpg)
 ```
 
+sometimes that:
+
+```md
+![image-rsvp](../assets/images/og-legacy/2017/11/rsvp-2.jpg)
+```
+
+so ?
+
+plan
+
+
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
+https://docs.astro.build/en/guides/integrations-guide/sitemap/
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
