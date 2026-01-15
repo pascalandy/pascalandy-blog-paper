@@ -28,10 +28,9 @@ Dependency Security
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-use graphite in my workflow
+use graphite in my workflow ?
 
-https://graphite.com/pricing
-
+https://graphite.com
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
