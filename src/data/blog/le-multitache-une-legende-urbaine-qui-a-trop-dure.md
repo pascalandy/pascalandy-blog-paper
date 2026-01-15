@@ -93,7 +93,7 @@ Ma vie serait si productive si je pouvais multitâcher comme un pro. Quand je vo
 
 Sauf que ... les études le démontrent. Quand on multitâche, on devient très mauvais dans tout ce qu'on fait.
 
-/blog//le-multitache-une-legende-urbaine-qui-a-trop-dure/
+[Lien permanent](/blog/le-multitache-une-legende-urbaine-qui-a-trop-dure/)
 
 #### ⚓ Annotations
 

@@ -8,7 +8,7 @@ ogImage: ../../assets/images/og-legacy/2018/03/banner-large-cyptoinmontreal-1.JP
 description: "Voici la liste des endroits qui accueillent généreusement l'événement #CryptoInMontreal depuis le jour un. "
 ---
 
-Voici la liste des endroits qui accueillent généreusement l'événement #CryptoInMontreal depuis le jour un. La page officielle et les informations générales [se trouvent ici](/blog/cryptoinmontreal-informations-generales/).
+Voici la liste des endroits qui accueillent généreusement l'événement #CryptoInMontreal depuis le jour un. La page officielle et les informations générales [se trouvent ici](/tags/crypto-in-montreal/).
 
 <a id="club-insiders"></a>
 
@@ -22,13 +22,13 @@ Insiders privilégie les échanges culturels, littéraires, intellectuels et sci
 
 PS: Nous avons changé de noms récemment, nous sommes maintenant Insiders.
 
-https://www.facebook.com/insidersmtl
+[Page Facebook](https://www.facebook.com/insidersmtl)
 
 <a id="coin-du-metro"></a>
 
 ### Bar au Coin du Métro
 
-https://coindumetro.ca/
+[Site web](https://coindumetro.ca/)
 
 <a id="we-work"></a>
 
@@ -36,9 +36,9 @@ https://coindumetro.ca/
 
 ![WeWork](../../assets/images/og-legacy/2017/12/we-work.jpg)
 
-WeWork offre à son réseau international de créateurs l’espace de travail, la communauté, et les services dont ils ont besoin afin qu'ils s'épanouissent non seulement dans leur travail et aussi dans leur vie.
+WeWork offre à son réseau international de créateurs l'espace de travail, la communauté, et les services dont ils ont besoin afin qu'ils s'épanouissent non seulement dans leur travail et aussi dans leur vie.
 
-https://www.wework.com/buildings/place-ville-marie--montreal--QC
+[Site web](https://www.wework.com/buildings/place-ville-marie--montreal--QC)
 
 <a id="gault"></a>
 
@@ -48,4 +48,4 @@ Notre espace, votre événement. Le lobby est idéal pour des événements corpo
 
 ![Gault](../../assets/images/og-legacy/2017/11/Gault.jpg)
 
-http://www.hotelgault.com/
+[Site web](http://www.hotelgault.com/)

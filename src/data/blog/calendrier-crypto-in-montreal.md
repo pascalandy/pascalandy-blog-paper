@@ -8,7 +8,7 @@ description: "Liste complète des événements Crypto In Montreal de 2017 à 202
 ogImage: "../../assets/images/og-legacy/2021/01/bull-2021-01-06_23h01-2.jpg"
 ---
 
-Voici la liste de nos événements futurs et antérieurs. Tous les détails se trouvent sur la page [informations générales](/blog/cryptoinmontreal-informations-generales/).
+Voici la liste de nos événements futurs et antérieurs. Tous les détails se trouvent sur la page [informations générales](/tags/crypto-in-montreal/).
 
 ## 2021
 

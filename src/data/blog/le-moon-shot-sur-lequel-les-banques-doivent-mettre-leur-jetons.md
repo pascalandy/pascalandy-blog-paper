@@ -98,6 +98,6 @@ Le 2e niveau de cette idée et de faire en sorte de devenir LA plateforme sur la
 
 Le 3e niveau est que les utilisateurs sont dans Decentralized autonomous organization et des machines. À ce point, chaque machine à son propre compte/wallet chez Banques XYZ. Et cette machine à sa propre côte de crédit.
 
-Maintenant toute la mécanique de ce que je viens de raconter peut sembler flou. Et pourtant je vois très bien comment nous pourrions y arriver. Ça te tente d'en parler? Vient à notre [prochain meetup](/tags/cryptoinmontreal/).
+Maintenant toute la mécanique de ce que je viens de raconter peut sembler flou. Et pourtant je vois très bien comment nous pourrions y arriver. Ça te tente d'en parler? Vient à notre [prochain meetup](/tags/crypto-in-montreal/).
 
 P.S. _On ne peut plus se fier sur Equifax et leur black box pour juger qui est un bon ou un mauvais citoyen. De plus, les gens d’Equifax nous ont montré qu’ils ne peuvent pas gérer nos données sans se faire solidement pirater à laisser traîner nos informations personnelles partout sur le web. Les systèmes centralisés sont voués à être piratés. Pour voir l’étendue des dégâts: [haveibeenpwned.com](https://haveibeenpwned.com/)_

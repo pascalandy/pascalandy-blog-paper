@@ -42,7 +42,7 @@ Sur papier c'est la fin de l'événement, sauf que si on se dit les vraies chose
 
 ## Informations générales
 
-J'ai regroupé les points ci-dessous sous la [page informations générales](/blog/cryptoinmontreal-informations-generales/).
+J'ai regroupé les points ci-dessous sous la [page informations générales](/tags/crypto-in-montreal/).
 
 1. Intention
 2. Prérequis
@@ -52,7 +52,7 @@ J'ai regroupé les points ci-dessous sous la [page informations générales](/bl
 
 ## Contact
 
-La page officielle de #CryptoInMontreal se trouve sous mon blog au [pascalandy.com/blog/tag/cryptoinmontreal](/tags/cryptoinmontreal/).
+La page officielle de #CryptoInMontreal se trouve sous mon blog au [pascalandy.com/blog/tag/cryptoinmontreal](/tags/crypto-in-montreal/).
 
 Je suis très actif sur [Twitter](https://twitter.com/askpascalandy) et sur la page [Facebook](https://www.facebook.com/cryptoinmontreal). Au plaisir de se croiser au prochain événement de #CryptoInMontreal!
 

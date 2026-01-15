@@ -52,6 +52,4 @@ _requester / helper_
 
 - if there is still time
 
-[See it in full resolution](../../assets/images/og-legacy/2017/04/10-stages-2.JPG)
-
 ![](../../assets/images/og-legacy/2017/04/10-stages-2.JPG)

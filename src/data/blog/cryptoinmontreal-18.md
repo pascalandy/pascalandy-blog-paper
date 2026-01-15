@@ -10,7 +10,7 @@ description: "Agenda de la soirée"
 
 ## Agenda de la soirée
 
-Voici le plan de match pour le **18e événement** de [#CryptoInMontreal](/tags/cryptoinmontreal/) qui sera un meetup d'introduction sur le sujet.
+Voici le plan de match pour le **18e événement** de [#CryptoInMontreal](/tags/crypto-in-montreal/) qui sera un meetup d'introduction sur le sujet.
 
 D'abord, pour ceux et celles qui désirent s'initier aux cryptomonnaies et au blockchain, **l'introduction au monde des cryptos** sera donnée par moi, Pascal Andy, dès **18h30**. La présentation permettra d'introduire de façon très pratique ceux qui cherchent à faire leur premier pas dans le monde des cryptomonnaies.
 
@@ -57,7 +57,7 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 - Le **deuxième** objectif est de **réunir les initiés** qui s'intéressent déjà au sujet des cryptomonnaies. Nous pourrons échanger et découvrir les différents enjeux de l’écosystème du blockchain et des cryptomonnaies altcoins.
 - Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades**, c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
 
-- **Calendrier 2018**: /blog/calendrier-2018-de-cryptoinmontreal/
+- **Calendrier 2018**: /blog/calendrier-crypto-in-montreal/
 - **Teaser** de l'événement sur [YouTube](https://www.youtube.com/watch?v=2_rPjzXXfBA)
 
 ## Contacts
@@ -66,7 +66,7 @@ Je suis très actif sur [Twitter](https://twitter.com/askpascalandy) et sur le h
 
 Il y a plusieurs façons de demeurer au courant des prochains événements:
 
-- [Site web officiel](/tags/cryptoinmontreal/)
+- [Site web officiel](/tags/crypto-in-montreal/)
 - Suivre sur [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - Suivre sur [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - Suivre sur [Facebook](https://www.facebook.com/cryptoinmontreal/)

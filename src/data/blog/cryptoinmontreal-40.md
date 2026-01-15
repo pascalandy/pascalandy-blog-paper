@@ -8,7 +8,7 @@ description: "Rejoignez CryptoInMontreal #40 pour une introduction pratique au b
 ogImage: "../../assets/images/og-legacy/2021/01/cim40-2021-01-06_23h03.jpg"
 ---
 
-Nous sommes déjà à la **40e édition** de [Crypto In Montreal](/blog/tag/cryptoinmontreal/) !!
+Nous sommes déjà à la **40e édition** de [Crypto In Montreal](/tags/crypto-in-montreal/) !!
 
 Assurez-vous de lire tous les détails sur la page officielle de l'événement:
 

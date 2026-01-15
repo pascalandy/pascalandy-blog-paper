@@ -2,7 +2,6 @@
 author: Pascal Andy
 date_created: 2014-09-27
 title: "Dper App"
-draft: true
 tags:
   - startups
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
@@ -51,7 +50,7 @@ I track the high-level steps to accomplish (and almost everything) in Trello. It
 ## 📢 Want some more?
 
 [The manifesto - Why did I decide to start Dper?](/blog/each-day-traditional-social-networks-are-disconnecting-from-you/)
-🏷️ [Search tag](/tags/dper/) about Dper
+🏷️ [Search tag](/tags/startups/) about Dper
 🏛️ Go to Dper [homepage](/blog/dper-app/)
 📖 Key [definitions](/blog/definitions/) about startups
 

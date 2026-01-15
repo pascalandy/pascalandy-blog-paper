@@ -61,6 +61,6 @@ _Note de l’éditeur_ - Cet article est une adaptation et un « mashup » de me
 
 Cher Internet, tout semble fonctionner comme par magie... jusqu'au jour où les systèmes en place se font défoncer. Donne-moi des solutions.
 
-/blog/le-blockchain-a-la-rescousse-de-la-securite-sur-internet/
+[Lien permanent](/blog/le-blockchain-a-la-rescousse-de-la-securite-sur-internet/)
 
 📷 [source](http://www.codecnetworks.com/services.php)

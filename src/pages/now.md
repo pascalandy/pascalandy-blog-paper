@@ -8,7 +8,7 @@ title: "Now"
 _Updated: 2020-02-17_
 
 - Startup: Gearing up for the **next phase** — [FirePress](https://firepress.org/en/)
-- Continue to host my **Meetup** — [Crypto In Montreal](/tags/cryptoinmontreal/)
+- Continue to host my **Meetup** — [Crypto In Montreal](/tags/crypto-in-montreal/)
 - Actively developing **BashLaVa** — <https://git.io/bashlava>
 - I'm **learning a ton about human psychology** thanks toJordan's B. Peterson lecture [2017 - Maps of Meaning](https://www.youtube.com/watch?v=I8Xc2_FtpHI&list=PL22J3VaeABQAT-0aSPq-OKOpQlHyR4k5h)
 

@@ -57,14 +57,14 @@ Per example, ISPs could make Netflix ‘slow’ while making their media content
 "Here I mine XYZ kW/h. Here are the invoices proving I bought the equipment. Please give me this great electricity rate as well.
 
 17/ Not only that, enthusiasts want a service as easy as changing our postal address online -
-http://www.hydroquebec.com/residential/customer-space/moving/change-address.html
+[Hydro-Québec](http://www.hydroquebec.com/residential/customer-space/moving/change-address.html)
 
 **The take away is**: It should not be a burden to request to be a miner to get the most advantageous electric rate.
 
 18/ Some prefer to run a SPA in their backward, some prefer to run miners.
 
 Read my conclusion here:
-/blog/thermodynamic-neutrality/
+[Lien permanent](/blog/thermodynamic-neutrality/)
 
 19/ Going back to present, it's June 2018.
 

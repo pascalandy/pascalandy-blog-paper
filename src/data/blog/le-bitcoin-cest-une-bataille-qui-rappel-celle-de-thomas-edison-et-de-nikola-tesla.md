@@ -71,4 +71,4 @@ Après la grosse news de PK... voici mon dernier post. J’y fais une analogie e
 
 OK, c’est intense et c’est loin des vidéos LOL cats mais je crois que cette image de style peut nous aider à comprendre l’enjeu d’un monde qui pourrait être sans frais bancaires et sans fraudes.
 
-/blog/le-bitcoin-cest-une-bataille-qui-rappel-celle-de-thomas-edison-et-de-nikola-tesla/
+[Lien permanent](/blog/le-bitcoin-cest-une-bataille-qui-rappel-celle-de-thomas-edison-et-de-nikola-tesla/)

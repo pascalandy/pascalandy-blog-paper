@@ -12,4 +12,4 @@ Voici où me trouver sur [Linkedin](https://www.linkedin.com/in/pascalnguyendesc
 ![linkedin-pascal-nguyen-deschenes-b](../../assets/images/og-legacy/2018/09/linkedin-pascal-nguyen-deschenes-b.jpg)
 
 Pour savoir ce que je fais de bon ces temps-ci —>
-/blog/now/
+[Lien permanent](/now/)

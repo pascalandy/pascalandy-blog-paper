@@ -8,7 +8,7 @@ description: "Introduction au Bitcoin, aux cryptomonnaies et à la blockchain lo
 ogImage: ../../assets/images/og-legacy/2021/01/cim-41-2021-01-06_21h26.jpg
 ---
 
-Après une longue pause, on se prépare pour la **41e édition** de [Crypto In Montreal](/blog/tag/cryptoinmontreal/)!! Cette introduction au monde des cryptos s'adresse à ceux et celles qui désirent s'initier au Bitcoin, aux cryptomonnaies et au blockchain. La présentation « **Comprendre la blockchain et ses cas d'utilisations** » permettra d'introduire de façon très pratique ceux qui cherchent à faire leur premier pas dans le monde des cryptomonnaies.
+Après une longue pause, on se prépare pour la **41e édition** de [Crypto In Montreal](/tags/crypto-in-montreal/)!! Cette introduction au monde des cryptos s'adresse à ceux et celles qui désirent s'initier au Bitcoin, aux cryptomonnaies et au blockchain. La présentation « **Comprendre la blockchain et ses cas d'utilisations** » permettra d'introduire de façon très pratique ceux qui cherchent à faire leur premier pas dans le monde des cryptomonnaies.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/h8gPzslZTzk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 

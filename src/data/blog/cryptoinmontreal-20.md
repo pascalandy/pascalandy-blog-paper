@@ -13,7 +13,7 @@ If you are already into crypto this question can’t be avoided. How much Canada
 Pour le **20e événement** de #CryptoInMontreal, la présentation principale sera en anglais.
 
 Les détails de cet événement se trouvent au:
-/blog/cryptoinmontreal-20/
+[Lien permanent](/blog/cryptoinmontreal-20/)
 
 **Video**: available soon!
 
@@ -82,7 +82,7 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 - Le **deuxième** objectif est de **réunir les initiés** qui s'intéressent déjà au sujet des cryptomonnaies. Nous pourrons échanger et découvrir les différents enjeux de l’écosystème du blockchain et des cryptomonnaies altcoins.
 - Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades**, c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
 
-- **Calendrier 2018**: /blog/calendrier-2018-de-cryptoinmontreal/
+- **Calendrier 2018**: /blog/calendrier-crypto-in-montreal/
 - **Teaser** de l'événement sur [YouTube](https://www.youtube.com/watch?v=2_rPjzXXfBA)
 
 ## Un petit geste qui nous aide grandement
@@ -96,7 +96,7 @@ Je suis très actif sur [Twitter](https://twitter.com/askpascalandy) et sur le h
 
 Il y a plusieurs façons de demeurer au courant des prochains événements:
 
-- [Site web officiel](/tags/cryptoinmontreal/)
+- [Site web officiel](/tags/crypto-in-montreal/)
 - Captation live sur [YouTube](https://www.youtube.com/watch?v=8f-9rdxV6A0&list=PL9epbd8UeXHsfQe2Tr4O1T5FHdAafAk_b)
 - Suivre sur [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - Suivre sur [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)

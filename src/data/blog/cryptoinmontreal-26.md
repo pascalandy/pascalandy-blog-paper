@@ -10,7 +10,7 @@ ogImage: ../../assets/images/og-legacy/2019/01/026-cryptoinmontreal-1.jpg
 
 Le **26e événement** de Crypto In Montreal aura lieu chez **Ernst & Young** Montréal. Notre hôte nous offrira gracieusement vin — bière et petites bouchées pour notre événement sympathique.
 
-Pour les détails sur [#CryptoInMontreal](/tag/cryptoinmontreal/) et la billetterie:
+Pour les détails sur [#CryptoInMontreal](/tags/crypto-in-montreal/) et la billetterie:
 
 [Lire cet article](/blog/cryptoinmontreal-26/)
 

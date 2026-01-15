@@ -10,7 +10,7 @@ description: "Agenda de la soirée"
 
 ## Agenda de la soirée
 
-Voici le plan de match pour le **19e événement** de [#CryptoInMontreal](/tags/cryptoinmontreal/). **Crédit de 20$** — Tous les gens présents à l'événement obtiendront un crédit de 20$ valable sur un marché d'échange canadien. La carte 'voucher' sera remise en personne.
+Voici le plan de match pour le **19e événement** de [#CryptoInMontreal](/tags/crypto-in-montreal/). **Crédit de 20$** — Tous les gens présents à l'événement obtiendront un crédit de 20$ valable sur un marché d'échange canadien. La carte 'voucher' sera remise en personne.
 
 Nous débuterons avec une présentation animée par **Tamara Kara**. Rejoignez-nous pour apprendre et discuter du sujet de la **CryptoÉconomie**. La présentation sera en Anglais et les discussions pourront se dérouler en Français ou en Anglais.
 
@@ -67,7 +67,7 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 - Le **deuxième** objectif est de **réunir les initiés** qui s'intéressent déjà au sujet des cryptomonnaies. Nous pourrons échanger et découvrir les différents enjeux de l’écosystème du blockchain et des cryptomonnaies altcoins.
 - Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades**, c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
 
-- **Calendrier 2018**: /blog/calendrier-2018-de-cryptoinmontreal/
+- **Calendrier 2018**: /blog/calendrier-crypto-in-montreal/
 - **Teaser** de l'événement sur [YouTube](https://www.youtube.com/watch?v=2_rPjzXXfBA)
 
 ## Un petit geste qui nous aide grandement
@@ -81,7 +81,7 @@ Je suis très actif sur [Twitter](https://twitter.com/askpascalandy) et sur le h
 
 Il y a plusieurs façons de demeurer au courant des prochains événements:
 
-- [Site web officiel](/tags/cryptoinmontreal/)
+- [Site web officiel](/tags/crypto-in-montreal/)
 - Suivre sur [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - Suivre sur [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - Suivre sur [Facebook](https://www.facebook.com/cryptoinmontreal/)

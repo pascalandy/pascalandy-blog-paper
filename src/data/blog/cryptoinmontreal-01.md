@@ -30,7 +30,7 @@ ogImage: "../../assets/images/og-legacy/2017/11/CryptoInMontreal-c-1400-b.JPG"
 ## Information générales
 
 J'ai regroupé ces cinq sections sous une seule et même page:
-/blog/cryptoinmontreal-informations-generales/
+[CryptoInMontreal](/tags/crypto-in-montreal/)
 
 - Intention
 - Prérequis
@@ -39,7 +39,7 @@ J'ai regroupé ces cinq sections sous une seule et même page:
 - Calendrier
 
 La page officiel de #CryptoInMontreal se trouve sur mon blog personnel:
-/tags/cryptoinmontreal/
+[CryptoInMontreal](/tags/crypto-in-montreal/)
 
 ### Billetterie et RSVP
 

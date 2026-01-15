@@ -101,4 +101,4 @@ De l'Internet aux courriels et jusqu'aux réseaux sociaux, je crois que l'éco-s
 
 Voici comment le phénomène du Bitcoin est en train de transformer notre monde (et non seulement le système financier).
 
-/blog/comment-le-bitcoin-et-le-blockchain-transforment-le-systeme-financier-comme-le-mp3-a-change-lindustrie-de-la-musique/
+[Lien permanent](/blog/comment-le-bitcoin-et-le-blockchain-transforment-le-systeme-financier-comme-le-mp3-a-change-lindustrie-de-la-musique/)

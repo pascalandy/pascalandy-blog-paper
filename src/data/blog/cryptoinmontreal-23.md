@@ -8,7 +8,7 @@ ogImage: ../../assets/images/og-legacy/2018/10/023-CryptoInMontreal_Crypto-In-Mo
 description: "Pour le 23e événement de #CryptoInMontreal , nous parlerons de trading et d'une façon de mettre en place un workflow systématique pour trader."
 ---
 
-Pour le **23e événement** de [#CryptoInMontreal](/tags/cryptoinmontreal/) , nous parlerons de **trading** et d'une façon de mettre en place un workflow systématique pour trader.
+Pour le **23e événement** de [#CryptoInMontreal](/tags/crypto-in-montreal/) , nous parlerons de **trading** et d'une façon de mettre en place un workflow systématique pour trader.
 
 Ce meetup s'addresse aux gens de **tous niveaux**. Je suggère à ceux qui débutent totalement d'assister à ma présentation "Le blockchain, les cryptomonnaies et le mining, ce qu'il faut savoir". Je l'anime régulièrement environ 1 meetup sur 3.
 
@@ -26,7 +26,7 @@ Je favoriserai les échanges et les discussions de groupes. Donc profitez-en pou
 - Du café et beacuoup de fun
 
 Les détails de cet événement et l'accès à la billeterie :
-/blog/cryptoinmontreal-23/
+[Lien permanent](/blog/cryptoinmontreal-23/)
 
 ### CRÉDIT DE 20$
 
@@ -74,11 +74,11 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 
 ## Contacts
 
-Personnellement, je suis très actif sur [Twitter](https://twitter.com/askpascalandy). Voici plusieurs façon de demeurer au courant des prochaines activités de [CryptoInMontreal](/tags/cryptoinmontreal/) :
+Personnellement, je suis très actif sur [Twitter](https://twitter.com/askpascalandy). Voici plusieurs façon de demeurer au courant des prochaines activités de [CryptoInMontreal](/tags/crypto-in-montreal/) :
 
 - [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - [YouTube](https://www.youtube.com/playlist?list=PL9epbd8UeXHsfQe2Tr4O1T5FHdAafAk_b)
 - [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - [Twitter](https://twitter.com/askpascalandy)
 - [Page Facebook](https://www.facebook.com/cryptoinmontreal/)
-- [Site web officiel](/tags/cryptoinmontreal/) | 📅 [Calendrier 2018](/blog/calendrier-2018-de-cryptoinmontreal/) | [Information générales](/blog/cryptoinmontreal-informations-generales/)
+- [Site web officiel](/tags/crypto-in-montreal/) | 📅 [Calendrier 2018](/blog/calendrier-crypto-in-montreal/) | [CryptoInMontreal](/tags/crypto-in-montreal/)

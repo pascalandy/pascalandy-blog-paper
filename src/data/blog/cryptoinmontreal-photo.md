@@ -21,7 +21,7 @@ Photographe:
 <http://www.avrilfrancophotographe.com/>
 
 Date des prochains événements:
-[https://pascalandy.com/blog/tag/cryptoinmontreal/](/tags/crypto-in-montreal/)
+[https://pascalandy.com/tags/crypto-in-montreal/](/tags/crypto-in-montreal/)
 
 ![](../../assets/images/og-legacy/2019/05/cim29-preview.jpg)
 

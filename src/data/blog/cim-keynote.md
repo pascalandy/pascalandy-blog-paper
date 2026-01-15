@@ -73,5 +73,5 @@ Dans l’histoire de l’humanité on remarque qu’il existe quelque façon d'o
 - [tradingview.com/chart/khmmgLKb/](https://www.tradingview.com/chart/khmmgLKb/)
 - [ledger.com/products/ledger-nano-s](https://www.ledger.com/products/ledger-nano-s)
 - [coinberry.com/](https://coinberry.com/)
-- [pascalandy.com/blog/cryptoinmontreal-informations-generales/#accronymes](/blog/cryptoinmontreal-informations-generales/#accronymes)
+- [pascalandy.com/tags/crypto-in-montreal/](/tags/crypto-in-montreal/)
 - [passwordsgenerator.net/sha256-hash-generator/](https://passwordsgenerator.net/sha256-hash-generator/)

@@ -51,4 +51,4 @@ Savoir comment glisser ses petites roches à travers les plus grosses dans la bo
 
 Prendre l'habitude de me faire des « To-Do list » m'a vraiment aidé à être plus productif. Avec le temps, je me suis rendu compte qu'il me manquait un ingrédient essentiel ... la bonne séquence.
 
-/blog/comment-doubler-sa-productivite-cette-semaine-avec-la-bonne-sequence/
+[Lien permanent](/blog/comment-doubler-sa-productivite-cette-semaine-avec-la-bonne-sequence/)

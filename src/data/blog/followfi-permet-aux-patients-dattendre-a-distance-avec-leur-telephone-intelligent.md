@@ -14,7 +14,7 @@ août 2013 – févr. 2014
 
 ### ► ACQUISITION
 
-http://www.newswire.ca/fr/news-releases/bonjour-sante-procede-a-lacquisition-de-followfi-pour-transformer-lattente-en-experience-patient--630929063.html
+[Communiqué de presse](http://www.newswire.ca/fr/news-releases/bonjour-sante-procede-a-lacquisition-de-followfi-pour-transformer-lattente-en-experience-patient--630929063.html)
 
 ### ► INVESTISSEMENTS
 

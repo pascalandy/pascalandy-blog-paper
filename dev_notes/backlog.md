@@ -9,34 +9,22 @@ description: "BACKLOG, todo"
 
 # BACKLOG
 
+broken links
 
-https://docs.astro.build/en/guides/content-collections/
+On this page at the end, you see this link, which is plain. And of course, this is not what I want. I want to have like just an internal click, an internal link, sorry. Sorry. So I want you to find all those, I would say lost link in plain text and replace them with a regular link. 
 
-I'm still trying to understand how content collection could help me. So this is what I do understand. When we click on a tag, we see a whole bunch of posts related to this tag. and in my mind, this is a collection grouped by tag. is there something else I need to know about this function manage in astro. 
+example sur http://localhost:4321/posts/combien-ca-te-coute-quand-des-machines-cliquent-sur-ta-pub/
 
-=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
-
-comment taguer un post comme une page
-cacher par défault tous les tags crypto in montreal
+/blog/combien-ca-te-coute-quand-des-machines-cliquent-sur-ta-pub/
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-Utilisez de vraies bullet points au lieu de tirer.
-
-— 🙌 le tout offert gratuitement par Desjardins Lab
-— 🙌 le tout offert gratuitement par Desjardins Lab
-— 🙌 le tout offert gratuitement par Desjardins Lab
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
 faire apparaitre une image header par défault.
 
 attention à : La génération pas de casque... celle née avant 1990
-
-
-=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
-
-Step 4 (Optional): Flatten the folder structure by removing YYYY/MM/ organization. This would move all images directly into public/og-legacy/. Do you want to proceed?
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
@@ -54,12 +42,6 @@ correct pattern for inline picture:
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-broken links
-example sur http://localhost:4321/posts/combien-ca-te-coute-quand-des-machines-cliquent-sur-ta-pub/
-
-/posts/combien-ca-te-coute-quand-des-machines-cliquent-sur-ta-pub/
-
-=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
 Now, I would like to think about all the good utilities that are useful when managing any given project on GitHub. So the next one I have in mind is renovate or dependabot. So I don't know which one I should take. I should use actually. actually, and are there any other utilities that are heavily used on GitHub by OSS maintainers.
 So I'm open to your suggestions. We are only planning here.

@@ -10,11 +10,11 @@ description: "om/blog/analyste-daffaires-senior-ti/)"
 
 [![dispo-analyste-affai![dispo-analyste-affaires-pascal](../../assets/images/og-legacy/2018/10/dispo-analyste-affaires-pascal.jpg)om/blog/analyste-daffaires-senior-ti/)
 
-_Cette page est une sous-section de mon [offre en tant que Consultant](/blog/analyste-daffaires-senior-it/)_.
+_Cette page est une sous-section de mon [offre en tant que Consultant](/blog/analyste-daffaires-senior-ti/)_.
 
 You are reading this because you want to know more about me. Am I the best candidate for this opportunity?
 
-Here is the deal. Let me help you to do the hard work in **4 parts**. I guarantee that you will have a clear answer at the end of this essay or else I'm paying for the next coffee round. If you missed it, [here is what I offer](/blog/analyste-daffaires-it-senior/) as a Senior Business Analyst.
+Here is the deal. Let me help you to do the hard work in **4 parts**. I guarantee that you will have a clear answer at the end of this essay or else I'm paying for the next coffee round. If you missed it, [here is what I offer](/blog/analyste-daffaires-senior-ti/) as a Senior Business Analyst.
 
 ### 1) What I do
 

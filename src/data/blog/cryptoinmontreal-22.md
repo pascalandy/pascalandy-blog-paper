@@ -8,10 +8,10 @@ ogImage: ../../assets/images/og-legacy/2018/10/022-Crypto-In-Montre-al_CryptoInM
 description: "Voici le plan de match pour le 22e événement de #CryptoInMontreal."
 ---
 
-Voici le plan de match pour le **22e événement** de [#CryptoInMontreal](/tags/cryptoinmontreal/).
+Voici le plan de match pour le **22e événement** de [#CryptoInMontreal](/tags/crypto-in-montreal/).
 
 Les détails de cet événement et l'accès à la billeterie :
-/blog/cryptoinmontreal-22/
+[Lien permanent](/blog/cryptoinmontreal-22/)
 
 Should we be concerned about our financial privacy when transacting in crypto? There is a popular misconception that transactions in Bitcoin network are private, anonymous, and untraceable. Yet it is not true. Transactions with Bitcoin and most cryptocurrencies are pseudonymous and fully traceable. This creates problems for individuals concerned about their financial privacy and limits the utilization of the blockchain for businesses. To address this issue a few cryptocurrencies, commonly called “privacy coins” were created. But are they truly private, decentralized and fungible?
 
@@ -30,7 +30,7 @@ This presentation is given by Tamara Kara. She is a Certified Bitcoin and Fintec
 - Financial privacy for businesses: Is closed blockchain the solution?
 
 Tickets available at :
-/blog/cryptoinmontreal-22/
+[Lien permanent](/blog/cryptoinmontreal-22/)
 
 ![flyer de l'événement](../../assets/images/og-legacy/2018/10/022-Crypto-In-Montre-al_CryptoInMontreal-par-Pascal-Andy.jpg)
 
@@ -73,7 +73,7 @@ En d’autres mots, **#CryptoInMontreal** à trois buts principaux:
 - Le **deuxième** objectif est de **réunir les initiés** qui s'intéressent déjà au sujet des cryptomonnaies. Nous pourrons échanger et découvrir les différents enjeux de l’écosystème du blockchain et des cryptomonnaies altcoins.
 - Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades**, c’est-à-dire créer un environnement propice à la création de nouvelles connexions entre des gens qui ne se connaissent pas. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle.
 
-- **Calendrier 2018**: /blog/calendrier-2018-de-cryptoinmontreal/
+- **Calendrier 2018**: /blog/calendrier-crypto-in-montreal/
 - **Teaser** de l'événement sur [YouTube](https://www.youtube.com/watch?v=2_rPjzXXfBA)
 
 ## Un petit geste qui nous aide grandement
@@ -87,7 +87,7 @@ Je suis très actif sur [Twitter](https://twitter.com/askpascalandy) et sur le h
 
 Plusieurs façon de demeurer au courant des prochains événements:
 
-- [Site web officiel](/tags/cryptoinmontreal/)
+- [Site web officiel](/tags/crypto-in-montreal/)
 - [YouTube](https://www.youtube.com/playlist?list=PL9epbd8UeXHsfQe2Tr4O1T5FHdAafAk_b)
 - [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)

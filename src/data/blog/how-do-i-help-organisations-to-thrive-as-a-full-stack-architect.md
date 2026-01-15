@@ -10,7 +10,7 @@ description: "om/blog/analyste-daffaires-senior-ti/)"
 
 [![dispo-analyste-affai![dispo-analyste-affaires-pascal](../../assets/images/og-legacy/2018/10/dispo-analyste-affaires-pascal.jpg)om/blog/analyste-daffaires-senior-ti/)
 
-_Cette page est une sous-section de mon [offre en tant que Consultant](/blog/analyste-daffaires-senior-it/)_.
+_Cette page est une sous-section de mon [offre en tant que Consultant](/blog/analyste-daffaires-senior-ti/)_.
 
 If you're reading this, it's probably because you want to know more about me. If we ever work together, what can you to expect from me? Am I the best candidate for this opportunity? So here is the deal: let me help you to do the hard work. I guarantee that you will have a clear answer at the end of this essay or else I'm paying for the next coffee round. Deal?
 

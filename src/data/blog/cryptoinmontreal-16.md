@@ -22,7 +22,7 @@ description: "Agenda de la soirée"
 **Tarification de la soirée**: La consommation de cafés bio gourmands de torréfaction locale, les thés et tisanes, les pains hauts gamme, les biscuits, le caramel, les légumes et fruits secs, nous avons même des produits sans gluten et véganes!
 
 - **Détails** de cet événement sur le site officiel : /blog/cryptoinmontreal-16/
-- **Calendrier 2018**: /blog/calendrier-2018-de-cryptoinmontreal/
+- **Calendrier 2018**: /blog/calendrier-crypto-in-montreal/
 - **Teaser** de l'événement sur [YouTube](https://www.youtube.com/watch?v=2_rPjzXXfBA)
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/2_rPjzXXfBA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -60,7 +60,7 @@ Je suis très actif sur [Twitter](https://twitter.com/askpascalandy) et sur le h
 
 Il y a plusieurs façons de demeurer au courant des prochains événements:
 
-- [Site web officiel](/tags/cryptoinmontreal/)
+- [Site web officiel](/tags/crypto-in-montreal/)
 - Suivre sur [Meetup.com](https://www.meetup.com/CryptoInMontreal)
 - Suivre sur [EventBrite](https://www.eventbrite.ca/o/cryptoinmontreal-15852655206)
 - Suivre sur [Facebook](https://www.facebook.com/cryptoinmontreal/)

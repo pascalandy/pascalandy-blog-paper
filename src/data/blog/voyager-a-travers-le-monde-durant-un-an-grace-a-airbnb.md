@@ -71,4 +71,4 @@ Sérieux c'était un big deal! Bye bye les autobus à 60$.
 
 Aujourd'hui on accueille et on reçoit des étrangers chez soi grâce à Airbnb. Bye les hôtels. Voici le récit de Prerna Gupta, une femme d'affaires qui a voyagé durant un an d'un logement à l'autre.
 
-/blog/voyager-a-travers-le-monde-durant-un-an-grace-a-airbnb/
+[Lien permanent](/blog/voyager-a-travers-le-monde-durant-un-an-grace-a-airbnb/)

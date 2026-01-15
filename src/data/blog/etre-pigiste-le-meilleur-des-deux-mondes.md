@@ -101,4 +101,4 @@ Cet article est une adaptation de ce [texte](https://econsultancy.com/blog/64320
 
 Le travail n’est plus un lieu, le bureau est désuet et le concept d’emploi traditionnel semble de plus en plus anachronique. Avec toute la panoplie de logiciels conçus pour travailler de façon collaborative, il est de plus en plus facile de travailler de partout. Un concept qui devient de plus en plus concret.
 
-/blog/etre-pigiste-le-meilleur-des-deux-mondes/
+[Lien permanent](/blog/etre-pigiste-le-meilleur-des-deux-mondes/)

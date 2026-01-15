@@ -22,7 +22,7 @@ Le problème quand nous utilisons le même mot de passe pour plusieurs sites est
 
 Je disais que parmi tous les sites web que nous fréquentons, il ne suffirait qu’un seul site web compromette nos données pour que toute notre identité en ligne soit compromise.
 
-Le site de Sony Playstation a été compromis, hacké, piraté en avril 2011 avec les données de [77 millions d’utilisateurs](www.guardian.co.uk/technology/gamesblog/2011/apr/27/playstation-network-hack-sony). C’est deux fois la population du Canada. Ohh ! Si ce n'est pas assez sérieux pour te faire trembler, tu peux [ajouter 25 millions de comptes](http://www.guardian.co.uk/technology/blog/2011/may/03/sony-data-breach-online-entertainment) piratés deux semaines plus tard sur le même site ...
+Le site de Sony Playstation a été compromis, hacké, piraté en avril 2011 avec les données de [77 millions d'utilisateurs](https://www.guardian.co.uk/technology/gamesblog/2011/apr/27/playstation-network-hack-sony). C’est deux fois la population du Canada. Ohh ! Si ce n'est pas assez sérieux pour te faire trembler, tu peux [ajouter 25 millions de comptes](http://www.guardian.co.uk/technology/blog/2011/may/03/sony-data-breach-online-entertainment) piratés deux semaines plus tard sur le même site ...
 
 Commences-tu à voir l’importance de posséder des mots de passe indépendants/différents entre la variété de services web que tu utilises ? Supposons que la moitié de ces gens ont le même mot de passe pour leurs courriels, ce n’est rien de moins que 50 millions de personnes qui sont très vulnérables aux activités illicites des pirates. Ce qui est fou c’est que le cas de Sony Playstation est l’un des plus gros qui s’est rendu aux oreilles des médias traditionnels. Combien de failles de sécurité ont lieu chaque année comme celle-ci ?
 
@@ -90,7 +90,7 @@ Bref, laisse aller ton imagination et pour ta santé digitale, crée ta propre c
 
 Voici une manière facile pour retenir tous ses différents mots de passes.
 
-/blog/gerer-ses-mots-de-passe-comme-une-choregraphie/
+[Lien permanent](/blog/gerer-ses-mots-de-passe-comme-une-choregraphie/)
 
 #### ⚓ Annotations
 

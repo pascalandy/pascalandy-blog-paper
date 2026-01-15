@@ -53,6 +53,6 @@ Cet article est une adaptation de [ce texte](http://www.niemanlab.org/2012/11/ho
 
 Des fois, on se sent rushé par toute la quantité d’information existante. Voici comment les interfaces, en particulier, influencent cette impression d’être submergé de contenu.
 
-/blog/too-much-information-notre-facon-de-lire-est-plus-determinante-que-ce-quon-lit/
+[Lien permanent](/blog/too-much-information-notre-facon-de-lire-est-plus-determinante-que-ce-quon-lit/)
 
 📷 [#1](https://stocksnap.io/photo/AU9LJF62Y8/), [#2](http://availabilityadvisor.com/2010/03/25/the-truth-about-virtual-machine-overload/)

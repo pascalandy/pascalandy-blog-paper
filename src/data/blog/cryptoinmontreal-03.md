@@ -23,11 +23,11 @@ En d’autres mots, #CryptoInMontreal à trois buts principaux:
 - Le **deuxième** objectif est de **réunir les initiés** qui s'intéressent déjà au sujet des cryptomonnaies. Nous pourrons échanger et découvrir les différents enjeux de l’écosystème du blockchain et des cryptomonnaies altcoins.
 - Le **troisième** objectif de #CryptoInMontreal est de **favoriser les triades**, c’est-à-dire de nouvelles connexions entre les gens qui ne se connaissent pas encore. Ce concept m'a été inspiré de David Logan lors de son [TED talk](https://www.youtube.com/watch?v=xTkKSJSqU-I). Ceci est beaucoup plus puissant que de simplement réunir des gens dans une même salle. Voir comment nous y arriverons dans l’agenda ci-bas.
 
-Sur [la page officielle](/tags/cryptoinmontreal/) de #CryptoInMontreal se trouve la liste des événements passés ou à venir. En 2018, les événements auront lieu aux deux semaines.
+Sur [la page officielle](/tags/crypto-in-montreal/) de #CryptoInMontreal se trouve la liste des événements passés ou à venir. En 2018, les événements auront lieu aux deux semaines.
 
 #### Informations générales
 
-J'ai regroupé les points ci-dessous sous la [page informations générales](/blog/cryptoinmontreal-informations-generales/).
+J'ai regroupé les points ci-dessous sous la [page informations générales](/tags/crypto-in-montreal/).
 
 1. Pré-requis
 2. Qui est l'organisateur de #CryptoInMontreal ?
@@ -75,7 +75,7 @@ J'ai regroupé les points ci-dessous sous la [page informations générales](/bl
 
 Je suis très actif sur [Twitter](https://twitter.com/askpascalandy). Pour ceux et celles qui préfèrent Facebook, voici la page [officielle du groupe](https://www.facebook.com/cryptoinmontreal).
 
-Sur [la page officielle](/tags/cryptoinmontreal/) de #CryptoInMontreal se trouve la liste des événements passés ou à venir. En 2018, les événements auront lieu aux deux semaines.
+Sur [la page officielle](/tags/crypto-in-montreal/) de #CryptoInMontreal se trouve la liste des événements passés ou à venir. En 2018, les événements auront lieu aux deux semaines.
 
 ## Billetterie et RSVP
 

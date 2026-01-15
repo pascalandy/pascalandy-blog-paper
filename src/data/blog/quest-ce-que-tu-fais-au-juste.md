@@ -38,4 +38,4 @@ Cet article est une adaptation de [ce texte](http://sethgodin.typepad.com/seths_
 
 Selon moi, choisir les activités qu’on ne veut plus faire est probablement l’une des décisions les plus importantes que l’on prend dans sa vie. Pas parce qu’on n’est pas capable … mais parce qu’on veut maximiser le temps d’exploiter nos forces.
 
-/blog/quest-ce-que-tu-fais-au-juste/
+[Lien permanent](/blog/quest-ce-que-tu-fais-au-juste/)

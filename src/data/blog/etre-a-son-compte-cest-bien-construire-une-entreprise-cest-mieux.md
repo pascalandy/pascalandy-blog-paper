@@ -98,6 +98,6 @@ Si faire XX $ de l'heure ne te satisfait pas, ça veut dire qu'échanger ton tem
 
 La mauvaise nouvelle est que cette liberté demande des efforts. La bonne est qu'il n'a jamais été aussi facile d'y arriver.
 
-/blog/etre-a-son-compte-cest-bien-construire-une-entreprise-cest-mieux/
+[Lien permanent](/blog/etre-a-son-compte-cest-bien-construire-une-entreprise-cest-mieux/)
 
 📷 [source 1](https://secure.flickr.com/photos/daviddmuir/2125697998/), 📷 [source 2](https://www.flickr.com/photos/21560098@N06/3832712784/)
