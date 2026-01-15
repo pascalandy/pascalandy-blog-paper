@@ -60,11 +60,11 @@ _P.S. C'est problématique quand les gens **confirment leurs présences mais ne 
 
 ### 🙌 (TL;DR), en gros
 
-— 🍺 de la boisson
-— 🍕 de la bouffe (parfois oui, parfois non)
-— 💡 du monde intéressé et intéressant
-— ❤️ un sujet passionnant
-— 🏒 un présentateur qui n'a pas peur d'aller dans les coins
+- 🍺 de la boisson
+- 🍕 de la bouffe (parfois oui, parfois non)
+- 💡 du monde intéressé et intéressant
+- ❤️ un sujet passionnant
+- 🏒 un présentateur qui n'a pas peur d'aller dans les coins
 
 ### Qu'est-ce que t'attends ?
 

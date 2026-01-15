@@ -56,15 +56,13 @@ Tous les gens présents à l'événement obtiendront un crédit de 20$ valable s
 
 <https://www.youtube.com/embed/2_rPjzXXfBA>
 
-### EN GROS (TL;DR)
+### 🙌 (TL;DR), en gros
 
-— 🍹 🍺 de la boisson
-— 🍔 🍕 de la bouffe
-— 💡 du monde intéressé et intéressant
-— ❤️ un sujet passionnant
-— 💵 20$ de crédit en crypto
-— 🏒 un présentateur qui n'a pas peur d'aller dans les coins
-— 🙌 le tout offert gratuitement @ #CryptoInMontreal
+- 🍺 de la boisson
+- 🍕 de la bouffe (parfois oui, parfois non)
+- 💡 du monde intéressé et intéressant
+- ❤️ un sujet passionnant
+- 🏒 un présentateur qui n'a pas peur d'aller dans les coins
 
 Amène tes fesses parce que c'est difficile de résister à ça si tu me demandes mon avis :-p
 

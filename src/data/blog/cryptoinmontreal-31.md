@@ -70,13 +70,13 @@ Parce que nous croyons que[ votre site web doit parler en votre nom](https://fir
 
 Amène tes fesses parce que c'est difficile de résister à ça si tu me demandes mon avis 🙊. Il te reste juste à faire ton RSVP 🙌.
 
-**EN GROS (TL;DR):**
+### 🙌 (TL;DR), en gros
 
-— 🍹 🍺 de la boisson
-— 💡 du monde intéressé et intéressant
-— ❤️ un sujet passionnant
-— 🏒 un présentateur qui n'a pas peur d'aller dans les coins
-— 🙌 le tout offert gratuitement @ #CryptoInMontreal
+- 🍺 de la boisson
+- 🍕 de la bouffe (parfois oui, parfois non)
+- 💡 du monde intéressé et intéressant
+- ❤️ un sujet passionnant
+- 🏒 un présentateur qui n'a pas peur d'aller dans les coins
 
 Cheers!
 
