@@ -11,39 +11,10 @@ description: "BACKLOG, todo"
 
 Now, I would like to think about all the good utilities that are useful when managing any given project on GitHub. 
 
-Here are the three ones I have in mind. 
+So as you can see in the CI, I have already a few of them. The next one will be the, I would say, the security part of it. Considering that I'm running an astro site Uh What should I monitor here? I don't want it to be overkill, but I think it deserves to have some coverage here. 
 
-1)
-Renovate
+examples I found
 
-For an Astro/TypeScript project, Renovate wins because:
-
-1. Grouped PRs - One PR for all ESLint plugins, one for Astro ecosystem, etc.
-2. Dependency Dashboard - Single issue showing all pending updates
-3. Better defaults - Community presets like config:recommended handle 90% of cases
-4. Automerge for patches - Can auto-merge patch updates that pass CI
-
-2)
-Release Drafter
-
-3)
-| pr-labeler | Auto-label PRs by file paths |
-
-Other Essential GitHub Utilities for OSS Maintainers ??
-
-4)
-GitHub Secret Scanning
-
-5)
-
-GitHub Actions Optimizations
-
-Caching (actions/cache) │ Cache node_modules, .astro build cache
-Parallel jobs           │ Split lint/test/build into separate jobs  
-Skip unchanged          │ paths filter to skip CI on docs-only changes
-Timeout limits      │ Prevent runaway jobs
-
-6)
 Dependency Security
 
 | Tool | Purpose |
@@ -57,11 +28,10 @@ Dependency Security
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-Sponsorships   Loading
-Sponsorships help your community know how to financially support this repository.
+use graphite in my workflow
 
-Display a "Sponsor" button
-Add links to GitHub Sponsors or third-party methods your repository accepts for financial contributions to your project.
+https://graphite.com/pricing
+
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
@@ -98,30 +68,25 @@ plan
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-https://docs.astro.build/en/guides/integrations-guide/sitemap/
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-Tell me about this warning.
+What do I need to know about these warnings? 
 
-13:43:00 [build] output: "static"
-13:43:00 [build] mode: "static"
-13:43:00 [build] directory: /Users/andy16/Documents/github_local/pascalandy-blog-paper/dist/
-13:43:00 [build] Collecting build info...
-13:43:00 [build] ✓ Completed in 211ms.
-13:43:00 [build] Building static entrypoints...
-13:43:00 [WARN] [vite] "matchHostname", "matchPathname", "matchPort" and "matchProtocol" are imported from external module "@astrojs/internal-helpers/remote" but never used in "node_modules/astro/dist/assets/utils/remotePattern.js" and "node_modules/astro/dist/assets/services/service.js".
+11:43:52 watching for file changes...
+11:49:36 [WARN] [glob-loader] Duplicate id "linkedin" found in /Users/andy16/Documents/github_local/pascalandy-blog-paper/src/data/blog/linkedin.md. Later items with the same id will overwrite earlier ones.
+11:49:36 [glob-loader] Reloaded data from linkedin.md
+11:50:22 [WARN] [glob-loader] Duplicate id "linkedin" found in /Users/andy16/Documents/github_local/pascalandy-blog-paper/src/data/blog/linkedin.md. Later items with the same id will overwrite earlier ones.
+11:50:22 [glob-loader] Reloaded data from linkedin.md
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
+Some posts have a section at the end called : "Share this post on:"
+So first identify this post and then delete this part. 
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-shit show about stuff at the end of each posts
-
-Share this post on:
-
-=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
+Double check if there are assets (src/assets) that exists that are not linked to any posts. 
 
 example:
 Would copy: dev_to_import/images_to_Import/2021/05/pascalandy-com_header_2020-07-16_10h11.jpg
@@ -132,22 +97,16 @@ do not copy these pics with this pattern "pascalandy-com_header\*"
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-broken
-ogImage: /og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
-
-update it to:
-ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
+https://docs.astro.build/en/guides/integrations-guide/sitemap/
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-Issues:
+SEO stuff
 
-- 8 S3 images are gone (404 errors) - the S3 bucket g00000017_001 no longer hosts these files:
-  - ombre_sur_container_130-1466968864108.JPG
-  - Comment_int_grer_IFTTT_dropbox_instagram_blog_006-1462883913445.jpg
-  - lancer_une_startup_2014_09_26_22h03-1462844793432.jpg
-  - result1-1486228849099.png
-  - un_selfie_en_1980b\_\_\_pascal_andy_blog-1462843185197.jpg
-  - picture_placeholder-1465435648969.png
-  - docker_splash_c-1486227924505.png
-  - mobile_24h_pascal_andy-1462898373886.jpg
+=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
+
+Sponsorships   Loading
+Sponsorships help your community know how to financially support this repository.
+
+Display a "Sponsor" button
+Add links to GitHub Sponsors or third-party methods your repository accepts for financial contributions to your project.
