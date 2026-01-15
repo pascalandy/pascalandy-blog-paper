@@ -22,7 +22,8 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       <Picture
         src={bannerImage}
         formats={["avif", "webp"]}
-        loading="eager"
+        priority
+        quality={80}
         alt="Pascal Andy"
         class="mb-6 w-full rounded-lg"
       />
