@@ -70,8 +70,6 @@ const isActive = (path: string) => {
           "mt-4 grid w-44 grid-cols-2 place-content-center gap-2",
           "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
           "hidden",
-          "fixed inset-0 z-40 h-screen w-full bg-background pt-20",
-          "sm:relative sm:inset-auto sm:z-auto sm:h-auto sm:bg-transparent sm:pt-0",
           "sm:mt-0 sm:flex sm:w-auto sm:items-center sm:gap-x-5 sm:gap-y-0",
         ]}
       >
@@ -176,13 +174,6 @@ const isActive = (path: string) => {
       menuItems.classList.toggle("hidden");
       menuIcon.classList.toggle("hidden");
       closeIcon.classList.toggle("hidden");
-
-      // Lock body scroll when menu is open on mobile
-      if (openMenu) {
-        document.body.style.overflow = "";
-      } else {
-        document.body.style.overflow = "hidden";
-      }
     });
   }
 
