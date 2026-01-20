@@ -6,9 +6,9 @@
 
 ## Browser, esign/Style
 - the user will ask you to test something on the website, like:
-  - http://localhost:4321/
-  - http://localhost:4321/blog/lhorizon-cest-toi
-  - http://localhost:4321/tags
+  - http://localhost:4320/
+  - http://localhost:4320/blog/lhorizon-cest-toi
+  - http://localhost:4320/tags
 - run` agent-browser --help` to see avail cmd, go!
 
 **Rules**:
