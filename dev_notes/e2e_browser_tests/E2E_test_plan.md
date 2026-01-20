@@ -25,14 +25,14 @@
 
 | Page | URL | Content Type |
 |------|-----|--------------|
-| HOME | `http://localhost:4321/` | Cards, hero, nav |
-| BLOG_LIST | `http://localhost:4321/blog` | Pagination, cards |
-| POST_SIMPLE | `http://localhost:4321/blog/lhorizon-cest-toi` | Standard content |
-| POST_CODE | `http://localhost:4321/blog/dev_workflows/how-to-configure-astropaper-theme` | Code blocks, tables |
-| POST_MEDIA | `http://localhost:4321/blog/10-stages-of-the-lifecycle-of-a-business` | Images, lists |
-| TAGS | `http://localhost:4321/tags` | Tag cloud |
-| SEARCH | `http://localhost:4321/search` | Pagefind input |
-| 404 | `http://localhost:4321/nonexistent-page-test` | Error state |
+| HOME | `http://localhost:4320/` | Cards, hero, nav |
+| BLOG_LIST | `http://localhost:4320/blog` | Pagination, cards |
+| POST_SIMPLE | `http://localhost:4320/blog/lhorizon-cest-toi` | Standard content |
+| POST_CODE | `http://localhost:4320/blog/dev_workflows/how-to-configure-astropaper-theme` | Code blocks, tables |
+| POST_MEDIA | `http://localhost:4320/blog/10-stages-of-the-lifecycle-of-a-business` | Images, lists |
+| TAGS | `http://localhost:4320/tags` | Tag cloud |
+| SEARCH | `http://localhost:4320/search` | Pagefind input |
+| 404 | `http://localhost:4320/nonexistent-page-test` | Error state |
 
 ### 1.3 Viewport Matrix
 
@@ -106,7 +106,7 @@ ls -lt ~/Documents/screenshots | head -2
 
 ### BLOCK-INIT: Session Setup
 ```bash
-agent-browser --session $SESSION open http://localhost:4321/
+agent-browser --session $SESSION open http://localhost:4320/
 agent-browser --session $SESSION wait 1000
 agent-browser --session $SESSION errors --clear
 agent-browser --session $SESSION console --clear
