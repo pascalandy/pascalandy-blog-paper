@@ -1,0 +1,194 @@
+# E2E Visual Test Matrix
+# Formula: 2 themes × 9 combinations × 5 pages = 90 tests
+
+# =============================================================================
+# RAW DIMENSIONS (6)
+# =============================================================================
+
+dimensions:
+  browser:
+    count: 1
+    values:
+      - id: chromium
+        engine: Chrome/Edge
+
+  theme:
+    count: 2
+    values:
+      - dark
+      - light
+
+  viewport:
+    count: 5
+    values:
+      - id: phone
+        width: 375
+        height: 667
+      - id: breakpoint-below
+        width: 639
+        height: 900
+        note: "Hamburger MUST show"
+      - id: breakpoint-at
+        width: 640
+        height: 900
+        note: "Hamburger MUST hide"
+      - id: tablet
+        width: 768
+        height: 1024
+      - id: desktop
+        width: 1440
+        height: 900
+
+  orientation:
+    count: 2
+    values:
+      - portrait
+      - landscape
+    constraints:
+      - "phone: portrait, landscape"
+      - "breakpoint-below: portrait only"
+      - "breakpoint-at: portrait only"
+      - "tablet: portrait, landscape"
+      - "desktop: portrait only"
+
+  menu_state:
+    count: 2
+    values:
+      - closed
+      - open
+    constraint: "open only when width < 640"
+
+  page:
+    count: 5
+    values:
+      - id: home
+        path: /
+      - id: blog
+        path: /blog
+      - id: post
+        path: /blog/lhorizon-cest-toi
+      - id: tags
+        path: /tags
+      - id: search
+        path: /search
+
+# =============================================================================
+# DERIVED COMBINATIONS (9)
+# Viewport + Orientation + Menu State with constraints applied
+# =============================================================================
+
+combinations:
+  - id: 1
+    name: phone-portrait-closed
+    viewport: phone
+    orientation: portrait
+    menu: closed
+    dimensions: 375x667
+
+  - id: 2
+    name: phone-portrait-open
+    viewport: phone
+    orientation: portrait
+    menu: open
+    dimensions: 375x667
+
+  - id: 3
+    name: phone-landscape-closed
+    viewport: phone
+    orientation: landscape
+    menu: closed
+    dimensions: 667x375
+    note: "Width 667 > 640, hamburger hidden"
+
+  - id: 4
+    name: breakpoint-below-closed
+    viewport: breakpoint-below
+    orientation: portrait
+    menu: closed
+    dimensions: 639x900
+
+  - id: 5
+    name: breakpoint-below-open
+    viewport: breakpoint-below
+    orientation: portrait
+    menu: open
+    dimensions: 639x900
+    critical: true
+    note: "Verify hamburger visible at 639px"
+
+  - id: 6
+    name: breakpoint-at-closed
+    viewport: breakpoint-at
+    orientation: portrait
+    menu: closed
+    dimensions: 640x900
+    critical: true
+    note: "Verify hamburger hidden at 640px"
+
+  - id: 7
+    name: tablet-portrait-closed
+    viewport: tablet
+    orientation: portrait
+    menu: closed
+    dimensions: 768x1024
+
+  - id: 8
+    name: tablet-landscape-closed
+    viewport: tablet
+    orientation: landscape
+    menu: closed
+    dimensions: 1024x768
+
+  - id: 9
+    name: desktop-closed
+    viewport: desktop
+    orientation: portrait
+    menu: closed
+    dimensions: 1440x900
+
+# =============================================================================
+# FINAL MATRIX
+# =============================================================================
+
+matrix:
+  formula: "2 themes × 9 combinations × 5 pages = 90 tests"
+  total_tests: 90
+
+# =============================================================================
+# SCREENSHOT CONVENTION
+# =============================================================================
+
+screenshot:
+  directory: ~/Documents/screenshots
+  pattern: "{theme}-{combination}-{page}.png"
+  examples:
+    - dark-phone-portrait-closed-home.png
+    - dark-phone-portrait-open-blog.png
+    - light-breakpoint-at-closed-search.png
+    - light-desktop-closed-tags.png
+  post_process: "magick mogrify -resize '1920x1920>' -quality 70 {filename}"
+
+# =============================================================================
+# FAILURE CRITERIA
+# =============================================================================
+
+failure_criteria:
+  - id: F1
+    name: horizontal_overflow
+    check: "document.documentElement.scrollWidth - document.documentElement.clientWidth > 0"
+
+  - id: F2
+    name: hamburger_visible_above_breakpoint
+    check: "width >= 640 AND #menu-btn is visible"
+
+  - id: F3
+    name: hamburger_hidden_below_breakpoint
+    check: "width < 640 AND #menu-btn is NOT visible"
+
+  - id: F4
+    name: zero_padding
+    check: "text touches viewport edge"
+
+  - id: F5
+    name: theme_artifact
+    check: "element color doesn't match current theme"

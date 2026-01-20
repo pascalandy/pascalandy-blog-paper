@@ -1,0 +1,380 @@
+# E2E Single Test Agent Prompt Template
+#
+# This template generates a self-contained prompt for one agent to execute one test (out of all 90 tests)
+# Replace variables in {BRACKETS} with values from e2e_test_cases.yaml
+
+# =============================================================================
+# TEMPLATE
+# =============================================================================
+
+template: |
+   You are executing a single E2E visual test. Do not load any MCP or skills.
+
+   ## TEST IDENTITY
+   - Test ID: {TEST_ID}
+   - Theme: {THEME}
+   - Combination: {COMBINATION}
+   - Dimensions: {DIMENSIONS}
+   - Page: {PAGE}
+   - Path: {PATH}
+
+   ## BROWSER SESSION
+   Use session name: e2e-{TEST_ID}
+
+   ## EXECUTION STEPS
+
+   1. SET VIEWPORT
+      ```bash
+      agent-browser --session e2e-{TEST_ID} set viewport {WIDTH} {HEIGHT}
+      ```
+
+   2. SET THEME
+      ```bash
+      agent-browser --session e2e-{TEST_ID} open http://localhost:4320{PATH}
+      agent-browser --session e2e-{TEST_ID} wait 500
+      agent-browser --session e2e-{TEST_ID} storage local set theme "{THEME}"
+      agent-browser --session e2e-{TEST_ID} set media {THEME}
+      agent-browser --session e2e-{TEST_ID} reload
+      agent-browser --session e2e-{TEST_ID} wait 1000
+      ```
+
+   3. VERIFY THEME APPLIED
+      ```bash
+      agent-browser --session e2e-{TEST_ID} get attr data-theme html
+      ```
+      Expected: "{THEME}"
+
+   4. CHECK HORIZONTAL OVERFLOW
+      ```bash
+      agent-browser --session e2e-{TEST_ID} eval "document.documentElement.scrollWidth - document.documentElement.clientWidth"
+      ```
+      Expected: 0 or negative. If > 0, log as DEFECT F1.
+
+   5. {MENU_STEP}
+
+   6. SCREENSHOT TOP + ANALYZE
+      ```bash
+      agent-browser --session e2e-{TEST_ID} screenshot ~/Documents/screenshots/{SCREENSHOT_TOP}
+      magick mogrify -resize '1920x1920>' -quality 70 ~/Documents/screenshots/{SCREENSHOT_TOP}
+      ```
+      
+      Now READ the screenshot file and visually analyze it. Look for:
+      - Layout issues (misaligned elements, broken grid)
+      - Text problems (truncated, overlapping, unreadable)
+      - Spacing issues (elements too close, inconsistent gaps)
+      - Theme problems (wrong colors for {THEME} mode)
+      - Missing elements (icons, images not loading)
+      - Overflow (content cut off or extending beyond container)
+      - Typography (font rendering, hierarchy clear)
+      
+      Log any issues as DEFECT V1-V7 (visual defects).
+
+   7. SCREENSHOT FOOTER + ANALYZE
+      ```bash
+      agent-browser --session e2e-{TEST_ID} scrollintoview "footer"
+      agent-browser --session e2e-{TEST_ID} wait 300
+      agent-browser --session e2e-{TEST_ID} screenshot ~/Documents/screenshots/{SCREENSHOT_FOOTER}
+      magick mogrify -resize '1920x1920>' -quality 70 ~/Documents/screenshots/{SCREENSHOT_FOOTER}
+      ```
+      
+      READ the screenshot and analyze:
+      - Footer layout and alignment
+      - Links visible and properly styled
+      - Spacing from content above
+      - Theme consistency with rest of page
+
+   8. COLLECT ERRORS
+      ```bash
+      agent-browser --session e2e-{TEST_ID} errors
+      agent-browser --session e2e-{TEST_ID} console
+      ```
+
+   9. CLOSE SESSION
+      ```bash
+      agent-browser --session e2e-{TEST_ID} close
+      ```
+
+   ## FAILURE CRITERIA
+
+   ### Technical Defects (automated checks)
+   - F1: Horizontal overflow > 0
+   - F2: Hamburger visible when width >= 640
+   - F3: Hamburger hidden when width < 640
+
+   ### Visual Defects (screenshot analysis)
+   - V1: Layout broken (misaligned, overlapping elements)
+   - V2: Text issues (truncated, overlapping, unreadable)
+   - V3: Spacing issues (cramped, inconsistent gaps, zero padding)
+   - V4: Theme artifact (colors wrong for current theme)
+   - V5: Missing content (images not loaded, icons missing)
+   - V6: Overflow (content extends beyond its container)
+   - V7: Typography (font not rendering, hierarchy unclear)
+
+   ## REPORT FORMAT
+   Return exactly this:
+   ```
+   TEST: {TEST_ID}
+   STATUS: PASS | FAIL
+
+   TECHNICAL CHECKS:
+     - Horizontal overflow: PASS | FAIL (value: X)
+     - Menu button state: PASS | FAIL
+     - Theme applied: PASS | FAIL
+
+   VISUAL ANALYSIS:
+     TOP screenshot:
+       - [description of what you see]
+       - Issues found: [list or "none"]
+     
+     FOOTER screenshot:
+       - [description of what you see]
+       - Issues found: [list or "none"]
+     
+     MENU screenshot: (if applicable)
+       - [description of what you see]
+       - Issues found: [list or "none"]
+
+   DEFECTS: [F1, V2, etc. or "none"]
+
+   SCREENSHOTS:
+     - {SCREENSHOT_TOP}
+     - {SCREENSHOT_FOOTER}
+     - {SCREENSHOT_MENU} (if applicable)
+
+   ERRORS: [console/page errors or "none"]
+   ```
+
+# =============================================================================
+# MENU STEP VARIANTS
+# =============================================================================
+
+menu_steps:
+   # For combinations with menu OPEN (width < 640)
+   open: |
+      5. TEST MENU OPEN + ANALYZE
+         ```bash
+         agent-browser --session e2e-{TEST_ID} is visible "#menu-btn"
+         ```
+         Expected: true. If false, log as DEFECT F3.
+         
+         ```bash
+         agent-browser --session e2e-{TEST_ID} click "#menu-btn"
+         agent-browser --session e2e-{TEST_ID} wait 300
+         agent-browser --session e2e-{TEST_ID} screenshot ~/Documents/screenshots/{SCREENSHOT_MENU}
+         magick mogrify -resize '1920x1920>' -quality 70 ~/Documents/screenshots/{SCREENSHOT_MENU}
+         agent-browser --session e2e-{TEST_ID} click "#menu-btn"
+         agent-browser --session e2e-{TEST_ID} wait 300
+         ```
+         
+         READ the menu screenshot and analyze:
+         - Menu overlay renders correctly
+         - All nav links visible and readable
+         - Close button/area accessible
+         - No content bleeding through overlay
+         - Animation completed (no partial states)
+
+   # For combinations with menu CLOSED and width < 640
+   closed_mobile: |
+      5. VERIFY MENU BUTTON VISIBLE
+         ```bash
+         agent-browser --session e2e-{TEST_ID} is visible "#menu-btn"
+         ```
+         Expected: true. If false, log as DEFECT F3.
+
+   # For combinations with width >= 640 (no hamburger)
+   closed_desktop: |
+      5. VERIFY NO HAMBURGER (INLINE NAV)
+         ```bash
+         agent-browser --session e2e-{TEST_ID} is visible "#menu-btn"
+         ```
+         Expected: false. If true, log as DEFECT F2.
+
+# =============================================================================
+# EXAMPLE: Generated Prompt for D-05-03
+# =============================================================================
+
+example_prompt: |
+   You are executing a single E2E visual test. Do not load any MCP or skills.
+
+   ## TEST IDENTITY
+   - Test ID: D-05-03
+   - Theme: dark
+   - Combination: breakpoint-below-open
+   - Dimensions: 639x900
+   - Page: post
+   - Path: /blog/lhorizon-cest-toi
+
+   ## BROWSER SESSION
+   Use session name: e2e-D-05-03
+
+   ## EXECUTION STEPS
+
+   1. SET VIEWPORT
+      ```bash
+      agent-browser --session e2e-D-05-03 set viewport 639 900
+      ```
+
+   2. SET THEME
+      ```bash
+      agent-browser --session e2e-D-05-03 open http://localhost:4320/blog/lhorizon-cest-toi
+      agent-browser --session e2e-D-05-03 wait 500
+      agent-browser --session e2e-D-05-03 storage local set theme "dark"
+      agent-browser --session e2e-D-05-03 set media dark
+      agent-browser --session e2e-D-05-03 reload
+      agent-browser --session e2e-D-05-03 wait 1000
+      ```
+
+   3. VERIFY THEME APPLIED
+      ```bash
+      agent-browser --session e2e-D-05-03 get attr data-theme html
+      ```
+      Expected: "dark"
+
+   4. CHECK HORIZONTAL OVERFLOW
+      ```bash
+      agent-browser --session e2e-D-05-03 eval "document.documentElement.scrollWidth - document.documentElement.clientWidth"
+      ```
+      Expected: 0 or negative. If > 0, log as DEFECT F1.
+
+   5. TEST MENU OPEN + ANALYZE
+      ```bash
+      agent-browser --session e2e-D-05-03 is visible "#menu-btn"
+      ```
+      Expected: true. If false, log as DEFECT F3.
+      
+      ```bash
+      agent-browser --session e2e-D-05-03 click "#menu-btn"
+      agent-browser --session e2e-D-05-03 wait 300
+      agent-browser --session e2e-D-05-03 screenshot ~/Documents/screenshots/dark-breakpoint-below-open-post-menu.png
+      magick mogrify -resize '1920x1920>' -quality 70 ~/Documents/screenshots/dark-breakpoint-below-open-post-menu.png
+      agent-browser --session e2e-D-05-03 click "#menu-btn"
+      agent-browser --session e2e-D-05-03 wait 300
+      ```
+      
+      READ the menu screenshot and analyze:
+      - Menu overlay renders correctly
+      - All nav links visible and readable
+      - Close button/area accessible
+      - No content bleeding through overlay
+      - Animation completed (no partial states)
+
+   6. SCREENSHOT TOP + ANALYZE
+      ```bash
+      agent-browser --session e2e-D-05-03 screenshot ~/Documents/screenshots/dark-breakpoint-below-open-post-top.png
+      magick mogrify -resize '1920x1920>' -quality 70 ~/Documents/screenshots/dark-breakpoint-below-open-post-top.png
+      ```
+      
+      Now READ the screenshot file and visually analyze it. Look for:
+      - Layout issues (misaligned elements, broken grid)
+      - Text problems (truncated, overlapping, unreadable)
+      - Spacing issues (elements too close, inconsistent gaps)
+      - Theme problems (wrong colors for dark mode)
+      - Missing elements (icons, images not loading)
+      - Overflow (content cut off or extending beyond container)
+      - Typography (font rendering, hierarchy clear)
+      
+      Log any issues as DEFECT V1-V7 (visual defects).
+
+   7. SCREENSHOT FOOTER + ANALYZE
+      ```bash
+      agent-browser --session e2e-D-05-03 scrollintoview "footer"
+      agent-browser --session e2e-D-05-03 wait 300
+      agent-browser --session e2e-D-05-03 screenshot ~/Documents/screenshots/dark-breakpoint-below-open-post-footer.png
+      magick mogrify -resize '1920x1920>' -quality 70 ~/Documents/screenshots/dark-breakpoint-below-open-post-footer.png
+      ```
+      
+      READ the screenshot and analyze:
+      - Footer layout and alignment
+      - Links visible and properly styled
+      - Spacing from content above
+      - Theme consistency with rest of page
+
+   8. COLLECT ERRORS
+      ```bash
+      agent-browser --session e2e-D-05-03 errors
+      agent-browser --session e2e-D-05-03 console
+      ```
+
+   9. CLOSE SESSION
+      ```bash
+      agent-browser --session e2e-D-05-03 close
+      ```
+
+   ## FAILURE CRITERIA
+
+   ### Technical Defects (automated checks)
+   - F1: Horizontal overflow > 0
+   - F2: Hamburger visible when width >= 640
+   - F3: Hamburger hidden when width < 640
+
+   ### Visual Defects (screenshot analysis)
+   - V1: Layout broken (misaligned, overlapping elements)
+   - V2: Text issues (truncated, overlapping, unreadable)
+   - V3: Spacing issues (cramped, inconsistent gaps, zero padding)
+   - V4: Theme artifact (colors wrong for current theme)
+   - V5: Missing content (images not loaded, icons missing)
+   - V6: Overflow (content extends beyond its container)
+   - V7: Typography (font not rendering, hierarchy unclear)
+
+   ## REPORT FORMAT
+   Return exactly this:
+   ```
+   TEST: D-05-03
+   STATUS: PASS | FAIL
+
+   TECHNICAL CHECKS:
+     - Horizontal overflow: PASS (value: 0)
+     - Menu button state: PASS
+     - Theme applied: PASS
+
+   VISUAL ANALYSIS:
+     TOP screenshot (dark-breakpoint-below-open-post-top.png):
+       - Blog post title "L'horizon, c'est toi" visible, properly styled
+       - Dark theme colors applied correctly
+       - Content width appropriate for 639px viewport
+       - Issues found: none
+     
+     FOOTER screenshot (dark-breakpoint-below-open-post-footer.png):
+       - Footer aligned at bottom
+       - Social links visible
+       - Copyright text readable
+       - Issues found: none
+     
+     MENU screenshot (dark-breakpoint-below-open-post-menu.png):
+       - Overlay covers full viewport
+       - Nav links: Home, Blog, Tags, Search visible
+       - Theme toggle visible
+       - Issues found: none
+
+   DEFECTS: none
+
+   SCREENSHOTS:
+     - dark-breakpoint-below-open-post-top.png
+     - dark-breakpoint-below-open-post-footer.png
+     - dark-breakpoint-below-open-post-menu.png
+
+   ERRORS: none
+   ```
+
+# =============================================================================
+# VARIABLE MAPPING
+# =============================================================================
+
+variables:
+   TEST_ID: "From e2e_test_cases.yaml (e.g., D-05-03)"
+   THEME: "dark or light"
+   COMBINATION: "One of the 9 combinations"
+   DIMENSIONS: "WIDTHxHEIGHT (e.g., 639x900)"
+   WIDTH: "First part of dimensions"
+   HEIGHT: "Second part of dimensions"
+   PAGE: "home, blog, post, tags, or search"
+   PATH: "URL path (e.g., /blog/lhorizon-cest-toi)"
+   SCREENSHOT_TOP: "{theme}-{combination}-{page}-top.png"
+   SCREENSHOT_FOOTER: "{theme}-{combination}-{page}-footer.png"
+   SCREENSHOT_MENU: "{theme}-{combination}-{page}-menu.png (only for menu open tests)"
+
+   MENU_STEP: |
+      Choose based on combination:
+      - phone-portrait-open, breakpoint-below-open → menu_steps.open
+      - phone-portrait-closed, breakpoint-below-closed → menu_steps.closed_mobile
+      - All others (width >= 640) → menu_steps.closed_desktop
