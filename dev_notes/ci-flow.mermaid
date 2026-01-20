@@ -1,0 +1,26 @@
+sequenceDiagram
+    participant Dev as Developer
+    participant GH as GitHub PR
+    participant CI as CI Workflow
+    participant QA as Quality Checks
+    participant Build as Build Job
+    participant Preview as Deploy Preview
+    participant Sevalla as Sevalla Hosting
+    
+    Dev->>GH: Create PR
+    GH->>CI: Trigger workflow (opened/synchronize)
+    CI->>QA: Run lint, format, typecheck
+    QA->>Build: All checks passed
+    Build->>Build: Build static site
+    Note over Preview: No deploy (missing 'preview' label)
+    
+    Dev->>GH: Add 'preview' label
+    GH->>CI: Trigger workflow (labeled)
+    CI->>QA: Run lint, format, typecheck
+    QA->>Build: All checks passed
+    Build->>Build: Build static site
+    Build->>Preview: Job starts (label detected)
+    Preview->>Sevalla: Deploy to SEVALLA_STATIC_SITE_ID_PREVIEW
+    Sevalla-->>Preview: Deployment complete
+    Preview->>GH: Post comment with preview URL
+    GH-->>Dev: Shows deployment notification
