@@ -1,0 +1,838 @@
+# E2E Test Cases - All 90 Mutations
+# Generated from: 2 themes × 9 combinations × 5 pages = 90 tests
+
+# =============================================================================
+# DARK THEME (45 tests)
+# =============================================================================
+
+dark_theme:
+  # ---------------------------------------------------------------------------
+  # Combination 1: phone-portrait-closed (375x667)
+  # ---------------------------------------------------------------------------
+  - id: D-01-01
+    theme: dark
+    combination: phone-portrait-closed
+    dimensions: 375x667
+    page: home
+    path: /
+    screenshot: dark-phone-portrait-closed-home.png
+
+  - id: D-01-02
+    theme: dark
+    combination: phone-portrait-closed
+    dimensions: 375x667
+    page: blog
+    path: /blog
+    screenshot: dark-phone-portrait-closed-blog.png
+
+  - id: D-01-03
+    theme: dark
+    combination: phone-portrait-closed
+    dimensions: 375x667
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: dark-phone-portrait-closed-post.png
+
+  - id: D-01-04
+    theme: dark
+    combination: phone-portrait-closed
+    dimensions: 375x667
+    page: tags
+    path: /tags
+    screenshot: dark-phone-portrait-closed-tags.png
+
+  - id: D-01-05
+    theme: dark
+    combination: phone-portrait-closed
+    dimensions: 375x667
+    page: search
+    path: /search
+    screenshot: dark-phone-portrait-closed-search.png
+
+  # ---------------------------------------------------------------------------
+  # Combination 2: phone-portrait-open (375x667)
+  # ---------------------------------------------------------------------------
+  - id: D-02-01
+    theme: dark
+    combination: phone-portrait-open
+    dimensions: 375x667
+    page: home
+    path: /
+    screenshot: dark-phone-portrait-open-home.png
+
+  - id: D-02-02
+    theme: dark
+    combination: phone-portrait-open
+    dimensions: 375x667
+    page: blog
+    path: /blog
+    screenshot: dark-phone-portrait-open-blog.png
+
+  - id: D-02-03
+    theme: dark
+    combination: phone-portrait-open
+    dimensions: 375x667
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: dark-phone-portrait-open-post.png
+
+  - id: D-02-04
+    theme: dark
+    combination: phone-portrait-open
+    dimensions: 375x667
+    page: tags
+    path: /tags
+    screenshot: dark-phone-portrait-open-tags.png
+
+  - id: D-02-05
+    theme: dark
+    combination: phone-portrait-open
+    dimensions: 375x667
+    page: search
+    path: /search
+    screenshot: dark-phone-portrait-open-search.png
+
+  # ---------------------------------------------------------------------------
+  # Combination 3: phone-landscape-closed (667x375)
+  # ---------------------------------------------------------------------------
+  - id: D-03-01
+    theme: dark
+    combination: phone-landscape-closed
+    dimensions: 667x375
+    page: home
+    path: /
+    screenshot: dark-phone-landscape-closed-home.png
+
+  - id: D-03-02
+    theme: dark
+    combination: phone-landscape-closed
+    dimensions: 667x375
+    page: blog
+    path: /blog
+    screenshot: dark-phone-landscape-closed-blog.png
+
+  - id: D-03-03
+    theme: dark
+    combination: phone-landscape-closed
+    dimensions: 667x375
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: dark-phone-landscape-closed-post.png
+
+  - id: D-03-04
+    theme: dark
+    combination: phone-landscape-closed
+    dimensions: 667x375
+    page: tags
+    path: /tags
+    screenshot: dark-phone-landscape-closed-tags.png
+
+  - id: D-03-05
+    theme: dark
+    combination: phone-landscape-closed
+    dimensions: 667x375
+    page: search
+    path: /search
+    screenshot: dark-phone-landscape-closed-search.png
+
+  # ---------------------------------------------------------------------------
+  # Combination 4: breakpoint-below-closed (639x900)
+  # ---------------------------------------------------------------------------
+  - id: D-04-01
+    theme: dark
+    combination: breakpoint-below-closed
+    dimensions: 639x900
+    page: home
+    path: /
+    screenshot: dark-breakpoint-below-closed-home.png
+
+  - id: D-04-02
+    theme: dark
+    combination: breakpoint-below-closed
+    dimensions: 639x900
+    page: blog
+    path: /blog
+    screenshot: dark-breakpoint-below-closed-blog.png
+
+  - id: D-04-03
+    theme: dark
+    combination: breakpoint-below-closed
+    dimensions: 639x900
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: dark-breakpoint-below-closed-post.png
+
+  - id: D-04-04
+    theme: dark
+    combination: breakpoint-below-closed
+    dimensions: 639x900
+    page: tags
+    path: /tags
+    screenshot: dark-breakpoint-below-closed-tags.png
+
+  - id: D-04-05
+    theme: dark
+    combination: breakpoint-below-closed
+    dimensions: 639x900
+    page: search
+    path: /search
+    screenshot: dark-breakpoint-below-closed-search.png
+
+  # ---------------------------------------------------------------------------
+  # Combination 5: breakpoint-below-open (639x900) [CRITICAL]
+  # ---------------------------------------------------------------------------
+  - id: D-05-01
+    theme: dark
+    combination: breakpoint-below-open
+    dimensions: 639x900
+    page: home
+    path: /
+    screenshot: dark-breakpoint-below-open-home.png
+    critical: true
+    note: "Verify hamburger visible at 639px"
+
+  - id: D-05-02
+    theme: dark
+    combination: breakpoint-below-open
+    dimensions: 639x900
+    page: blog
+    path: /blog
+    screenshot: dark-breakpoint-below-open-blog.png
+    critical: true
+
+  - id: D-05-03
+    theme: dark
+    combination: breakpoint-below-open
+    dimensions: 639x900
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: dark-breakpoint-below-open-post.png
+    critical: true
+
+  - id: D-05-04
+    theme: dark
+    combination: breakpoint-below-open
+    dimensions: 639x900
+    page: tags
+    path: /tags
+    screenshot: dark-breakpoint-below-open-tags.png
+    critical: true
+
+  - id: D-05-05
+    theme: dark
+    combination: breakpoint-below-open
+    dimensions: 639x900
+    page: search
+    path: /search
+    screenshot: dark-breakpoint-below-open-search.png
+    critical: true
+
+  # ---------------------------------------------------------------------------
+  # Combination 6: breakpoint-at-closed (640x900) [CRITICAL]
+  # ---------------------------------------------------------------------------
+  - id: D-06-01
+    theme: dark
+    combination: breakpoint-at-closed
+    dimensions: 640x900
+    page: home
+    path: /
+    screenshot: dark-breakpoint-at-closed-home.png
+    critical: true
+    note: "Verify hamburger hidden at 640px"
+
+  - id: D-06-02
+    theme: dark
+    combination: breakpoint-at-closed
+    dimensions: 640x900
+    page: blog
+    path: /blog
+    screenshot: dark-breakpoint-at-closed-blog.png
+    critical: true
+
+  - id: D-06-03
+    theme: dark
+    combination: breakpoint-at-closed
+    dimensions: 640x900
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: dark-breakpoint-at-closed-post.png
+    critical: true
+
+  - id: D-06-04
+    theme: dark
+    combination: breakpoint-at-closed
+    dimensions: 640x900
+    page: tags
+    path: /tags
+    screenshot: dark-breakpoint-at-closed-tags.png
+    critical: true
+
+  - id: D-06-05
+    theme: dark
+    combination: breakpoint-at-closed
+    dimensions: 640x900
+    page: search
+    path: /search
+    screenshot: dark-breakpoint-at-closed-search.png
+    critical: true
+
+  # ---------------------------------------------------------------------------
+  # Combination 7: tablet-portrait-closed (768x1024)
+  # ---------------------------------------------------------------------------
+  - id: D-07-01
+    theme: dark
+    combination: tablet-portrait-closed
+    dimensions: 768x1024
+    page: home
+    path: /
+    screenshot: dark-tablet-portrait-closed-home.png
+
+  - id: D-07-02
+    theme: dark
+    combination: tablet-portrait-closed
+    dimensions: 768x1024
+    page: blog
+    path: /blog
+    screenshot: dark-tablet-portrait-closed-blog.png
+
+  - id: D-07-03
+    theme: dark
+    combination: tablet-portrait-closed
+    dimensions: 768x1024
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: dark-tablet-portrait-closed-post.png
+
+  - id: D-07-04
+    theme: dark
+    combination: tablet-portrait-closed
+    dimensions: 768x1024
+    page: tags
+    path: /tags
+    screenshot: dark-tablet-portrait-closed-tags.png
+
+  - id: D-07-05
+    theme: dark
+    combination: tablet-portrait-closed
+    dimensions: 768x1024
+    page: search
+    path: /search
+    screenshot: dark-tablet-portrait-closed-search.png
+
+  # ---------------------------------------------------------------------------
+  # Combination 8: tablet-landscape-closed (1024x768)
+  # ---------------------------------------------------------------------------
+  - id: D-08-01
+    theme: dark
+    combination: tablet-landscape-closed
+    dimensions: 1024x768
+    page: home
+    path: /
+    screenshot: dark-tablet-landscape-closed-home.png
+
+  - id: D-08-02
+    theme: dark
+    combination: tablet-landscape-closed
+    dimensions: 1024x768
+    page: blog
+    path: /blog
+    screenshot: dark-tablet-landscape-closed-blog.png
+
+  - id: D-08-03
+    theme: dark
+    combination: tablet-landscape-closed
+    dimensions: 1024x768
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: dark-tablet-landscape-closed-post.png
+
+  - id: D-08-04
+    theme: dark
+    combination: tablet-landscape-closed
+    dimensions: 1024x768
+    page: tags
+    path: /tags
+    screenshot: dark-tablet-landscape-closed-tags.png
+
+  - id: D-08-05
+    theme: dark
+    combination: tablet-landscape-closed
+    dimensions: 1024x768
+    page: search
+    path: /search
+    screenshot: dark-tablet-landscape-closed-search.png
+
+  # ---------------------------------------------------------------------------
+  # Combination 9: desktop-closed (1440x900)
+  # ---------------------------------------------------------------------------
+  - id: D-09-01
+    theme: dark
+    combination: desktop-closed
+    dimensions: 1440x900
+    page: home
+    path: /
+    screenshot: dark-desktop-closed-home.png
+
+  - id: D-09-02
+    theme: dark
+    combination: desktop-closed
+    dimensions: 1440x900
+    page: blog
+    path: /blog
+    screenshot: dark-desktop-closed-blog.png
+
+  - id: D-09-03
+    theme: dark
+    combination: desktop-closed
+    dimensions: 1440x900
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: dark-desktop-closed-post.png
+
+  - id: D-09-04
+    theme: dark
+    combination: desktop-closed
+    dimensions: 1440x900
+    page: tags
+    path: /tags
+    screenshot: dark-desktop-closed-tags.png
+
+  - id: D-09-05
+    theme: dark
+    combination: desktop-closed
+    dimensions: 1440x900
+    page: search
+    path: /search
+    screenshot: dark-desktop-closed-search.png
+
+# =============================================================================
+# LIGHT THEME (45 tests)
+# =============================================================================
+
+light_theme:
+  # ---------------------------------------------------------------------------
+  # Combination 1: phone-portrait-closed (375x667)
+  # ---------------------------------------------------------------------------
+  - id: L-01-01
+    theme: light
+    combination: phone-portrait-closed
+    dimensions: 375x667
+    page: home
+    path: /
+    screenshot: light-phone-portrait-closed-home.png
+
+  - id: L-01-02
+    theme: light
+    combination: phone-portrait-closed
+    dimensions: 375x667
+    page: blog
+    path: /blog
+    screenshot: light-phone-portrait-closed-blog.png
+
+  - id: L-01-03
+    theme: light
+    combination: phone-portrait-closed
+    dimensions: 375x667
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: light-phone-portrait-closed-post.png
+
+  - id: L-01-04
+    theme: light
+    combination: phone-portrait-closed
+    dimensions: 375x667
+    page: tags
+    path: /tags
+    screenshot: light-phone-portrait-closed-tags.png
+
+  - id: L-01-05
+    theme: light
+    combination: phone-portrait-closed
+    dimensions: 375x667
+    page: search
+    path: /search
+    screenshot: light-phone-portrait-closed-search.png
+
+  # ---------------------------------------------------------------------------
+  # Combination 2: phone-portrait-open (375x667)
+  # ---------------------------------------------------------------------------
+  - id: L-02-01
+    theme: light
+    combination: phone-portrait-open
+    dimensions: 375x667
+    page: home
+    path: /
+    screenshot: light-phone-portrait-open-home.png
+
+  - id: L-02-02
+    theme: light
+    combination: phone-portrait-open
+    dimensions: 375x667
+    page: blog
+    path: /blog
+    screenshot: light-phone-portrait-open-blog.png
+
+  - id: L-02-03
+    theme: light
+    combination: phone-portrait-open
+    dimensions: 375x667
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: light-phone-portrait-open-post.png
+
+  - id: L-02-04
+    theme: light
+    combination: phone-portrait-open
+    dimensions: 375x667
+    page: tags
+    path: /tags
+    screenshot: light-phone-portrait-open-tags.png
+
+  - id: L-02-05
+    theme: light
+    combination: phone-portrait-open
+    dimensions: 375x667
+    page: search
+    path: /search
+    screenshot: light-phone-portrait-open-search.png
+
+  # ---------------------------------------------------------------------------
+  # Combination 3: phone-landscape-closed (667x375)
+  # ---------------------------------------------------------------------------
+  - id: L-03-01
+    theme: light
+    combination: phone-landscape-closed
+    dimensions: 667x375
+    page: home
+    path: /
+    screenshot: light-phone-landscape-closed-home.png
+
+  - id: L-03-02
+    theme: light
+    combination: phone-landscape-closed
+    dimensions: 667x375
+    page: blog
+    path: /blog
+    screenshot: light-phone-landscape-closed-blog.png
+
+  - id: L-03-03
+    theme: light
+    combination: phone-landscape-closed
+    dimensions: 667x375
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: light-phone-landscape-closed-post.png
+
+  - id: L-03-04
+    theme: light
+    combination: phone-landscape-closed
+    dimensions: 667x375
+    page: tags
+    path: /tags
+    screenshot: light-phone-landscape-closed-tags.png
+
+  - id: L-03-05
+    theme: light
+    combination: phone-landscape-closed
+    dimensions: 667x375
+    page: search
+    path: /search
+    screenshot: light-phone-landscape-closed-search.png
+
+  # ---------------------------------------------------------------------------
+  # Combination 4: breakpoint-below-closed (639x900)
+  # ---------------------------------------------------------------------------
+  - id: L-04-01
+    theme: light
+    combination: breakpoint-below-closed
+    dimensions: 639x900
+    page: home
+    path: /
+    screenshot: light-breakpoint-below-closed-home.png
+
+  - id: L-04-02
+    theme: light
+    combination: breakpoint-below-closed
+    dimensions: 639x900
+    page: blog
+    path: /blog
+    screenshot: light-breakpoint-below-closed-blog.png
+
+  - id: L-04-03
+    theme: light
+    combination: breakpoint-below-closed
+    dimensions: 639x900
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: light-breakpoint-below-closed-post.png
+
+  - id: L-04-04
+    theme: light
+    combination: breakpoint-below-closed
+    dimensions: 639x900
+    page: tags
+    path: /tags
+    screenshot: light-breakpoint-below-closed-tags.png
+
+  - id: L-04-05
+    theme: light
+    combination: breakpoint-below-closed
+    dimensions: 639x900
+    page: search
+    path: /search
+    screenshot: light-breakpoint-below-closed-search.png
+
+  # ---------------------------------------------------------------------------
+  # Combination 5: breakpoint-below-open (639x900) [CRITICAL]
+  # ---------------------------------------------------------------------------
+  - id: L-05-01
+    theme: light
+    combination: breakpoint-below-open
+    dimensions: 639x900
+    page: home
+    path: /
+    screenshot: light-breakpoint-below-open-home.png
+    critical: true
+    note: "Verify hamburger visible at 639px"
+
+  - id: L-05-02
+    theme: light
+    combination: breakpoint-below-open
+    dimensions: 639x900
+    page: blog
+    path: /blog
+    screenshot: light-breakpoint-below-open-blog.png
+    critical: true
+
+  - id: L-05-03
+    theme: light
+    combination: breakpoint-below-open
+    dimensions: 639x900
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: light-breakpoint-below-open-post.png
+    critical: true
+
+  - id: L-05-04
+    theme: light
+    combination: breakpoint-below-open
+    dimensions: 639x900
+    page: tags
+    path: /tags
+    screenshot: light-breakpoint-below-open-tags.png
+    critical: true
+
+  - id: L-05-05
+    theme: light
+    combination: breakpoint-below-open
+    dimensions: 639x900
+    page: search
+    path: /search
+    screenshot: light-breakpoint-below-open-search.png
+    critical: true
+
+  # ---------------------------------------------------------------------------
+  # Combination 6: breakpoint-at-closed (640x900) [CRITICAL]
+  # ---------------------------------------------------------------------------
+  - id: L-06-01
+    theme: light
+    combination: breakpoint-at-closed
+    dimensions: 640x900
+    page: home
+    path: /
+    screenshot: light-breakpoint-at-closed-home.png
+    critical: true
+    note: "Verify hamburger hidden at 640px"
+
+  - id: L-06-02
+    theme: light
+    combination: breakpoint-at-closed
+    dimensions: 640x900
+    page: blog
+    path: /blog
+    screenshot: light-breakpoint-at-closed-blog.png
+    critical: true
+
+  - id: L-06-03
+    theme: light
+    combination: breakpoint-at-closed
+    dimensions: 640x900
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: light-breakpoint-at-closed-post.png
+    critical: true
+
+  - id: L-06-04
+    theme: light
+    combination: breakpoint-at-closed
+    dimensions: 640x900
+    page: tags
+    path: /tags
+    screenshot: light-breakpoint-at-closed-tags.png
+    critical: true
+
+  - id: L-06-05
+    theme: light
+    combination: breakpoint-at-closed
+    dimensions: 640x900
+    page: search
+    path: /search
+    screenshot: light-breakpoint-at-closed-search.png
+    critical: true
+
+  # ---------------------------------------------------------------------------
+  # Combination 7: tablet-portrait-closed (768x1024)
+  # ---------------------------------------------------------------------------
+  - id: L-07-01
+    theme: light
+    combination: tablet-portrait-closed
+    dimensions: 768x1024
+    page: home
+    path: /
+    screenshot: light-tablet-portrait-closed-home.png
+
+  - id: L-07-02
+    theme: light
+    combination: tablet-portrait-closed
+    dimensions: 768x1024
+    page: blog
+    path: /blog
+    screenshot: light-tablet-portrait-closed-blog.png
+
+  - id: L-07-03
+    theme: light
+    combination: tablet-portrait-closed
+    dimensions: 768x1024
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: light-tablet-portrait-closed-post.png
+
+  - id: L-07-04
+    theme: light
+    combination: tablet-portrait-closed
+    dimensions: 768x1024
+    page: tags
+    path: /tags
+    screenshot: light-tablet-portrait-closed-tags.png
+
+  - id: L-07-05
+    theme: light
+    combination: tablet-portrait-closed
+    dimensions: 768x1024
+    page: search
+    path: /search
+    screenshot: light-tablet-portrait-closed-search.png
+
+  # ---------------------------------------------------------------------------
+  # Combination 8: tablet-landscape-closed (1024x768)
+  # ---------------------------------------------------------------------------
+  - id: L-08-01
+    theme: light
+    combination: tablet-landscape-closed
+    dimensions: 1024x768
+    page: home
+    path: /
+    screenshot: light-tablet-landscape-closed-home.png
+
+  - id: L-08-02
+    theme: light
+    combination: tablet-landscape-closed
+    dimensions: 1024x768
+    page: blog
+    path: /blog
+    screenshot: light-tablet-landscape-closed-blog.png
+
+  - id: L-08-03
+    theme: light
+    combination: tablet-landscape-closed
+    dimensions: 1024x768
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: light-tablet-landscape-closed-post.png
+
+  - id: L-08-04
+    theme: light
+    combination: tablet-landscape-closed
+    dimensions: 1024x768
+    page: tags
+    path: /tags
+    screenshot: light-tablet-landscape-closed-tags.png
+
+  - id: L-08-05
+    theme: light
+    combination: tablet-landscape-closed
+    dimensions: 1024x768
+    page: search
+    path: /search
+    screenshot: light-tablet-landscape-closed-search.png
+
+  # ---------------------------------------------------------------------------
+  # Combination 9: desktop-closed (1440x900)
+  # ---------------------------------------------------------------------------
+  - id: L-09-01
+    theme: light
+    combination: desktop-closed
+    dimensions: 1440x900
+    page: home
+    path: /
+    screenshot: light-desktop-closed-home.png
+
+  - id: L-09-02
+    theme: light
+    combination: desktop-closed
+    dimensions: 1440x900
+    page: blog
+    path: /blog
+    screenshot: light-desktop-closed-blog.png
+
+  - id: L-09-03
+    theme: light
+    combination: desktop-closed
+    dimensions: 1440x900
+    page: post
+    path: /blog/lhorizon-cest-toi
+    screenshot: light-desktop-closed-post.png
+
+  - id: L-09-04
+    theme: light
+    combination: desktop-closed
+    dimensions: 1440x900
+    page: tags
+    path: /tags
+    screenshot: light-desktop-closed-tags.png
+
+  - id: L-09-05
+    theme: light
+    combination: desktop-closed
+    dimensions: 1440x900
+    page: search
+    path: /search
+    screenshot: light-desktop-closed-search.png
+
+# =============================================================================
+# SUMMARY
+# =============================================================================
+
+summary:
+  total_tests: 90
+  dark_theme_tests: 45
+  light_theme_tests: 45
+  critical_tests: 20  # Combinations 5 and 6 for both themes (10 each)
+  
+  by_combination:
+    phone-portrait-closed: 10     # D-01-*, L-01-*
+    phone-portrait-open: 10       # D-02-*, L-02-*
+    phone-landscape-closed: 10    # D-03-*, L-03-*
+    breakpoint-below-closed: 10   # D-04-*, L-04-*
+    breakpoint-below-open: 10     # D-05-*, L-05-* (critical)
+    breakpoint-at-closed: 10      # D-06-*, L-06-* (critical)
+    tablet-portrait-closed: 10    # D-07-*, L-07-*
+    tablet-landscape-closed: 10   # D-08-*, L-08-*
+    desktop-closed: 10            # D-09-*, L-09-*
+
+  by_page:
+    home: 18    # 9 combinations × 2 themes
+    blog: 18
+    post: 18
+    tags: 18
+    search: 18

@@ -35,14 +35,15 @@ When user say "create a PR":
 
   1. Run make qa (via background agent) before pushing
   2. Push & create PR
-  3. Wait ~2 min, then check:
+  3. Open PR in browser (`gh pr view --web`)
+  4. Wait ~2 min, then check:
     - gh pr checks <PR#> - CI status
     - gh api repos/.../pulls/<PR#>/comments - Greptile feedback
-  4. Fix Greptile comments if any
-  5. Run make qa again before pushing fixes
-  6. Push fixes
-  7. Re-check CI until green
-  8. Report back with final status
+  5. Fix Greptile comments if any
+  6. Run make qa again before pushing fixes
+  7. Push fixes
+  8. Re-check CI until green
+  9. Report back with final status
 
   Trigger phrases:
   - "create a pr"

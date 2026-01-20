@@ -104,7 +104,7 @@ jobs:
       - run: bun run build:ci
 
   deploy:
-    name: Deploy to Sevalla
+    name: Deploy in Production
     runs-on: ubuntu-latest
     timeout-minutes: 5
     needs: build
@@ -119,7 +119,7 @@ jobs:
           wait-for-finish: true
 
   deploy-preview:
-    name: Deploy PR Preview to Sevalla
+    name: Deploy PR Preview
     runs-on: ubuntu-latest
     timeout-minutes: 5
     needs: build
