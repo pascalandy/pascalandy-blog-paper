@@ -52,7 +52,7 @@ const isActive = (path: string) => {
     </a>
     <nav
       id="nav-menu"
-      class="flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
+      class="relative flex w-full flex-col items-center sm:ms-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0"
     >
       <button
         id="menu-btn"
@@ -67,12 +67,14 @@ const isActive = (path: string) => {
       <ul
         id="menu-items"
         class:list={[
-          "mt-4 grid w-44 grid-cols-2 place-content-center gap-2",
-          "[&>li>a]:block [&>li>a]:px-4 [&>li>a]:py-3 [&>li>a]:text-center [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
           "hidden",
-          "fixed inset-0 z-40 h-screen w-full bg-background pt-20",
-          "sm:relative sm:inset-auto sm:z-auto sm:h-auto sm:bg-transparent sm:pt-0",
-          "sm:mt-0 sm:flex sm:w-auto sm:items-center sm:gap-x-5 sm:gap-y-0",
+          "absolute top-full right-0 z-40 mt-2",
+          "flex flex-col gap-1 p-4",
+          "w-48 rounded-lg border border-border bg-background shadow-lg",
+          "[&>li>a]:block [&>li>a]:p-3 [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
+          "sm:relative sm:top-auto sm:right-auto sm:z-auto sm:mt-0",
+          "sm:flex sm:w-auto sm:flex-row sm:items-center sm:gap-x-5 sm:gap-y-0",
+          "sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none",
         ]}
       >
         <li class="col-span-2 flex items-center">
@@ -83,7 +85,8 @@ const isActive = (path: string) => {
               { "active-nav": isActive("/blog") },
             ]}
           >
-            /blog
+            <span class="sm:hidden">Blog</span>
+            <span class="hidden sm:inline">/blog</span>
           </a>
         </li>
         <li class="col-span-2 sm:col-span-1">
@@ -92,7 +95,7 @@ const isActive = (path: string) => {
               <LinkButton
                 href="/tags"
                 class:list={[
-                  "focus-outline flex justify-center p-3 sm:p-1",
+                  "focus-outline flex p-3 sm:justify-center sm:p-1",
                   {
                     "active-nav [&>svg]:stroke-accent": isActive("/tags"),
                   },
@@ -108,7 +111,7 @@ const isActive = (path: string) => {
               <LinkButton
                 href="/about"
                 class:list={[
-                  "focus-outline flex justify-center p-3 sm:p-1",
+                  "focus-outline flex p-3 sm:justify-center sm:p-1",
                   {
                     "active-nav [&>svg]:stroke-accent": isActive("/about"),
                   },
@@ -121,32 +124,36 @@ const isActive = (path: string) => {
               </LinkButton>
             </li>
 
-            <li class="col-span-1 flex items-center justify-center">
+            <li class="col-span-1 flex items-center sm:justify-center">
               <LinkButton
                 href="/search"
                 class:list={[
-                  "focus-outline flex justify-center p-3 sm:p-1",
+                  "focus-outline flex p-3 sm:justify-center sm:p-1",
                   { "[&>svg]:stroke-accent": isActive("/search") },
                 ]}
                 title="Search"
                 aria-label="search"
               >
-                <IconSearch class="size-[22px]" />
-                <span class="sr-only">Search</span>
+                <IconSearch class="hidden size-[22px] sm:inline-block" />
+                <span class="sm:sr-only">Search</span>
               </LinkButton>
             </li>
             {
               SITE.lightAndDarkMode && (
-                <li class="col-span-1 flex items-center justify-center">
+                <li class="col-span-1 flex items-center sm:justify-center">
                   <button
                     id="theme-btn"
-                    class="focus-outline relative p-3 sm:p-1 hover:[&>svg]:stroke-accent"
+                    class="focus-outline relative flex p-3 sm:p-1 hover:[&>svg]:stroke-accent"
                     title="Toggles light & dark"
                     aria-label="auto"
                     aria-live="polite"
                   >
-                    <IconMoon class="size-5 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-                    <IconSunHigh class="absolute top-1/2 left-1/2 size-5 -translate-1/2 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
+                    <IconMoon class="hidden size-5 scale-100 rotate-0 transition-all sm:inline-block dark:scale-0 dark:-rotate-90" />
+                    <IconSunHigh class="absolute top-1/2 left-1/2 hidden size-5 -translate-1/2 scale-0 rotate-90 transition-all sm:inline-block dark:scale-100 dark:rotate-0" />
+                    <span class="sm:hidden dark:hidden">Dark mode</span>
+                    <span class="hidden dark:inline sm:dark:hidden">
+                      Light mode
+                    </span>
                   </button>
                 </li>
               )
@@ -176,13 +183,6 @@ const isActive = (path: string) => {
       menuItems.classList.toggle("hidden");
       menuIcon.classList.toggle("hidden");
       closeIcon.classList.toggle("hidden");
-
-      // Lock body scroll when menu is open on mobile
-      if (openMenu) {
-        document.body.style.overflow = "hidden";
-      } else {
-        document.body.style.overflow = "";
-      }
     });
   }
 
