@@ -179,9 +179,9 @@ const isActive = (path: string) => {
 
       // Lock body scroll when menu is open on mobile
       if (openMenu) {
-        document.body.style.overflow = "";
-      } else {
         document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "";
       }
     });
   }
