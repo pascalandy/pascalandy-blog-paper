@@ -5,8 +5,7 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Card from "@/components/Card.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
-import { Picture } from "astro:assets";
-import bannerImage from "@/assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg";
+import Banner from "@/components/Banner.astro";
 
 const posts = await getCollection("blog");
 
@@ -17,16 +16,9 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
 <Layout>
   <Header />
+  <Banner />
   <main id="main-content" data-layout="index" class="app-layout">
-    <section id="hero" class="pt-8 pb-6">
-      <Picture
-        src={bannerImage}
-        formats={["avif", "webp"]}
-        priority
-        quality={80}
-        alt="Pascal Andy"
-        class="mb-6 w-full rounded-lg"
-      />
+    <section id="hero" class="pt-4 pb-6">
       <p>
         Pour les « non technos » qui desirent de meilleures relations avec les
         technologies.

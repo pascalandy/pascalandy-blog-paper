@@ -2,6 +2,7 @@
 import { render, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
+import Banner from "@/components/Banner.astro";
 import Footer from "@/components/Footer.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
@@ -81,7 +82,8 @@ const nextPost =
 
 <Layout {...layoutProps}>
   <Header />
-  <main id="main-content" class="app-layout mt-8 pb-12" data-pagefind-body>
+  <Banner />
+  <main id="main-content" class="app-layout pt-8 pb-12" data-pagefind-body>
     <h1
       transition:name={slugifyStr(title)}
       class="inline-block text-xl text-accent sm:text-2xl"
