@@ -1,0 +1,15 @@
+---
+import { Picture } from "astro:assets";
+import bannerImage from "@/assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg";
+---
+
+<div class="app-layout pt-6">
+  <Picture
+    src={bannerImage}
+    formats={["avif", "webp"]}
+    priority
+    quality={80}
+    alt="Le blog de Pascal Andy - L'homme et les relations technologiques"
+    class="w-full rounded-lg"
+  />
+</div>
