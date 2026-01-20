@@ -11,38 +11,6 @@ description: "BACKLOG, todo"
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-scan audit.
-
-this is broken
-
-audit:
-  name: Security Audit
-  runs-on: ubuntu-latest
-  timeout-minutes: 3
-  continue-on-error: true
-  steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 1
-
-    - name: Install and run OSV Scanner
-      run: |
-        go install github.com/google/osv-scanner/cmd/osv-scanner@latest
-        ~/go/bin/osv-scanner --lockfile=bun.lock
-
-
-=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
-
-The solution:
-```yaml
-- uses: actions/cache@v3
-  with:
-    path: node_modules
-    key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-```
-
-=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
-
 use graphite in my workflow ?
 
 https://graphite.com
