@@ -6,7 +6,7 @@ export const SITE = {
   profile: "https://pascalandy.com/",
   desc: "L'homme et les relations technologiques.",
   title: "Le blog de Pascal Andy",
-  ogImage: "pascalandy-og.jpg",
+  ogImage: "pascalandy_banner.jpg",
   lightAndDarkMode: true,
   postPerIndex: 4,
   postPerPage: 20,
