@@ -41,6 +41,7 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: package.json
+          cache: true
 
       - run: bun install --frozen-lockfile
       - run: bun run lint
@@ -57,6 +58,7 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: package.json
+          cache: true
 
       - run: bun install --frozen-lockfile
       - run: bun run format:check
@@ -73,6 +75,7 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: package.json
+          cache: true
 
       - run: bun install --frozen-lockfile
       - run: bun astro check
@@ -91,6 +94,7 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version-file: package.json
+          cache: true
 
       - name: Cache Astro build artifacts
         uses: actions/cache@v4
