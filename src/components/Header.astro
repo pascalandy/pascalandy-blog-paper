@@ -10,6 +10,11 @@ import IconChessKnight from "@/assets/icons/IconChessKnight.svg";
 import LinkButton from "./LinkButton.astro";
 import { SITE } from "@/config";
 
+type Props = {
+  showLogo?: boolean;
+};
+
+const { showLogo = true } = Astro.props;
 const { pathname } = Astro.url;
 
 // Remove trailing slash from current pathname if exists
@@ -39,14 +44,16 @@ const isActive = (path: string) => {
     id="top-nav-wrap"
     class:list={[
       "py-4 sm:py-6",
-      "border-b border-border",
       "relative w-full bg-background",
       "flex items-baseline justify-between sm:items-center",
     ]}
   >
     <a
       href="/"
-      class="absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none"
+      class:list={[
+        "absolute py-1 text-xl leading-8 font-semibold whitespace-nowrap sm:static sm:my-auto sm:text-2xl sm:leading-none",
+        { hidden: !showLogo },
+      ]}
     >
       <IconPascalAndy class="inline-block h-10 text-foreground sm:h-11" />
     </a>
