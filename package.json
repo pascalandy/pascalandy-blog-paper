@@ -1,7 +1,7 @@
 {
   "name": "pascalandy-blog-paper",
   "type": "module",
-  "version": "0.1.0",
+  "version": "5.6.0",
   "packageManager": "bun@1.3.4",
   "scripts": {
     "dev": "astro dev",

@@ -2,6 +2,77 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.6.0](https://github.com/pascalandy/pascalandy-blog-paper/compare/v5.5.1...v5.6.0) (2026-01-21)
+
+
+### Features
+
+* add E2E visual test matrix specification ([#28](https://github.com/pascalandy/pascalandy-blog-paper/issues/28)) ([e872a05](https://github.com/pascalandy/pascalandy-blog-paper/commit/e872a05056cc24b06db1d037cc9a91a5ec2a59d6))
+* add elegant-luxury and claude themes, set claude as active ([68cae6d](https://github.com/pascalandy/pascalandy-blog-paper/commit/68cae6d56c37eb79b9ec0ff05aa47bda05018a38))
+* add git hooks for quality checks via Lefthook ([#1](https://github.com/pascalandy/pascalandy-blog-paper/issues/1)) ([396b354](https://github.com/pascalandy/pascalandy-blog-paper/commit/396b3545824b167787bf7e35561a589289310788))
+* add image optimization and viewport prefetch ([e4b39e0](https://github.com/pascalandy/pascalandy-blog-paper/commit/e4b39e0d096d9fa734e5e18d2194c238e74dedc4))
+* add image optimization and viewport prefetch ([#4](https://github.com/pascalandy/pascalandy-blog-paper/issues/4)) ([aba1e44](https://github.com/pascalandy/pascalandy-blog-paper/commit/aba1e4446355649e560f3ea710171e5bdb0cfa72))
+* add shadcn/ui compatible theme system with tweakcn support ([ed004f2](https://github.com/pascalandy/pascalandy-blog-paper/commit/ed004f2db62d604dd7c8e7c953293f20f3751429))
+* automatic TOC generation in layout ([34bfd9a](https://github.com/pascalandy/pascalandy-blog-paper/commit/34bfd9a522aabf643de0d0561b8b7b822cac5dac))
+* change font to JetBrains Mono ([11bbadc](https://github.com/pascalandy/pascalandy-blog-paper/commit/11bbadc5bc13ca4a38821cc3e5303a46fe95befe))
+* **ci:** add GitHub Secret Scanning config ([b14eb8b](https://github.com/pascalandy/pascalandy-blog-paper/commit/b14eb8b8bd8235efc7bce1fee53edd4896b8a5b8))
+* **ci:** add Gitleaks workflow for secret scanning ([4364e80](https://github.com/pascalandy/pascalandy-blog-paper/commit/4364e801edd7cdd566e3f6d33183d610d2b7d210))
+* **ci:** add label-triggered preview deployment to Sevalla ([#25](https://github.com/pascalandy/pascalandy-blog-paper/issues/25)) ([d8f5c36](https://github.com/pascalandy/pascalandy-blog-paper/commit/d8f5c36281d3454b1f8bc6e5d205ae5dedf6e03c))
+* **ci:** add Renovate, Release Drafter, and PR Labeler ([96909cb](https://github.com/pascalandy/pascalandy-blog-paper/commit/96909cb537e1370d5893198dd82dc895b937a5ad))
+* **ci:** add Sevalla deployment after tests pass ([55a3cb2](https://github.com/pascalandy/pascalandy-blog-paper/commit/55a3cb2d2d1aa3b9e280f09c02e92b1f680df99c))
+* **ci:** replace release-drafter with release-please ([#26](https://github.com/pascalandy/pascalandy-blog-paper/issues/26)) ([d894499](https://github.com/pascalandy/pascalandy-blog-paper/commit/d894499cb2bcca085c513444b084014b74d7f483))
+* **config:** update site configuration for personal blog ([a51ee89](https://github.com/pascalandy/pascalandy-blog-paper/commit/a51ee89c38529e5430aa57090a734b4dae1dcfe9))
+* **header:** replace text logo with PascalAndy icon ([44cab6c](https://github.com/pascalandy/pascalandy-blog-paper/commit/44cab6c3a73c00893d5bf14a497f59b12e0f5402))
+* **homepage:** add banner image and remove recent posts section ([db9d922](https://github.com/pascalandy/pascalandy-blog-paper/commit/db9d922edba90c59a82777efb1e5cb4741022d1e))
+* **homepage:** use legacy 2017 banner image ([#30](https://github.com/pascalandy/pascalandy-blog-paper/issues/30)) ([288c26b](https://github.com/pascalandy/pascalandy-blog-paper/commit/288c26beef0fe4ac3cd349b050c3379a1041f29c))
+* **hooks:** add build validation and enable parallel execution ([f100585](https://github.com/pascalandy/pascalandy-blog-paper/commit/f100585fb3112be9bfedfef9b58de9b4ea079f25))
+* **icons:** add PascalAndy icon ([0312cae](https://github.com/pascalandy/pascalandy-blog-paper/commit/0312cae68a409f4cbbe372fbcfce9cc81ba54588))
+* integrate Astro fonts API with Google Sans Code font ([#602](https://github.com/pascalandy/pascalandy-blog-paper/issues/602)) ([698295d](https://github.com/pascalandy/pascalandy-blog-paper/commit/698295d23dfd43aaf161b00cab267893ef4399de))
+* **nav:** replace About text with chess knight icon ([ca6eeae](https://github.com/pascalandy/pascalandy-blog-paper/commit/ca6eeae8af2f4d5f11d94377706bbaaef7166564))
+* **scripts:** add image link validation tool ([1e31cdb](https://github.com/pascalandy/pascalandy-blog-paper/commit/1e31cdb6da1d154650016468436286ccba87af78))
+* **scripts:** add strict mode for CI to broken refs fixer ([b1fd79f](https://github.com/pascalandy/pascalandy-blog-paper/commit/b1fd79f142408e4d4ced48f010ab710729c33508))
+* **socials:** update social links to Pascal Andy accounts ([4f5cb6d](https://github.com/pascalandy/pascalandy-blog-paper/commit/4f5cb6dfcdaa7c6c28bb8a2b50d6d236e84347f8))
+* **tags:** add tag config system with display names and descriptions ([e833e6a](https://github.com/pascalandy/pascalandy-blog-paper/commit/e833e6ac26da8f519a87a625c2f394f11158de76))
+* **ui:** update header navigation and homepage content ([dd548fe](https://github.com/pascalandy/pascalandy-blog-paper/commit/dd548fef5e796b75e5c94a7e8bb4ca7744fa1e66))
+
+
+### Bug Fixes
+
+* add autofocus in search bar and update search result title style ([#603](https://github.com/pascalandy/pascalandy-blog-paper/issues/603)) ([c61a755](https://github.com/pascalandy/pascalandy-blog-paper/commit/c61a75575d3251f4eb82fc38365874ff6c5013ef))
+* apply Prettier formatting to 8 blog posts ([50168d8](https://github.com/pascalandy/pascalandy-blog-paper/commit/50168d8651e98f62e9c835463c8bfdb58006e885))
+* **content:** repair broken blog posts and update maturity report ([#18](https://github.com/pascalandy/pascalandy-blog-paper/issues/18)) ([876aeb5](https://github.com/pascalandy/pascalandy-blog-paper/commit/876aeb5d2eccb321e680c1434a6930dc3dcd2529))
+* **content:** standardize TL;DR sections in CryptoInMontreal posts ([#15](https://github.com/pascalandy/pascalandy-blog-paper/issues/15)) ([f8b9d22](https://github.com/pascalandy/pascalandy-blog-paper/commit/f8b9d2263016e2fcf78135c7d4d97c394d6f882e))
+* **content:** update linkedin profile page frontmatter ([#20](https://github.com/pascalandy/pascalandy-blog-paper/issues/20)) ([a5de09a](https://github.com/pascalandy/pascalandy-blog-paper/commit/a5de09a9ba8422877e9916de5122232463a98ff4))
+* correct lockfile name and narrow cache key pattern ([a562371](https://github.com/pascalandy/pascalandy-blog-paper/commit/a562371a393df5c2229591f2516cb1fc3ac7d1a9))
+* **icons:** adjust archive icon vertical alignment ([f632c11](https://github.com/pascalandy/pascalandy-blog-paper/commit/f632c1151f6c2202e76c9ed5b816a3abf04a3a32))
+* improve inline code and code block styling with theme colors ([ced84ae](https://github.com/pascalandy/pascalandy-blog-paper/commit/ced84aebaec7a8efc5f81bd1c06a123e2545c6e4))
+* make post date/edit more subtle with smaller text ([02511aa](https://github.com/pascalandy/pascalandy-blog-paper/commit/02511aa497506050e16b121d60caa1523d8fb451))
+* **makefile:** enable pipefail to stop chain on piped command failure ([a0e4390](https://github.com/pascalandy/pascalandy-blog-paper/commit/a0e439017e5c04e20bdf98a3aaa85f4e9d2036f6))
+* move intro paragraphs before TOC to prevent remark-collapse hiding them ([a1a5232](https://github.com/pascalandy/pascalandy-blog-paper/commit/a1a5232867a1afb24627a0fe442dbe5724811695))
+* remove unused imports to pass ESLint ([fc21479](https://github.com/pascalandy/pascalandy-blog-paper/commit/fc214794311ea7d92842769a71c0a62222d26aaf))
+* replace hardcoded bg-black/text-white with theme colors ([9842c7b](https://github.com/pascalandy/pascalandy-blog-paper/commit/9842c7bf07cff64852b9ce8f4e60460087e3a369))
+* **search:** autofocus input on page load ([#17](https://github.com/pascalandy/pascalandy-blog-paper/issues/17)) ([e2cbc9b](https://github.com/pascalandy/pascalandy-blog-paper/commit/e2cbc9b4761dbdb3d57e07cff3fc44d0ea6bc026))
+* simplify post typography and layout ([c4c76e6](https://github.com/pascalandy/pascalandy-blog-paper/commit/c4c76e62bfe23b97cc0a412b4645a0d84d8e8e20))
+* soften code block border with 50% opacity ([eb09618](https://github.com/pascalandy/pascalandy-blog-paper/commit/eb096186adbfa404384c7e4707ef5d3c4eb967e1))
+* style TOC with same background as code blocks ([3cff0fe](https://github.com/pascalandy/pascalandy-blog-paper/commit/3cff0feb724840f95e82600c53f7ee2f2ec8cd09))
+* tighten list item spacing ([0a89427](https://github.com/pascalandy/pascalandy-blog-paper/commit/0a894276f99512b8ee091bf915eacdff4eebe6c2))
+* update fix_broken_refs.py for src/assets image paths ([9f1f6f7](https://github.com/pascalandy/pascalandy-blog-paper/commit/9f1f6f7bdaa70fc007f4d60dae05b90fd7fc41c9))
+* use correct astro-code variable names, different bg for light/dark ([3b6c3c0](https://github.com/pascalandy/pascalandy-blog-paper/commit/3b6c3c04bab759ef852960bb12ec1a539a0280f4))
+* use muted background for code blocks, remove hardcoded colors ([95b7371](https://github.com/pascalandy/pascalandy-blog-paper/commit/95b73711446dc692b71f8cf5b42e70dd1c4d3dfd))
+* use muted for lighter code block bg in light mode ([cc71e33](https://github.com/pascalandy/pascalandy-blog-paper/commit/cc71e3332a4d9e7f72abcd171cad16bf7f15ac05))
+* use relative oklch for subtler code block background ([98d8d6c](https://github.com/pascalandy/pascalandy-blog-paper/commit/98d8d6c5fbb72f1ccae0d9a0c384d166616ab03c))
+
+
+### Performance Improvements
+
+* **ci:** parallelize jobs and fix blog post validation ([6fbc062](https://github.com/pascalandy/pascalandy-blog-paper/commit/6fbc0623358c6ed343b5b4c501a79610c695b1d0))
+
+
+### Reverts
+
+* keep 2019 og-legacy images in public folder ([d9956fb](https://github.com/pascalandy/pascalandy-blog-paper/commit/d9956fb8ebb0409c78efc1eadf5846f27906131e))
+* undo last 2 commits to return to b4d1397 ([5065659](https://github.com/pascalandy/pascalandy-blog-paper/commit/5065659817b5e59a09a313b1c0a209988d250737))
+
 ## v5.5.1 (2026-01-08)
 
 ### Fix
