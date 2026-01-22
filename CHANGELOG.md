@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.2](https://github.com/pascalandy/pascalandy-blog-paper/compare/pascalandy-blog-paper-v0.2.1...pascalandy-blog-paper-v0.2.2) (2026-01-22)
+
+### Content
+
+* **home:** update hero section text with improved presentation
+
 ## [0.2.1](https://github.com/pascalandy/pascalandy-blog-paper/compare/pascalandy-blog-paper-v0.2.0...pascalandy-blog-paper-v0.2.1) (2026-01-22)
 
 
