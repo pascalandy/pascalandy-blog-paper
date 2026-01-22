@@ -9,11 +9,7 @@ _Dernière mise à jour : janvier 2026_
 
 ## Comment je vais
 
-<!-- PLACEHOLDER: 2-3 phrases sur ton état d'esprit actuel. Exemples:
-- "Je suis dans une phase d'exploration intense côté IA."
-- "L'hiver québécois me pousse à passer plus de temps sur mes projets perso."
-- "Je me sens énergisé par les possibilités qu'ouvre l'IA pour les créateurs."
--->
+Je suis dans une saison de ma vie où est-ce que je dois me calmer parce que j'ai toujours envie de travailler. Donc, ça crée un déséquilibre, je le sais. je m'occupe un peu moins je fais un peu moins de sport je promette un peu moins du plein air mais pour moi c'est des vagues comme ça qui arrivent dans la vie et la vague qui me permet de réaliser mes projets actuellement est vraiment présente.
 
 ## Ce qui m'occupe
 
