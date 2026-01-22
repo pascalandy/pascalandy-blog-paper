@@ -116,18 +116,18 @@ const isActive = (path: string) => {
             </li>
             <li class="col-span-2">
               <LinkButton
-                href="/about"
+                href="/a-propos"
                 class:list={[
                   "focus-outline flex p-3 sm:justify-center sm:p-1",
                   {
-                    "active-nav [&>svg]:stroke-accent": isActive("/about"),
+                    "active-nav [&>svg]:stroke-accent": isActive("/a-propos"),
                   },
                 ]}
-                title="About"
-                aria-label="about"
+                title="À propos"
+                aria-label="à propos"
               >
                 <IconChessKnight class="hidden size-5 sm:inline-block" />
-                <span class="sm:sr-only">About</span>
+                <span class="sm:sr-only">À propos</span>
               </LinkButton>
             </li>
 

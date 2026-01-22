@@ -1,9 +1,7 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "Qui est Pascal Andy ?"
+title: "À propos"
 ---
-
-Salut,
 
 J'ai toujours été un patenteux, une personne qui entreprend ses idées. Pour moi, c'est une façon de vivre. J'aime me questionner et simplifier ce qui nous parait complexe.
 
@@ -11,13 +9,11 @@ La façon dont les technologies nous touchent me fascine. Elles m'amènent à me
 
 Faire des liens entre ce qui nous semble abstrait et concret tient mon esprit éveillé. Je trouve ça magique quand les points finissent par dévoiler « le big picture ».
 
-Bienvenue dans mon monde,
+Bienvenue dans mon monde
 
-Pascal
+## Maintenant
 
-## Now
-
-Je mets régulièrement ma [page now](/now/) à jour. Elle donne le ton sur ce qu'est ma vie depuis les quelques derniers mois. Je me suis [inspiré du projet](http://nownownow.com/about) de Derek Sivers.
+Pour connaître ce que je fais ces temps-ci —> page [maintenant](/maintenant)
 
 ## Du côté professionnel
 
