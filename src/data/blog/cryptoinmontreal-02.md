@@ -62,4 +62,4 @@ L'admission est **gratuite** et les billets de cet événement [ se trouvent ici
 
 [![image-rsvp](../../assets/images/og-legacy/2017/11/rsvp-2.jpg)](https://www.eventbrite.ca/e/cryptoinmontreal-02-tickets-41179846028)
 
-Cheers!<br>[Pascal Andy](/now/)
+Cheers!<br>[Pascal Andy](/maintenant)

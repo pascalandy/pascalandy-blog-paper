@@ -85,4 +85,4 @@ L'admission est **gratuite** et les billets de cet événement [ se trouvent ici
 
 Au plaisir de se croiser au prochain événement de #CryptoInMontreal!
 
-Cheers!<br>[Pascal Andy](/now/)
+Cheers!<br>[Pascal Andy](/maintenant)

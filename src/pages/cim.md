@@ -69,7 +69,7 @@ Afin de profiter au maximum de ce qu'ils apprendront durant l'evenement, je cons
 
 ### Qui sont les organisateurs ?
 
-**Pascal Andy** — Crypto In Montreal a ete lance par Pascal en 2017. Sa [« now page »](/now/) est le meilleur endroit pour rapidement connaitre ce qu'il fait ces temps-ci.
+**Pascal Andy** — Crypto In Montreal a ete lance par Pascal en 2017. Sa [« now page »](/maintenant) est le meilleur endroit pour rapidement connaitre ce qu'il fait ces temps-ci.
 
 **Tamara Kara**, biographie en cours.
 

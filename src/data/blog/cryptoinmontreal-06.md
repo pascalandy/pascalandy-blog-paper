@@ -29,7 +29,7 @@ Do you speak **English**? You're welcome as well! I just don't have the time to 
 Tous les détails de l'événement:
 [Lien permanent](/blog/cryptoinmontreal-06/)
 
-Cheers!<br>[Pascal Andy](/now/)
+Cheers!<br>[Pascal Andy](/maintenant)
 
 ## Est-ce pour moi ?
 

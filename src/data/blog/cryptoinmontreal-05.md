@@ -61,7 +61,7 @@ Your speak **English**? You're welcome as well! I just don't have the time to tr
 - **Lieu**: Banque Nationale
 - **Adresse**: 500 Places d’Armes, Montréal QC H2Y 2W3
 
-Cheers!<br>[Pascal Andy](/now/)
+Cheers!<br>[Pascal Andy](/maintenant)
 
 ## Est-ce pour moi ?
 
