@@ -3,7 +3,7 @@ layout: ../layouts/AboutLayout.astro
 title: "Maintenant"
 ---
 
-## C'est jours-ci
+## Ces jours-ci
 
 - **pascalandy.com** — Migration vers Astro
 - **OS de Pascal** — Mon env pour travailler avec l'IA (non-dev)
@@ -18,7 +18,7 @@ title: "Maintenant"
 - Je me présente à travers ce post — [Qui suis-je](/blog/qui-est-pascal-andy/)
 - Il m'arrive encore d'écouter ce bon vieux [remix](/blog/nes-pour-mourir-le-video/)
 - Ancien participant de [Star Académie 2003](https://en.wikipedia.org/wiki/Star_Acad%C3%A9mie) (l'équivalent québécois d'American Idol)
-- **[Twitter/X](https://twitter.com/askpascalandy/)** pour suivre les sujet qui m'intéressent
+- **[Twitter/X](https://twitter.com/askpascalandy/)** pour suivre les sujets qui m'intéressent
 - **Obsidian** — Organisation de mes pensées (PKM)
 
 ## Focus
