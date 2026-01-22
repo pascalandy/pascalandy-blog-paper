@@ -1,25 +1,24 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "maintenant"
+title: "Maintenant"
 ---
 
 ## C'est jours-ci
 
 - **pascalandy.com** — Migration vers Astro
+- **OS de Pascal** — Mon env pour travailler avec l'IA (non-dev)
 - **Monorepos** — Apprentissage de Turbo Repo
 - **Open source** — Quelques projets à venir dont :
   - **[[Dotfiles]](https://github.com/pascalandy/dotfiles)** — Gestion sérieuse avec chezmoi (restauration facile en cas de crash)
-  - **Forzr** — Mon environnement de dev préconfiguré pour travailler avec l'IA
+  - **Forzr** — Mon env de dev préconfiguré pour travailler avec l'IA
 
-## Random facts
+## En vrac
 
-- Founder at [FirePress](https://firepress.org/en/) (Website hosting on Ghost)
-- Je me presente a travers ce post — [Qui suis-je](/blog/qui-est-pascal-andy/)
 - Je vis au Québec, Canada
-- Former **reality show singer** at [Star Academie 2003](https://en.wikipedia.org/wiki/Star_Acad%C3%A9mie). Think of it as an American Idol version of the show in Quebec Canada
+- Je me présente à travers ce post — [Qui suis-je](/blog/qui-est-pascal-andy/)
 - Il m'arrive encore d'écouter ce bon vieux [remix](/blog/nes-pour-mourir-le-video/)
-- By far **Twitter** is the place where I enjoy [to connect](https://twitter.com/askpascalandy/) with people outside my physical entourage.
-- Launch my first **business** at 23 years old. I've been CEO and **sound engineer** for 7 years at [Studio Transology](/blog/studio-transology-inc/)
+- Ancien participant de [Star Académie 2003](https://en.wikipedia.org/wiki/Star_Acad%C3%A9mie) (l'équivalent québécois d'American Idol)
+- **[Twitter/X](https://twitter.com/askpascalandy/)** pour suivre les sujet qui m'intéressent
 - **Obsidian** — Organisation de mes pensées (PKM)
 
 ## Focus
