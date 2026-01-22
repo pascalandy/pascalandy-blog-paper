@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.5](https://github.com/pascalandy/pascalandy-blog-paper/compare/pascalandy-blog-paper-v0.2.4...pascalandy-blog-paper-v0.2.5) (2026-01-22)
+
+### Bug Fixes
+
+* **header:** make nav full-width for hamburger visibility on mobile portrait
+* **ui:** improve mobile spacing on home page (banner and text)
+
 ## [0.2.4](https://github.com/pascalandy/pascalandy-blog-paper/compare/pascalandy-blog-paper-v0.2.3...pascalandy-blog-paper-v0.2.4) (2026-01-22)
 
 ### Bug Fixes

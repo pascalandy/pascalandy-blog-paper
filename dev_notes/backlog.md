@@ -9,6 +9,10 @@ description: "BACKLOG, todo"
 
 # BACKLOG
 
+=—=—=—
+
+les tags ne sont pas propre
+
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
 use graphite in my workflow ?
