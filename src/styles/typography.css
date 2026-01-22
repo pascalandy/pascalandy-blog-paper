@@ -48,6 +48,12 @@
       height: auto;
     }
 
+    iframe {
+      @apply mx-auto max-w-full border border-border;
+      aspect-ratio: 16 / 9;
+      height: auto;
+    }
+
     figcaption {
       @apply opacity-75;
     }
