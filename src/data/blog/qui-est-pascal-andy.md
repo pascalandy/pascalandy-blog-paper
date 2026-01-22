@@ -27,7 +27,7 @@ _ci-haut, ma face de cheese cake._
 
 ## Now
 
-Je mets régulièrement ma [page now](/now/) à jour. Elle donne le ton sur ce qu'est ma vie depuis les quelques dernier mois. Je me suis [inspiré du projet](http://nownownow.com/about) de Derek Sivers.
+Je mets régulièrement ma [page now](/maintenant) à jour. Elle donne le ton sur ce qu'est ma vie depuis les quelques dernier mois. Je me suis [inspiré du projet](http://nownownow.com/about) de Derek Sivers.
 
 ## Du côté professionnel
 

@@ -1,9 +1,7 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "Qui est Pascal Andy ?"
+title: "À propos"
 ---
-
-Salut,
 
 J'ai toujours été un patenteux, une personne qui entreprend ses idées. Pour moi, c'est une façon de vivre. J'aime me questionner et simplifier ce qui nous parait complexe.
 
@@ -11,17 +9,29 @@ La façon dont les technologies nous touchent me fascine. Elles m'amènent à me
 
 Faire des liens entre ce qui nous semble abstrait et concret tient mon esprit éveillé. Je trouve ça magique quand les points finissent par dévoiler « le big picture ».
 
-Bienvenue dans mon monde,
+Bienvenue dans mon monde
 
-Pascal
+## Maintenant
 
-## Now
-
-Je mets régulièrement ma [page now](/now/) à jour. Elle donne le ton sur ce qu'est ma vie depuis les quelques derniers mois. Je me suis [inspiré du projet](http://nownownow.com/about) de Derek Sivers.
+Pour connaître ce que je fais ces temps-ci —> page [maintenant](/maintenant)
 
 ## Du côté professionnel
 
-Je travaille sur FirePress, une startup d'hébergement de site web basé sur Ghost. Pour connaître ce que j'ai fait dans le passé, tu peux consulter mon [profil LinkedIn](https://www.linkedin.com/in/pascalnguyendeschenes) qui demeure à jour et bien détaillé.
+À mon compte depuis plus de 20 ans. Mes startups :
+
+- [FirePress](https://firepress.org/) — Hébergement de sites web basé sur Ghost
+- [repost](/blog/repost-ma-premiere-startup/) — Ma première startup
+- [FollowFi](/blog/followfi-permet-aux-patients-dattendre-a-distance-avec-leur-telephone-intelligent/) — Permettre aux patients d'attendre à distance
+
+Pour le détail, tu peux consulter mon [profil LinkedIn](https://www.linkedin.com/in/pascalnguyendeschenes).
+
+## En coulisses
+
+- Je vis au Québec, Canada
+- Ancien participant de [Star Académie 2003](https://en.wikipedia.org/wiki/Star_Acad%C3%A9mie) (l'équivalent québécois d'American Idol)
+- Il m'arrive encore d'écouter ce bon vieux [remix](/blog/nes-pour-mourir-le-video/)
+- **Obsidian** pour organiser mes pensées (PKM)
+- **[Twitter/X](https://twitter.com/askpascalandy/)** pour suivre les sujets qui m'intéressent
 
 ## Mon nom de famille
 
