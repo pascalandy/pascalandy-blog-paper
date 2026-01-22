@@ -7,9 +7,9 @@ title: "Maintenant"
 
 _janvier 26'_
 
-Je suis dans une saison de ma vie où je dois me calmer parce que j'ai toujours envie de travailler. Ça crée un déséquilibre, j'en suis conscient. Je fais moins de sport, moins de plein air. 
+Je suis dans une saison de ma vie où je dois me calmer parce que j'ai toujours envie de travailler. Ça crée un déséquilibre, j'en suis conscient. Je fais moins de sport, moins de plein air.
 
-Mon **hypothèse**, c'est qu'en créant tout ce que j'ai envie de créer, ça me donne de l'espace dans le futur pour faire encore plus ce que je veux dans ma vie :-p C'est un cercle vertueux que je mets en place. Un exemple concret : lorsque j'ai envie de partager quoi que ce soit sur mon blog, ça me prend combien de temps  le faire? Est-ce que ça me prend deux heures, deux minutes, vingt secondes? La vélocité de pouvoir exécuter ce qui me passe par la tête est très importante pour moi. et j'ai enfin la capacité de pouvoir concrétiser ses idées. 
+Mon **hypothèse**, c'est qu'en créant tout ce que j'ai envie de créer, ça me donne de plus en plus d'espace dans le futur. C'est un cercle vertueux que je mets en place. Un exemple concret : lorsque j'ai envie de partager quoi que ce soit sur mon blog, ça me prend combien de temps le faire — deux heures ? deux minutes ? vingt secondes ? La vélocité de pouvoir exécuter ce qui me passe par la tête est un game changer et et j'ai enfin la capacité de concrétiser ces idées.
 
 ## Ce qui m'occupe
 
