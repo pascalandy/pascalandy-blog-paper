@@ -1,7 +1,6 @@
 name: CI
 
 on:
-  workflow_dispatch:
   push:
     branches: [main]
     paths-ignore:
@@ -15,7 +14,14 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, labeled]
-    # No paths-ignore: always run CI on PRs to satisfy required status checks
+    paths-ignore:
+      - "*.md"
+      - "!src/**/*.md"
+      - "LICENSE"
+      - ".vscode/**"
+      - ".github/*.md"
+      - ".github/ISSUE_TEMPLATE/**"
+      - "dev_notes/**"
 
 permissions:
   contents: read

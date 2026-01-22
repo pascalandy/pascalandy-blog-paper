@@ -107,7 +107,7 @@ Posts: `src/data/blog/` | Zod validated | `_` prefix = ignored | subdirs preserv
 Documentation for development workflows is published publicly on the blog:
 `src/data/blog/dev_workflows/`
 
-Includes: development commands, git hooks, release-please, worktrees, themes, etc.
+Includes: development commands, git hooks, worktrees, themes, etc.
 
 When adding or updating a workflow, document it there.
 
