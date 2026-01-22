@@ -9,7 +9,7 @@ _Dernière mise à jour : janvier 2026_
 
 ## Comment je vais
 
-Je suis dans une saison de ma vie où est-ce que je dois me calmer parce que j'ai toujours envie de travailler. Donc, ça crée un déséquilibre, je le sais. je m'occupe un peu moins je fais un peu moins de sport je promette un peu moins du plein air mais pour moi c'est des vagues comme ça qui arrivent dans la vie et la vague qui me permet de réaliser mes projets actuellement est vraiment présente.
+Je suis dans une saison de ma vie où je dois me calmer parce que j'ai toujours envie de travailler. Ça crée un déséquilibre, j'en suis conscient. Je fais moins de sport, moins du plein air. Mais mon hypothèse, c'est qu'en créant tout ce que j'ai envie de créer, ça me donne la place et ça me donne de l'espace dans le futur, dans le but de pouvoir faire encore plus que je veux dans ma vie personnelle. donc pour moi c'est un cercle vertueux que je mets en place.
 
 ## Ce qui m'occupe
 
