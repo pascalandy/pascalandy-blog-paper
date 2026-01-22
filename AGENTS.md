@@ -103,6 +103,14 @@ astro.config.ts → src/config.ts + content.config + src/constants
 ## Content
 Posts: `src/data/blog/` | Zod validated | `_` prefix = ignored | subdirs preserved in URL
 
+## Dev Workflow Docs
+Documentation for development workflows is published publicly on the blog:
+`src/data/blog/dev_workflows/`
+
+Includes: development commands, git hooks, release-please, worktrees, themes, etc.
+
+When adding or updating a workflow, document it there.
+
 ---
 
 # Global User Preferences
