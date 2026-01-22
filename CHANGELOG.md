@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.1](https://github.com/pascalandy/pascalandy-blog-paper/compare/pascalandy-blog-paper-v0.2.0...pascalandy-blog-paper-v0.2.1) (2026-01-22)
+
+
+### Features
+
+* **ci:** add workflow_dispatch trigger for manual runs ([#37](https://github.com/pascalandy/pascalandy-blog-paper/issues/37)) ([25e1043](https://github.com/pascalandy/pascalandy-blog-paper/commit/25e10434df765feb463024e789efb0eab9e2907e))
+
+
+### Bug Fixes
+
+* **ci:** always run CI on PRs to satisfy required checks ([#39](https://github.com/pascalandy/pascalandy-blog-paper/issues/39)) ([1e9b05a](https://github.com/pascalandy/pascalandy-blog-paper/commit/1e9b05a993e78375f4de960c69383901cd9b9cf1))
+* **ci:** include CHANGELOG.md in CI triggers for release PRs ([#38](https://github.com/pascalandy/pascalandy-blog-paper/issues/38)) ([def8636](https://github.com/pascalandy/pascalandy-blog-paper/commit/def8636685554a97e58ce8539d80278d95f91408))
+
 ## [0.2.0](https://github.com/pascalandy/pascalandy-blog-paper/compare/pascalandy-blog-paper-v0.1.0...pascalandy-blog-paper-v0.2.0) (2026-01-22)
 
 
