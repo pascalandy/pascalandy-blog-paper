@@ -19,7 +19,7 @@ _Dernière mise à jour : janvier 2026_
 
 **pascalandy.com** — Je migre mon blog vers Astro. Ça fait longtemps que je souhaite avoir un site web en mode statique. c'est-à-dire que j'écris tout en markdown et que par la suite, tout est publié. je n'ai plus besoin de me connecter dans un interface ou un dashboard tel que c'était le cas avec Ghost.
 
-**OS de Pascal** — Je construis mon environnement pour travailler avec l'IA (pour les non-devs). Donc l'idée ici, c'est toujours d'avoir le contexte prêt afin de travailler sur différentes sphères de ma vie, que ce soit mon entreprise, ma santé, un comité quelconque, ma comptabilité, etc. 
+**OS de Pascal** — Je construis mon environnement pour travailler avec l'IA (pour les non-devs). Donc l'idée ici, c'est toujours d'avoir le contexte prêt afin de travailler sur différentes sphères de ma vie, que ce soit mon entreprise, ma santé, un comité quelconque, ma comptabilité, etc.
 
 **Open source** — Quelques projets en préparation :
 
@@ -28,7 +28,7 @@ _Dernière mise à jour : janvier 2026_
 
 ## Ce que j'apprends
 
-- **Monorepos** avec Turbo Repo — Donc, l'idée ici est que tu peux travailler simultanément dans différents répertoires à travers un seul projet. C'est extrêmement puissant. Par exemple, mon blog pourrait partir d'un monorepo, et ça va être le cas. Alors qu'exemple, je travaille sur un projet et ce projet-là met des documentations à jour sur mon blog. 
+- **Monorepos** avec Turbo Repo — Donc, l'idée ici est que tu peux travailler simultanément dans différents répertoires à travers un seul projet. C'est extrêmement puissant. Par exemple, mon blog pourrait partir d'un monorepo, et ça va être le cas. Alors qu'exemple, je travaille sur un projet et ce projet-là met des documentations à jour sur mon blog.
 
 ## Ce que je ne fais pas
 
