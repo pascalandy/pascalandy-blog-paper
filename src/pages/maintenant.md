@@ -1,31 +1,28 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "Now"
+title: "maintenant"
 ---
 
-### What Am I up to these days
+## C'est jours-ci
 
-_Updated: 2020-02-17_
+- **pascalandy.com** — Migration vers Astro
+- **Monorepos** — Apprentissage de Turbo Repo
+- **Open source** — Quelques projets à venir dont :
+  - **[[Dotfiles]](https://github.com/pascalandy/dotfiles)** — Gestion sérieuse avec chezmoi (restauration facile en cas de crash)
+  - **Forzr** — Mon environnement de dev préconfiguré pour travailler avec l'IA
 
-- Startup: Gearing up for the **next phase** — [FirePress](https://firepress.org/en/)
-- Continue to host my **Meetup** — [Crypto In Montreal](/tags/crypto-in-montreal/)
-- Actively developing **BashLaVa** — <https://git.io/bashlava>
-- I'm **learning a ton about human psychology** thanks toJordan's B. Peterson lecture [2017 - Maps of Meaning](https://www.youtube.com/watch?v=I8Xc2_FtpHI&list=PL22J3VaeABQAT-0aSPq-OKOpQlHyR4k5h)
-
-### Random facts
+## Random facts
 
 - Founder at [FirePress](https://firepress.org/en/) (Website hosting on Ghost)
-- One of my [GitHub project](https://github.com/pascalandy/docker-stack-this) is getting some traction
 - Je me presente a travers ce post — [Qui suis-je](/blog/qui-est-pascal-andy/)
-- I live in **Montreal**, Canada.
-- My **personality type** is the [debater (ENTP-A)](/blog/my-personality-type-entp-a-debater/).
+- Je vis au Québec, Canada
 - Former **reality show singer** at [Star Academie 2003](https://en.wikipedia.org/wiki/Star_Acad%C3%A9mie). Think of it as an American Idol version of the show in Quebec Canada
-- I released a minimal tech **song**. You can listen [the video here](/blog/nes-pour-mourir-le-video/)
-- Launch my first **business** at 23 years old. I've been CEO and **sound engineer** for 7 years at [Studio Transology](/blog/studio-transology-inc/)
+- Il m'arrive encore d'écouter ce bon vieux [remix](/blog/nes-pour-mourir-le-video/)
 - By far **Twitter** is the place where I enjoy [to connect](https://twitter.com/askpascalandy/) with people outside my physical entourage.
-- I keep in decent shape by going to the **gym** 3-4 times a week
+- Launch my first **business** at 23 years old. I've been CEO and **sound engineer** for 7 years at [Studio Transology](/blog/studio-transology-inc/)
+- **Obsidian** — Organisation de mes pensées (PKM)
 
-### Focus
+## Focus
 
 Here are the things I actively prevent myself to do. I need to focus and execute the big plan.
 
@@ -36,13 +33,13 @@ Here are the things I actively prevent myself to do. I need to focus and execute
 - Start learning to day trade
 - Deploy Discourse stack
 
-### YouTube
+## YouTube
 
 - My Vlog [#OneStepAtATime](https://www.youtube.com/playlist?list=PL9epbd8UeXHs0yqWEGv6eVuJimFyouEpf) — I'm starting the show « **One Step at a Time**» as I realize that I still have a good 50 years in front of me. I want to **share my personnal journey** as I believe it's gonna be an outstanding one. It's also to remind myself that when I'm impatient, life is not about the destination, it's about
   the journey.
 - The [#AskMeAboutYourWebsite](https://www.youtube.com/playlist?list=PL9epbd8UeXHtRu7WI4aK4RKDCThMf7-8Q) show — I'm **documenting FirePress's journey** for the next 10 years. This is a place where I allow myself to go deep into our vision of building an outstanding website.
 
-### Archives
+## Archives
 
 - I'm moving my **CI/CD** from Travis to Github Actions (workflow) ([example](https://github.com/firepress-org/rclone-in-docker/actions))
 - I just **upgraded my office** that have a better lighting, sound and fun
