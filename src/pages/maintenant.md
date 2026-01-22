@@ -17,7 +17,7 @@ _Dernière mise à jour : janvier 2026_
 
 ## Ce qui m'occupe
 
-**pascalandy.com** — Je migre mon blog vers Astro. Ça fait longtemps que je souhaite avoir un site web en mode statique. c'est-à-dire que j'écris tout en markdown et que par la suite, tout est publié. je n'ai plus besoin de me connecter dans un interface ou un dashboard tel que c'était le cas avec Ghost.
+**pascalandy.com** — Je migre mon blog vers Astro. Ça fait longtemps que je souhaite avoir un site web en mode statique. C'est-à-dire que j'écris tout en markdown sans avoir plus besoin de me connecter dans une interface ou un dashboard.
 
 **OS de Pascal** — Je construis mon environnement pour travailler avec l'IA (pour les non-devs). Donc l'idée ici, c'est toujours d'avoir le contexte prêt afin de travailler sur différentes sphères de ma vie, que ce soit mon entreprise, ma santé, un comité quelconque, ma comptabilité, etc.
 
@@ -28,11 +28,11 @@ _Dernière mise à jour : janvier 2026_
 
 ## Ce que j'apprends
 
-- **Monorepos** avec Turbo Repo — Donc, l'idée ici est que tu peux travailler simultanément dans différents répertoires à travers un seul projet. C'est extrêmement puissant. Par exemple, mon blog pourrait partir d'un monorepo, et ça va être le cas. Alors qu'exemple, je travaille sur un projet et ce projet-là met des documentations à jour sur mon blog.
+- **Monorepos** avec Turbo Repo — Travailler simultanément dans plusieurs répertoires à travers un seul projet. Mon blog va vivre dans un monorepo. Par exemple, un projet pourra mettre à jour automatiquement sa documentation sur mon blog.
 
 ## Ce que je ne fais pas
 
 - Mettre en place un homelab
-- Cesser de penser d'offrir mes services dans le but de focuser sur des produits
+- Offrir mes services — je me concentre sur des produits
 
 Ceci est une [page "maintenant"](/blog/what-is-a-now-page/). Si tu as ton propre site, [tu devrais en créer une](/blog/what-is-a-now-page/) aussi.
