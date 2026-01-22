@@ -9,10 +9,6 @@ description: "BACKLOG, todo"
 
 # BACKLOG
 
-=—=—=—
-
-les tags ne sont pas propre
-
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
 use graphite in my workflow ?
@@ -21,7 +17,9 @@ https://graphite.com
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-faire apparaitre une image header par défault.
+mettre à jour l'image header par défault
+
+En ce moment, ça ne fait pas de sens de la conserver puisque mon logo, c'est la chaise avec le mot Pascal Indi écrit. et ensuite de ça on a l'image d'une main en nature et ensuite j'ai un autre texte qui crée le blog de Pascal Indy, l'homme et les relations technologiques. donc je ne veux pas de texte là-dedans Je veux seulement une image qui... on produit une image de marque de mon blog. 
 
 attention à : La génération pas de casque... celle née avant 1990
 
@@ -33,37 +31,32 @@ https://docs.astro.build/en/guides/build-with-ai/
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-about: img url
+So when I build, sometimes I see these warnings. 
 
-I have a question about the links. what's the correct way of linking to an image because sometimes I see this
+What do I need to know ? Should I fix something about it? 
 
-```md
-![image-rsvp](../../assets/images/og-legacy/2017/11/rsvp-2.jpg)
-```
+--
 
-sometimes that:
+Result (57 files): 
+- 0 errors
+- 0 warnings
+- 0 hints
 
-```md
-![image-rsvp](../assets/images/og-legacy/2017/11/rsvp-2.jpg)
-```
+14:55:40 [content] Syncing content
+14:55:40 [content] Synced content
+14:55:40 [types] Generated 241ms
+14:55:40 [build] output: "static"
+14:55:40 [build] mode: "static"
+14:55:40 [build] directory: /Users/andy16/Documents/github_local/pascalandy-blog-paper/dist/
+14:55:40 [build] Collecting build info...
+14:55:40 [build] ✓ Completed in 250ms.
+14:55:40 [build] Building static entrypoints...
+14:55:41 [WARN] [vite] "matchHostname", "matchPathname", "matchPort" and "matchProtocol" are imported from external module "@astrojs/internal-helpers/remote" but never used in "node_modules/astro/dist/assets/utils/remotePattern.js" and "node_modules/astro/dist/assets/services/service.js".
+14:55:41 [assets] Copying fonts (12 files)...
+14:55:42 [vite] ✓ built in 1.57s
+14:55:42 [build] ✓ Completed in 1.60s.
 
-so ?
 
-plan
-
-
-=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
-
-
-=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
-
-What do I need to know about these warnings? 
-
-11:43:52 watching for file changes...
-11:49:36 [WARN] [glob-loader] Duplicate id "linkedin" found in /Users/andy16/Documents/github_local/pascalandy-blog-paper/src/data/blog/linkedin.md. Later items with the same id will overwrite earlier ones.
-11:49:36 [glob-loader] Reloaded data from linkedin.md
-11:50:22 [WARN] [glob-loader] Duplicate id "linkedin" found in /Users/andy16/Documents/github_local/pascalandy-blog-paper/src/data/blog/linkedin.md. Later items with the same id will overwrite earlier ones.
-11:50:22 [glob-loader] Reloaded data from linkedin.md
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
