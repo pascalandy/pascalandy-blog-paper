@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.4](https://github.com/pascalandy/pascalandy-blog-paper/compare/pascalandy-blog-paper-v0.2.3...pascalandy-blog-paper-v0.2.4) (2026-01-22)
+
+### Bug Fixes
+
+* **header:** add ms-auto to nav for proper layout alignment
+
 ## [0.2.3](https://github.com/pascalandy/pascalandy-blog-paper/compare/pascalandy-blog-paper-v0.2.2...pascalandy-blog-paper-v0.2.3) (2026-01-22)
 
 ### Bug Fixes
