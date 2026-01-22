@@ -15,17 +15,7 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, labeled]
-    # Note: paths-ignore is skipped for release-please branches to ensure
-    # required status checks run on CHANGELOG-only PRs
-    paths-ignore:
-      - "*.md"
-      - "!src/**/*.md"
-      - "!CHANGELOG.md"
-      - "LICENSE"
-      - ".vscode/**"
-      - ".github/*.md"
-      - ".github/ISSUE_TEMPLATE/**"
-      - "dev_notes/**"
+    # No paths-ignore: always run CI on PRs to satisfy required status checks
 
 permissions:
   contents: read
