@@ -21,7 +21,21 @@ Je mets régulièrement ma [page now](/now/) à jour. Elle donne le ton sur ce q
 
 ## Du côté professionnel
 
-Je travaille sur FirePress, une startup d'hébergement de site web basé sur Ghost. Pour connaître ce que j'ai fait dans le passé, tu peux consulter mon [profil LinkedIn](https://www.linkedin.com/in/pascalnguyendeschenes) qui demeure à jour et bien détaillé.
+À mon compte depuis plus de 20 ans. Mes startups :
+
+- [FirePress](https://firepress.org/) — Hébergement de sites web basé sur Ghost
+- [repost](/blog/repost-ma-premiere-startup/) — Ma première startup
+- [FollowFi](/blog/followfi-permet-aux-patients-dattendre-a-distance-avec-leur-telephone-intelligent/) — Permettre aux patients d'attendre à distance
+
+Pour le détail, tu peux consulter mon [profil LinkedIn](https://www.linkedin.com/in/pascalnguyendeschenes).
+
+## En coulisses
+
+- Je vis au Québec, Canada
+- Ancien participant de [Star Académie 2003](https://en.wikipedia.org/wiki/Star_Acad%C3%A9mie) (l'équivalent québécois d'American Idol)
+- Il m'arrive encore d'écouter ce bon vieux [remix](/blog/nes-pour-mourir-le-video/)
+- **Obsidian** pour organiser mes pensées (PKM)
+- **[Twitter/X](https://twitter.com/askpascalandy/)** pour suivre les sujets qui m'intéressent
 
 ## Mon nom de famille
 
