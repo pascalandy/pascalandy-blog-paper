@@ -30,4 +30,5 @@ Mon **hypothèse**, c'est qu'en créant tout ce que j'ai envie de créer, ça me
 
 - Mettre en place un homelab
 - Offrir mes services — je me concentre sur des produits
-  Cette page est inspirée par Derek Sivers. [now page](https://nownownow.com/about)
+
+Cette page est inspirée par Derek Sivers. [now page](https://nownownow.com/about)
