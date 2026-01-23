@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2020-10-29
 title: "Le trou noir supermassif : Bitcoin mange le monde"
 tags:
-  - uncategorized
+  - crypto
 ogImage: ../../assets/images/og-legacy/2021/01/pascalandy-bg-2021-01-06_23h42-1.jpg
 description: "Voici le tweet storm de Raoul Pal résume bien la situation:"
 ---

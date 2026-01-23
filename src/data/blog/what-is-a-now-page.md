@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2017-10-21
 title: "What is a now page?"
 tags:
-  - uncategorized
+  - random
 ogImage: ../../assets/images/og-legacy/2017/10/pascalandy-com_header_2017-04-10_14h46-6.jpg
 description: 'Most websites have a link that says about. It goes to a page that tells you something about the background of this person or business. For short, people just call it an "about page". '
 ---

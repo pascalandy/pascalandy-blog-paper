@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2018-09-24
 title: "cim-keynote"
 tags:
-  - uncategorized
+  - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2021/01/bull-2021-01-06_23h01-4.jpg
 description: "Pour qui"
 ---
