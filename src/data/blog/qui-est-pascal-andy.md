@@ -33,7 +33,7 @@ Je mets régulièrement ma [page now](/maintenant) à jour. Elle donne le ton su
 
 Je travaille sur FirePress une startup d'hébergement de site web basé sur Ghost. Le produit est en Beta et on peut voir la première ébauche sur <https://play-with-ghost.com/>
 
-Pour connaître ce que j'ai fait dans le passé, tu peux consulter [ma biographie](/blog/biographie-de-pascal-andy/)et mon [profil Linkedin](https://www.linkedin.com/in/pascalnguyendeschenes) qui demeure à jour et bien détaillé.
+Pour connaître ce que j'ai fait dans le passé, tu peux consulter [ma biographie](/blog/biographie-de-pascal-andy/)et mon [profil Linkedin](/blog/linkedin/) qui demeure à jour et bien détaillé.
 
 ## Mon nom de famille
 

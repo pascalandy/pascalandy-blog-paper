@@ -12,7 +12,7 @@ Voici le meilleur endroit où me contacter. À travers mes réseaux sociaux, je 
 
 - [Twitter](https://twitter.com/askpascalandy) _(j'y suis très actif)_
 - [Par courriel](https://firepress.typeform.com/to/hQJ3di)
-- [Linkedin](https://www.linkedin.com/in/pascalnguyendeschenes)
+- [Linkedin](/blog/linkedin/)
 - [Facebook](https://www.facebook.com/askpascalandy)
 - [YouTube](https://www.youtube.com/playlist?list=PL9epbd8UeXHtRu7WI4aK4RKDCThMf7-8Q)
 

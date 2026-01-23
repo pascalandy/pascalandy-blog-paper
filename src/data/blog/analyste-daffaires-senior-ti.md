@@ -80,6 +80,6 @@ En somme, j’adore connecter les points qui semblent disparates pour en faire a
 
 ### Contact
 
-[Linkedin](https://www.linkedin.com/in/pascalnguyendeschenes)
+[Linkedin](/blog/linkedin/)
 [M'écrire](/blog/rester-en-contact/)
 Pascal Nguyen Deschênes
