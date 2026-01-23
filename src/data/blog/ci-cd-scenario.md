@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2015-06-18
 title: "CI/CD Scenario"
 tags:
-  - uncategorized
+  - void
 ogImage: ../../assets/images/og-legacy/2016/Jun/ombre_sur_container_130-1466968864108.JPG
 description: "Scenario"
 ---

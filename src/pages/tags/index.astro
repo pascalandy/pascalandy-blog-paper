@@ -8,10 +8,13 @@ import Banner from "@/components/Banner.astro";
 import Footer from "@/components/Footer.astro";
 import getUniqueTags from "@/utils/getUniqueTags";
 import { SITE } from "@/config";
+import { getTagConfig } from "@/tags";
 
 const posts = await getCollection("blog");
 
-let tags = getUniqueTags(posts);
+let tags = getUniqueTags(posts).filter(
+  ({ tag }) => !getTagConfig(tag).hiddenFromTagsPage
+);
 ---
 
 <Layout title={`Tags | ${SITE.title}`}>

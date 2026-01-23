@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2018-04-25
 title: "Satoshi Nakamoto annonce the creation of Bitcoin. This is how it started."
 tags:
-  - uncategorized
+  - crypto
 description: "Re: Bitcoin P2P e-cash paper"
 ---
 

@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2014-10-26
 title: "10 ans après Star Académie 1 (2003), les retrouvailles"
 tags:
-  - personnel
+  - random
 ogImage: ../../assets/images/og-legacy/2017/04/10_ans_star_academie-1462895695802.jpg
 description: "Le 8 juin 2013, je recevais un courriel en même temps que les treize autres académiciens de la première cuvée de Star Académie. C'était Marianik Giffard qui..."
 ---
@@ -48,7 +48,7 @@ P.P.S. J'ai originalement publié cet article le 27 juin 2013 sur mon blog préc
 
 **Dans un autre ordre d'idée**. Je ne suis pas très présent « online » depuis 3 semaines, et ce pour une excellente raison. Je travaille fort sur une nouvelle startup où nous sommes quatre associés. Essentiellement, on fera en sorte qu’attendre dans une clinique, un hôpital, un garage, un resto, etc. soit une histoire du passé. Notre vision en deux mots? « Libérés d’attendre ».
 
-[Mise à jour à propos de FollowFi](/blog/followfi-permet-aux-patients-dattendre-a-distance-avec-leur-telephone-intelligent/)
+[Mise à jour à propos de FollowFi](/blog/followfi/)
 
 Et la nouvelle technologique qui m’a rendu extrêmement heureux aujourd’hui, est que [KickStarter](http://www.kickstarter.com/canada) est officiellement disponible au Canada. C’est une excellente nouvelle pour tous les Canadiens qui ont des projets à réaliser.
 

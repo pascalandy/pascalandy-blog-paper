@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2015-05-09
 title: "Firepress c'est devenir propriétaire de sa maison digitale"
 tags:
-  - uncategorized
+  - random
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Je crois qu'il faut cesser de travailler pour le compte des mégas corporations telles que Facebook, Tumblr, Twitter et compagnie. Ton contenu à une immense..."
 ---

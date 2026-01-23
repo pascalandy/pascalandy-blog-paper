@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2020-09-23
 title: "Golf R parts"
 tags:
-  - uncategorized
+  - void
 description: "My setup: Golf R 2018 MK75 6MT, CTS Downpipe, CTS intake, CTS turbo inlet, RacingLine intercooler, A2B Brushless RS3 LPFP, A2B MPI 925cc, A2B 5/4Bar..."
 ---
 

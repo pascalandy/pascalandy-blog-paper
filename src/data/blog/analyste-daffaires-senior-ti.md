@@ -10,8 +10,8 @@ description: "Recommandations et témoignages"
 
 ### Recommandations et témoignages
 
-- J’ai reçu [sept recommandations](/blog/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada/#recommandations-et-t-moignages) lors mon passage à la Banque Nationale du Canada. [Les voici](/blog/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada/#recommandations-et-t-moignages).
-- Après mon passage à chez **Bell Canada**, voici les **recommandations** [qu'ils m'ont partagés](/blog/analyste-daffaires-bell-business-market-infrastructures-service/#recommandationsettmoignages)
+- J’ai reçu [sept recommandations](/blog/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada/#recommandations-et-témoignages) lors mon passage à la Banque Nationale du Canada. [Les voici](/blog/analyste-daffaires-senior-t-i-bnc-banque-nationale-du-canada/#recommandations-et-témoignages).
+- Après mon passage à chez **Bell Canada**, voici les **recommandations** [qu'ils m'ont partagés](/blog/analyste-daffaires-bell-business-market-infrastructures-service/#recommandations-et-témoignages)
 
 ### En deux questions
 
@@ -80,6 +80,6 @@ En somme, j’adore connecter les points qui semblent disparates pour en faire a
 
 ### Contact
 
-[Linkedin](https://www.linkedin.com/in/pascalnguyendeschenes)
+[Linkedin](/blog/linkedin/)
 [M'écrire](/blog/rester-en-contact/)
 Pascal Nguyen Deschênes

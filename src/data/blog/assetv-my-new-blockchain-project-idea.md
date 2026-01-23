@@ -3,9 +3,9 @@ author: Pascal Andy
 date_created: 2018-05-10
 title: "AssetV: my new blockchain project idea"
 tags:
-  - crypto
+  - random
 ogImage: ../../assets/images/og-legacy/2018/05/pascalandy-com_header_2017-04-10_14h46.jpg
-description: "1/ As a developer and a crypto-user I just had this spark."
+description: "What if we repackage the idea of ‘Git’ as a software that can track any digital assets?"
 ---
 
 1/ As a developer and a crypto-user I just had this spark.

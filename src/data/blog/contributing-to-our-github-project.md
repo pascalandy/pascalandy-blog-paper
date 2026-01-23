@@ -1,7 +1,7 @@
 ---
 title: "Contributing to our Github project"
 tags:
-  - startups
+  - void
 date_created: 2019-01-10
 author: "Pascal Andy"
 description: "A guide to contributing to our GitHub projects: bug reports, feature requests, pull requests, and best practices for collaboration."

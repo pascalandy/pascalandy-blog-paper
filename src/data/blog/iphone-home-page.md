@@ -1,7 +1,7 @@
 ---
 title: "My iPhone home page looks like this"
 tags:
-  - personnel
+  - void
 date_created: 2017-10-21
 author: "Pascal Andy"
 description: "A quick snapshot of my iPhone home screen setup and how I organize my apps."

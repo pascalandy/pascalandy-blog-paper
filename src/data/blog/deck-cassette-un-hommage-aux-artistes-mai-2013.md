@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2013-05-04
 title: "Deck Cassette: Un Hommage aux Artistes (mai 2013)"
 tags:
-  - deck-cassette
+  - musique
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "- Parce que j’aime l’intimité que ces chansons peuvent créer avec nous. - Parce que la musique est de moins en moins une industrie et de plus en plus un..."
 ---
@@ -13,6 +13,8 @@ description: "- Parce que j’aime l’intimité que ces chansons peuvent créer
 - Parce que je crois que c’est en donnant et en redonnant qu’on obtient le plus de la vie.
 - Parce que la musique transcende les mots et les statuts sociaux.
 - Je me sens privilégié d’écouter ces petits miracles de quelques minutes.
+
+Merci!!
 
 - **Sky Ferreira** merci de me faire vibrer.
 - **MS MR** merci de me faire oublier le rythme du quotidien.

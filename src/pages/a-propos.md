@@ -3,53 +3,38 @@ layout: ../layouts/AboutLayout.astro
 title: "À propos"
 ---
 
-J'ai toujours été un patenteux, une personne qui entreprend ses idées. Pour moi, c'est une façon de vivre. J'aime me questionner et simplifier ce qui nous parait complexe.
+- Ce que je fais ces temps-ci —> [/maintenant](/maintenant)
 
-La façon dont les technologies nous touchent me fascine. Elles m'amènent à me questionner et à tenter de comprendre comment elles façonnent nos vies au quotidien.
+## Pour commencer
 
-Faire des liens entre ce qui nous semble abstrait et concret tient mon esprit éveillé. Je trouve ça magique quand les points finissent par dévoiler « le big picture ».
+- [Mon Top 5](/blog/mon-top-5/) — Mes articles recommandés pour les nouveaux lecteurs
+- [Tous les tags](/tags/)
 
-Bienvenue dans mon monde
+## Qui suis-je
 
-## Maintenant
+- Intro —> [Qui est Pascal Andy](/blog/qui-est-pascal-andy/)
+- ENTP-A —> [personality-type-entp-a-debater](/blog/my-personality-type-entp-a-debater/)
+- Ok je me la joue —> [Biographie](/blog/biographie-de-pascal-andy/)
 
-Pour connaître ce que je fais ces temps-ci —> page [maintenant](/maintenant)
+## Mes projets
 
-## Du côté professionnel
+À mon compte depuis plus de 20 ans :
 
-À mon compte depuis plus de 20 ans. Mes startups :
+- [FirePress](https://firepress.org/) — Hébergement de sites web basé sur Ghost (actuel)
+- [CryptoInMontreal](/blog/crypto-in-montreal/) — 40+ meetups organisés depuis 2017
+- [FollowFi](/blog/followfi/) — App pour patients, présentée au Banquier (2013)
+- [repost](/blog/repost/) — Automatisation d'annonces Kijiji (2011)
+- [Studio Transology](/blog/studio-transology-inc/) — Studio de production sonore à Montréal (2003-2010)
 
-- [FirePress](https://firepress.org/) — Hébergement de sites web basé sur Ghost
-- [repost](/blog/repost-ma-premiere-startup/) — Ma première startup
-- [FollowFi](/blog/followfi-permet-aux-patients-dattendre-a-distance-avec-leur-telephone-intelligent/) — Permettre aux patients d'attendre à distance
-
-Pour le détail, tu peux consulter mon [profil LinkedIn](https://www.linkedin.com/in/pascalnguyendeschenes).
-
-## En coulisses
+## En vrac
 
 - Je vis au Québec, Canada
 - Ancien participant de [Star Académie 2003](https://en.wikipedia.org/wiki/Star_Acad%C3%A9mie) (l'équivalent québécois d'American Idol)
 - Il m'arrive encore d'écouter ce bon vieux [remix](/blog/nes-pour-mourir-le-video/)
-- **Obsidian** pour organiser mes pensées (PKM)
-- **[Twitter/X](https://twitter.com/askpascalandy/)** pour suivre les sujets qui m'intéressent
+- Obsidian pour organiser mes pensées (PKM)
 
-## Mon nom de famille
+## Me contacter
 
-Mon nom est Pascal Nguyen Deschênes. Pascal Andy c'est simplement l'acronyme qui simplifie mon nom de famille :
-
-- **N**guyen **D**eschênes, qui devient
-- **N D**, qui devient
-- **Andy**
-
-Ceux qui ont deux noms de famille comprendront. Par exemple, mon nom n'entre pas en entier dans Twitter et je trouve ça pénible. Depuis que je suis jeune, je réalise que mon nom est compliqué pour la plupart des gens.
-
-Quelques avantages en rafale :
-
-- C'est facile à épeler pour les francophones et les anglophones.
-- C'est facile à retenir par coeur.
-- Ça sonne bien.
-- C'est plus court.
-
-## Pourquoi me lire ?
-
-J'écris pour tous les « non-technos » qui souhaitent une meilleure relation avec les technologies. À travers ces articles, j'essaie de comprendre comment elles façonnent la vie de chacun d'entre nous.
+- [Twitter/X](https://twitter.com/askpascalandy/)
+- [Rester en contact](/blog/rester-en-contact/)
+- [LinkedIn](/blog/linkedin/)
