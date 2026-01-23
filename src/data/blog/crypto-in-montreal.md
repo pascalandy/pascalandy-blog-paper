@@ -35,59 +35,59 @@ Crypto In Montreal est un événement au sujet des cryptomonnaies et du blockcha
 
 ### 2021
 
-- [#41](/blog/cryptoinmontreal-41/) — Comprendre la blockchain et ses cas d'utilisations
+- [#41](/blog/cim-41/) — Comprendre la blockchain et ses cas d'utilisations
 
 ### 2020
 
-- [#40](/blog/cryptoinmontreal-40/) — Le futur est maintenant. Une introduction au blockchain et aux cryptos
+- [#40](/blog/cim-40/) — Le futur est maintenant. Une introduction au blockchain et aux cryptos
 
 ### 2019
 
-- [#39](/blog/cryptoinmontreal-39/) — Bitcoin Standard of Money
-- [#38](/blog/cryptoinmontreal-38/) — Le Big Bang de l'ère financière : Une introduction au blockchain et aux cryptos
-- [#37](/blog/cryptoinmontreal-37/) — Bring your laptop! Intro to Solidity on Ethereum and Smart Contracts
-- [#36](/blog/cryptoinmontreal-36/) — Bitcoin Decentralized Governance
-- [#35](/blog/cryptoinmontreal-35/) — Decentralized & Collaborative AI on the Blockchain
-- [#34](/blog/cryptoinmontreal-34/) — Le Big Bang de l'ère financière : Une introduction au blockchain et aux cryptos
-- [#33](/blog/cryptoinmontreal-33/) — Ethereum, Decentralized Exchanges (DEX) & Decentralized Finance (DeFi)
-- [#32](/blog/cryptoinmontreal-32/) — Le futur est maintenant, une introduction au blockchain et aux cryptos
-- [#31](/blog/cryptoinmontreal-31/) — Cinq idées Survivalist pour l'avenir de son portefeuille Bitcoin
-- [#30](/blog/cryptoinmontreal-30/) — 2 en 1: Bitcoin full node & Proof of stake on Tezos
-- [#29](/blog/cryptoinmontreal-29/) — Le Big Bang de l'ère financière : Une introduction au blockchain et aux cryptos
-- [#28](/blog/cryptoinmontreal-28/) — Privacy on the Blockchain and a Q&A on Crypto Taxes
-- [#27](/blog/cryptoinmontreal-27/) — Le Bitcoin et les Altcoins, une introduction au monde des cryptos
-- [#26](/blog/cryptoinmontreal-26/) — Ethereum Constantinople: la mise à jour qui change tout (ou presque)
-- [#25](/blog/cryptoinmontreal-25/) — Les institutions arrivent dans le monde des cryptos
+- [#39](/blog/cim-39/) — Bitcoin Standard of Money
+- [#38](/blog/cim-38/) — Le Big Bang de l'ère financière : Une introduction au blockchain et aux cryptos
+- [#37](/blog/cim-37/) — Bring your laptop! Intro to Solidity on Ethereum and Smart Contracts
+- [#36](/blog/cim-36/) — Bitcoin Decentralized Governance
+- [#35](/blog/cim-35/) — Decentralized & Collaborative AI on the Blockchain
+- [#34](/blog/cim-34/) — Le Big Bang de l'ère financière : Une introduction au blockchain et aux cryptos
+- [#33](/blog/cim-33/) — Ethereum, Decentralized Exchanges (DEX) & Decentralized Finance (DeFi)
+- [#32](/blog/cim-32/) — Le futur est maintenant, une introduction au blockchain et aux cryptos
+- [#31](/blog/cim-31/) — Cinq idées Survivalist pour l'avenir de son portefeuille Bitcoin
+- [#30](/blog/cim-30/) — 2 en 1: Bitcoin full node & Proof of stake on Tezos
+- [#29](/blog/cim-29/) — Le Big Bang de l'ère financière : Une introduction au blockchain et aux cryptos
+- [#28](/blog/cim-28/) — Privacy on the Blockchain and a Q&A on Crypto Taxes
+- [#27](/blog/cim-27/) — Le Bitcoin et les Altcoins, une introduction au monde des cryptos
+- [#26](/blog/cim-26/) — Ethereum Constantinople: la mise à jour qui change tout (ou presque)
+- [#25](/blog/cim-25/) — Les institutions arrivent dans le monde des cryptos
 
 ### 2018
 
-- [#24](/blog/cryptoinmontreal-24/) — Le Bitcoin et les Altcoins, une introduction au monde des cryptos
-- [#23](/blog/cryptoinmontreal-23/) — Mettre en place une stratégie pour mieux Trader (et éviter le FUD et le FOMO)
-- [#22](/blog/cryptoinmontreal-22/) — Privacy coins and the blockchain: are ZCash, Dash and Monero really private?
-- [#21](/blog/cryptoinmontreal-21/) — Le blockchain, les cryptomonnaies et le mining, ce qu'il faut savoir
-- [#20](/blog/cryptoinmontreal-20/) — Crypto fiscality, because your coins get taxed too!
-- [#19](/blog/cryptoinmontreal-19/) — Comprendre ce qu'est la CryptoÉconomie + les cas d'utilisations du blockchain
-- [#18](/blog/cryptoinmontreal-18/) — Le blockchain, les cryptomonnaies et le mining, ce qu'il faut savoir
-- [#17](/blog/cryptoinmontreal-17/) — Privacy coins: how ZenCash & ZCash can lead businesses and individuals to freedom
-- [#16](/blog/cryptoinmontreal-16/) — Le Bitcoin et les Altcoins, une introduction au monde des cryptos
-- [#15](/blog/cryptoinmontreal-15/) — Comprendre l'algo trading et mettre en place un robot trader
-- [#14](/blog/cryptoinmontreal-14/) — La rentabilité du mining et la guerre entre les ASICS et les GPU
-- [#13](/blog/cryptoinmontreal-13/) — Ethereum & Bitcoin: une introduction au monde des cryptos
-- [#12](/blog/cryptoinmontreal-12/) — Blockchain et cryptomonnaies
-- [#11](/blog/cryptoinmontreal-11/) — Comprendre les cas d'utilisations du blockchain
-- [#10](/blog/cryptoinmontreal-10/) — Blockchain et cryptomonnaies
-- [#09](/blog/cryptoinmontreal-09/) — Blockchain et cryptomonnaies
-- [#08](/blog/cryptoinmontreal-08/) — Une introduction aux cryptomonnaies
-- [#07](/blog/cryptoinmontreal-07/) — Blockchain et cryptomonnaies
-- [#06](/blog/cryptoinmontreal-06/) — Miner ou acheter ses coins ?
-- [#05](/blog/cryptoinmontreal-05/) — Miner ou acheter ses coins ?
-- [#04](/blog/cryptoinmontreal-04/) — Décentraliser grâce aux cryptomonnaies et le blockchain
+- [#24](/blog/cim-24/) — Le Bitcoin et les Altcoins, une introduction au monde des cryptos
+- [#23](/blog/cim-23/) — Mettre en place une stratégie pour mieux Trader (et éviter le FUD et le FOMO)
+- [#22](/blog/cim-22/) — Privacy coins and the blockchain: are ZCash, Dash and Monero really private?
+- [#21](/blog/cim-21/) — Le blockchain, les cryptomonnaies et le mining, ce qu'il faut savoir
+- [#20](/blog/cim-20/) — Crypto fiscality, because your coins get taxed too!
+- [#19](/blog/cim-19/) — Comprendre ce qu'est la CryptoÉconomie + les cas d'utilisations du blockchain
+- [#18](/blog/cim-18/) — Le blockchain, les cryptomonnaies et le mining, ce qu'il faut savoir
+- [#17](/blog/cim-17/) — Privacy coins: how ZenCash & ZCash can lead businesses and individuals to freedom
+- [#16](/blog/cim-16/) — Le Bitcoin et les Altcoins, une introduction au monde des cryptos
+- [#15](/blog/cim-15/) — Comprendre l'algo trading et mettre en place un robot trader
+- [#14](/blog/cim-14/) — La rentabilité du mining et la guerre entre les ASICS et les GPU
+- [#13](/blog/cim-13/) — Ethereum & Bitcoin: une introduction au monde des cryptos
+- [#12](/blog/cim-12/) — Blockchain et cryptomonnaies
+- [#11](/blog/cim-11/) — Comprendre les cas d'utilisations du blockchain
+- [#10](/blog/cim-10/) — Blockchain et cryptomonnaies
+- [#09](/blog/cim-09/) — Blockchain et cryptomonnaies
+- [#08](/blog/cim-08/) — Une introduction aux cryptomonnaies
+- [#07](/blog/cim-07/) — Blockchain et cryptomonnaies
+- [#06](/blog/cim-06/) — Miner ou acheter ses coins ?
+- [#05](/blog/cim-05/) — Miner ou acheter ses coins ?
+- [#04](/blog/cim-04/) — Décentraliser grâce aux cryptomonnaies et le blockchain
 
 ### 2017
 
-- [#03](/blog/cryptoinmontreal-03/) — Bitcoin, Ripple, Ethereum, Litecoin
-- [#02](/blog/cryptoinmontreal-02/) — S'initier aux cryptomonnaies (Bitcoin, Ethereum, Litecoin)
-- [#01](/blog/cryptoinmontreal-01/) — Premier événement
+- [#03](/blog/cim-03/) — Bitcoin, Ripple, Ethereum, Litecoin
+- [#02](/blog/cim-02/) — S'initier aux cryptomonnaies (Bitcoin, Ethereum, Litecoin)
+- [#01](/blog/cim-01/) — Premier événement
 
 ---
 

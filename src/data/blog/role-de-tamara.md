@@ -20,7 +20,7 @@ Faire la liste et trouver des gens qui désirent parler de leurs projets blockch
 \***\*Étapes\*\***:
 
 - A) S'assurer que l'événement est bien sur la page FB du Insider café: <https://www.facebook.com/pg/insidersmtl/events/?ref=page_internal>
-- B) Aller sur la page officiel de l’évent: [https://pascalandy.com/blog/cryptoinmontreal-19/](/blog/cryptoinmontreal-19/)
+- B) Aller sur la page officiel de l’évent: [https://pascalandy.com/blog/cim-19/](/blog/cim-19/)
 - C) Mario doit copié le texte (voir screen shot) dans leur propres événement FB. Il devrait aussi être en mesure de copier l'image. Example: /blog/content/images/2018/08/019-Comprendre-ce-quest-la-CryptoE-conomie-les-cas-d-utilisations-du-blockchains-CryptoInMontreal-19.jpg
 
 Veux-tu t’en chargé à l’avenir ?
@@ -45,4 +45,4 @@ S'occuper de débuter et terminer le stream live sur Facebook / YouTube)
 
 # Done!
 
-Besoin de ton résumé au niveau de ta présentation du modèle économique Ethereum. Inspire-toi de: [https://pascalandy.com/blog/cryptoinmontreal-17/](/blog/cryptoinmontreal-17/)et de [https://pascalandy.com/blog/cryptoinmontreal-15/](/blog/cryptoinmontreal-15/)
+Besoin de ton résumé au niveau de ta présentation du modèle économique Ethereum. Inspire-toi de: [https://pascalandy.com/blog/cim-17/](/blog/cim-17/)et de [https://pascalandy.com/blog/cim-15/](/blog/cim-15/)

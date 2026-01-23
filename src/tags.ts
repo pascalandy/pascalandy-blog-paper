@@ -3,15 +3,29 @@
  * - slug: the URL-safe identifier (used in posts frontmatter and URLs)
  * - name: display name with proper capitalization/spacing
  * - description: short description shown on the tags page
+ * - hiddenFromTagsPage: if true, tag won't appear on /tags/ but /tags/[tag]/ still works
  */
 
 type TagConfig = {
   slug: string;
   name: string;
   description: string;
+  hiddenFromTagsPage?: boolean;
 };
 
 export const TAGS: TagConfig[] = [
+  {
+    slug: "crypto-in-montreal",
+    name: "Crypto In Montreal",
+    description: "41 meetups organisés depuis 2017",
+    hiddenFromTagsPage: true,
+  },
+  {
+    slug: "void",
+    name: "void",
+    description: "",
+    hiddenFromTagsPage: true,
+  },
   {
     slug: "dev-notes",
     name: "dev-notes",
