@@ -20,11 +20,11 @@ L'année 2003 est pour moi un rêve surréaliste où la tournée nous amène à 
 
 Durant mes études en 2011, je lance [repost] qui permet à mes clients de réafficher sur Kijiji leurs annonces automatiquement, une ou deux fois par jours. On peut [voir les archives](/blog/repost-ma-premiere-startup/) des deux sites web. Fait entièrement sur iWeb qui était fourni avec le Mac. Fallait le faire!
 
-En **2012**, je lance [FollowFi](/blog/followfi-permet-aux-patients-dattendre-a-distance-avec-leur-telephone-intelligent/) qui est une application web qui permet aux patients de gérer leur temps comme ils le souhaitent à l'extérieur des salles d'attente.
+En **2012**, je lance [FollowFi](/blog/followfi/) qui est une application web qui permet aux patients de gérer leur temps comme ils le souhaitent à l'extérieur des salles d'attente.
 
-En mars **2014** je suis cassé raide. Le meilleur move pour moi est d'accepter un poste d'analyste d'affaires chez Bell Canada. Peu après je m'achète une auto sport. Détails sur [Linkedin](https://www.linkedin.com/in/pascalnguyendeschenes/).
+En mars **2014** je suis cassé raide. Le meilleur move pour moi est d'accepter un poste d'analyste d'affaires chez Bell Canada. Peu après je m'achète une auto sport. Détails sur [Linkedin](/blog/linkedin/).
 
-En mai **2017**, je prends un poste d'analyste d'affaires à la Banque Nationnale comme Analyste d’Affaires Sénior Infrastructures dans le Centre Transformation Office (CTO). Détails sur [Linkedin](https://www.linkedin.com/in/pascalnguyendeschenes/).
+En mai **2017**, je prends un poste d'analyste d'affaires à la Banque Nationnale comme Analyste d’Affaires Sénior Infrastructures dans le Centre Transformation Office (CTO). Détails sur [Linkedin](/blog/linkedin/).
 
 Dans la même période, je démarre [FirePress](https://firepress.org/). Chez **FirePress**, ont se donne à 100% afin de permettre aux entrepreneurs et aux petites organisations de créer leurs sites web. Nous faisons l'hébergement de sites web sur Ghost en plus d'aider leurs clients à se familiariser avec la plate-forme.
 
@@ -74,7 +74,7 @@ Sachant que l’aventure allait se terminer abruptement après cette tournée, j
 
 **3 octobre 2012** - Mon premier blog voit le jour. Il est intitulé « À la quête d’un meilleur mode de vie grâce aux technologies ». _(Le blog pnddesign.ca est depuis inactif et a été remplacé par celui-ci.)_
 
-**Septembre 2013** - Je présente officiellement ma deuxième startup [FollowFi](/blog/followfi-permet-aux-patients-dattendre-a-distance-avec-leur-telephone-intelligent/) lors de l'**émission Le Banquier**.
+**Septembre 2013** - Je présente officiellement ma deuxième startup [FollowFi](/blog/followfi/) lors de l'**émission Le Banquier**.
 
 **Mars 2014** - PND Design devient officiellement [Andy Media](/blog/andy-media/), car le mot "design" crée de la confusion sur les activités de l'entreprise. Je décide de lancer par la même occasion http://pascalandy.com/. C'est un endroit où je peux communiquer mes opinions au sujet des relations technologiques, mes projets, ainsi que mes activités professionnelles.
 

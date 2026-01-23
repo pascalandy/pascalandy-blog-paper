@@ -8,7 +8,7 @@ ogImage: ../../assets/images/og-legacy/2016/May/lancer_une_startup_2014_09_26_22
 description: "Après [[repost]](GHOSTURL__/repost-ma-premiere-startup) et FollowFi, je commence les premiers élans de ma troisième startup. Cette fois-ci, tout sera en..."
 ---
 
-Après [[repost]](/blog/repost-ma-premiere-startup/) et [FollowFi](/blog/followfi-permet-aux-patients-dattendre-a-distance-avec-leur-telephone-intelligent/), je commence les premiers élans de ma troisième startup. Cette fois-ci, tout sera en anglais puisqu'il est pénible de développer dans les deux langues.
+Après [[repost]](/blog/repost-ma-premiere-startup/) et [FollowFi](/blog/followfi/), je commence les premiers élans de ma troisième startup. Cette fois-ci, tout sera en anglais puisqu'il est pénible de développer dans les deux langues.
 
 ![](../../assets/images/og-legacy/2017/04/10354565_762168327167596_880957032_n-1462845004762.jpg)
 
