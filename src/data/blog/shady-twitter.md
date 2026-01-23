@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2017-04-14
 title: "Shady Twitter"
 tags:
-  - uncategorized
+  - random
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "I received an email from Twitter (copied below). They are shutting down a feature. Fair enough."
 ---

@@ -4,7 +4,7 @@ date_created: 2014-01-01
 title: "La vaccination obligatoire est à nos portes"
 draft: true
 tags:
-  - uncategorized
+  - random
 description: "À mes amis, voisins, et connaissances qui sont dans le système de santé, policiers, professeurs et autres qui travaillent « dans le publique », je m'engage..."
 ---
 
