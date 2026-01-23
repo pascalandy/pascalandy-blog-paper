@@ -12,7 +12,7 @@ Tous les participants, conférenciers, sponsors et volontaires pour notre confé
 
 En bref, ne soyez pas un imbécile.
 
-> Les événements de #CryptoInMontreal ont lieu aux 2 semaines! Tous les détails se trouvent sur la [page informations générales](/cim/).
+> Les événements de #CryptoInMontreal ont lieu aux 2 semaines! Tous les détails se trouvent sur la [page informations générales](/blog/crypto-in-montreal/).
 
 ## Besoin d'aide ?
 
@@ -38,7 +38,7 @@ Les membres de l'organisation seront ravis d'aider les participants à contacter
 
 Nous attendons des participants qu'ils suivent ces règles dans le bâtiment des conférences et des ateliers, ainsi que pendant les événements sociaux relatifs à la conférence.
 
-> Les événements de #CryptoInMontreal ont lieu aux 2 semaines! Tous les détails se trouvent sur la [page informations générales](/cim/).
+> Les événements de #CryptoInMontreal ont lieu aux 2 semaines! Tous les détails se trouvent sur la [page informations générales](/blog/crypto-in-montreal/).
 
 ## Crédits
 

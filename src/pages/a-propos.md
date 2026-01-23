@@ -19,7 +19,7 @@ title: "À propos"
 À mon compte depuis plus de 20 ans :
 
 - [FirePress](https://firepress.org/) — Hébergement de sites web basé sur Ghost (actuel)
-- [CryptoInMontreal](/cim/) — 40+ meetups organisés depuis 2017
+- [CryptoInMontreal](/blog/crypto-in-montreal/) — 40+ meetups organisés depuis 2017
 - [FollowFi](/blog/followfi/) — App pour patients, présentée au Banquier (2013)
 - [repost](/blog/repost-ma-premiere-startup/) — Automatisation d'annonces Kijiji (2011)
 - [Studio Transology](/blog/studio-transology-inc/) — Studio de production sonore à Montréal (2003-2010)
@@ -36,3 +36,4 @@ title: "À propos"
 - [Twitter/X](https://twitter.com/askpascalandy/)
 - [Rester en contact](/blog/rester-en-contact/)
 - [LinkedIn](/blog/linkedin/)
+

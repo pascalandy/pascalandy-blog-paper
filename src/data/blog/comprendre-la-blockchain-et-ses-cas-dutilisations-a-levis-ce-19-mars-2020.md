@@ -20,7 +20,7 @@ Pascal vous démystifiera les principales notions que vous lisez régulièrement
 
 ### 🕺 À propos de l'organisateur
 
-Pascal est fasciné pour la décentralisation et cela l'a emmené à organiser plus d'une quarantaine de Meetup « [CryptoInMontreal](/cim/) » depuis 2017. Il est également fondateur de FirePress.org, une plateforme qui permet aux entrepreneurs et aux PME de créer leurs sites internet sur la plateforme Ghost (CMS). Il est chargé de cours pour [le programme blockchain](https://www.linkedin.com/feed/update/urn:li:activity:6635922763167084544/) offert à ESG+ UQAM donné pour la session d'hiver 2020.
+Pascal est fasciné pour la décentralisation et cela l'a emmené à organiser plus d'une quarantaine de Meetup « [CryptoInMontreal](/blog/crypto-in-montreal/) » depuis 2017. Il est également fondateur de FirePress.org, une plateforme qui permet aux entrepreneurs et aux PME de créer leurs sites internet sur la plateforme Ghost (CMS). Il est chargé de cours pour [le programme blockchain](https://www.linkedin.com/feed/update/urn:li:activity:6635922763167084544/) offert à ESG+ UQAM donné pour la session d'hiver 2020.
 
 Pour en savoir plus: [pascalandy.com/blog/qui-est-pascal-andy](/blog/qui-est-pascal-andy/)
 

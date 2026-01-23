@@ -36,7 +36,7 @@ Tous les détails sur la page officielle de l'événement:
 
 ![Pascal Andy](../../assets/images/og-legacy/2020/03/2019-04-24_CIM29_16-6.jpg)
 
-Je suis Pascal Andy et je suis fasciné par la décentralisation de notre monde. Ça m'a emmené à organiser plus d'une quarantaine de Meetup « [CryptoInMontreal](/cim/) » depuis 2017. En 2020, j'ai aussi été chargé de cours durant [le programme blockchain](https://www.linkedin.com/feed/update/urn:li:activity:6635922763167084544/) offert à ESG+ UQAM durant pour la session d'hiver 2020. Je suis également le fondateur de FirePress.org, une plateforme qui permet aux entrepreneurs et aux PME de créer leurs sites internet sur la plateforme Ghost (CMS). Pour en savoir plus sur moi: [pascalandy.com/blog/qui-est-pascal-andy](/blog/qui-est-pascal-andy/)
+Je suis Pascal Andy et je suis fasciné par la décentralisation de notre monde. Ça m'a emmené à organiser plus d'une quarantaine de Meetup « [CryptoInMontreal](/blog/crypto-in-montreal/) » depuis 2017. En 2020, j'ai aussi été chargé de cours durant [le programme blockchain](https://www.linkedin.com/feed/update/urn:li:activity:6635922763167084544/) offert à ESG+ UQAM durant pour la session d'hiver 2020. Je suis également le fondateur de FirePress.org, une plateforme qui permet aux entrepreneurs et aux PME de créer leurs sites internet sur la plateforme Ghost (CMS). Pour en savoir plus sur moi: [pascalandy.com/blog/qui-est-pascal-andy](/blog/qui-est-pascal-andy/)
 
 ### 🎟️ Billetterie >> 🙋 RSVP 🙋‍♂️
 
