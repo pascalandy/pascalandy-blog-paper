@@ -74,12 +74,13 @@ const isActive = (path: string) => {
       <ul
         id="menu-items"
         class:list={[
-          "hidden",
+          "pointer-events-none opacity-0",
           "absolute top-full right-0 z-40 mt-2",
           "flex flex-col gap-1 p-4",
           "w-48 rounded-lg border border-border bg-background shadow-lg",
+          "transition-opacity duration-150",
           "[&>li>a]:block [&>li>a]:p-3 [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
-          "sm:relative sm:top-auto sm:right-auto sm:z-auto sm:mt-0",
+          "sm:pointer-events-auto sm:relative sm:top-auto sm:right-auto sm:z-auto sm:mt-0 sm:opacity-100",
           "sm:flex sm:w-auto sm:flex-row sm:items-center sm:gap-x-5 sm:gap-y-0",
           "sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none",
         ]}
@@ -172,25 +173,62 @@ const isActive = (path: string) => {
   </div>
 </header>
 
+<!-- Mobile menu backdrop overlay -->
+<div
+  id="menu-overlay"
+  class="pointer-events-none fixed inset-0 z-30 bg-background/60 opacity-0 backdrop-blur-sm transition-opacity duration-150 sm:hidden"
+  aria-hidden="true"
+>
+</div>
+
 <script>
   function toggleNav() {
     const menuBtn = document.querySelector("#menu-btn");
     const menuItems = document.querySelector("#menu-items");
     const menuIcon = document.querySelector("#menu-icon");
     const closeIcon = document.querySelector("#close-icon");
+    const menuOverlay = document.querySelector("#menu-overlay");
 
-    if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
+    if (!menuBtn || !menuItems || !menuIcon || !closeIcon || !menuOverlay)
+      return;
+
+    const openMenu = () => {
+      menuBtn.setAttribute("aria-expanded", "true");
+      menuBtn.setAttribute("aria-label", "Close Menu");
+      menuItems.classList.remove("opacity-0", "pointer-events-none");
+      menuItems.classList.add("opacity-100", "pointer-events-auto");
+      menuOverlay.classList.remove("opacity-0", "pointer-events-none");
+      menuOverlay.classList.add("opacity-100", "pointer-events-auto");
+      menuIcon.classList.add("hidden");
+      closeIcon.classList.remove("hidden");
+    };
+
+    const closeMenu = () => {
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.setAttribute("aria-label", "Open Menu");
+      menuItems.classList.add("opacity-0", "pointer-events-none");
+      menuItems.classList.remove("opacity-100", "pointer-events-auto");
+      menuOverlay.classList.add("opacity-0", "pointer-events-none");
+      menuOverlay.classList.remove("opacity-100", "pointer-events-auto");
+      menuIcon.classList.remove("hidden");
+      closeIcon.classList.add("hidden");
+    };
 
     menuBtn.addEventListener("click", () => {
-      const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
-
-      menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
-      menuBtn.setAttribute("aria-label", openMenu ? "Open Menu" : "Close Menu");
-
-      menuItems.classList.toggle("hidden");
-      menuIcon.classList.toggle("hidden");
-      closeIcon.classList.toggle("hidden");
+      const isOpen = menuBtn.getAttribute("aria-expanded") === "true";
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
+
+    // Close menu when clicking overlay
+    menuOverlay.addEventListener("click", closeMenu);
+
+    // Close menu when clicking theme toggle (doesn't navigate, so close manually)
+    const themeBtn = document.querySelector("#theme-btn");
+    themeBtn?.addEventListener("click", closeMenu);
   }
 
   toggleNav();
