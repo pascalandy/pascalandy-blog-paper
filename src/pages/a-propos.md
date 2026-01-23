@@ -5,15 +5,16 @@ title: "À propos"
 
 - Ce que je fais ces temps-ci —> [/maintenant](/maintenant)
 
-## Qui suis-je
-
-- Intro —> [Qui est Pascal Andy](/blog/qui-est-pascal-andy/)
-- Ok je me la joue—> [Biographie](/blog/biographie-de-pascal-andy/)
-
 ## Pour commencer
 
 - [Mon Top 5](/blog/mon-top-5/) — Mes articles recommandés pour les nouveaux lecteurs
 - [Tous les tags](/tags/)
+
+## Qui suis-je
+
+- Intro —> [Qui est Pascal Andy](/blog/qui-est-pascal-andy/)
+- ENTP-A —> [personality-type-entp-a-debater](/blog/my-personality-type-entp-a-debater/)
+- Ok je me la joue —> [Biographie](/blog/biographie-de-pascal-andy/)
 
 ## Mes projets
 

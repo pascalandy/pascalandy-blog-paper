@@ -36,6 +36,12 @@ export const TAGS: TagConfig[] = [
     name: "random",
     description: "Random thoughts and musings",
   },
+  {
+    slug: "biographie",
+    name: "Biographie",
+    description: "À propos de Pascal Andy",
+    hiddenFromTagsPage: true,
+  },
 ];
 
 /**
