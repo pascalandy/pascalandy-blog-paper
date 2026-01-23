@@ -1,11 +1,10 @@
 ---
 author: Pascal Andy
 date_created: 2014-01-01
-title: "Dossier Julian"
-draft: true
+title: "Dossier Julian Assange"
 tags:
   - uncategorized
-description: "La semaine dernière les procureurs américains ont annoncé 17 nouvelles accusations contre Julian Assange pour avoir publié des centaines de milliers de..."
+description: "La semaine dernière les procureurs américains ont annoncé 17 nouvelles accusations contre Julian Assange pour avoir publié des centaines de milliers ..."
 ---
 
 La semaine dernière les procureurs américains ont annoncé 17 nouvelles accusations contre Julian Assange pour avoir publié des centaines de milliers de câbles diplomatiques. Ceux-ci portaient entre autre, sur les communications en lien avec les guerres en Afghanistan et en Irak.
