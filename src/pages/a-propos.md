@@ -36,4 +36,3 @@ title: "À propos"
 - [Twitter/X](https://twitter.com/askpascalandy/)
 - [Rester en contact](/blog/rester-en-contact/)
 - [LinkedIn](/blog/linkedin/)
-
