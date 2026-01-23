@@ -10,10 +10,10 @@ import { SITE } from "@/config";
 const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
 ---
 
-<Layout title={`Search | ${SITE.title}`}>
+<Layout title={`Recherche | ${SITE.title}`}>
   <Header />
   <Banner />
-  <Main pageTitle="Search">
+  <Main pageTitle="Recherche">
     <div id="pagefind-search" transition:persist data-backurl={backUrl}></div>
   </Main>
   <Footer />
@@ -40,9 +40,12 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
         showImages: false,
         showSubResults: true,
         translations: {
-          zero_results: "No results",
-          many_results: "[COUNT] results",
-          one_result: "1 result",
+          placeholder: "Rechercher...",
+          zero_results: "Aucun résultat",
+          many_results: "[COUNT] résultats",
+          one_result: "1 résultat",
+          clear_search: "Effacer",
+          load_more: "Afficher plus de résultats",
         },
         processTerm: function (term: string) {
           params.set("q", term); // Update the `q` parameter in the URL
