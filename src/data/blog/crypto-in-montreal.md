@@ -109,7 +109,7 @@ Crypto In Montreal est un événement au sujet des cryptomonnaies et du blockcha
 - [Bitcoin and Canadian taxation of cryptocurrencies (full video)](/blog/bitcoin-and-canadian-taxation-of-cryptocurrencies-full-video/)
 - [Les Smart Contract à l'ESG UQAM (juin 2020)](/blog/charge-de-cours-a-lesg-uqam/)
 - [Comprendre la blockchain et ses cas d'utilisations — à Lévis (mars 2020)](/blog/comprendre-la-blockchain-et-ses-cas-dutilisations-a-levis-ce-19-mars-2020/)
-- [Le moon shot sur lequel les banques doivent mettre leurs jetons](/blog/le-moon-shot-sur-lequel-les-banques-doivent-mettre-leur-jetons/)
+
 - [Le prochain événement, je le ferai sans masque](/blog/le-prochain-evenement-je-le-ferai-sans-masque/)
 - [Rôle de Tamara](/blog/role-de-tamara/)
 

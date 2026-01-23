@@ -18,7 +18,7 @@ L'année 2003 est pour moi un rêve surréaliste où la tournée nous amène à 
 
 **7 ans plus tard**, après avoir opéré un studio de production sonore dans le milieu de la publicité, je **retourne aux études en 2011** pour faire un certificat en administration des affaires.
 
-Durant mes études en 2011, je lance [repost] qui permet à mes clients de réafficher sur Kijiji leurs annonces automatiquement, une ou deux fois par jours. On peut [voir les archives](/blog/repost-ma-premiere-startup/) des deux sites web. Fait entièrement sur iWeb qui était fourni avec le Mac. Fallait le faire!
+Durant mes études en 2011, je lance [repost] qui permet à mes clients de réafficher sur Kijiji leurs annonces automatiquement, une ou deux fois par jours. On peut [voir les archives](/blog/repost/) des deux sites web. Fait entièrement sur iWeb qui était fourni avec le Mac. Fallait le faire!
 
 En **2012**, je lance [FollowFi](/blog/followfi/) qui est une application web qui permet aux patients de gérer leur temps comme ils le souhaitent à l'extérieur des salles d'attente.
 

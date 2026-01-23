@@ -33,8 +33,7 @@ P.P.S. You want to know how Dper is working, what is the user experience, what i
 ## 📢 Want some more?
 
 [The manifesto - Why did I decide to start Dper?](/blog/each-day-traditional-social-networks-are-disconnecting-from-you/)
-🏷️ [Search tag](/tags/startups/) about Dper
-🏛️ Go to Dper [homepage](/blog/dper-app/)
-📖 Key [definitions](/blog/definitions/) about startups
+🏷️ [Search tag](/tags/projets/) about Dper
+🏛️ Go to Dper [homepage](/blog/dper/)
 
 📷 [source](https://unsplash.com/galymzhanabdugalimov)

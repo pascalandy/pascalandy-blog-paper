@@ -14,6 +14,8 @@ description: "- Parce que j’aime l’intimité que ces chansons peuvent créer
 - Parce que la musique transcende les mots et les statuts sociaux.
 - Je me sens privilégié d’écouter ces petits miracles de quelques minutes.
 
+Merci!!
+
 - **Sky Ferreira** merci de me faire vibrer.
 - **MS MR** merci de me faire oublier le rythme du quotidien.
 - **Ellie Goulding** merci de me donner des ailes.

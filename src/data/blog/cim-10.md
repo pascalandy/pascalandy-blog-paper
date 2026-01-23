@@ -22,10 +22,10 @@ Do you speak **English**? You're welcome as well! I just don't have the time to 
 
 - **Prix**: 6.50$ payable sur place
 - **Date** et **heure**: jeudi 17 avril 2018 à 18h15 (fin à 21h00)
-- **Lieu**: [Anticafé Local Crescent](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#anticafe)
+- **Lieu**: [Anticafé Local Crescent](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders)
 - **Adresse**: 2067 Crescent St #205, Montreal QC H3G 2C1 Montréal Quéebec Canada
 
-Le **prix inclut** — les cafés gourmands de torréfaction locale, les thés et tisanes, les pains haut gamme, les biscuits, le caramel, les légumes et fruits sec, nous avons même des produits sans gluten et véganes. Pour plus de détails --> [Anticafé Local Crescent](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#anticafe)
+Le **prix inclut** — les cafés gourmands de torréfaction locale, les thés et tisanes, les pains haut gamme, les biscuits, le caramel, les légumes et fruits sec, nous avons même des produits sans gluten et véganes. Pour plus de détails --> [Anticafé Local Crescent](/blog/les-endroits-qui-acceillent-cryptoinmontreal/#club-insiders)
 
 ![anticafe](../../assets/images/og-legacy/2018/03/anticafe.png)
 

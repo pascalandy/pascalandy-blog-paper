@@ -89,7 +89,7 @@ Posts with potential but significant issues.
 | `lhorizon-cest-toi.md` | Very short, typos | Expand or fix |
 | `configurer-un-gym-maison-avec-une-seule-paire-de-dumbbells.md` | Broken images | Fix or remove |
 | `contributor-code-of-conduct-on-github.md` | Placeholder email | Complete or remove |
-| `repost-ma-premiere-startup.md` | Placeholder + image dump | Complete or remove |
+| `repost.md` | Placeholder + image dump | Complete or remove |
 | `voici-comment-chiffrer-ses-donnees-confidentielles-et-ses-photos-pdta.md` | Deprecated tools | Update or archive |
 
 ---

@@ -1,12 +1,11 @@
 ---
 author: Pascal Andy
 date_created: 2014-02-28
-title: "FollowFi permet aux patients d'attendre à distance avec leurs téléphones intelligents"
+title: "FollowFi"
 tags:
-  - biographie
-  - startups
+  - projets
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
-description: "FollowFi août 2013 – févr. 2014"
+description: "FollowFi permet aux patients d'attendre à distance avec leurs téléphones intelligents"
 ---
 
 FollowFi

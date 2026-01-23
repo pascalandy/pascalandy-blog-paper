@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2018-06-28
 title: "Code de conduite de Crypto in Montréal"
 tags:
-  - crypto-in-montreal
+  - void
 ogImage: ../../assets/images/og-legacy/2018/06/banner-large-cyptoinmontreal.JPG
 description: "Code de conduite de Crypto in Montréal #CryptoInMontreal"
 ---
