@@ -23,11 +23,14 @@ basé sur http://localhost:4320/blog/crypto-in-montreal/#faq-questions-et-repons
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
- Rester en contact 
- par courriel : faire une nouvelle forme
+Rester en contact 
+par courriel : faire une nouvelle forme
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
+star ac est un projet
+
+=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
 mettre à jour l'image header par défault
 
