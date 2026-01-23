@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2014-02-01
 title: "Rester en contact"
 tags:
-  - personnel
+  - void
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "Voici le meilleur endroit où me contacter. À travers mes réseaux sociaux, je partage des articles que je considère pertinents, des moments de ma vie et des chansons qui me collent à la peau."
 ---

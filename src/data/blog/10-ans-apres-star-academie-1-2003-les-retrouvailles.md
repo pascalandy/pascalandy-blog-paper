@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2014-10-26
 title: "10 ans après Star Académie 1 (2003), les retrouvailles"
 tags:
-  - personnel
+  - random
 ogImage: ../../assets/images/og-legacy/2017/04/10_ans_star_academie-1462895695802.jpg
 description: "Le 8 juin 2013, je recevais un courriel en même temps que les treize autres académiciens de la première cuvée de Star Académie. C'était Marianik Giffard qui..."
 ---
