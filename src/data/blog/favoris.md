@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2020-12-20
 title: "Favoris"
 tags:
-  - uncategorized
+  - random
 description: "FirePress DevOps"
 ---
 
