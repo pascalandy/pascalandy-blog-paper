@@ -3,7 +3,7 @@ author: Pascal Andy
 date_created: 2013-05-04
 title: "Deck Cassette: Un Hommage aux Artistes (mai 2013)"
 tags:
-  - deck-cassette
+  - musique
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "- Parce que j’aime l’intimité que ces chansons peuvent créer avec nous. - Parce que la musique est de moins en moins une industrie et de plus en plus un..."
 ---
