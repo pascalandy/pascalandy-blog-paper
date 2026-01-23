@@ -31,35 +31,6 @@ https://docs.astro.build/en/guides/build-with-ai/
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-So when I build, sometimes I see these warnings. 
-
-What do I need to know ? Should I fix something about it? 
-
---
-
-Result (57 files): 
-- 0 errors
-- 0 warnings
-- 0 hints
-
-14:55:40 [content] Syncing content
-14:55:40 [content] Synced content
-14:55:40 [types] Generated 241ms
-14:55:40 [build] output: "static"
-14:55:40 [build] mode: "static"
-14:55:40 [build] directory: /Users/andy16/Documents/github_local/pascalandy-blog-paper/dist/
-14:55:40 [build] Collecting build info...
-14:55:40 [build] ✓ Completed in 250ms.
-14:55:40 [build] Building static entrypoints...
-14:55:41 [WARN] [vite] "matchHostname", "matchPathname", "matchPort" and "matchProtocol" are imported from external module "@astrojs/internal-helpers/remote" but never used in "node_modules/astro/dist/assets/utils/remotePattern.js" and "node_modules/astro/dist/assets/services/service.js".
-14:55:41 [assets] Copying fonts (12 files)...
-14:55:42 [vite] ✓ built in 1.57s
-14:55:42 [build] ✓ Completed in 1.60s.
-
-
-
-=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
-
 Some posts have a section at the end called : "Share this post on:"
 So first identify this post and then delete this part. 
 
