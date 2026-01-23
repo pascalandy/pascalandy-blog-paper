@@ -3,9 +3,10 @@ layout: ../layouts/AboutLayout.astro
 title: "À propos"
 ---
 
+- Ce que je fais ces temps-ci —> [/maintenant](/maintenant)
+
 ## Qui suis-je
 
-- Ce que je fais maintenant —> [/maintenant](/maintenant)
 - Intro —> [Qui est Pascal Andy](/blog/qui-est-pascal-andy/)
 - Ok je me la joue—> [Biographie](/blog/biographie-de-pascal-andy/)
 
