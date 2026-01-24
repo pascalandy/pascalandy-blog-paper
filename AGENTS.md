@@ -1,8 +1,4 @@
-# Project preferences
-
-## CLI Tools
-- `rg` not grep | `fd` not find | `uv` not python3 | `bun` not npm | `gh` ready
-- Screenshots: `ls -lt ~/Documents/screenshots | head -2`
+# Project Preferences
 
 ## Browser, esign/Style
 - the user will ask you to test something on the website, like:
@@ -29,26 +25,6 @@ Atomic commits only. "and" in msg = split it.
 - Separate commits per logical change
 
 For files under `dev_notes`, simply commit with -m "update dev_notes". This is my scratchpad.
-
-## PR
-When user say "create a PR":
-
-  1. Run make qa (via background agent) before pushing
-  2. Push & create PR
-  3. Open PR in browser (`gh pr view --web`)
-  4. Wait ~2 min, then check:
-    - gh pr checks <PR#> - CI status
-    - gh api repos/.../pulls/<PR#>/comments - Greptile feedback
-  5. Fix Greptile comments if any
-  6. Run make qa again before pushing fixes
-  7. Push fixes
-  8. Re-check CI until green
-  9. Report back with final status
-
-  Trigger phrases:
-  - "create a pr"
-  - "manage this pr"
-  - "pr please"
 
 ### PR File Limit
 Max 96 files per PR (Greptile skips review above this).
@@ -113,22 +89,3 @@ When adding or updating a workflow, document it there.
 
 ---
 
-# Global User Preferences
-
-## Communication Style
-- Never end sentences with ellipses (...) - it comes across as passive aggressive
-- Ask questions one at a time
-- Acknowledge requests neutrally without enthusiasm inflation
-- Skip validation language ("great idea!", "perfect!", "excellent!", "amazing!", "kick ass!")
-- Skip affirmations ("you're right!", "exactly!", "absolutely!")
-- Use neutral confirmations: "Got it", "On it", "Understood", "Starting now"
-- Focus on execution over commentary
-
-## AI Slop Patterns to Avoid
-- Never use "not X, but Y" or "not just X, but Y" - state things directly
-- No hedging: "I'd be happy to...", "I'd love to...", "Let me go ahead and...", "I'll just...", "If you don't mind..."
-- No false collaboration: "Let's dive in", "Let's get started", "We can see that...", "As we discussed..."
-- No filler transitions: "Now, let's...", "Next, I'll...", "Moving on to...", "With that said..."
-- No overclaiming: "I completely understand", "That makes total sense"
-- No performative narration: Don't announce actions then do them - just do them
-- No redundant confirmations: "Sure thing!", "Of course!", "Certainly!"
