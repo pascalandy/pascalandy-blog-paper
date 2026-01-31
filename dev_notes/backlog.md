@@ -11,15 +11,17 @@ description: "BACKLOG, todo"
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-use graphite in my workflow ?
-
-https://graphite.com
+Liens: soulignement trop épais → amincir + utiliser couleur primaire
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-table des matieres
+ Choisir mes 5 meilleurs posts, les relire, les mettre en avant
 
-basé sur http://localhost:4320/blog/crypto-in-montreal/#faq-questions-et-reponses
+
+=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
+
+ Graphite (git stacking) — graphite.com
+https://graphite.com
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
@@ -40,9 +42,8 @@ attention à : La génération pas de casque... celle née avant 1990
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-Add MCP
-
-https://docs.astro.build/en/guides/build-with-ai/
+Add MCP, maybe ? 
+MCP Astro AI — docs.astro.build/en/guides/build-with-ai/
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
@@ -66,12 +67,9 @@ https://docs.astro.build/en/guides/integrations-guide/sitemap/
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-SEO stuff
+SEO — 0o0o quoi exactement? audit? meta tags? schema?
+
+Ajouter sitemap Astro
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
-Sponsorships   Loading
-Sponsorships help your community know how to financially support this repository.
-
-Display a "Sponsor" button
-Add links to GitHub Sponsors or third-party methods your repository accepts for financial contributions to your project.
