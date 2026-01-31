@@ -12,11 +12,11 @@
 - resize_page before screenshots
   - magick mogrify -resize '1920x1920>' -quality 70 {filename}
 
-## Make Targets
-- `make qa` pre-commit | `make ci` fast check | `make build` | `make lint` | `make format`
+## Just Recipes
+- `just qa` pre-commit | `just ci` fast check | `just build` | `just lint` | `just format`
 
 ## To test this app
-- Spawn @charlie → tell it: "run: make qa"
+- Spawn @charlie → tell it: "run: just qa"
 
 ## Git
 Atomic commits only. "and" in msg = split it.

@@ -5,24 +5,28 @@ pre-commit:
   parallel: true
   jobs:
     - name: format
-      run: bun run format
+      run: just format
       fail_text: "Error while formatting"
 
-    - name: format:check
-      run: bun run format:check
-      fail_text: "Formatting issues found. Run 'bun run format' to fix"
+    - name: format-check
+      run: just format-check
+      fail_text: "Formatting issues found. Run 'just format' to fix"
 
     - name: lint
-      run: bun run lint | tspin
+      run: just lint
       fail_text: "Linting errors found. Fix them before committing"
+
+    - name: check-tags
+      run: just check-tags
+      fail_text: "Invalid tags found. Check scripts/check-tags.sh"
 
 pre-push:
   parallel: true
   jobs:
     - name: check
-      run: bun astro check | tspin
+      run: just check
       fail_text: "TypeScript errors found. Fix them before pushing"
 
     - name: build
-      run: bun astro build | tspin
+      run: just build
       fail_text: "Build failed. Check image paths or content errors"

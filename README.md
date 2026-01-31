@@ -4,13 +4,34 @@ This is my personal blog built on the AstroPaper theme - a minimal, responsive, 
 
 Source: https://github.com/pascalandy/pascalandy-blog-paper
 
+## Prerequisites
+
+- [Bun](https://bun.sh/) - Package manager & runtime
+- [Just](https://just.systems/) - Command runner (required for hooks and CI)
+
+```bash
+# macOS
+brew install bun just
+
+# Verify installation
+bun --version && just --version
+```
+
+## Quick Start
+
+```bash
+just install
+just dev
+just qa
+```
+
 ## Tech Stack
 
 - [Astro](https://astro.build/) - Static site generator
 - [TypeScript](https://www.typescriptlang.org/) - Type checking
 - [Tailwind CSS v4](https://tailwindcss.com/) - Styling
 - [Pagefind](https://pagefind.app/) - Static search
-- [Bun](https://bun.sh/) - Package manager & runtime
+- [Just](https://just.systems/) - Command runner
 - [Prettier](https://prettier.io/) + [ESLint](https://eslint.org) - Code quality
 
 ## Documentation
