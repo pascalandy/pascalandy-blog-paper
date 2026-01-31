@@ -71,8 +71,8 @@ ci:
 
 # Remove build artifacts and cache
 clean:
-    rm -rf dist node_modules/.cache .astro
+    rm -rf dist cache .astro
 
 # Deep clean before archiving workspace (removes node_modules)
 archive:
-    rm -rf dist node_modules .astro
+    rm -rf dist node_modules cache .astro

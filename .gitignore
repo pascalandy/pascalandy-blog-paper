@@ -4,14 +4,11 @@ to_import/
 
 # ai dev
 
-# caching
-.astro-cache/
+# astro build cache (images, OG images, fonts)
+cache/
 
 # generated types
 .astro/
-
-# astro build cache
-.astro-cache/
 
 # dependencies
 node_modules/
