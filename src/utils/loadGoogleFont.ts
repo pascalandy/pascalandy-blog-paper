@@ -1,9 +1,18 @@
+import { getFontCacheKey, getCachedFont, cacheFont } from "./fontCache";
+
 async function loadGoogleFont(
   font: string,
-  text: string,
   weight: number
 ): Promise<ArrayBuffer> {
-  const API = `https://fonts.googleapis.com/css2?family=${font}:wght@${weight}&text=${encodeURIComponent(text)}`;
+  // Check cache first
+  const cacheKey = getFontCacheKey(font, weight);
+  const cached = getCachedFont(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  // Download full font (no text subset for better caching)
+  const API = `https://fonts.googleapis.com/css2?family=${font}:wght@${weight}`;
 
   const css = await (
     await fetch(API, {
@@ -26,14 +35,21 @@ async function loadGoogleFont(
     throw new Error("Failed to download dynamic font. Status: " + res.status);
   }
 
-  return res.arrayBuffer();
+  const fontBuffer = await res.arrayBuffer();
+
+  // Cache for future use
+  cacheFont(cacheKey, fontBuffer);
+
+  return fontBuffer;
 }
 
 async function loadGoogleFonts(
-  text: string
+  // Text parameter kept for API compatibility, full fonts are cached
+  text?: string
 ): Promise<
   Array<{ name: string; data: ArrayBuffer; weight: number; style: string }>
 > {
+  void text; // Intentionally unused - full fonts are cached instead of subsets
   const fontsConfig = [
     {
       name: "IBM Plex Mono",
@@ -51,7 +67,7 @@ async function loadGoogleFonts(
 
   const fonts = await Promise.all(
     fontsConfig.map(async ({ name, font, weight, style }) => {
-      const data = await loadGoogleFont(font, text, weight);
+      const data = await loadGoogleFont(font, weight);
       return { name, data, weight, style };
     })
   );
