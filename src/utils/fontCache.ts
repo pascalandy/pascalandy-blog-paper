@@ -10,11 +10,20 @@ function ensureFontCacheDir(): void {
   }
 }
 
-export function getFontCacheKey(font: string, weight: number): string {
+export function getFontCacheKey(
+  font: string,
+  weight: number,
+  style: string,
+  textHash: string
+): string {
   return createHash("sha256")
-    .update(`${font}-${weight}`)
+    .update(`${font}-${weight}-${style}-${textHash}`)
     .digest("hex")
     .slice(0, 12);
+}
+
+export function hashText(text: string): string {
+  return createHash("sha256").update(text).digest("hex").slice(0, 8);
 }
 
 export function getCachedFont(cacheKey: string): ArrayBuffer | null {

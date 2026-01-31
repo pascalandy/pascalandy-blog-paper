@@ -1,18 +1,28 @@
-import { getFontCacheKey, getCachedFont, cacheFont } from "./fontCache";
+import {
+  getFontCacheKey,
+  getCachedFont,
+  cacheFont,
+  hashText,
+} from "./fontCache";
 
 async function loadGoogleFont(
   font: string,
-  weight: number
+  text: string,
+  weight: number,
+  style: string
 ): Promise<ArrayBuffer> {
+  // Generate cache key with text hash for glyph-specific caching
+  const textHash = hashText(text);
+  const cacheKey = getFontCacheKey(font, weight, style, textHash);
+
   // Check cache first
-  const cacheKey = getFontCacheKey(font, weight);
   const cached = getCachedFont(cacheKey);
   if (cached) {
     return cached;
   }
 
-  // Download full font (no text subset for better caching)
-  const API = `https://fonts.googleapis.com/css2?family=${font}:wght@${weight}`;
+  // Download font subset with specific glyphs
+  const API = `https://fonts.googleapis.com/css2?family=${font}:wght@${weight}&text=${encodeURIComponent(text)}`;
 
   const css = await (
     await fetch(API, {
@@ -44,12 +54,10 @@ async function loadGoogleFont(
 }
 
 async function loadGoogleFonts(
-  // Text parameter kept for API compatibility, full fonts are cached
-  text?: string
+  text: string
 ): Promise<
   Array<{ name: string; data: ArrayBuffer; weight: number; style: string }>
 > {
-  void text; // Intentionally unused - full fonts are cached instead of subsets
   const fontsConfig = [
     {
       name: "IBM Plex Mono",
@@ -67,7 +75,7 @@ async function loadGoogleFonts(
 
   const fonts = await Promise.all(
     fontsConfig.map(async ({ name, font, weight, style }) => {
-      const data = await loadGoogleFont(font, weight);
+      const data = await loadGoogleFont(font, text, weight, style);
       return { name, data, weight, style };
     })
   );

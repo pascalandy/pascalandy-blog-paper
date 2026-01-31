@@ -4,6 +4,9 @@ import { join } from "node:path";
 
 const CACHE_DIR = "cache/og-images";
 
+// Bump when OG template changes to invalidate cache
+const OG_TEMPLATE_VERSION = "v1";
+
 function ensureCacheDir(): void {
   if (!existsSync(CACHE_DIR)) {
     mkdirSync(CACHE_DIR, { recursive: true });
@@ -12,10 +15,11 @@ function ensureCacheDir(): void {
 
 export function generateCacheKey(
   title: string,
-  date: Date,
+  author: string,
+  siteTitle: string,
   theme: string
 ): string {
-  const content = `${title}-${date.toISOString()}-${theme}`;
+  const content = `${OG_TEMPLATE_VERSION}-${title}-${author}-${siteTitle}-${theme}`;
   return createHash("sha256").update(content).digest("hex").slice(0, 16);
 }
 
