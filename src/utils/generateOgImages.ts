@@ -2,6 +2,12 @@ import { Resvg } from "@resvg/resvg-js";
 import { type CollectionEntry } from "astro:content";
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
+import { ACTIVE_THEME } from "@/config";
+import {
+  generateCacheKey,
+  getCachedOgImage,
+  cacheOgImage,
+} from "./ogImageCache";
 
 function svgBufferToPngBuffer(svg: string) {
   const resvg = new Resvg(svg);
@@ -10,11 +16,40 @@ function svgBufferToPngBuffer(svg: string) {
 }
 
 export async function generateOgImageForPost(post: CollectionEntry<"blog">) {
+  const cacheKey = generateCacheKey(
+    post.data.title,
+    post.data.date_created,
+    ACTIVE_THEME
+  );
+
+  // Check cache first
+  const cached = getCachedOgImage(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  // Generate and cache
   const svg = await postOgImage(post);
-  return svgBufferToPngBuffer(svg);
+  const png = svgBufferToPngBuffer(svg);
+  cacheOgImage(cacheKey, png);
+  return png;
 }
 
 export async function generateOgImageForSite() {
+  // Site OG rarely changes, use static cache key
+  const cacheKey = generateCacheKey(
+    "site-og",
+    new Date("2024-01-01"),
+    ACTIVE_THEME
+  );
+
+  const cached = getCachedOgImage(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
   const svg = await siteOgImage();
-  return svgBufferToPngBuffer(svg);
+  const png = svgBufferToPngBuffer(svg);
+  cacheOgImage(cacheKey, png);
+  return png;
 }
