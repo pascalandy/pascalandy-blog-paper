@@ -1,8 +1,27 @@
+import {
+  getFontCacheKey,
+  getCachedFont,
+  cacheFont,
+  hashText,
+} from "./fontCache";
+
 async function loadGoogleFont(
   font: string,
   text: string,
-  weight: number
+  weight: number,
+  style: string
 ): Promise<ArrayBuffer> {
+  // Generate cache key with text hash for glyph-specific caching
+  const textHash = hashText(text);
+  const cacheKey = getFontCacheKey(font, weight, style, textHash);
+
+  // Check cache first
+  const cached = getCachedFont(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  // Download font subset with specific glyphs
   const API = `https://fonts.googleapis.com/css2?family=${font}:wght@${weight}&text=${encodeURIComponent(text)}`;
 
   const css = await (
@@ -26,7 +45,12 @@ async function loadGoogleFont(
     throw new Error("Failed to download dynamic font. Status: " + res.status);
   }
 
-  return res.arrayBuffer();
+  const fontBuffer = await res.arrayBuffer();
+
+  // Cache for future use
+  cacheFont(cacheKey, fontBuffer);
+
+  return fontBuffer;
 }
 
 async function loadGoogleFonts(
@@ -51,7 +75,7 @@ async function loadGoogleFonts(
 
   const fonts = await Promise.all(
     fontsConfig.map(async ({ name, font, weight, style }) => {
-      const data = await loadGoogleFont(font, text, weight);
+      const data = await loadGoogleFont(font, text, weight, style);
       return { name, data, weight, style };
     })
   );
