@@ -20,9 +20,9 @@ bun --version && just --version
 ## Quick Start
 
 ```bash
-just install   # Install dependencies
-just dev       # Lint, format, then start dev server on :4320
-just qa        # Full QA workflow (lint, format, check, build)
+just install
+just dev
+just qa
 ```
 
 ## Tech Stack
