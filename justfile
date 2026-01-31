@@ -37,7 +37,7 @@ build:
 
 # Run Astro check
 check:
-    bun run sync && astro check | tspin
+    bun run sync && bun astro check | tspin
 
 # Preview production build
 preview:
