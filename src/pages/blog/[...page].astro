@@ -10,14 +10,14 @@ import Card from "@/components/Card.astro";
 import Pagination from "@/components/Pagination.astro";
 import getSortedPosts from "@/utils/getSortedPosts";
 import { SITE } from "@/config";
+import { getExcludedTags } from "@/tags";
 
 export const getStaticPaths = (async ({ paginate }) => {
+  const excludedTags = getExcludedTags();
   const posts = await getCollection(
     "blog",
     ({ data }) =>
-      !data.draft &&
-      !data.tags.includes("dev-notes") &&
-      !data.tags.includes("crypto-in-montreal")
+      !data.draft && !data.tags.some(tag => excludedTags.includes(tag))
   );
   return paginate(getSortedPosts(posts), { pageSize: SITE.postPerPage });
 }) satisfies GetStaticPaths;

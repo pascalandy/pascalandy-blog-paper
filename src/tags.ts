@@ -11,6 +11,7 @@ type TagConfig = {
   name: string;
   description: string;
   hiddenFromTagsPage?: boolean;
+  excludeFromBlogRoll?: boolean;
 };
 
 export const TAGS: TagConfig[] = [
@@ -19,17 +20,20 @@ export const TAGS: TagConfig[] = [
     name: "Crypto In Montreal",
     description: "41 meetups organisés depuis 2017",
     hiddenFromTagsPage: true,
+    excludeFromBlogRoll: true,
   },
   {
     slug: "void",
     name: "void",
     description: "",
     hiddenFromTagsPage: true,
+    excludeFromBlogRoll: true,
   },
   {
     slug: "dev-notes",
     name: "dev-notes",
     description: "Notes about how to run this website",
+    excludeFromBlogRoll: true,
   },
   {
     slug: "random",
@@ -41,6 +45,7 @@ export const TAGS: TagConfig[] = [
     name: "Biographie",
     description: "À propos de Pascal Andy",
     hiddenFromTagsPage: true,
+    excludeFromBlogRoll: true,
   },
 ];
 
@@ -58,4 +63,11 @@ export function getTagConfig(slug: string): TagConfig {
     name: slug,
     description: "",
   };
+}
+
+/**
+ * Get list of tags excluded from blog roll and RSS
+ */
+export function getExcludedTags(): string[] {
+  return TAGS.filter(t => t.excludeFromBlogRoll).map(t => t.slug);
 }
