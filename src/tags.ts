@@ -41,6 +41,11 @@ export const TAGS: TagConfig[] = [
     description: "Random thoughts and musings",
   },
   {
+    slug: "folie",
+    name: "folie",
+    description: "Folie",
+  },
+  {
     slug: "biographie",
     name: "Biographie",
     description: "À propos de Pascal Andy",
