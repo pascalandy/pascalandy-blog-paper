@@ -4,6 +4,7 @@ date_created: 2020-12-20
 title: "Favoris"
 tags:
   - random
+draft: true
 description: "FirePress DevOps"
 ---
 

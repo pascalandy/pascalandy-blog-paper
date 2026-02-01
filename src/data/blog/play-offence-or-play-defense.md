@@ -4,6 +4,7 @@ date_created: 2016-02-26
 title: "Play offence or play defense"
 tags:
   - personnel
+draft: true
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg
 description: "It's 6 PM."
 ---
