@@ -28,7 +28,7 @@
     }
 
     a {
-      @apply wrap-break-word text-foreground decoration-dashed underline-offset-4 hover:text-accent focus-visible:no-underline;
+      @apply wrap-break-word text-foreground decoration-muted-foreground/30 decoration-solid decoration-1 underline-offset-4 hover:text-accent hover:decoration-accent focus-visible:no-underline;
     }
 
     ul {
