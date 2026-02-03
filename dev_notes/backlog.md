@@ -15,12 +15,43 @@ Liens: soulignement trop épais → amincir + utiliser couleur primaire
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
- Choisir mes 5 meilleurs posts, les relire, les mettre en avant
-
+Choisir mes 5 meilleurs posts, les relire, les mettre en avant
+- http://localhost:4320/blog/lekt-le-lecteur/
+- http://localhost:4320/blog/pourquoi-se-donner-la-peine-decrire/?
+- http://localhost:4320/blog/pourquoi-jaime-vous-tutoyer/
+- http://localhost:4320/blog/le-multitache-une-legende-urbaine-qui-a-trop-dure/
+- http://localhost:4320/blog/comment-reprendre-le-dessus-quand-le-rythme-accelere/
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
- Graphite (git stacking) — graphite.com
+Sitemap Astro + mini audit SEO
+Tu as deux items "sitemap" + "SEO ?". C'est un levier net pour l'indexation. On peut:
+
+Ajouter l'intégration sitemap Astro
+Faire un mini‑audit (meta tags, canonical, og/twitter, robots, schema)
+
+Supprimer "Share this post on"
+Nettoyage simple et répétitif. Je peux identifier tous les posts concernés et retirer le bloc.
+
+Nettoyage des assets non utilisés
+Ça évite d'embarquer du poids mort. On peut lister les assets non référencés et exclure le pattern pascalandy-com_header*.
+
+Header image par défaut
+Changement plus "branding". Tu as un besoin clair: image seule, cohérente avec la marque. On peut définir une direction visuelle et produire/choisir l'image.
+
+Mettre en avant 5 meilleurs posts
+Impact éditorial fort mais demande ton choix. Je peux préparer une shortlist basée sur tags/engagement si tu veux.
+
+Items à clarifier
+
+"star ac est un projet" → c'est un contenu à écrire, une page à créer, ou un tag à structurer ?
+"Graphite (git stacking)" → tu veux évaluer l'outil ou l'adopter dans le workflow ?
+"Rester en contact par courriel" → tu veux un nouveau composant form + copy ?
+Dis-moi quel lot tu veux attaquer en premier, et si tu veux que j'enchaîne directement avec une implémentation.
+
+=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
+
+Graphite (git stacking) — graphite.com
 https://graphite.com
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
