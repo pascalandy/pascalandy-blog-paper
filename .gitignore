@@ -9,6 +9,7 @@ cache/
 
 # generated types
 .astro/
+.astro-cache
 
 # dependencies
 node_modules/
