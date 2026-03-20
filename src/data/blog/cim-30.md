@@ -32,7 +32,7 @@ La présentation sera donnée par **Maciej Cepnik** , cofondateur de Veriphi, do
 
 ### 2) Proof-of-stake
 
-Zakaria parlera du proof-of-stake dans le contexte de la blockchain Tezos (par exemple, il expliquera le fonctionnement du baking). Il comparera l'implémentation du proof-of-stake de Tezos (liquid proof-of-stake) à une autre variante populaire (delegated proof-of-stake). Il abordera également d'autres aspects de Tezos (histoire, philosophie, gouvernance et amendements potentiels).
+L'invité parlera du proof-of-stake dans le contexte de la blockchain Tezos (par exemple, il expliquera le fonctionnement du baking). Il comparera l'implémentation du proof-of-stake de Tezos (liquid proof-of-stake) à une autre variante populaire (delegated proof-of-stake). Il abordera également d'autres aspects de Tezos (histoire, philosophie, gouvernance et amendements potentiels).
 
 **Agenda**
 
@@ -44,7 +44,7 @@ Zakaria parlera du proof-of-stake dans le contexte de la blockchain Tezos (par e
 - La différence entre le liquid proof of stake de Tezos et le delegated proof of stake de EOS
 - Le mécanisme de gouvernance initial de Tezos
 
-**Zakaria Boukhcheb** est un des organisateurs du Meetup Tezos Montréal depuis septembre 2018 et un adepte des cryptomonnaies depuis plusieurs années. Il s'intéresse à l'économie, à la finance, à la technologie, aux sciences et aux arts.
+L'invité est un des organisateurs du Meetup Tezos Montréal depuis septembre 2018 et un adepte des cryptomonnaies depuis plusieurs années. Il s'intéresse à l'économie, à la finance, à la technologie, aux sciences et aux arts.
 
 Dans tous les cas, je vais m'assurer qu'on passe tous une belle soirée! Notre Meetup favorise les triades, les échanges authentiques et l’apprentissage. C'est pas ta classe boring. C'est du réseautage comme le réseautage devrait être fait. See ya 👩‍⚕️ 👨‍⚕️ 👩‍🌾 👨‍🌾 👩‍🍳 👨‍🍳 👩‍🎓 👨‍🎓 👩‍🎤 👨.
 
