@@ -3,6 +3,7 @@ dist/
 to_import/
 
 # ai dev
+.napkin/
 
 # astro build cache (images, OG images, fonts)
 cache/
