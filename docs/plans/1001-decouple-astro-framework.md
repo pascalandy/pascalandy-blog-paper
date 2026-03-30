@@ -74,6 +74,9 @@ Anyone should be able to clone blog-core, point it at any cms-md repo, and have 
 - **Variant Phasing**: Design for multiple variants, build only classic in Phase 1
   - *Rationale*: Keep the architecture variant-aware (don't hardcode assumptions that there's only one blog-core), but only build the classic variant initially. Fanta/yellow are separate projects after the core decoupling is proven. Copying the repo to create a new variant is low friction.
 
+- **Pages Routing**: Dynamic route in blog-core via pages content collection
+  - *Rationale*: blog-core defines a `pages` content collection and a catch-all route (`src/pages/[...slug].astro`) that renders any markdown page from cms-md. Content creators write plain markdown in `cms-md/pages/` (e.g., `about.md`, `now.md`) with no Astro-specific frontmatter. blog-core owns layout assignment—all pages use a `PageLayout` by default, with an optional `layout` frontmatter field that maps to blog-core layout names (e.g., `layout: "about"` → blog-core's `AboutLayout`). This keeps cms-md free of framework code while giving blog-core full control over presentation.
+
 ## Architecture
 
 ### Repository Structure
@@ -180,6 +183,7 @@ Reusable workflow runs in cms-md context:
 **Critical Implementation Details:**
 - **Content Overlay**: Content is copied into framework directories, not symlinked (works across all platforms)
 - **Blog Content Path**: Posts copy to `src/data/blog/` (matching current Astro content loader config)
+- **Pages Content Path**: Pages copy to `src/data/pages/`. blog-core defines a `pages` content collection + dynamic route `src/pages/[...slug].astro`. Layout assignment via optional `layout` frontmatter field (defaults to `PageLayout`).
 - **Image Handling (Phase 1)**: Images copied to `public/` and served as-is (no optimization). See Evolution section for remark plugin upgrade path.
 - **Pagefind**: Search indexing runs after Astro build (`pagefind --site dist`), same as current build chain
 - **Dynamic OG Images**: blog-core generates OG images per post via satori + resvg-js at build time (existing feature, stays in blog-core)
@@ -526,13 +530,13 @@ Fix these issues before committing.
 - **Variant phasing**: Design for variants, build only classic in Phase 1.
 - **Local preview**: Deferred to Evolution (not needed while sole user).
 - **Content validation**: Local via lefthook + just. CI as safety net.
+- **Pages routing**: Dynamic route in blog-core via pages content collection + `[...slug].astro` catch-all.
 
 ### Deferred to Planning
 - Should we support multiple deployment targets (Sevalla, Vercel, Netlify) in one workflow or separate workflows?
 - How to handle build caching across thousands of independent repos?
 - How to handle missing/invalid themes gracefully?
 - How to validate cms-md setup on first run (secrets check, structure validation)?
-- Pages routing: how does blog-core turn `cms-md/pages/*.md` into routes? (Content collection vs dynamic pages)
 - Config generation script: exact implementation (shell script, Node script, or Astro integration?)
 
 ## Documentation Notes (For cms-md README)
