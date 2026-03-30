@@ -1,10 +1,3 @@
-## Project overview using progressive disclosure
-
-1. Read and understand: `.napkin/NAPKIN.md`
-2. run `napkin overview --json`
-
----
-
 # Project Preferences
 
 ## Project overview using progressive disclosure
@@ -108,4 +101,3 @@ Includes: development commands, git hooks, worktrees, themes, etc.
 When adding or updating a workflow, document it there.
 
 ---
-
