@@ -38,7 +38,8 @@ Anyone should be able to clone blog-core, point it at any cms-md repo, and have 
 
 ## Scope Boundaries
 
-- **In Scope**: Repository separation, reusable GitHub Actions workflow, content contract, template repository setup, multi-tenant build orchestration, multiple blog-core variants (classic, fanta, yellow, etc.)
+- **In Scope (Phase 0-4)**: Repository separation, reusable GitHub Actions workflow, content contract, personal blog migration, template repository setup, content validation, documentation
+- **In Scope (Evolution)**: Local preview, image optimization via remark plugin, additional blog-core variants, multi-tenant workflow stability
 - **Out of Scope**: Content editing UI, headless CMS integration (Strapi, etc.), custom domain management, user authentication, variant marketplace/discovery
 
 ## Key Decisions
@@ -61,13 +62,25 @@ Anyone should be able to clone blog-core, point it at any cms-md repo, and have 
 - **No Force-Rebuild Mechanism**: Not needed
   - *Rationale*: cms-md repos rebuild on their own schedule (content pushes). If they need latest blog-core immediately, they can trigger a manual rebuild. No centralized orchestration required.
 
+- **Image Strategy**: Serve from `public/` now, add Astro optimization later via remark plugin
+  - *Rationale*: Phase 1 copies images to `public/blog-img/` and serves them as-is (no optimization). This is simple and works. Later, blog-core adds a remark plugin that rewrites `![alt](/blog-img/x.jpg)` into Astro's `<Image>` component and moves images from `public/` to `src/assets/` during the overlay step. This restores full Astro optimization (responsive breakpoints, WebP, lazy loading) without any change to cms-md. The key guarantee: cms-md image paths never change. Optimization is a blog-core internal concern.
+
+- **File Naming**: Slug-based filenames, no date prefix required
+  - *Rationale*: The date is already in frontmatter (`date_created`). Forcing it into the filename is redundant and would break all ~185 existing URLs during migration. Filenames like `vinyl.md`, `lhorizon-cest-toi.md` produce clean URLs (`/blog/vinyl/`, `/blog/lhorizon-cest-toi/`). Subdirectories are supported and preserved in URLs (e.g., `dev_workflows/image_path.md` → `/blog/dev_workflows/image_path/`).
+
+- **Config Ownership**: All user-specific config lives in cms-md's `site.yaml`
+  - *Rationale*: Social links, share links, and tag configuration are personal to each site. Putting them in `site.yaml` means content creators control everything about their site from one file. blog-core reads these during config generation and provides sensible defaults for anything missing.
+
+- **Variant Phasing**: Design for multiple variants, build only classic in Phase 1
+  - *Rationale*: Keep the architecture variant-aware (don't hardcode assumptions that there's only one blog-core), but only build the classic variant initially. Fanta/yellow are separate projects after the core decoupling is proven. Copying the repo to create a new variant is low friction.
+
 ## Architecture
 
 ### Repository Structure
 
-**blog-core variants** (Multiple Visual Frameworks)
+**blog-core** (Phase 1 -- Classic variant only)
 
-Each variant is a separate repo with its own design philosophy:
+Only the classic variant is built in Phase 1. The architecture supports multiple variants (fanta, yellow, etc.) but they are deferred to the Evolution roadmap.
 
 ```
 blog-core/                    # Classic - Traditional, battle-tested
@@ -79,26 +92,6 @@ blog-core/                    # Classic - Traditional, battle-tested
 │   ├── pages/                # Route definitions
 │   └── themes/               # Classic themes (caffeine, elegant-luxury, claude)
 └── README.md                 # "Use me for traditional blogs"
-
-blog-core-fanta/              # Fanta - Colorful, playful, bold
-├── .github/workflows/
-│   └── build-blog.yml        # Reusable workflow (fanta variant)
-├── src/
-│   ├── components/           # Fanta components (cards, gradients, animations)
-│   ├── layouts/              # Fanta layouts
-│   ├── pages/                # Route definitions
-│   └── themes/               # Fanta themes (vibrant, neon, pastel)
-└── README.md                 # "Use me for colorful, modern blogs"
-
-blog-core-yellow/             # Yellow - Minimalist, typography-focused
-├── .github/workflows/
-│   └── build-blog.yml        # Reusable workflow (yellow variant)
-├── src/
-│   ├── components/           # Yellow components (clean, minimal)
-│   ├── layouts/              # Yellow layouts
-│   ├── pages/                # Route definitions
-│   └── themes/               # Yellow themes (mono, serif, Swiss)
-└── README.md                 # "Use me for minimalist blogs"
 ```
 
 **cms-md** (Content - Template Repository)
@@ -111,22 +104,24 @@ cms-md/
 │
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml                 # Calls chosen blog-core variant
+│       └── deploy.yml                 # Calls blog-core reusable workflow
 │
-├── blog/                              # Blog posts (flat, date-prefixed)
-│   ├── 2014-04-17-hello-world.md
-│   ├── 2014-04-21-my-second-post.md
-│   ├── 2024-05-22-new-year-thoughts.md
-│   ├── 2025-01-15-ai-reflections.md
+├── blog/                              # Blog posts (slug-based filenames)
+│   ├── hello-world.md
+│   ├── my-second-post.md
+│   ├── vinyl.md
+│   ├── lhorizon-cest-toi.md
+│   ├── dev_workflows/                 # Subdirectories preserved in URL
+│   │   ├── image_path.md
+│   │   └── worktree-workflow.md
 │   └── drafts/                        # Draft posts (_prefix = ignored)
-│       └── _2025-03-30-unfinished-post.md
+│       └── _unfinished-post.md
 │
-├── blog-img/                          # Blog post images (flat, date-prefixed)
-│   ├── 2014-04-17-hello-world-hero.jpg
-│   ├── 2014-04-17-hello-world-diagram.png
-│   ├── 2014-04-21-my-second-post-screenshot.png
-│   ├── 2024-05-22-new-year-thoughts-fireworks.jpg
-│   └── 2025-01-15-ai-reflections-cover.jpg
+├── blog-img/                          # Blog post images
+│   ├── hello-world-hero.jpg
+│   ├── hello-world-diagram.png
+│   ├── vinyl-cover.jpg
+│   └── lhorizon-cest-toi-banner.jpg
 │
 ├── pages/                             # Static pages (flat)
 │   ├── about.md
@@ -143,7 +138,7 @@ cms-md/
 │
 └── system/                            # Configuration & assets (rarely touched)
     ├── config/
-    │   └── site.yaml                  # Site metadata, theme, author
+    │   └── site.yaml                  # Site metadata, theme, socials, tags
     └── assets/
         ├── og/                        # Open Graph images
         │   └── default.jpg
@@ -169,20 +164,26 @@ Reusable workflow runs in cms-md context:
    1. Checkout blog-core (framework code) → ./framework/
    2. Checkout cms-md (content) → ./content/
    3. Merge content into framework:
-      - Copy ./content/blog/ → ./framework/src/content/blog/
+      - Copy ./content/blog/ → ./framework/src/data/blog/
       - Copy ./content/pages/ → ./framework/src/content/pages/
       - Copy ./content/blog-img/ → ./framework/public/blog-img/
       - Copy ./content/pages-img/ → ./framework/public/pages-img/
       - Copy ./content/system/assets/ → ./framework/public/assets/
       - Generate ./framework/src/config.ts from ./content/system/config/site.yaml
+      - Generate ./framework/src/tags.ts from tags section of site.yaml
+      - Generate ./framework/src/constants.ts from socials/share_links sections
    4. Build Astro site in ./framework/
-   5. Deploy dist/ to user's target (Sevalla, etc.)
+   5. Run Pagefind indexing on ./framework/dist/
+   6. Deploy dist/ to user's target (Sevalla, etc.)
 ```
 
 **Critical Implementation Details:**
 - **Content Overlay**: Content is copied into framework directories, not symlinked (works across all platforms)
-- **Image Handling**: Images copied to `public/` so Astro serves them at root path
-- **Config Generation**: YAML → TypeScript config conversion happens during build
+- **Blog Content Path**: Posts copy to `src/data/blog/` (matching current Astro content loader config)
+- **Image Handling (Phase 1)**: Images copied to `public/` and served as-is (no optimization). See Evolution section for remark plugin upgrade path.
+- **Pagefind**: Search indexing runs after Astro build (`pagefind --site dist`), same as current build chain
+- **Dynamic OG Images**: blog-core generates OG images per post via satori + resvg-js at build time (existing feature, stays in blog-core)
+- **Config Generation**: YAML → TypeScript config conversion happens during build (generates config.ts, tags.ts, constants.ts)
 - **Working Directory**: All operations happen in cms-md's GitHub Actions runner
 - **Isolation**: Each build is completely isolated—no shared state between cms-md repos
 
@@ -238,13 +239,13 @@ jobs:
 
 **cms-md must provide:**
 
-1. **Directory Structure** (Base contract - all variants)
+1. **Directory Structure** (Base contract)
    ```
    justfile                 # Required: Just commands (validate, format)
    lefthook.yml             # Required: Git hooks for pre-commit validation
-   blog/                    # Required: Blog posts (flat, date-prefixed)
+   blog/                    # Required: Blog posts (slug-based, subdirs allowed)
    blog/drafts/             # Optional: Draft posts (_prefix = ignored)
-   blog-img/                # Required: Blog images (flat, date-prefixed)
+   blog-img/                # Required: Blog images
    pages/                   # Optional: Static pages (flat)
    pages-img/               # Optional: Page images (flat)
    scripts/                 # Required: Validation scripts
@@ -255,71 +256,49 @@ jobs:
    system/assets/files/     # Optional: Downloadable files
    ```
 
-2. **File Naming Convention** (All variants)
-   - Blog posts: `YYYY-MM-DD-slug.md` (e.g., `2014-04-17-hello-world.md`)
-   - Blog images: `YYYY-MM-DD-slug-descriptor.ext` (e.g., `2014-04-17-hello-world-hero.jpg`)
-   - Drafts: `_YYYY-MM-DD-slug.md` in `blog/drafts/` (underscore prefix = ignored)
+2. **File Naming Convention**
+   - Blog posts: `slug.md` (e.g., `vinyl.md`, `lhorizon-cest-toi.md`). No date prefix -- date comes from frontmatter `date_created`.
+   - Blog subdirectories: supported, preserved in URL (e.g., `dev_workflows/image_path.md` → `/blog/dev_workflows/image_path/`)
+   - Blog images: `slug-descriptor.ext` (e.g., `vinyl-cover.jpg`, `hello-world-hero.jpg`)
+   - Drafts: `_slug.md` in `blog/drafts/` (underscore prefix = ignored)
    - Pages: `slug.md` (e.g., `about.md`)
    - Page images: `slug-descriptor.ext` (e.g., `about-portrait.jpg`)
 
-3. **Frontmatter Schema** (Base contract - all variants)
+3. **Frontmatter Schema** (Base contract)
    ```yaml
    ---
+   # Required
    author: string
    date_created: date
    title: string
-   tags: string[]
+   tags: string[]            # min 1 tag
    description: string
+
+   # Optional
    featured?: boolean
    draft?: boolean
-   ogImage?: string        # Relative path: blog-img/2014-04-17-hello-world-hero.jpg
+   ogImage?: string          # Path: /blog-img/hello-world-hero.jpg
+   canonicalURL?: string     # Canonical URL for syndicated content
+   hideEditPost?: boolean    # Hide "edit this post" link
+   mermaid?: boolean         # Enable Mermaid diagram rendering (default: false)
    ---
    ```
 
-4. **Variant-Specific Extensions**
+4. **Variant-Specific Frontmatter Extensions** (Deferred -- see Evolution section)
    
-   Each blog-core variant may require additional fields:
-   
-   **blog-core-fanta** (colorful variant):
-   ```yaml
-   ---
-   # Base fields (required by all variants)
-   author: string
-   date_created: date
-   title: string
-   tags: string[]
-   description: string
-   
-   # Fanta-specific (optional but recommended)
-   accent_color: "#FF6B6B"     # Custom accent for this post
-   hero_layout: "full-bleed"   # "full-bleed", "split", "minimal"
-   ---
-   ```
-   
-   **blog-core-yellow** (minimalist variant):
-   ```yaml
-   ---
-   # Base fields (required by all variants)
-   author: string
-   date_created: date
-   title: string
-   tags: string[]
-   description: string
-   
-   # Yellow-specific (optional)
-   reading_time: true          # Show reading time
-   serif_title: true           # Use serif font for title
-   ---
-   ```
+   Each blog-core variant may define additional optional frontmatter fields. These are not part of the base contract and are ignored by variants that don't use them. Deferred to when additional variants are built.
 
 5. **Site Configuration** (system/config/site.yaml)
    ```yaml
    site:
      title: "Blog Title"
      author: "Author Name"
+     profile: "https://example.com/"
      description: "Site description"
-     website: "https://example.com"
+     website: "https://example.com/blog/"
+     ogImage: "pascalandy_banner.jpg"    # Default OG image in system/assets/static/
      lang: "en"
+     dir: "ltr"
      timezone: "America/Montreal"
    
    theme:
@@ -328,25 +307,61 @@ jobs:
    posts:
      perPage: 20
      perIndex: 4
-     dateFormat: "YYYY-MM-DD"
+     scheduledPostMargin: 15    # Minutes before date_created to make post visible
+     dynamicOgImage: true       # Generate OG images for posts without ogImage
    
    features:
      rss: true
      sitemap: true
      darkMode: true
      search: true
+     showBackButton: true
+     editPost:
+       enabled: false
+       # text: "Edit page"
+       # url: "https://github.com/..."
+   
+   socials:                     # Social links shown on site
+     - name: "X"
+       href: "https://x.com/username"
+       label: "X"
+       active: true
+     - name: "LinkedIn"
+       href: "https://linkedin.com/in/username"
+       label: "LinkedIn"
+       active: true
+     - name: "GitHub"
+       href: "https://github.com/username"
+       label: "GitHub"
+       active: true
+   
+   share_links:                 # Share buttons on posts
+     - name: "WhatsApp"
+       active: true
+     - name: "Facebook"
+       active: true
+     - name: "X"
+       active: true
+     - name: "Telegram"
+       active: true
+     - name: "Mail"
+       active: true
+   
+   tags:                        # Tag behavior configuration
+     - slug: "dev-notes"
+       name: "Dev Notes"
+       description: "Development workflow documentation"
+       excludeFromBlogRoll: true
+     - slug: "random"
+       name: "Random"
+       description: "Random thoughts"
+     # Tags not listed here get default behavior (visible everywhere)
+     # Available options per tag:
+     #   hiddenFromTagsPage: true    # Hide from /tags/ listing
+     #   excludeFromBlogRoll: true   # Exclude from blog roll and RSS
    
    deployment:
      target: "sevalla"     # or "vercel", "netlify", etc.
-   
-   # Variant-specific settings:
-   # fanta:
-   #   animations: true
-   #   card_style: "rounded"
-   # 
-   # yellow:
-   #   typography: "serif"
-   #   max_width: "narrow"
    ```
 
 6. **GitHub Secrets** (configured by user)
@@ -365,7 +380,7 @@ jobs:
 
 ## Use Cases
 
-### Switch Visual Framework (Look & Feel)
+### Switch Visual Framework (Look & Feel) -- Future, see Evolution
 **As a user, I want to completely change my website's design without rewriting content**
 
 **Current State:**
@@ -416,9 +431,9 @@ uses: pascalandy/blog-core/.github/workflows/build-blog.yml@v2.1.0
 
 **Your Daily Workflow:**
 1. Open `blog/` folder
-2. Create `2025-04-01-my-new-post.md`
+2. Create `my-new-post.md` (slug-based filename, date in frontmatter)
 3. Add images to `blog-img/`
-4. Reference images naturally: `![alt](../blog-img/2025-04-01-my-new-post-hero.jpg)`
+4. Reference images in markdown: `![alt](/blog-img/my-new-post-hero.jpg)`
 5. `git add . && git commit -m "new post" && git push`
 6. Site deploys automatically in 2 minutes
 
@@ -502,20 +517,23 @@ Fix these issues before committing.
 
 ## Outstanding Questions
 
-### Resolve Before Planning
-*All questions resolved. Ready for planning.*
+### Resolved (Review Decisions)
+- **Content overlay**: Copy, not symlink (cross-platform). Blog posts → `src/data/blog/`, images → `public/blog-img/`.
+- **Config consumption**: Generate `config.ts`, `tags.ts`, `constants.ts` from `site.yaml` during build.
+- **Image optimization**: Serve from `public/` in Phase 1. Remark plugin upgrade in Evolution.
+- **File naming**: Slug-based, no date prefix. Date from frontmatter only.
+- **Config ownership**: All user config (socials, share_links, tags) in cms-md `site.yaml`.
+- **Variant phasing**: Design for variants, build only classic in Phase 1.
+- **Local preview**: Deferred to Evolution (not needed while sole user).
+- **Content validation**: Local via lefthook + just. CI as safety net.
 
 ### Deferred to Planning
-- How does the reusable workflow merge blog-core framework with cms-md content? (Copy vs symlink vs overlay)
-- How does blog-core consume system/config/site.yaml? (Generate config.ts vs runtime read)
 - Should we support multiple deployment targets (Sevalla, Vercel, Netlify) in one workflow or separate workflows?
 - How to handle build caching across thousands of independent repos?
-- Should we validate the content contract in CI, or let Astro fail at build time?
-- Exact mechanism for copying images to public/ directory during build
 - How to handle missing/invalid themes gracefully?
 - How to validate cms-md setup on first run (secrets check, structure validation)?
-- How much can variants diverge from base content contract? (frontmatter extensions, config options)
-- Should variants share common components/utilities, or be completely independent?
+- Pages routing: how does blog-core turn `cms-md/pages/*.md` into routes? (Content collection vs dynamic pages)
+- Config generation script: exact implementation (shell script, Node script, or Astro integration?)
 
 ## Documentation Notes (For cms-md README)
 
@@ -601,39 +619,114 @@ If your build fails with "Missing secret", double-check Step 2 above.
 
 ## Migration Path
 
-1. **Phase 1**: Create `blog-core` repository (classic variant) with reusable workflow
-   - Extract framework code from current repo
-   - Create `.github/workflows/build-blog.yml` (reusable)
-   - Make blog-core public
+Start small, prove the pattern, then scale. Each phase must work end-to-end before starting the next.
 
-2. **Phase 2**: Create `cms-md` template repository
-   - Extract content from current repo
-   - Create template structure (blog/, blog-img/, pages/, pages-img/, system/)
-   - Add workflow that calls blog-core reusable workflow
-   - Mark as GitHub template repository
+1. **Phase 0 -- Hello World proof-of-concept**
+   - Create `blog-core` repo with minimal Astro framework (one layout, one theme, one page)
+   - Create `.github/workflows/build-blog.yml` (reusable workflow)
+   - Create `cms-md` repo with a single "Hello World" post and minimal `site.yaml`
+   - Prove end-to-end: push to cms-md → reusable workflow triggers → site builds → deploys
+   - Goal: validate the reusable workflow + content overlay pattern works
 
-3. **Phase 3**: Test end-to-end with fork
-   - Fork cms-md template to test account
-   - Push content, verify build triggers
-   - Verify deployment works
+2. **Phase 1 -- Migrate personal blog to blog-core**
+   - Extract full framework code from current repo into `blog-core`
+   - All components, layouts, themes (caffeine, elegant-luxury, claude), pages routing
+   - Pagefind integration, dynamic OG image generation, RSS, sitemap
+   - Config generation script (YAML → config.ts, tags.ts, constants.ts)
+   - Test with Hello World cms-md to verify nothing broke
 
-4. **Phase 4**: Migrate current site
-   - Convert current repo content to cms-md format
-   - Either: migrate current repo to use reusable workflow, OR create new cms-md repo
+3. **Phase 2 -- Migrate personal content to cms-md**
+   - Extract ~185 posts from `src/data/blog/` to `cms-md/blog/` (preserve filenames)
+   - Extract images from `src/assets/images/` to `cms-md/blog-img/`
+   - Rewrite image paths in posts (`../../assets/images/...` → `/blog-img/...`)
+   - Create `site.yaml` from current `config.ts`, `tags.ts`, `constants.ts`
+   - Extract pages (`a-propos.md`, `maintenant.md`, etc.) to `cms-md/pages/`
+   - Deploy personal blog from cms-md → verify URL parity with current site
 
-5. **Phase 5**: Create additional blog-core variants (optional)
-   - `blog-core-fanta` - Colorful, playful design
-   - `blog-core-yellow` - Minimalist, typography-focused
-   - Each variant has its own repo, themes, and reusable workflow
-
-6. **Phase 6**: Documentation
+4. **Phase 3 -- Harden and template-ize**
+   - Add content validation (lefthook + just + validate-content.sh) to cms-md
+   - Add CI validation as safety net in blog-core's reusable workflow
+   - Mark cms-md as GitHub template repository
    - Write "Getting Started" guide for new users
-   - Document content contract (base + variant-specific extensions)
-   - Document deployment configuration
-   - Create variant comparison guide (classic vs fanta vs yellow)
+   - Document content contract
+
+5. **Phase 4 -- Documentation**
+   - Document deployment configuration (Sevalla, Vercel, Netlify)
+   - Build cost awareness guide
+   - Private repository setup guide
+   - GitHub Actions setup guide
+
+## Evolution (Post-Phase 4)
+
+Items deferred from initial scope. Each is independent and can be prioritized based on need.
+
+### Local Preview for Content Creators
+**Problem**: Content creators with only cms-md have no way to preview their site locally. They must push and wait ~2 minutes for the CI build.
+
+**Solution (when needed)**: cms-md's `justfile` includes a `just dev` recipe that:
+1. Clones blog-core into a temporary directory (or uses a cached copy)
+2. Runs the same content overlay step the CI does (copy blog/ → src/data/blog/, etc.)
+3. Runs `astro dev` inside the framework directory
+4. Content creator sees their site at `localhost:4320`
+
+**Prerequisite**: Requires Node/bun installed locally. Acceptable trade-off since this is opt-in for users who want local preview.
+
+**Priority**: Low while you're the only user. High before onboarding others.
+
+### Image Optimization via Remark Plugin
+**Problem**: Phase 1 serves images from `public/` as-is (no optimization). Large images hurt page load.
+
+**Solution**: blog-core adds a remark plugin that:
+1. During the content overlay step, images move from `public/blog-img/` to `src/assets/blog-img/`
+2. The remark plugin rewrites `![alt](/blog-img/x.jpg)` → Astro's `<Image>` component
+3. Astro's pipeline generates responsive breakpoints, WebP conversion, lazy loading
+
+**Key guarantee**: cms-md image paths never change. Authors keep writing `![alt](/blog-img/x.jpg)`. The remark plugin handles rewriting transparently.
+
+**Priority**: Medium. Implement after Phase 2 when you can measure actual image payload sizes.
+
+### Additional blog-core Variants
+**Problem**: One visual framework doesn't fit all use cases.
+
+**Solution**: Create additional blog-core repos, each with its own design philosophy:
+- `blog-core-fanta` -- Colorful, playful, bold (gradients, animations, card layouts)
+- `blog-core-yellow` -- Minimalist, typography-focused (serif, narrow width, no clutter)
+
+Each variant:
+- Is a separate repo with its own reusable workflow
+- May define additional optional frontmatter fields (e.g., fanta: `accent_color`, `hero_layout`)
+- May add variant-specific sections to `site.yaml` (e.g., yellow: `typography: "serif"`)
+- Shares the base content contract (same required frontmatter, same directory structure)
+
+**Switching**: User changes one line in `deploy.yml`:
+```yaml
+# From classic:
+uses: pascalandy/blog-core/.github/workflows/build-blog.yml@main
+# To fanta:
+uses: pascalandy/blog-core-fanta/.github/workflows/build-blog.yml@main
+```
+
+**Priority**: Low. Build after the core decoupling is proven and stable.
+
+### Workflow Stability for Multi-Tenant
+**Problem**: If blog-core pushes a broken workflow to `main`, all cms-md repos break on next build.
+
+**Solution options** (pick one when scaling):
+- A `stable` branch that `@main` only advances to after CI passes on a test cms-md
+- Semantic version tags (`@v1`, `@v2`) with cms-md defaulting to latest stable tag
+- Automated smoke test: blog-core CI builds a reference cms-md before merging to main
+
+**Priority**: Low while you're the only user. Required before "THOUSANDS of cms-md repos."
 
 ## Next Steps
 
-→ `/ce:plan` for structured implementation planning. All decisions resolved:
+→ `/ce:plan` for structured implementation planning, starting with Phase 0 (Hello World proof-of-concept).
+
+All key decisions resolved:
 - Versioning: Always use `@main` (latest)
 - Force-rebuild: Not needed (repos rebuild on their own schedule)
+- Images: Serve from `public/` in Phase 1, remark plugin later (Evolution)
+- File naming: Slug-based, no date prefix
+- Config: All user config in cms-md `site.yaml` (socials, share_links, tags included)
+- Variants: Design for them, build only classic
+- Local preview: Deferred to Evolution
