@@ -76,3 +76,23 @@ clean:
 # Deep clean before archiving workspace (removes node_modules)
 archive:
     rm -rf dist node_modules cache .astro
+
+# === GitHub Actions (manual only) ===
+
+# Run the CI workflow on GitHub for a pushed ref; deploy is none, preview, or production (main only)
+[positional-arguments]
+gh-ci ref=`git branch --show-current` deploy="none":
+    @test -n "$1" || { echo "error: HEAD is detached; pass a ref" >&2; exit 1; }
+    @test "$2" != production || test "$1" = main || { echo "error: production deploys only main" >&2; exit 1; }
+    gh workflow run ci.yml --ref "$1" -f "deploy=$2"
+
+# Scan the full history of a pushed ref for secrets on GitHub
+[positional-arguments]
+gh-gitleaks ref=`git branch --show-current`:
+    @test -n "$1" || { echo "error: HEAD is detached; pass a ref" >&2; exit 1; }
+    gh workflow run gitleaks.yml --ref "$1"
+
+# Label a pull request on GitHub from the paths it changes
+[positional-arguments]
+gh-labels pr:
+    gh workflow run pr-labeler.yml -f "pr=$1"
