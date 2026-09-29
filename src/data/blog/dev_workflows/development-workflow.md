@@ -47,7 +47,7 @@ Skip a hook only when you must: `git commit --no-verify` or `git push --no-verif
 
 GitHub Actions runs `just check` in a single `check` job, on every pull request whatever its base branch, and on every push to `main` that can change the site. Deploys wait for it.
 
-Claude Code on the web runs `.claude/hooks/session-start.sh` when a session starts: it installs Just, gitleaks, and the dependencies with their hooks.
+Claude Code on the web runs `.claude/hooks/session-start.sh` when a session starts: it installs uv, Just, gitleaks, and the dependencies with their hooks.
 
 ## Preview Deployment
 
