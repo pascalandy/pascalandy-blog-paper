@@ -4,9 +4,10 @@ Pascal Andy's blog, [pascalandy.com/blog](https://pascalandy.com/blog/): Astro 5
 
 ## First moves
 
-1. Run `just` to list the recipes, and `just check --list` to list the checks
-2. Read only the route below that matches your task
-3. Before you report done, run `just check`: it prints nothing when every check passes, and a failure prints `NAME failed; rerun: just check --only NAME`
+1. Run `just overview` for the blog's state: posts by bucket, featured and latest posts, tags with their flags, site language and theme, and the docs index (`--json` for one object)
+2. Run `just` to list the recipes, and `just check --list` to list the checks
+3. Read only the route below that matches your task
+4. Before you report done, run `just check`: it prints nothing when every check passes, and a failure prints `NAME failed; rerun: just check --only NAME`
 
 ## Trust map
 
