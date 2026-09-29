@@ -22,26 +22,33 @@ ROOT = Path(__file__).resolve().parent.parent
 EPILOG = """\
 What counts as a citation:
   paths    inline code that starts with a tracked top-level name or a dot, such
-           as `src/tags.ts` or `.claude/settings.json`; a bare source file name,
-           such as `Layout.astro`, or a bare dotfile, such as `.mcp.json`, must
-           exist somewhere in the repo; relative Markdown links must resolve
+           as `src/tags.ts` or `.mcp.json`, must exist from the repo root; a
+           source file named bare, such as `Layout.astro`, or under another
+           folder, such as `dev_workflows/image_path.md`, must end a tracked
+           path; relative Markdown links must resolve
   recipes  `just NAME` in inline code or a code block
   checks   `--only NAME` after `just check` or `just ci`
+  size     AGENTS.md, the contract, stays at most 150 lines
 
-Skipped: code blocks for paths, URLs, site routes (`/tags/`), home paths (`~/`),
-gitignored paths such as `dist/`, placeholders such as `<name>` or `NAME`, bare
-names of generated files such as `state.json`, CSS classes such as `.card`, and
-names starting with `_`, the prefix of unpublished playbooks and examples.
+Skipped: code blocks for paths, URLs, site routes and commands (`/tags/`), home
+paths (`~/`), gitignored paths such as `dist/`, folders under another folder
+such as `dev_workflows/`, placeholders such as `<name>` or `NAME`, bare names of
+generated files such as `state.json`, CSS classes such as `.card`, and names
+starting with `_`, the prefix of unpublished playbooks and examples. Link a
+command's file, as in [/worktree](.claude/commands/worktree.md), to check it.
 
 examples:
   just check --only docs
   uv run scripts/check_docs.py AGENTS.md
 
 exit codes:
-  0    every citation exists
-  1    a citation names something missing
+  0    every citation exists and AGENTS.md is within its cap
+  1    a citation names something missing, or AGENTS.md is over its cap
   2    bad usage"""
 
+# The contract routes agents to the docs they need; past this many lines it
+# stops being a router
+CONTRACT, CONTRACT_LINES = "AGENTS.md", 150
 # The docs agents read: the contract, the README, the PR template, Claude
 # commands and skills, and the published playbooks
 DOCS = (
@@ -158,7 +165,6 @@ class Paths:
             str(parent) for name in self.files for parent in Path(name).parents
         }
         self.top = {name.split("/")[0] for name in self.files}
-        self.basenames = {Path(name).name for name in self.files}
 
     def ignored(self, path: str) -> bool:
         """Whether git ignores the path; the trailing slash matches an absent directory."""
@@ -171,34 +177,47 @@ class Paths:
             return any(Path(name).match(path) for name in self.files)
         return path in self.files or path in self.dirs or (ROOT / path).exists()
 
+    def ends(self, path: str) -> bool:
+        """Whether a tracked file's path ends with this one; `*` and `?` glob."""
+        if "*" in path or "?" in path:
+            return any(Path(name).match(path) for name in self.files)
+        return any(name == path or name.endswith(f"/{path}") for name in self.files)
+
     def problem(self, span: str) -> str | None:
         path = re.sub(r"(:\d+)+$|#.*$", "", span.strip().rstrip(".,;:"))
         if not path or " " in path or PLACEHOLDER.search(path):
             return None
         first = path.split("/")[0]
-        if path.startswith(("/", "~", "@", "http")) or first in (".", ".."):
+        if path.startswith(("/", "~", "@", "http", "_")) or first in (".", ".."):
             return None
-        if "/" in path:
-            if first not in self.top and not first.startswith("."):
+        if path.startswith("."):
+            if "/" not in path and not DOTFILE.fullmatch(path):
                 return None
-        elif path.startswith("."):
-            if not DOTFILE.fullmatch(path):
-                return None
-        elif path.rsplit(".", 1)[-1] not in EXTENSIONS:
-            return None
-        if path.startswith("_"):
+            rooted = True
+        elif "/" in path and first in self.top:
+            rooted = True
+        elif path.rsplit(".", 1)[-1] in EXTENSIONS:
+            # A bare source file, or one under another folder, may be
+            # relative, as in `dev_workflows/image_path.md`: it must end a
+            # tracked path, so a renamed top-level folder still fails it
+            rooted = False
+        else:
             return None
         if self.ignored(path):
             return None
-        if "/" not in path and not path.startswith(".") and "*" not in path:
-            found = path in self.basenames
-        else:
-            found = self.exists(path)
+        found = self.exists(path) if rooted else self.ends(path)
         return None if found else f'path "{span}" does not exist'
 
 
 def problems(doc: Path, names: set[str], paths: Paths) -> Iterator[str]:
     where = doc.relative_to(ROOT)
+    if str(where) == CONTRACT:
+        count = len(doc.read_text(encoding="utf-8").splitlines())
+        if count > CONTRACT_LINES:
+            yield (
+                f"{where}:{CONTRACT_LINES + 1}: the contract has {count} lines, "
+                f"over its cap of {CONTRACT_LINES}; move detail into a playbook"
+            )
     for number, line, fenced in lines(doc):
         # In a code block, a comment is prose
         spans = [line.split(" #")[0]] if fenced else CODE.findall(line)
@@ -242,7 +261,7 @@ def main(argv: list[str] | None = None) -> int:
         print(problem, file=sys.stderr)
     if found:
         print(
-            "error: docs cite missing paths, recipes, or checks; fix the lines above",
+            "error: docs have problems; fix the lines above",
             file=sys.stderr,
         )
         return 1
