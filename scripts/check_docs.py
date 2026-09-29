@@ -23,19 +23,20 @@ EPILOG = """\
 What counts as a citation:
   paths    inline code that starts with a tracked top-level name or a dot, such
            as `src/tags.ts` or `.mcp.json`, must exist from the repo root; a
-           source file named bare, such as `Layout.astro`, or under another
-           folder, such as `dev_workflows/image_path.md`, must end a tracked
-           path; relative Markdown links must resolve
+           source file named bare, such as `Layout.astro`, and a folder or a
+           source file under another folder, such as `dev_workflows/` or
+           `dev_workflows/image_path.md`, must end a tracked path; relative
+           Markdown links must resolve
   recipes  `just NAME` in inline code or a code block
   checks   `--only NAME` after `just check` or `just ci`
   size     AGENTS.md, the contract, stays at most 150 lines
 
 Skipped: code blocks for paths, URLs, site routes and commands (`/tags/`), home
-paths (`~/`), gitignored paths such as `dist/`, folders under another folder
-such as `dev_workflows/`, placeholders such as `<name>` or `NAME`, bare names of
-generated files such as `state.json`, CSS classes such as `.card`, and names
-starting with `_`, the prefix of unpublished playbooks and examples. Link a
-command's file, as in [/worktree](.claude/commands/worktree.md), to check it.
+paths (`~/`), gitignored paths such as `dist/`, placeholders such as `<name>` or
+`NAME`, bare names of generated files such as `state.json`, CSS classes such as
+`.card`, and names starting with `_`, the prefix of unpublished playbooks and
+examples. Link a command's file, as in [/worktree](.claude/commands/worktree.md),
+to check it.
 
 examples:
   just check --only docs
@@ -178,10 +179,14 @@ class Paths:
         return path in self.files or path in self.dirs or (ROOT / path).exists()
 
     def ends(self, path: str) -> bool:
-        """Whether a tracked file's path ends with this one; `*` and `?` glob."""
+        """Whether a tracked file's path, or a folder's for `NAME/`, ends with this one.
+
+        `*` and `?` glob."""
+        names = self.dirs if path.endswith("/") else self.files
+        path = path.rstrip("/")
         if "*" in path or "?" in path:
-            return any(Path(name).match(path) for name in self.files)
-        return any(name == path or name.endswith(f"/{path}") for name in self.files)
+            return any(Path(name).match(path) for name in names)
+        return any(name == path or name.endswith(f"/{path}") for name in names)
 
     def problem(self, span: str) -> str | None:
         path = re.sub(r"(:\d+)+$|#.*$", "", span.strip().rstrip(".,;:"))
@@ -196,8 +201,8 @@ class Paths:
             rooted = True
         elif "/" in path and first in self.top:
             rooted = True
-        elif path.rsplit(".", 1)[-1] in EXTENSIONS:
-            # A bare source file, or one under another folder, may be
+        elif path.endswith("/") or path.rsplit(".", 1)[-1] in EXTENSIONS:
+            # A folder, a bare source file, or one under another folder may be
             # relative, as in `dev_workflows/image_path.md`: it must end a
             # tracked path, so a renamed top-level folder still fails it
             rooted = False
