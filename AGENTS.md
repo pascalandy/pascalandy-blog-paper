@@ -25,7 +25,7 @@
   - magick mogrify -resize '1920x1920>' -quality 70 {filename}
 
 ## Just Recipes
-- `just qa` pre-commit | `just ci` fast check | `just build` | `just lint` | `just format`
+- `just qa` pre-commit | `just ci` fast check | `just signoff` PR gate | `just deploy` ship main | `just build` | `just lint` | `just format`
 
 ## To test this app
 - Spawn @charlie → tell it: "run: just qa"
@@ -38,12 +38,20 @@ Atomic commits only. "and" in msg = split it.
 
 For files under `dev_notes`, simply commit with -m "update dev_notes". This is my scratchpad.
 
+### Merge and deploy
+The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just gh-gitleaks`, `just gh-labels`). A PR merges into `main` only with a green `signoff` status on its head commit; admins can bypass that rule, so never bypass it.
+- Agents run `just ci` and report the result; Pascal runs `just signoff` on the pushed head
+- Agents never merge PRs, run `just signoff` or `gh signoff`, or run `just deploy`, unless Pascal asks
+- Never merge with `gh pr merge --admin` or the bypass option to skip the gate
+- Merging does not deploy: `just deploy` ships main
+- Details: `src/data/blog/dev_workflows/development-workflow.md`
+
 ### PR File Limit
 Max 96 files per PR (Greptile skips review above this).
 
 **When exceeding 90 files** (common with bulk content updates):
 1. Stage only a subset of files (< 90) for initial PR
-2. Push, wait for CI + Greptile review
+2. Push, wait for the Greptile review and `just signoff`
 3. Once approved, commit remaining files
 4. Push again (Greptile already reviewed the logic)
 

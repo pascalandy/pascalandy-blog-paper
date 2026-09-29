@@ -8,13 +8,17 @@ Source: https://github.com/pascalandy/pascalandy-blog-paper
 
 - [Bun](https://bun.sh/) - Package manager & runtime
 - [Just](https://just.systems/) - Command runner (required for hooks and CI)
+- [uv](https://docs.astral.sh/uv/) - Runs the Python scripts behind `just signoff` and `just deploy`
+- [GitHub CLI](https://cli.github.com/) with [gh-signoff](https://github.com/basecamp/gh-signoff) - Posts the `signoff` status that gates merges
+- [gitleaks](https://github.com/gitleaks/gitleaks) - Scans a branch for secrets before signoff
 
 ```bash
 # macOS
-brew install bun just
+brew install bun just uv gh gitleaks
+gh extension install basecamp/gh-signoff
 
 # Verify installation
-bun --version && just --version
+bun --version && just --version && uv --version && gh signoff version && gitleaks version
 ```
 
 ## Quick Start
