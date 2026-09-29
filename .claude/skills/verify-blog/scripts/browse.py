@@ -38,11 +38,15 @@ examples:
 
 exit codes:
   0    every step ran and the evidence is saved
-  1    a step or the page failed; the evidence saved so far stays
-  2    bad usage"""
+  1    a step or the page failed, and the evidence saved so far stays; or
+       Chromium is not installed
+  2    bad usage
+  130  interrupted (SIGINT)"""
 
 VIEWPORTS = {"desktop": {"width": 1440, "height": 900}}
 ACTIONS = ("click", "fill", "press", "wait", "goto")
+# The browser matching the pinned Playwright; a cloud sandbox may ship it already
+INSTALL = "uv run --with playwright==1.56.0 python -m playwright install chromium"
 
 
 class Parser(argparse.ArgumentParser):
@@ -115,11 +119,24 @@ def main(argv: list[str] | None = None) -> int:
         cli.print_help()
         return 0
     args = cli.parse_args(argv)
+    try:
+        return drive(args)
+    except KeyboardInterrupt:
+        print("interrupted", file=sys.stderr)
+        return 130
+
+
+def drive(args: argparse.Namespace) -> int:
     args.out.mkdir(parents=True, exist_ok=True)
     errors: list[str] = []
     failure = ""
     with sync_playwright() as playwright:
-        browser = playwright.chromium.launch()
+        try:
+            browser = playwright.chromium.launch()
+        except Error as error:
+            print(str(error).splitlines()[0], file=sys.stderr)
+            print(f"error: Chromium did not start; run: {INSTALL}", file=sys.stderr)
+            return 1
         if args.device == "iphone":
             options = dict(playwright.devices["iPhone 15"])
         else:
