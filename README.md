@@ -40,7 +40,7 @@ just qa      # format, then run the same checks as CI
 
 ## Documentation
 
-- See [AGENTS.md](AGENTS.md) for development guidelines and architecture details.
+- See [AGENTS.md](AGENTS.md) for the working contract: first moves, rules, and where to read more.
 - Original theme by [Sat Naing](https://satnaing.dev) and [contributors](https://github.com/satnaing/astro-paper/graphs/contributors). A fork of [AstroPaper](https://github.com/satnaing/astro-paper).
 
 ## License
