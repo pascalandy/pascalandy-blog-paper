@@ -189,6 +189,7 @@ def up() -> str:
         raise Failure(
             f"another process serves {PREVIEW}; stop it or free port {PREVIEW_PORT}, then rerun up"
         )
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
     log = STATE_DIR / "build.log"
     with log.open("w", encoding="utf-8") as output:
         built = subprocess.run(
