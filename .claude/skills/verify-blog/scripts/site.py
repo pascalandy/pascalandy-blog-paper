@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import os
 import re
@@ -221,7 +222,12 @@ def main(argv: list[str] | None = None) -> int:
     cli.add_argument(
         "action", choices=["up", "doctor", "down"], help="up, doctor, or down"
     )
-    args = cli.parse_args(sys.argv[1:] if argv is None else argv)
+    argv = sys.argv[1:] if argv is None else argv
+    # -h wins over every other argument before --, as the CLI contract asks
+    if {"-h", "--help"} & set(itertools.takewhile(lambda arg: arg != "--", argv)):
+        cli.print_help()
+        return 0
+    args = cli.parse_args(argv)
     try:
         if args.action == "doctor":
             healthy, report = doctor()

@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import sys
 from pathlib import Path
@@ -108,7 +109,12 @@ def main(argv: list[str] | None = None) -> int:
         metavar="ACTION:ARGUMENT",
         help="an action to run before the capture; repeat for more",
     )
-    args = cli.parse_args(sys.argv[1:] if argv is None else argv)
+    argv = sys.argv[1:] if argv is None else argv
+    # -h wins over every other argument before --, as the CLI contract asks
+    if {"-h", "--help"} & set(itertools.takewhile(lambda arg: arg != "--", argv)):
+        cli.print_help()
+        return 0
+    args = cli.parse_args(argv)
     args.out.mkdir(parents=True, exist_ok=True)
     errors: list[str] = []
     failure = ""
