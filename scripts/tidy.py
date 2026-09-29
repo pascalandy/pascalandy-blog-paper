@@ -25,7 +25,6 @@ PRETTIER = (
     "prettier",
     "--log-level=warn",
     "--ignore-unknown",
-    "--no-error-on-unmatched-pattern",
 )
 ESLINT = ("bun", "x", "eslint", "--no-warn-ignored")
 ESLINT_SUFFIXES = {
