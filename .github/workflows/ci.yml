@@ -50,6 +50,7 @@ jobs:
           path: |
             cache
             !cache/check
+            !cache/data-store.json
           key: astro-cache-${{ runner.os }}-${{ hashFiles('src/assets/**/*', 'astro.config.ts', 'src/config.ts') }}
           restore-keys: |
             astro-cache-${{ runner.os }}-
