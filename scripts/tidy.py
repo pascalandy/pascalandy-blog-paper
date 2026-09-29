@@ -109,8 +109,10 @@ def wants_help(argv: list[str]) -> bool:
 
 def runs(action: str, files: list[str]) -> list[Run]:
     """The named tool runs that cover FILES, or the whole repository without them."""
-    python = [name for name in files if name.endswith(".py")]
-    site = [name for name in files if not name.endswith(".py")]
+    # A symlink is covered as its target; Prettier rejects one named outright
+    named = [name for name in files if not (ROOT / name).is_symlink()]
+    python = [name for name in named if name.endswith(".py")]
+    site = [name for name in named if not name.endswith(".py")]
     everything = not files
     planned: list[Run] = []
     if action == "lint":
