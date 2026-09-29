@@ -38,9 +38,9 @@ When sources disagree, trust them in this order:
 | Theme and colors          | [theme system](src/data/blog/dev_workflows/shadcn-theme-system.md)                                                                      |
 | Mermaid diagrams          | [Mermaid](src/data/blog/dev_workflows/using-mermaid.md)                                                                                 |
 | Recipes, hooks, CI        | [development workflow](src/data/blog/dev_workflows/development-workflow.md)                                                             |
-| Parallel work             | [worktrees](src/data/blog/dev_workflows/worktree-workflow.md), or the `/worktree` command                                               |
-| Dependencies              | [updating dependencies](src/data/blog/dev_workflows/how-to-update-dependencies.md), `renovate.json`                                     |
-| Astro APIs                | the `astro-docs` MCP server in `.mcp.json`; fallback https://docs.astro.build/llms-small.txt                                           |
+| Parallel work             | [worktrees](src/data/blog/dev_workflows/worktree-workflow.md), or the [`/worktree`](.claude/commands/worktree.md) command               |
+| Dependencies              | [updating dependencies](src/data/blog/dev_workflows/how-to-update-dependencies.md), [`renovate.json`](renovate.json)                    |
+| Astro APIs                | the `astro-docs` MCP server in `.mcp.json`; fallback https://docs.astro.build/llms-small.txt                                            |
 | Pick work                 | `dev_notes/backlog.md`                                                                                                                  |
 | Check the UI in a browser | Browser checks, below                                                                                                                   |
 
