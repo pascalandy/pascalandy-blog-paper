@@ -14,5 +14,13 @@ export default [
     },
   },
   { rules: { "no-console": "error" } },
+  // Declaration files keep `interface`, which merges into globals such as Window
+  {
+    files: ["**/*.{ts,tsx,mts,cts,astro}"],
+    ignores: ["**/*.d.ts"],
+    rules: {
+      "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    },
+  },
   { ignores: ["dist/**", ".astro", "public/pagefind/**"] },
 ];
