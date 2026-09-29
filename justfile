@@ -79,6 +79,10 @@ archive:
 
 # === Ship ===
 
+# Run `just ci` and `just gitleaks`, then mark the pushed HEAD green on GitHub; push first
+signoff:
+    uv run --quiet scripts/signoff.py
+
 # Scan this branch's commits since origin/main for secrets
 gitleaks:
     gitleaks git --log-opts="origin/main..HEAD" --no-banner --redact --verbose
