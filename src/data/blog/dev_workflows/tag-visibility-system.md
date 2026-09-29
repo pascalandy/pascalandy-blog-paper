@@ -24,13 +24,7 @@ Each tag can have two visibility flags:
 
 ## Current Configuration
 
-| Tag                | Hidden from `/tags/` | Excluded from `/blog/` & RSS |
-| ------------------ | -------------------- | ---------------------------- |
-| void               | Yes                  | Yes                          |
-| crypto-in-montreal | Yes                  | Yes                          |
-| dev-notes          | No                   | Yes                          |
-| biographie         | Yes                  | Yes                          |
-| random             | No                   | No                           |
+The registry, `TAGS` in `src/tags.ts`, is the only list of tags and their flags. A post may use only a registered slug: `just check --only content` fails on any other tag and names the registry.
 
 ## How It Works
 
@@ -61,7 +55,7 @@ const posts = await getCollection(
 
 ## Adding a New Tag
 
-Edit `src/tags.ts`:
+Register the tag in `src/tags.ts` before a post uses it. The slug is kebab-case, since it appears in post frontmatter and in the tag's URL:
 
 ```typescript
 export const TAGS: TagConfig[] = [
