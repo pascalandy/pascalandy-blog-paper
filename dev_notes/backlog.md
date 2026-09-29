@@ -7,7 +7,37 @@ author: Pascal Andy
 description: "BACKLOG, todo"
 ---
 
-# BACKLOG
+# Backlog
+
+Agents pick the first `open` ticket; each fix ships with its own check. Triage adds or updates a ticket and leaves the Inbox untouched: it keeps Pascal's raw notes verbatim.
+
+| ID | Status | Ticket | Done when |
+| --- | --- | --- | --- |
+| B1 | open | Post dates render a day early and in English | Dates match `date_created`, in Québec French; a check fails on a shifted or English date |
+| B2 | open | `<html lang="en">`, so search indexes the French posts as English | French pages declare `fr-CA`, English posts `en`; a check asserts it |
+| B3 | open | The RSS autodiscovery URL and the robots.txt sitemap URL return 404 | Both URLs resolve on the built site; a check follows them |
+| B4 | open | Non-post pages emit BlogPosting JSON-LD with `datePublished: "undefined"` | Only posts emit BlogPosting, with a real date; a check validates the JSON-LD |
+| B5 | open | No `og:type` or `og:locale` | Posts emit `og:type` `article`, other pages `website`, all with `og:locale`; a check asserts them |
+| B6 | open | `<html class="false">` | The attribute is gone; a check asserts it |
+| B7 | open | 41 renamed `cim` URLs lack redirects | Each old URL redirects to its new one; a check covers the list |
+| B8 | open | 178 of 531 images are unreferenced; skip `pascalandy-com_header*` on import | Each orphan is deleted or kept on purpose; a check fails on a new orphan |
+| B9 | open | Posts that share a `date_created` have no stable order, so builds can reorder them | `getSortedPosts` breaks ties; a check proves two builds order them the same |
+| B10 | open | Move the playbooks from `src/data/blog/dev_workflows/` to `/docs` | Playbooks live in `/docs`, the docs check and the contract follow, and old URLs redirect or are unpublished |
+| B11 | open | SEO audit: meta tags, canonical, og and twitter, robots, schema | Each finding is fixed or ticketed; B2 to B6 cover part of it |
+| B12 | half done | Thinner link underline in the primary color: thinner is done, the color is not | Links underline thin, in `--primary` |
+| B13 | needs Pascal | Feature the 5 best posts: 0 are featured; Pascal rereads the shortlist in the Inbox first | 5 posts have `featured: true` |
+| B14 | needs Pascal | Default header image: a brand image with no text | Pascal picks the image, and it replaces the current header |
+| B15 | needs Pascal | "Rester en contact": an email sign-up form | Pascal decides on the form and its copy |
+| B16 | needs Pascal | "star ac est un projet": a post, a page, or a tag? | Pascal chooses the format |
+| B17 | needs Pascal | Graphite (git stacking): evaluate or adopt? | Pascal decides |
+| B18 | in progress | Mobile checks through `agent-browser -p ios` | The verify-blog skill (#70, M4) drives the iOS profile |
+| B19 | done | Astro docs MCP server | `.mcp.json` configures `astro-docs` (#70, M3) |
+| B20 | done | Sitemap integration | `@astrojs/sitemap` runs in `astro.config.ts` |
+| B21 | done | Remove the "Share this post on" block from posts | 0 posts contain it |
+
+## Inbox
+
+Pascal's raw notes, verbatim.
 
 =—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=—=
 
