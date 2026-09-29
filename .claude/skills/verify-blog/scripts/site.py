@@ -12,6 +12,7 @@ import itertools
 import json
 import os
 import re
+import shutil
 import signal
 import subprocess
 import sys
@@ -66,6 +67,10 @@ class Failure(Exception):
 
 def site_title() -> str:
     """SITE.title, read from src/config.ts through Bun, never copied."""
+    if shutil.which("bun") is None:
+        raise Failure(
+            "bun not found on PATH; install Bun (https://bun.sh), then run: just install"
+        )
     result = subprocess.run(
         ["bun", "-e", 'console.log((await import("./src/config.ts")).SITE.title)'],
         cwd=ROOT,
