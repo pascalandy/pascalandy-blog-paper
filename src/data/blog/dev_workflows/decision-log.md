@@ -11,6 +11,7 @@ description: "Settled decisions about how this blog is built, one dated line eac
 
 > One dated line per settled decision, newest first, linked to where it was decided. Read the link before proposing to change a decision.
 
+- 2026-09-29 · GitHub workflows run only by hand; a green `signoff` status from Pascal's `just signoff` gates merges into `main`, and `just deploy` ships `main` from the terminal ([#75](https://github.com/pascalandy/pascalandy-blog-paper/pull/75), [#76](https://github.com/pascalandy/pascalandy-blog-paper/pull/76), [#77](https://github.com/pascalandy/pascalandy-blog-paper/pull/77), [#78](https://github.com/pascalandy/pascalandy-blog-paper/pull/78))
 - 2026-09-29 · UI proof runs through the verify-blog skill: it reuses Pascal's dev server on :4320, else previews a build on :4330, and never starts the dev server ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70), [#74](https://github.com/pascalandy/pascalandy-blog-paper/pull/74))
 - 2026-09-29 · Sessions start with `just overview`, computed from the source files, instead of exploring them ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70), [#74](https://github.com/pascalandy/pascalandy-blog-paper/pull/74))
 - 2026-09-29 · `AGENTS.md` is a router of at most 150 lines; `CLAUDE.md` and `GEMINI.md` stay symlinks to it ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70), [#73](https://github.com/pascalandy/pascalandy-blog-paper/pull/73))
