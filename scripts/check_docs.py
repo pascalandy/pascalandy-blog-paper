@@ -28,6 +28,7 @@ What counts as a citation:
            path; relative Markdown links must resolve
   recipes  `just NAME` in inline code or a code block
   checks   `--only NAME` after `just check` or `just ci`
+  size     AGENTS.md, the contract, stays at most 150 lines
 
 Skipped: code blocks for paths, URLs, site routes and commands (`/tags/`), home
 paths (`~/`), gitignored paths such as `dist/`, folders under another folder
@@ -41,10 +42,13 @@ examples:
   uv run scripts/check_docs.py AGENTS.md
 
 exit codes:
-  0    every citation exists
-  1    a citation names something missing
+  0    every citation exists and AGENTS.md is within its cap
+  1    a citation names something missing, or AGENTS.md is over its cap
   2    bad usage"""
 
+# The contract routes agents to the docs they need; past this many lines it
+# stops being a router
+CONTRACT, CONTRACT_LINES = "AGENTS.md", 150
 # The docs agents read: the contract, the README, the PR template, Claude
 # commands and skills, and the published playbooks
 DOCS = (
@@ -207,6 +211,13 @@ class Paths:
 
 def problems(doc: Path, names: set[str], paths: Paths) -> Iterator[str]:
     where = doc.relative_to(ROOT)
+    if str(where) == CONTRACT:
+        count = len(doc.read_text(encoding="utf-8").splitlines())
+        if count > CONTRACT_LINES:
+            yield (
+                f"{where}:{CONTRACT_LINES + 1}: the contract has {count} lines, "
+                f"over its cap of {CONTRACT_LINES}; move detail into a playbook"
+            )
     for number, line, fenced in lines(doc):
         # In a code block, a comment is prose
         spans = [line.split(" #")[0]] if fenced else CODE.findall(line)
@@ -250,7 +261,7 @@ def main(argv: list[str] | None = None) -> int:
         print(problem, file=sys.stderr)
     if found:
         print(
-            "error: docs cite missing paths, recipes, or checks; fix the lines above",
+            "error: docs have problems; fix the lines above",
             file=sys.stderr,
         )
         return 1
