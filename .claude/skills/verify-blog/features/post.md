@@ -20,10 +20,10 @@ A post page shows one article with its title, date, and tags, then links to the 
 Preconditions:
 
 - `site.py doctor` exits 0
-- Pick the post from `just overview --json | jq '.latest[0]'`; its `url` is the path to open
+- The steps use `/blog/lhorizon-cest-toi`; its overview entry is `just overview --json | jq '.posts.buckets.blog_roll[] | select(.url == "/blog/lhorizon-cest-toi")'`. For another post, take its `url` and `title` from the overview the same way
 
 - **Open the post.** Run `agent-browser open "$URL/blog/lhorizon-cest-toi"` and `agent-browser get title`. The title is `L'horizon, c'est toi | Le blog de Pascal Andy`.
-- **Read the article.** Run `agent-browser get text "#article h1"`. It matches the post's `title` in the overview.
+- **Read the title.** Run `agent-browser get text "#main-content > h1"`. It matches the `title` of that overview entry; the body sits in `#article`, below the heading.
 - **Follow a tag.** Run `agent-browser snapshot -i`, then click the tag link. The page moves to `/tags/TAG/` and lists the post.
 - **Follow a neighbor.** Return to the post and run `agent-browser find role link click --name "Next"`. The next post opens, and its `Previous` link leads back.
 - **Check a Mermaid post.** Run `agent-browser open "$URL/blog/dev-workflows/using-mermaid"` and `agent-browser wait ".mermaid-diagram svg"`. Each diagram renders as an SVG inside `.mermaid-diagram`.
