@@ -87,6 +87,16 @@ signoff:
 gitleaks:
     gitleaks git --log-opts="origin/main..HEAD" --no-banner --redact --verbose
 
+# Deploy GitHub's main to production on Sevalla and wait for the build; --dry-run checks the setup
+[positional-arguments]
+deploy *args:
+    uv run --quiet scripts/deploy.py production "$@"
+
+# Deploy a pushed branch, the current one by default, to the Sevalla preview site
+[positional-arguments]
+deploy-preview *args:
+    uv run --quiet scripts/deploy.py preview "$@"
+
 # === GitHub Actions (manual only) ===
 
 # Run the CI workflow on GitHub for a pushed ref; deploy is none, preview, or production (main only)
