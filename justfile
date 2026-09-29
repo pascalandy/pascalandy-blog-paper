@@ -80,13 +80,19 @@ archive:
 # === GitHub Actions (manual only) ===
 
 # Run the CI workflow on GitHub for a pushed ref; deploy is none, preview, or production (main only)
+[positional-arguments]
 gh-ci ref=`git branch --show-current` deploy="none":
-    gh workflow run ci.yml --ref "{{ref}}" -f deploy="{{deploy}}"
+    @test -n "$1" || { echo "error: HEAD is detached; pass a ref" >&2; exit 1; }
+    @test "$2" != production || test "$1" = main || { echo "error: production deploys only main" >&2; exit 1; }
+    gh workflow run ci.yml --ref "$1" -f "deploy=$2"
 
 # Scan the full history of a pushed ref for secrets on GitHub
+[positional-arguments]
 gh-gitleaks ref=`git branch --show-current`:
-    gh workflow run gitleaks.yml --ref "{{ref}}"
+    @test -n "$1" || { echo "error: HEAD is detached; pass a ref" >&2; exit 1; }
+    gh workflow run gitleaks.yml --ref "$1"
 
 # Label a pull request on GitHub from the paths it changes
+[positional-arguments]
 gh-labels pr:
-    gh workflow run pr-labeler.yml -f pr="{{pr}}"
+    gh workflow run pr-labeler.yml -f "pr=$1"
