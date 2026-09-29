@@ -25,10 +25,10 @@
   - magick mogrify -resize '1920x1920>' -quality 70 {filename}
 
 ## Just Recipes
-- `just qa` pre-commit | `just ci` fast check | `just build` | `just lint` | `just format`
+- Run `just` to list recipes. `just qa` = format, then `just check`
 
 ## To test this app
-- Spawn @charlie → tell it: "run: just qa"
+- Run `just check`: the CI verdict, silent on success. A failure prints its rerun command, `just check --only NAME`; `just check --list` names the checks
 
 ## Git
 Atomic commits only. "and" in msg = split it.
