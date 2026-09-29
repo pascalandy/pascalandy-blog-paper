@@ -22,14 +22,15 @@ ROOT = Path(__file__).resolve().parent.parent
 EPILOG = """\
 What counts as a citation:
   paths    inline code that starts with a tracked top-level name or a dot, such
-           as `src/tags.ts` or `.claude/settings.json`; a bare file name, such
-           as `Layout.astro`, must exist somewhere in the repo; relative
-           Markdown links must resolve from their file
+           as `src/tags.ts` or `.claude/settings.json`; a bare source file name,
+           such as `Layout.astro`, or a bare dotfile, such as `.mcp.json`, must
+           exist somewhere in the repo; relative Markdown links must resolve
   recipes  `just NAME` in inline code or a code block
   checks   `--only NAME` after `just check` or `just ci`
 
 Skipped: code blocks for paths, URLs, site routes (`/tags/`), home paths (`~/`),
-gitignored paths such as `dist/`, placeholders such as `<name>` or `NAME`, and
+gitignored paths such as `dist/`, placeholders such as `<name>` or `NAME`, bare
+names of generated files such as `state.json`, CSS classes such as `.card`, and
 names starting with `_`, the prefix of unpublished playbooks and examples.
 
 examples:
@@ -51,14 +52,13 @@ DOCS = (
     "src/data/blog/dev_workflows/[!_]*.md",
 )
 
+# A bare name counts as a path only for source files; a bare `state.json` or
+# `aria.txt` usually names a file a tool writes
 EXTENSIONS = {
     "astro",
     "cjs",
     "css",
-    "html",
     "js",
-    "json",
-    "lock",
     "md",
     "mjs",
     "py",
@@ -66,10 +66,11 @@ EXTENSIONS = {
     "toml",
     "ts",
     "tsx",
-    "txt",
     "yaml",
     "yml",
 }
+# A bare dotfile has an extension, such as `.mcp.json`; `.card` is a CSS class
+DOTFILE = re.compile(r"\.[\w-]+\.(json|mjs|js|toml|yaml|yml|md)")
 FENCE = re.compile(r"^\s*(```|~~~)")
 CODE = re.compile(r"`([^`\n]+)`")
 LINK = re.compile(r"\]\(([^)\s]+)\)")
@@ -180,9 +181,12 @@ class Paths:
         if "/" in path:
             if first not in self.top and not first.startswith("."):
                 return None
-        elif not (path.startswith(".") or path.rsplit(".", 1)[-1] in EXTENSIONS):
+        elif path.startswith("."):
+            if not DOTFILE.fullmatch(path):
+                return None
+        elif path.rsplit(".", 1)[-1] not in EXTENSIONS:
             return None
-        if re.fullmatch(r"\.\w+", path) or path.startswith("_"):
+        if path.startswith("_"):
             return None
         if self.ignored(path):
             return None
