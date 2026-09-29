@@ -9,14 +9,16 @@ Source: https://github.com/pascalandy/pascalandy-blog-paper
 - [Bun](https://bun.sh/) - Package manager & runtime
 - [Just](https://just.systems/) - Command runner (required for hooks and CI)
 - [uv](https://docs.astral.sh/uv/) - Runs the Python scripts behind the recipes
-- [gitleaks](https://github.com/gitleaks/gitleaks) - Scans staged changes for secrets before each commit
+- [GitHub CLI](https://cli.github.com/) with [gh-signoff](https://github.com/basecamp/gh-signoff) - Posts the `signoff` status that gates merges
+- [gitleaks](https://github.com/gitleaks/gitleaks) - Scans staged changes for secrets before each commit, and a branch before signoff
 
 ```bash
 # macOS
-brew install bun just uv gitleaks
+brew install bun just uv gh gitleaks
+gh extension install basecamp/gh-signoff
 
 # Verify installation
-bun --version && just --version && uv --version && gitleaks version
+bun --version && just --version && uv --version && gh signoff version && gitleaks version
 ```
 
 Without Just, run any recipe through uv: `uvx --from rust-just just check`.

@@ -54,6 +54,16 @@ When sources disagree, trust them in this order:
 - Split large work into stacked PRs, each based on the branch below it
 - Fill the PR template: summary, evidence, and what you could not confirm
 
+## Merge and deploy
+
+The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just gh-gitleaks`, `just gh-labels`). A PR merges into `main` only with a green `signoff` status on its head commit; admins can bypass that rule, so never bypass it.
+
+- Agents run `just check` and report the result; Pascal runs `just signoff` on the pushed head
+- Agents never merge PRs, run `just signoff` or `gh signoff`, or run `just deploy`, unless Pascal asks
+- Never merge with `gh pr merge --admin` or the bypass option to skip the gate
+- Merging does not deploy: `just deploy` ships main
+- Details: the [development workflow](src/data/blog/dev_workflows/development-workflow.md)
+
 ## Gotchas
 
 - Drafts never build, dev included. A future `date_created` keeps a post out of listings and RSS until 15 minutes before, but its page still builds

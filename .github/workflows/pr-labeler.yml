@@ -1,8 +1,14 @@
 name: PR Labeler
 
+# Manual only: labels one pull request from the paths it changes.
+# Start it with `just gh-labels <pr>`
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      pr:
+        description: "Pull request number to label"
+        type: number
+        required: true
 
 permissions:
   contents: read
@@ -14,4 +20,5 @@ jobs:
     steps:
       - uses: actions/labeler@v5
         with:
+          pr-number: ${{ inputs.pr }}
           sync-labels: true

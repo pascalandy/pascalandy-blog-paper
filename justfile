@@ -1,5 +1,6 @@
-# Bare `just` lists these in file order: the commands you run most, then checks.
-# Each recipe is one line that calls one script or tool; logic lives in scripts/.
+# Bare `just` lists these in file order: the commands you run most, the checks,
+# shipping, then the GitHub workflows, which run only by hand.
+# Each recipe calls one script or tool; logic lives in scripts/.
 # Without just installed: uvx --from rust-just just <recipe>
 set positional-arguments
 # Every script and tool reports its own errors
@@ -71,3 +72,41 @@ lint *files:
 [group('checks')]
 gitleaks-staged:
     @gitleaks git --staged --no-banner --redact --log-level warn --verbose --no-color
+
+# Scan this branch's commits since origin/main for secrets
+[group('checks')]
+gitleaks:
+    @gitleaks git --log-opts="origin/main..HEAD" --no-banner --redact --verbose
+
+# Install, run `just ci` and `just gitleaks`, then mark the pushed HEAD green on GitHub; push first
+[group('ship')]
+signoff:
+    @uv run --quiet scripts/signoff.py
+
+# Deploy GitHub's main to production on Sevalla and wait for the build; --dry-run checks the setup
+[group('ship')]
+deploy *args:
+    @uv run --quiet scripts/deploy.py production "$@"
+
+# Deploy a pushed branch, the current one by default, to the Sevalla preview site
+[group('ship')]
+deploy-preview *args:
+    @uv run --quiet scripts/deploy.py preview "$@"
+
+# Run the CI workflow on GitHub for a pushed ref; deploy is none, preview, or production (main only)
+[group('github')]
+gh-ci ref=`git branch --show-current` deploy="none":
+    @test -n "$1" || { echo "error: HEAD is detached; pass a ref" >&2; exit 1; }
+    @test "$2" != production || test "$1" = main || { echo "error: production deploys only main" >&2; exit 1; }
+    @gh workflow run ci.yml --ref "$1" -f "deploy=$2"
+
+# Scan the full history of a pushed ref for secrets on GitHub
+[group('github')]
+gh-gitleaks ref=`git branch --show-current`:
+    @test -n "$1" || { echo "error: HEAD is detached; pass a ref" >&2; exit 1; }
+    @gh workflow run gitleaks.yml --ref "$1"
+
+# Label a pull request on GitHub from the paths it changes
+[group('github')]
+gh-labels pr:
+    @gh workflow run pr-labeler.yml -f "pr=$1"

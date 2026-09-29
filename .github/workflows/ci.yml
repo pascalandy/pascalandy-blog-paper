@@ -1,25 +1,20 @@
 name: CI
 
+# Manual only: `just signoff` is the PR gate, and a person ships main.
+# Start a run with `just gh-ci [ref] [deploy]`
 on:
-  push:
-    branches: [main]
-    # Pushes that cannot change the site skip the check and the deploy
-    paths-ignore:
-      - "*.md"
-      - "!src/**/*.md"
-      - "LICENSE"
-      - ".vscode/**"
-      - ".github/*.md"
-      - "dev_notes/**"
-  # Every pull request, whatever its base branch, so stacked PRs get a verdict
-  pull_request:
-    types: [opened, synchronize, reopened, labeled]
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: "After the checks pass, deploy this ref to Sevalla (production takes main only)"
+        type: choice
+        options:
+          - none
+          - preview
+          - production
+        default: none
 
 permissions: {}
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   # The same verdict as `just check` on any machine
@@ -65,9 +60,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     needs: check
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: inputs.deploy == 'production'
     permissions: {}
     steps:
+      # The deploy below always ships main, so checks on another ref prove nothing about it
+      - name: Refuse a ref other than main
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "::error::production deploys only main, not $GITHUB_REF_NAME"
+          exit 1
+
       - uses: sevalla-hosting/sevalla-deploy@cea78040bda96fa24be11ef35458e1b4f7646bfa # v1.0.1
         with:
           action: deploy-static-site
@@ -77,31 +79,20 @@ jobs:
           wait-for-finish: true
 
   deploy-preview:
-    name: Deploy PR Preview
+    name: Deploy Preview
     runs-on: ubuntu-latest
     timeout-minutes: 5
     needs: check
-    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'preview')
-    permissions:
-      pull-requests: write
+    if: inputs.deploy == 'preview'
+    permissions: {}
     steps:
       - uses: sevalla-hosting/sevalla-deploy@cea78040bda96fa24be11ef35458e1b4f7646bfa # v1.0.1
         with:
           action: deploy-static-site
           sevalla-token: ${{ secrets.SEVALLA_TOKEN }}
           static-site-id: ${{ vars.SEVALLA_STATIC_SITE_ID_PREVIEW }}
-          branch: ${{ github.head_ref }}
+          branch: ${{ github.ref_name }}
           wait-for-finish: true
 
-      - name: Comment PR with preview URL
-        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
-        env:
-          HEAD_REF: ${{ github.head_ref }}
-        with:
-          script: |
-            await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `🚀 Preview deployment triggered on Sevalla!\n\nBranch: \`${process.env.HEAD_REF}\``
-            })
+      - name: Summarize
+        run: echo "🚀 Preview deployed on Sevalla from \`$GITHUB_REF_NAME\`" >> "$GITHUB_STEP_SUMMARY"
