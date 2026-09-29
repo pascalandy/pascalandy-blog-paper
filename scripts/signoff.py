@@ -67,7 +67,10 @@ def require_pushed_head() -> None:
     try:
         push_ref = git("rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{push}")
     except Refused:
-        raise Refused("HEAD has no push branch; run: git push -u origin HEAD") from None
+        raise Refused(
+            "HEAD has no push branch; run: git push -u origin HEAD. "
+            "For a PR from a fork, run: just ci && just gitleaks && gh signoff"
+        ) from None
     remote, _, branch = push_ref.partition("/")
     if not is_ancestor("HEAD", push_ref):
         git("fetch", "--quiet", remote, branch)
