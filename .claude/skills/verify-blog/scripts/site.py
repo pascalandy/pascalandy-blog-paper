@@ -29,17 +29,23 @@ DEV = "http://localhost:4320"
 PREVIEW_PORT = 4330
 PREVIEW = f"http://127.0.0.1:{PREVIEW_PORT}"
 READY_TIMEOUT = 60.0
+# While its toolbar is on, Astro's dev server marks elements with the absolute
+# path of their source file, which names the checkout it serves
+SOURCE_FILE = re.compile(r'data-astro-source-file="([^"]+)"')
 
 EPILOG = """\
 actions:
-  up      reuse Pascal's dev server on :4320 when it answers; otherwise build the
-          site and serve the build on :4330; print the base URL
-  doctor  read-only: which instance, whether it answers as the blog, whether the
-          build is older than src/; exit 1 when it is not worth driving
-  down    stop the preview this run started, and nothing else
+  up      reuse Pascal's dev server on :4320 when it answers for this checkout;
+          otherwise serve a build on :4330, rebuilt when src/ changed since;
+          print the base URL
+  doctor  read-only: which instance, whether it answers as the blog, and whether
+          it is current; exit 1 when it is not worth driving
+  down    stop the preview this run started, once its command confirms it,
+          and nothing else
 
-It never starts the dev server. The state lives in cache/verify-blog/server.json,
-and down leaves every other file in cache/verify-blog/, the evidence, in place.
+It never starts the dev server. The state lives in cache/verify-blog/server.json
+with this checkout's path, so a state copied from another checkout is ignored;
+down leaves every other file in cache/verify-blog/, the evidence, in place.
 
 examples:
   uv run .claude/skills/verify-blog/scripts/site.py up
@@ -97,32 +103,80 @@ def is_blog(body: str | None, title: str) -> bool:
     return bool(match and title in match.group(1))
 
 
+def elsewhere(body: str | None) -> str | None:
+    """A source file of the page when none sits in this checkout, else None.
+
+    None also when the page carries no source marks: the checkout is unknown."""
+    files = [Path(name) for name in SOURCE_FILE.findall(body or "")]
+    if not files or any(name.is_relative_to(ROOT) for name in files):
+        return None
+    return str(files[0])
+
+
+def stale() -> bool:
+    """Whether a file in src/ changed after the last build."""
+    built = ROOT / "dist" / "index.html"
+    if not built.exists():
+        return True
+    newest = max(
+        path.stat().st_mtime for path in (ROOT / "src").rglob("*") if path.is_file()
+    )
+    return built.stat().st_mtime < newest
+
+
 def load() -> dict[str, Any] | None:
+    """This checkout's recorded instance; a state copied from another is ignored."""
     try:
-        return json.loads(STATE.read_text(encoding="utf-8"))
+        state = json.loads(STATE.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return None
+    return state if state.get("root") == str(ROOT) else None
 
 
-def alive(pid: int) -> bool:
+def save(url: str, pid: int | None = None) -> None:
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    state = {"url": url, "started": pid is not None, "pid": pid, "root": str(ROOT)}
+    STATE.write_text(json.dumps(state), encoding="utf-8")
+
+
+def ours(state: dict[str, Any]) -> bool:
+    """Whether the recorded process still runs this run's preview.
+
+    A process ID outlives its process and can be reused, so its command decides."""
     try:
-        os.kill(pid, 0)
-    except ProcessLookupError:
+        os.kill(state["pid"], 0)
+    except (ProcessLookupError, PermissionError):
         return False
-    except PermissionError:
-        return True
-    return True
+    try:
+        result = subprocess.run(
+            ["ps", "-o", "args=", "-p", str(state["pid"])],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+    except OSError:
+        raise Failure(
+            f"ps not found, so pid {state['pid']} can't be confirmed as the preview; "
+            "install ps, or stop the preview yourself"
+        ) from None
+    return f"preview --port {PREVIEW_PORT}" in result.stdout
 
 
 def up() -> str:
     title = site_title()
     state = load()
-    if state and is_blog(fetch(state["url"] + "/"), title):
-        return state["url"]
-    STATE_DIR.mkdir(parents=True, exist_ok=True)
-    if is_blog(fetch(DEV + "/"), title):
-        STATE.write_text(json.dumps({"url": DEV, "started": False}), encoding="utf-8")
+    started = bool(state and state["started"])
+    body = fetch(DEV + "/")
+    if is_blog(body, title) and elsewhere(body) is None:
+        if started:
+            down()
+        save(DEV)
         return DEV
+    current = started and ours(state) and not stale()
+    if current and is_blog(fetch(state["url"] + "/"), title):
+        return state["url"]
+    if started:
+        down()
     if fetch(PREVIEW + "/") is not None:
         raise Failure(
             f"another process serves {PREVIEW}; stop it or free port {PREVIEW_PORT}, then rerun up"
@@ -156,10 +210,7 @@ def up() -> str:
             stderr=subprocess.STDOUT,
             start_new_session=True,
         )
-    STATE.write_text(
-        json.dumps({"url": PREVIEW, "started": True, "pid": preview.pid}),
-        encoding="utf-8",
-    )
+    save(PREVIEW, preview.pid)
     deadline = time.monotonic() + READY_TIMEOUT
     while time.monotonic() < deadline:
         if is_blog(fetch(PREVIEW + "/"), title):
@@ -177,40 +228,43 @@ def up() -> str:
 def doctor() -> tuple[bool, str]:
     state = load()
     if state is None:
-        return False, "no instance recorded; run: site.py up"
+        return False, "no instance recorded for this checkout; run: site.py up"
     title = site_title()
-    lines = [f"url: {state['url']}"]
-    healthy = is_blog(fetch(state["url"] + "/"), title)
-    lines.append(f"answers as {title!r}: {'yes' if healthy else 'no'}")
+    body = fetch(state["url"] + "/")
+    healthy = is_blog(body, title)
+    lines = [
+        f"url: {state['url']}",
+        f"answers as {title!r}: {'yes' if healthy else 'no'}",
+    ]
     if state["started"]:
-        running = alive(state["pid"])
-        healthy = healthy and running
+        running, fresh = ours(state), not stale()
         lines.append(
             f"instance: preview started by this run, pid {state['pid']} "
             f"{'running' if running else 'gone'}"
         )
-        built = ROOT / "dist" / "index.html"
-        newest = max(
-            path.stat().st_mtime for path in (ROOT / "src").rglob("*") if path.is_file()
-        )
-        if built.exists() and built.stat().st_mtime < newest:
-            lines.append("warning: src/ changed after the build; run down, then up")
+        if not fresh:
+            lines.append("stale: src/ changed after the build; run: site.py up")
+        healthy = healthy and running and fresh
     else:
         lines.append("instance: Pascal's dev server, reused; this run never stops it")
+        other = elsewhere(body)
+        if other:
+            lines.append(f"serves another checkout, such as {other}; run: site.py up")
+        healthy = healthy and other is None
     return healthy, "\n".join(lines)
 
 
 def down() -> str:
     state = load()
-    if state and state.get("started") and alive(state["pid"]):
+    if state and state["started"] and ours(state):
         try:
             os.killpg(state["pid"], signal.SIGTERM)
             deadline = time.monotonic() + 10
-            while time.monotonic() < deadline and alive(state["pid"]):
+            while time.monotonic() < deadline and ours(state):
                 time.sleep(0.2)
-            if alive(state["pid"]):
+            if ours(state):
                 os.killpg(state["pid"], signal.SIGKILL)
-        except ProcessLookupError:
+        except (ProcessLookupError, PermissionError):
             pass
     STATE.unlink(missing_ok=True)
     return ""

@@ -5,7 +5,7 @@ This directory is the maintained source for verifying what a reader sees on Pasc
 ## Baseline preconditions
 
 - `site.py up` printed the base URL, and `site.py doctor` exits 0; the steps call it `$URL`
-- Pascal's dev server on :4320 is reused as is; otherwise the preview on :4330 serves a fresh build
+- Pascal's dev server on :4320 is reused as is when it serves this checkout; otherwise the preview on :4330 serves a fresh build
 - Posts, tags, and counts come from `just overview --json`; do not hardcode them from memory
 - Never drive an instance that neither this run started nor Pascal's dev server provides
 
