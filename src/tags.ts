@@ -52,6 +52,20 @@ export const TAGS: TagConfig[] = [
     hiddenFromTagsPage: true,
     excludeFromBlogRoll: true,
   },
+  {
+    slug: "comment-le-reflechir",
+    name: "comment-le-reflechir",
+    description: "",
+  },
+  { slug: "consultation", name: "consultation", description: "" },
+  { slug: "crypto", name: "crypto", description: "" },
+  { slug: "du-fond-des-tripes", name: "du-fond-des-tripes", description: "" },
+  { slug: "emplois", name: "emplois", description: "" },
+  { slug: "musique", name: "musique", description: "" },
+  { slug: "personnel", name: "personnel", description: "" },
+  { slug: "projets", name: "projets", description: "" },
+  { slug: "repost", name: "repost", description: "" },
+  { slug: "technologie", name: "technologie", description: "" },
 ];
 
 /**
