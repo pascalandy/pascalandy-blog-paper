@@ -55,7 +55,7 @@ const posts = await getCollection(
 
 ## Adding a New Tag
 
-Register the tag in `src/tags.ts` before a post uses it. The slug appears in post frontmatter and in the tag's URL, so it must already be in URL form: lowercase words and numbers joined by hyphens (`web-3`, not `web3` or `web_3`). `just check --only content` fails on any other slug and names the rename:
+Register the tag in `src/tags.ts` before a post uses it. The slug appears in post frontmatter and in the tag's URL, so it must already be in URL form: lowercase words and numbers joined by hyphens (`web-3`, not `web3` or `web_3`). `just check --only content` fails on a post that uses any other slug and names the rename:
 
 ```typescript
 export const TAGS: TagConfig[] = [
