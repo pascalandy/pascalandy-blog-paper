@@ -76,3 +76,17 @@ clean:
 # Deep clean before archiving workspace (removes node_modules)
 archive:
     rm -rf dist node_modules cache .astro
+
+# === GitHub Actions (manual only) ===
+
+# Run the CI workflow on GitHub for a pushed ref; deploy is none, preview, or production (main only)
+gh-ci ref=`git branch --show-current` deploy="none":
+    gh workflow run ci.yml --ref "{{ref}}" -f deploy="{{deploy}}"
+
+# Scan the full history of a pushed ref for secrets on GitHub
+gh-gitleaks ref=`git branch --show-current`:
+    gh workflow run gitleaks.yml --ref "{{ref}}"
+
+# Label a pull request on GitHub from the paths it changes
+gh-labels pr:
+    gh workflow run pr-labeler.yml -f pr="{{pr}}"
