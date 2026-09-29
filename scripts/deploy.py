@@ -22,6 +22,7 @@ Exit codes: 0 deployed, 1 refused or the deployment failed, 2 bad usage.
 from __future__ import annotations
 
 import argparse
+import http.client
 import json
 import os
 import shutil
@@ -52,6 +53,14 @@ TARGETS = {
 
 class Refused(Exception):
     """A precondition failed; the message says how to fix it."""
+
+
+class ApiError(Exception):
+    """A Sevalla API call failed; retryable is False for a 4xx answer."""
+
+    def __init__(self, message: str, retryable: bool) -> None:
+        super().__init__(message)
+        self.retryable = retryable
 
 
 def run(*args: str) -> subprocess.CompletedProcess[str]:
@@ -104,13 +113,20 @@ def request(method: str, path: str, token: str, body: dict | None = None) -> dic
             "User-Agent": "pascalandy-blog-deploy",
         },
     )
-    with urllib.request.urlopen(req, timeout=30) as response:
-        return json.loads(response.read() or b"{}")
-
-
-def http_error(error: urllib.error.HTTPError) -> str:
-    detail = error.read().decode(errors="replace").strip()
-    return f"HTTP {error.code} {error.reason}" + (f": {detail[:300]}" if detail else "")
+    try:
+        with urllib.request.urlopen(req, timeout=30) as response:
+            return json.loads(response.read() or b"{}")
+    except urllib.error.HTTPError as error:
+        detail = error.read().decode(errors="replace").strip()[:300]
+        message = f"HTTP {error.code} {error.reason}" + (
+            f": {detail}" if detail else ""
+        )
+        raise ApiError(message, retryable=error.code >= 500) from None
+    except json.JSONDecodeError:
+        raise ApiError("the answer was not JSON", retryable=True) from None
+    # urllib wraps only request errors in URLError; response errors arrive raw
+    except (OSError, http.client.HTTPException) as error:
+        raise ApiError(f"could not reach Sevalla: {error}", retryable=True) from None
 
 
 def wait_for(site: str, deployment: str, token: str) -> int:
@@ -122,13 +138,15 @@ def wait_for(site: str, deployment: str, token: str) -> int:
             status = request(
                 "GET", f"/static-sites/{site}/deployments/{deployment}", token
             ).get("status")
-        except (urllib.error.URLError, TimeoutError, ValueError) as error:
-            reason = (
-                http_error(error)
-                if isinstance(error, urllib.error.HTTPError)
-                else error
-            )
-            print(f"status check failed ({reason}); retrying", file=sys.stderr)
+        except ApiError as error:
+            if not error.retryable:
+                print(
+                    f"error: status check failed ({error}); "
+                    "the deployment may still run on Sevalla",
+                    file=sys.stderr,
+                )
+                return 1
+            print(f"status check failed ({error}); retrying", file=sys.stderr)
             continue
         if status != last:
             print(f"deployment {deployment}: {status}")
@@ -141,6 +159,18 @@ def wait_for(site: str, deployment: str, token: str) -> int:
     return 1
 
 
+def sevalla_token() -> str:
+    token = os.environ.get("SEVALLA_TOKEN", "").strip()
+    if not token:
+        raise Refused(
+            "SEVALLA_TOKEN is not set; create an API key in the Sevalla dashboard "
+            "and export SEVALLA_TOKEN in ~/.zshrc"
+        )
+    if not token.isprintable():
+        raise Refused("the Sevalla API key has a line break or control character")
+    return token
+
+
 def deploy(target_name: str, branch: str | None, dry_run: bool, wait: bool) -> int:
     target = TARGETS[target_name]
     branch = (
@@ -150,12 +180,7 @@ def deploy(target_name: str, branch: str | None, dry_run: bool, wait: bool) -> i
     )
     if not branch:
         raise Refused("no branch to deploy; check out a branch or pass one")
-    token = os.environ.get("SEVALLA_TOKEN", "")
-    if not token:
-        raise Refused(
-            "SEVALLA_TOKEN is not set; create an API key in the Sevalla dashboard "
-            "and export SEVALLA_TOKEN in ~/.zshrc"
-        )
+    token = sevalla_token()
     site = site_id(target.site_variable)
     sha = github_tip(branch)
     if target.fixed_branch is None:
@@ -171,12 +196,8 @@ def deploy(target_name: str, branch: str | None, dry_run: bool, wait: bool) -> i
         deployment = request(
             "POST", f"/static-sites/{site}/deployments", token, {"branch": branch}
         )
-    except urllib.error.HTTPError as error:
-        raise Refused(f"Sevalla refused the deployment: {http_error(error)}") from None
-    except urllib.error.URLError as error:
-        raise Refused(f"could not reach Sevalla: {error.reason}") from None
-    except ValueError:
-        raise Refused("Sevalla answered with something other than JSON") from None
+    except ApiError as error:
+        raise Refused(f"Sevalla did not start the deployment: {error}") from None
     deployment_id = deployment.get("id")
     if not deployment_id:
         raise Refused(f"Sevalla answered without a deployment id: {deployment}")
