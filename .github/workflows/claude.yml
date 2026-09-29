@@ -27,8 +27,8 @@ jobs:
     env:
       JUST_VERSION: "1.50.0"
       # The runner has no gitleaks, so the git hooks would block Claude's
-      # commits; the gitleaks and CI workflows scan and verify its pull
-      # request instead
+      # commits; `just signoff`, the merge gate, runs the verdict and the
+      # secret scan on its pull request instead
       LEFTHOOK: "0"
     steps:
       - name: Checkout repository
