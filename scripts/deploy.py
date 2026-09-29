@@ -12,7 +12,8 @@ Usage:
     just deploy [--dry-run] [--no-wait]
     just deploy-preview [branch] [--dry-run] [--no-wait]
 
-Setup: export SEVALLA_TOKEN (a Sevalla API key). The site IDs come from
+Setup: store a Sevalla API key in the macOS Keychain under the service
+sevalla-api-token, or set SEVALLA_TOKEN. The site IDs come from
 SEVALLA_STATIC_SITE_ID and SEVALLA_STATIC_SITE_ID_PREVIEW in the environment,
 or else from the GitHub repository variables of the same names through gh.
 
@@ -37,6 +38,7 @@ API = "https://api.sevalla.com/v3"
 POLL_SECONDS = 5.0
 DEADLINE_SECONDS = 30 * 60
 FINISHED = {"success": True, "failed": False, "cancelled": False}
+KEYCHAIN_SERVICE = "sevalla-api-token"
 
 
 @dataclass(frozen=True)
@@ -160,11 +162,17 @@ def wait_for(site: str, deployment: str, token: str) -> int:
 
 
 def sevalla_token() -> str:
-    token = os.environ.get("SEVALLA_TOKEN", "").strip()
+    """Read the API key from SEVALLA_TOKEN, else from the macOS Keychain."""
+    token = os.environ.get("SEVALLA_TOKEN", "")
+    if not token and shutil.which("security"):
+        token = run(
+            "security", "find-generic-password", "-s", KEYCHAIN_SERVICE, "-w"
+        ).stdout
+    token = token.strip()
     if not token:
         raise Refused(
-            "SEVALLA_TOKEN is not set; create an API key in the Sevalla dashboard "
-            "and export SEVALLA_TOKEN in ~/.zshrc"
+            "no Sevalla API key; store one with: security add-generic-password "
+            f'-s {KEYCHAIN_SERVICE} -a "$USER" -w  (or set SEVALLA_TOKEN)'
         )
     if not token.isprintable():
         raise Refused("the Sevalla API key has a line break or control character")
