@@ -29,6 +29,10 @@ CHECKS = (
     ("just", "ci"),
     ("just", "gitleaks"),
 )
+FORK_HINT = (
+    "For a PR from a fork, read its whole diff first, since the checks run its code, "
+    "then run: bun install --frozen-lockfile && just ci && just gitleaks && gh signoff"
+)
 
 
 class Refused(Exception):
@@ -40,6 +44,10 @@ def git(*args: str) -> str:
     if result.returncode != 0:
         raise Refused(f"git {' '.join(args)} failed: {result.stderr.strip()}")
     return result.stdout.strip()
+
+
+def succeeds(*command: str) -> bool:
+    return subprocess.run(command, capture_output=True).returncode == 0
 
 
 def require_tools() -> None:
@@ -59,10 +67,16 @@ def require_tools() -> None:
             "the gh signoff extension is missing; "
             "run: gh extension install basecamp/gh-signoff"
         )
+    if not succeeds("gh", "auth", "status", "--hostname", "github.com"):
+        raise Refused("gh is not signed in to github.com; run: gh auth login")
+    if not succeeds("git", "config", "user.name"):
+        raise Refused(
+            'git user.name is not set; run: git config --global user.name "..."'
+        )
 
 
 def require_clean_tree() -> None:
-    if git("status", "--porcelain"):
+    if git("status", "--porcelain", "--untracked-files=all"):
         raise Refused(
             "the working tree has uncommitted or untracked files; "
             "commit or stash them, push, then run: just signoff"
@@ -70,26 +84,35 @@ def require_clean_tree() -> None:
 
 
 def require_pushed_head() -> None:
-    try:
-        push_ref = git("rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{push}")
-    except Refused:
+    """Require HEAD to be exactly the tip GitHub has for this branch's upstream."""
+    branch = subprocess.run(
+        ("git", "symbolic-ref", "--quiet", "--short", "HEAD"),
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    if not branch:
         raise Refused(
-            "HEAD has no push branch; run: git push -u origin HEAD. "
-            "For a PR from a fork, run: "
-            "bun install --frozen-lockfile && just ci && just gitleaks && gh signoff"
-        ) from None
-    remote, _, branch = push_ref.partition("/")
-    if not is_ancestor("HEAD", push_ref):
-        git("fetch", "--quiet", remote, branch)
-        if not is_ancestor("HEAD", push_ref):
-            raise Refused(f"HEAD is not pushed to {push_ref}; run: git push")
-
-
-def is_ancestor(commit: str, ref: str) -> bool:
-    return (
-        subprocess.run(("git", "merge-base", "--is-ancestor", commit, ref)).returncode
-        == 0
-    )
+            "HEAD is detached; check out the PR branch, then run: just signoff"
+        )
+    # The upstream names the remote branch exactly; git push -u and gh pr checkout
+    # both set it
+    remote, _, remote_ref = git(
+        "for-each-ref",
+        "--format=%(upstream:remotename)%09%(upstream:remoteref)",
+        f"refs/heads/{branch}",
+    ).partition("\t")
+    if not remote or not remote_ref:
+        raise Refused(
+            f"{branch} has no upstream; run: git push -u origin HEAD. {FORK_HINT}"
+        )
+    git("fetch", "--quiet", remote, remote_ref)
+    head, tip = git("rev-parse", "HEAD"), git("rev-parse", "FETCH_HEAD")
+    if head == tip:
+        return
+    shown = remote_ref.removeprefix("refs/heads/")
+    if succeeds("git", "merge-base", "--is-ancestor", head, tip):
+        raise Refused(f"GitHub has newer commits on {remote}/{shown}; run: git pull")
+    raise Refused(f"HEAD is not pushed to {remote}/{shown}; run: git push")
 
 
 PRECONDITIONS: tuple[Callable[[], None], ...] = (
