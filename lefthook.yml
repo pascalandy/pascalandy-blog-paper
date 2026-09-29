@@ -1,32 +1,30 @@
-# Git hooks configuration
-# Docs: https://github.com/evilmartians/lefthook
+# Git hooks: every command is a just recipe, scoped by glob; jobs run in order.
+# Docs: https://lefthook.dev
+# Silent on success; a failing job replays its output
+output:
+  - failure
 
 pre-commit:
-  parallel: true
   jobs:
-    - name: format
-      run: just format
-      fail_text: "Error while formatting"
+    - name: gitleaks
+      run: just gitleaks-staged
+      fail_text: "A secret is staged, or gitleaks is missing (brew install gitleaks)"
 
-    - name: format-check
-      run: just format-check
-      fail_text: "Formatting issues found. Run 'just format' to fix"
+    - name: format
+      glob: "*.{astro,cjs,css,cts,js,json,jsx,md,mjs,mts,py,ts,tsx,yaml,yml}"
+      run: just format {staged_files}
+      stage_fixed: true
 
     - name: lint
-      run: just lint
-      fail_text: "Linting errors found. Fix them before committing"
+      glob: "*.{astro,cjs,cts,js,jsx,mjs,mts,py,ts,tsx}"
+      run: just lint {staged_files}
 
-    - name: check-tags
-      run: just check-tags
-      fail_text: "Invalid tags found. Check scripts/check-tags.sh"
+    # Posts, the tag registry, or the schema changed: validate the content
+    - name: content
+      glob: "{src/data/blog/*.md,src/tags.ts,src/content.config.ts}"
+      run: just check --only content
 
 pre-push:
-  parallel: true
   jobs:
     - name: check
       run: just check
-      fail_text: "TypeScript errors found. Fix them before pushing"
-
-    - name: build
-      run: just build
-      fail_text: "Build failed. Check image paths or content errors"
