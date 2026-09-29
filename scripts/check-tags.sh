@@ -6,17 +6,11 @@ set -euo pipefail
 
 BLOG_DIR="src/data/blog"
 
-# Verify rg is available
-if ! command -v rg &>/dev/null; then
-    echo "ERROR: ripgrep (rg) is required but not installed"
-    exit 1
-fi
-
 errors=0
 
 # Check for inline array format: tags: [...]
-# rg returns exit 1 when no matches found - that's success for us
-if inline_files=$(rg -l 'tags:\s*\[' "$BLOG_DIR" --glob '*.md' 2>/dev/null); then
+# grep returns exit 1 when no matches found - that's success for us
+if inline_files=$(grep -rlE --include='*.md' 'tags:[[:space:]]*\[' "$BLOG_DIR"); then
     echo "ERROR: Inline array format found (use multi-line bullet format):"
     echo "$inline_files" | while read -r file; do
         echo "  - $file"
