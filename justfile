@@ -9,6 +9,11 @@ set no-exit-message
 default:
     @{{ just_executable() }} --list --unsorted
 
+# Print the blog's state: posts by bucket, tags, site, docs index; --json for one object
+[group('commands')]
+overview *args:
+    @uv run --quiet scripts/overview.py "$@"
+
 # Install dependencies; this also installs the git hooks
 [group('commands')]
 install *args:
