@@ -32,12 +32,16 @@ READY_TIMEOUT = 60.0
 # While its toolbar is on, Astro's dev server marks elements with the absolute
 # path of their source file, which names the checkout it serves
 SOURCE_FILE = re.compile(r'data-astro-source-file="([^"]+)"')
+# What a build reads. Deleting or renaming a file changes its folder's time, so
+# folders count as well as files
+INPUTS = ("src", "public", "astro.config.ts", "package.json", "bun.lock")
 
 EPILOG = """\
 actions:
   up      reuse Pascal's dev server on :4320 when it answers for this checkout;
-          otherwise serve a build on :4330, rebuilt when src/ changed since;
-          print the base URL
+          otherwise serve a build on :4330, rebuilt once a build input (src/,
+          public/, astro.config.ts, package.json, bun.lock) changes; print the
+          base URL
   doctor  read-only: which instance, whether it answers as the blog, and whether
           it is current; exit 1 when it is not worth driving
   down    stop the preview this run started, once its command confirms it,
@@ -113,15 +117,18 @@ def elsewhere(body: str | None) -> str | None:
     return str(files[0])
 
 
-def stale() -> bool:
-    """Whether a file in src/ changed after the last build."""
-    built = ROOT / "dist" / "index.html"
-    if not built.exists():
-        return True
-    newest = max(
-        path.stat().st_mtime for path in (ROOT / "src").rglob("*") if path.is_file()
-    )
-    return built.stat().st_mtime < newest
+def changed(state: dict[str, Any]) -> str | None:
+    """Why this run's build is out of date, or None while it is current."""
+    if not (ROOT / "dist" / "index.html").exists():
+        return "the build is gone"
+    built = state.get("built") or 0
+    for name in INPUTS:
+        top = ROOT / name
+        for path in (top, *top.rglob("*")) if top.is_dir() else (top,):
+            if path.exists() and path.stat().st_mtime > built:
+                name = f"{path.relative_to(ROOT)}{'/' if path.is_dir() else ''}"
+                return f"{name} changed after the build"
+    return None
 
 
 def load() -> dict[str, Any] | None:
@@ -133,10 +140,10 @@ def load() -> dict[str, Any] | None:
     return state if state.get("root") == str(ROOT) else None
 
 
-def save(url: str, pid: int | None = None) -> None:
+def save(url: str, pid: int | None = None, built: float | None = None) -> None:
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     state = {"url": url, "started": pid is not None, "pid": pid, "root": str(ROOT)}
-    STATE.write_text(json.dumps(state), encoding="utf-8")
+    STATE.write_text(json.dumps({**state, "built": built}), encoding="utf-8")
 
 
 def ours(state: dict[str, Any]) -> bool:
@@ -172,7 +179,7 @@ def up() -> str:
             down()
         save(DEV)
         return DEV
-    current = started and ours(state) and not stale()
+    current = started and ours(state) and changed(state) is None
     if current and is_blog(fetch(state["url"] + "/"), title):
         return state["url"]
     if started:
@@ -194,6 +201,7 @@ def up() -> str:
         tail = log.read_text(encoding="utf-8", errors="replace").splitlines()[-15:]
         print("\n".join(tail), file=sys.stderr)
         raise Failure(f"the build failed (log: {log}); run: just check --only build")
+    finished = time.time()
     with (STATE_DIR / "preview.log").open("w", encoding="utf-8") as output:
         preview = subprocess.Popen(
             [
@@ -210,7 +218,7 @@ def up() -> str:
             stderr=subprocess.STDOUT,
             start_new_session=True,
         )
-    save(PREVIEW, preview.pid)
+    save(PREVIEW, preview.pid, finished)
     deadline = time.monotonic() + READY_TIMEOUT
     while time.monotonic() < deadline:
         if is_blog(fetch(PREVIEW + "/"), title):
@@ -237,14 +245,14 @@ def doctor() -> tuple[bool, str]:
         f"answers as {title!r}: {'yes' if healthy else 'no'}",
     ]
     if state["started"]:
-        running, fresh = ours(state), not stale()
+        running, reason = ours(state), changed(state)
         lines.append(
             f"instance: preview started by this run, pid {state['pid']} "
             f"{'running' if running else 'gone'}"
         )
-        if not fresh:
-            lines.append("stale: src/ changed after the build; run: site.py up")
-        healthy = healthy and running and fresh
+        if reason:
+            lines.append(f"stale: {reason}; run: site.py up")
+        healthy = healthy and running and reason is None
     else:
         lines.append("instance: Pascal's dev server, reused; this run never stops it")
         other = elsewhere(body)

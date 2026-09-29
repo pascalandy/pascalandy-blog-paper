@@ -16,7 +16,7 @@ uv run .claude/skills/verify-blog/scripts/site.py up
 It prints the base URL once the site answers, and records it in `cache/verify-blog/server.json`:
 
 - When Pascal's dev server answers on http://localhost:4320, it is reused and never restarted, unless its pages show it serves another checkout, such as the main one seen from a worktree
-- Otherwise it builds the site (`bun run build:ci`, about a minute when cold) and serves the build with `astro preview` on http://127.0.0.1:4330; a later `up` reuses that preview while the build is newer than `src/`, and rebuilds otherwise
+- Otherwise it builds the site (`bun run build:ci`, about a minute when cold) and serves the build with `astro preview` on http://127.0.0.1:4330; a later `up` reuses that preview until a build input changes (`src/`, `public/`, `astro.config.ts`, `package.json`, `bun.lock`), then rebuilds
 - It never starts the dev server: Pascal runs `just dev` himself
 - The state records this checkout's path, so a state copied from another checkout is ignored
 
@@ -28,7 +28,7 @@ Set `URL` to the printed base URL for the commands below.
 uv run .claude/skills/verify-blog/scripts/site.py doctor
 ```
 
-Read-only. It names the instance (Pascal's dev server or this run's preview) and checks that it answers with the blog's title. It exits 1 when `src/` changed after the build or the dev server serves another checkout; exit 0 means worth driving. Run it first whenever anything looks off.
+Read-only. It names the instance (Pascal's dev server or this run's preview) and checks that it answers with the blog's title. It exits 1 when a build input changed after the build or the dev server serves another checkout; exit 0 means worth driving. Run it first whenever anything looks off.
 
 ## Drive
 
