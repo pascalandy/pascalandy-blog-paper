@@ -156,6 +156,12 @@ def overview(state: dict[str, Any], now: datetime) -> dict[str, Any]:
                 f"{entry['file']} lacks {', '.join(missing)}; "
                 "run: just check --only content"
             )
+        tags = data["tags"]
+        if not isinstance(tags, list) or not all(isinstance(tag, str) for tag in tags):
+            raise Failure(
+                f"{entry['file']}: tags must be a list of tag slugs; "
+                "run: just check --only content"
+            )
         date = str(data["date_created"])
         try:
             listed = published(date, margin, now)
