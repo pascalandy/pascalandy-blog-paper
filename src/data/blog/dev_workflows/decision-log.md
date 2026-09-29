@@ -11,14 +11,14 @@ description: "Settled decisions about how this blog is built, one dated line eac
 
 > One dated line per settled decision, newest first, linked to where it was decided. Read the link before proposing to change a decision.
 
-- 2026-09-29 · UI proof runs through the verify-blog skill: it reuses Pascal's dev server on :4320, else previews a build on :4330, and never starts the dev server ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70))
-- 2026-09-29 · Sessions start with `just overview`, computed from the source files, instead of exploring them ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70))
-- 2026-09-29 · `AGENTS.md` is a router of at most 150 lines; `CLAUDE.md` and `GEMINI.md` stay symlinks to it ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70))
-- 2026-09-29 · Posts are in Québec French; code, docs, and commits are in English ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70))
-- 2026-09-29 · Commits follow Pascal's [commit skill](https://github.com/pascalandy/skills/tree/main/skills/commit); `dev_notes/` commits say `update dev_notes` ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70))
-- 2026-09-29 · Playbooks stay public in `src/data/blog/dev_workflows/`; moving them to `/docs` is backlog ticket B10 ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70))
-- 2026-09-29 · Renovate is the only dependency bot ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70))
-- 2026-09-29 · Astro answers come from the Astro docs MCP server, with [llms-small.txt](https://docs.astro.build/llms-small.txt) as the fallback ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70))
+- 2026-09-29 · UI proof runs through the verify-blog skill: it reuses Pascal's dev server on :4320, else previews a build on :4330, and never starts the dev server ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70), [#74](https://github.com/pascalandy/pascalandy-blog-paper/pull/74))
+- 2026-09-29 · Sessions start with `just overview`, computed from the source files, instead of exploring them ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70), [#74](https://github.com/pascalandy/pascalandy-blog-paper/pull/74))
+- 2026-09-29 · `AGENTS.md` is a router of at most 150 lines; `CLAUDE.md` and `GEMINI.md` stay symlinks to it ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70), [#73](https://github.com/pascalandy/pascalandy-blog-paper/pull/73))
+- 2026-09-29 · Posts are in Québec French; code, docs, and commits are in English ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70), [#73](https://github.com/pascalandy/pascalandy-blog-paper/pull/73))
+- 2026-09-29 · Commits follow Pascal's [commit skill](https://github.com/pascalandy/skills/tree/main/skills/commit); `dev_notes/` commits say `update dev_notes` ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70), [#73](https://github.com/pascalandy/pascalandy-blog-paper/pull/73))
+- 2026-09-29 · Playbooks stay public in `src/data/blog/dev_workflows/`; moving them to `/docs` is backlog ticket B10 ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70), [#73](https://github.com/pascalandy/pascalandy-blog-paper/pull/73))
+- 2026-09-29 · Renovate is the only dependency bot ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70), [#73](https://github.com/pascalandy/pascalandy-blog-paper/pull/73))
+- 2026-09-29 · Astro answers come from the Astro docs MCP server, with [llms-small.txt](https://docs.astro.build/llms-small.txt) as the fallback ([#70](https://github.com/pascalandy/pascalandy-blog-paper/issues/70), [#73](https://github.com/pascalandy/pascalandy-blog-paper/pull/73))
 - 2026-09-29 · The frontmatter schema is strict, and every tag must be registered in `src/tags.ts` ([#72](https://github.com/pascalandy/pascalandy-blog-paper/pull/72))
 - 2026-09-29 · `type`, not `interface`, outside declaration files ([#72](https://github.com/pascalandy/pascalandy-blog-paper/pull/72))
 - 2026-09-29 · `just check` is the one verdict, and CI runs exactly it: silent on success, a failing row names its rerun ([#71](https://github.com/pascalandy/pascalandy-blog-paper/pull/71))
