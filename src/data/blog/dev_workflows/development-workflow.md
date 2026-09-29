@@ -122,6 +122,8 @@ security add-generic-password -s sevalla-api-token -a "$USER" -w
 
 The site IDs come from the `SEVALLA_STATIC_SITE_ID` and `SEVALLA_STATIC_SITE_ID_PREVIEW` repository variables through `gh variable get`; export either variable to override it. If you create a new API key, also run `gh secret set SEVALLA_TOKEN` so the manual CI workflow deploys with it.
 
+The CI production job uses GitHub's `production` Environment, which permits deployments only from `main`. The Sevalla token remains a repository secret shared with the preview job; separate production and preview tokens are needed to restrict credential access by branch.
+
 ## GitHub Actions (manual only)
 
 Every workflow runs only when started by hand, except `claude.yml`, which answers `@claude` mentions. GitHub runs a workflow from the branch you name, but it lists a manual workflow only once `main` has it.
