@@ -61,6 +61,7 @@ CHECKS = [
     row("workflows", ACTIONLINT),
     # astro sync validates every post against the schema in src/content.config.ts
     row("content", ("bun", "run", "sync")),
+    row("docs", uv_run("scripts/check_docs.py")),
     row("typecheck", ("bun", "run", "astro", "check")),
     row("build", ("bun", "run", "build:ci")),
 ]
