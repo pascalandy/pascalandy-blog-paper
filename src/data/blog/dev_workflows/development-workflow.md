@@ -41,6 +41,8 @@ Before each commit:
 
 Before each push, `just check` runs.
 
+The staged hook and `just gitleaks` use Gitleaks's built-in rules. They ignore configuration and ignore files from the checked-out branch.
+
 Skip a hook only when you must: `git commit --no-verify` or `git push --no-verify`.
 
 ## CI
