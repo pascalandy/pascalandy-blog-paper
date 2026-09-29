@@ -13,6 +13,7 @@ import json
 import sys
 from pathlib import Path
 from typing import NoReturn
+from urllib.parse import urljoin
 
 from playwright.sync_api import Error, Page, sync_playwright
 
@@ -80,7 +81,8 @@ def run(page: Page, base: str, action: str, argument: str) -> None:
     elif action == "wait":
         page.locator(argument).first.wait_for(state="visible")
     else:
-        page.goto(base.rstrip("/") + "/" + argument.lstrip("/"))
+        # /tags resolves against the site's origin, whatever page it starts from
+        page.goto(urljoin(base, argument))
     page.wait_for_load_state("networkidle")
 
 
