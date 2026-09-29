@@ -45,8 +45,11 @@ exit codes:
 
 VIEWPORTS = {"desktop": {"width": 1440, "height": 900}}
 ACTIONS = ("click", "fill", "press", "wait", "goto")
-# The browser matching the pinned Playwright; a cloud sandbox may ship it already
-INSTALL = "uv run --with playwright==1.56.0 python -m playwright install chromium"
+# The browser matching the pinned Playwright, with the system libraries it needs
+# on Linux; a cloud sandbox may ship both already
+INSTALL = (
+    "uv run --with playwright==1.56.0 python -m playwright install --with-deps chromium"
+)
 
 
 class Parser(argparse.ArgumentParser):
