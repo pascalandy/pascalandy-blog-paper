@@ -28,7 +28,7 @@ Set `URL` to the printed base URL for the commands below.
 uv run .claude/skills/verify-blog/scripts/site.py doctor
 ```
 
-Read-only. It names the instance (Pascal's dev server or this run's preview) and checks that it answers with the blog's title. It exits 1 when a build input changed after the build or the dev server serves another checkout; exit 0 means worth driving. Run it first whenever anything looks off.
+Read-only. It names the instance (Pascal's dev server or this run's preview) and checks that it answers with the blog's title. It exits 1 when a build input changed after the build or the dev server's pages show another checkout; exit 0 means worth driving. Run it first whenever anything looks off.
 
 ## Drive
 

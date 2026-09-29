@@ -38,10 +38,11 @@ INPUTS = ("src", "public", "astro.config.ts", "package.json", "bun.lock")
 
 EPILOG = """\
 actions:
-  up      reuse Pascal's dev server on :4320 when it answers for this checkout;
-          otherwise serve a build on :4330, rebuilt once a build input (src/,
-          public/, astro.config.ts, package.json, bun.lock) changes; print the
-          base URL
+  up      reuse Pascal's dev server on :4320 when it answers, unless its pages
+          name source files in another checkout (Astro marks them while its
+          dev toolbar is on); otherwise serve a build on :4330, rebuilt once a
+          build input (src/, public/, astro.config.ts, package.json, bun.lock)
+          changes; print the base URL
   doctor  read-only: which instance, whether it answers as the blog, and whether
           it is current; exit 1 when it is not worth driving
   down    stop the preview this run started, once its command confirms it,
