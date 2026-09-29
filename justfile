@@ -77,6 +77,12 @@ clean:
 archive:
     rm -rf dist node_modules cache .astro
 
+# === Ship ===
+
+# Scan this branch's commits since origin/main for secrets
+gitleaks:
+    gitleaks git --log-opts="origin/main..HEAD" --no-banner --redact --verbose
+
 # === GitHub Actions (manual only) ===
 
 # Run the CI workflow on GitHub for a pushed ref; deploy is none, preview, or production (main only)
