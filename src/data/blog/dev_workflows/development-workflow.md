@@ -112,13 +112,13 @@ Each PR was signed off on its own, so two PRs can pass separately and still clas
 
 ### Setup
 
-Store a Sevalla API key in the macOS Keychain. The command prompts for the key, so it stays out of your shell history:
+The Sevalla API key is available through chezmoi's keyring on all three machines. Pass it to one deploy command:
 
 ```bash
-security add-generic-password -s sevalla-api-token -a "$USER" -w
+SEVALLA_TOKEN="$(chezmoi secret keyring get --service=SEVALLA_API_KEY --user=api_key)" just deploy
 ```
 
-`just deploy` reads it from there. Setting `SEVALLA_TOKEN` overrides the Keychain, but avoid exporting it in `~/.zshrc`: every command you run, including a checked-out PR's scripts, would inherit the production key.
+Use the same prefix with `just deploy-preview` or `just deploy --dry-run`. The deploy script also reads the macOS Keychain when `SEVALLA_TOKEN` is unset. Keep the token out of shell startup files: every command, including a checked-out PR's scripts, would inherit it.
 
 The site IDs come from the `SEVALLA_STATIC_SITE_ID` and `SEVALLA_STATIC_SITE_ID_PREVIEW` repository variables through `gh variable get`; export either variable to override it. If you create a new API key, also run `gh secret set SEVALLA_TOKEN` so the manual CI workflow deploys with it.
 
