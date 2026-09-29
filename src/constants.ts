@@ -10,12 +10,12 @@ import IconTelegram from "@/assets/icons/IconTelegram.svg";
 import IconPinterest from "@/assets/icons/IconPinterest.svg";
 import { SITE } from "@/config";
 
-interface Social {
+type Social = {
   name: string;
   href: string;
   linkTitle: string;
   icon: (_props: Props) => Element;
-}
+};
 
 export const SOCIALS: Social[] = [
   {

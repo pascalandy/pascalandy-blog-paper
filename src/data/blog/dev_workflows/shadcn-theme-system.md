@@ -1,17 +1,17 @@
 ---
 author: Pascal Andy
-title: "shadcn Theme System for AstroPaper"
-description: "How to use and customize the shadcn/ui compatible theme system in AstroPaper, including adding themes from tweakcn.com"
+title: "shadcn Theme System"
+description: "How to use and customize the blog's shadcn/ui compatible themes, including adding themes from tweakcn.com"
 date_created: 2026-01-11
 tags:
   - dev-notes
 ---
 
-AstroPaper now supports [shadcn/ui](https://ui.shadcn.com/) compatible themes, allowing you to easily apply beautiful, professionally designed color schemes from [tweakcn.com](https://tweakcn.com) and other sources.
+The blog uses [shadcn/ui](https://ui.shadcn.com/) compatible themes, so color schemes from [tweakcn.com](https://tweakcn.com) and other sources drop in as they are.
 
 ## Overview
 
-The theme system uses CSS custom properties (variables) with the modern `oklch()` color format for perceptually uniform colors. Each theme provides both light and dark mode variants that work seamlessly with AstroPaper's existing theme toggle.
+The theme system uses CSS custom properties (variables) with the modern `oklch()` color format for perceptually uniform colors. Each theme provides both light and dark mode variants, which the light/dark toggle switches between.
 
 ### Key Features
 
@@ -25,7 +25,7 @@ The theme system uses CSS custom properties (variables) with the modern `oklch()
 
 ### Theme Structure
 
-Themes are defined in `src/config.ts` using the `THEMES` object:
+Themes are defined in `src/config.ts`: `THEMES` holds every theme, and `ACTIVE_THEME` names the one the site uses. The example below activates `caffeine`:
 
 ```typescript
 import type { ThemeConfig } from "./types";
@@ -63,7 +63,7 @@ export const ACTIVE_THEME: keyof typeof THEMES = "yourThemeName";
 Then rebuild the site:
 
 ```bash
-npm run build
+just build
 ```
 
 ## Adding New Themes
@@ -111,7 +111,7 @@ npm run build
 
 ### Using the Parse Utility
 
-AstroPaper includes a utility to help convert tweakcn JSON to the config format:
+`src/utils/parseTheme.ts` converts tweakcn JSON to the config format:
 
 ```typescript
 import { parseTweakcnTheme, formatThemeAsTS } from "@/utils/parseTheme";
@@ -176,7 +176,7 @@ Or use CSS variables directly:
 
 ## Backward Compatibility
 
-For backward compatibility with existing AstroPaper components:
+Components inherited from AstroPaper use `text-accent`; `src/styles/global.css` maps it to `--primary`:
 
 - `text-accent` maps to `--primary` (the main brand color)
 - All existing Tailwind color utilities continue to work
@@ -220,7 +220,8 @@ export type ThemeConfig = {
 1. **Build time**: `Layout.astro` reads the active theme from `config.ts`
 2. **CSS injection**: Theme colors are injected as CSS variables in the `<head>`
 3. **Tailwind mapping**: `global.css` maps CSS variables to Tailwind color utilities
-4. **Runtime toggle**: The existing light/dark toggle switches `data-theme` attribute
+4. **Runtime toggle**: The light/dark toggle switches the `data-theme` attribute
+5. **OG images**: `src/utils/getOgColors.ts` converts the active theme's colors for the generated OG images; their cache key includes the theme, so switching themes regenerates them
 
 This approach provides:
 

@@ -59,8 +59,11 @@ CHECKS = [
     row("format", uv_run("scripts/tidy.py", "check")),
     row("lint", uv_run("scripts/tidy.py", "lint")),
     row("workflows", ACTIONLINT),
-    # astro sync validates every post against the schema in src/content.config.ts
-    row("content", ("bun", "run", "sync"), ("bash", "scripts/check-tags.sh")),
+    # astro sync validates every post against the schema in src/content.config.ts.
+    # --force clears the content store: without it, a registry edit in
+    # src/tags.ts leaves unchanged posts unvalidated
+    row("content", ("bun", "run", "sync", "--force")),
+    row("docs", uv_run("scripts/check_docs.py")),
     row("typecheck", ("bun", "run", "astro", "check")),
     row("build", ("bun", "run", "build:ci")),
 ]

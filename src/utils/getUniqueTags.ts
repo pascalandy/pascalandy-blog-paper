@@ -2,11 +2,11 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "./slugify";
 import postFilter from "./postFilter";
 
-interface Tag {
+type Tag = {
   tag: string;
   tagName: string;
   count: number;
-}
+};
 
 const getUniqueTags = (posts: CollectionEntry<"blog">[]) => {
   const filteredPosts = posts.filter(postFilter);

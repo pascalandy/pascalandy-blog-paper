@@ -9,7 +9,7 @@ description: Create a new git worktree for parallel development (posts, features
 ## Instructions
 
 Follow the workflow documented in:
-`src/data/blog/dev_workflows/git-worktree-workflow.md`
+`src/data/blog/dev_workflows/worktree-workflow.md`
 
 Execute the **"Agent Instructions: Creating a New Worktree"** section with `$ARGUMENTS` as the feature name.
 

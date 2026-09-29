@@ -10,7 +10,6 @@ on:
       - "LICENSE"
       - ".vscode/**"
       - ".github/*.md"
-      - ".github/ISSUE_TEMPLATE/**"
       - "dev_notes/**"
   # Every pull request, whatever its base branch, so stacked PRs get a verdict
   pull_request:
@@ -51,6 +50,7 @@ jobs:
           path: |
             cache
             !cache/check
+            !cache/data-store.json
           key: astro-cache-${{ runner.os }}-${{ hashFiles('src/assets/**/*', 'astro.config.ts', 'src/config.ts') }}
           restore-keys: |
             astro-cache-${{ runner.os }}-
