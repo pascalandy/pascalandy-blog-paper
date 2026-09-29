@@ -81,4 +81,4 @@ description: "Brief description for SEO and cards"
 - **Tags** must be registered first: see [Tag Visibility System](/blog/dev-workflows/tag-visibility-system/)
 - **Files prefixed with `_`** are excluded from the collection (e.g., `_draft-post.md`)
 - **Subdirectories starting with `_`** are NOT excluded — only filenames matter
-- **Subdirectories** affect the URL path, slugified (e.g., `blog/dev_workflows/post.md` -> `/blog/dev-workflows/post/`)
+- **Subdirectories** affect the URL path, slugified (e.g., `src/data/blog/dev_workflows/frontmatter-schema.md` -> `/blog/dev-workflows/frontmatter-schema/`)
