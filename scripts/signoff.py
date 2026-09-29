@@ -3,7 +3,7 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Run `just ci` and `just gitleaks`, then post a green `signoff` status on the pushed HEAD.
+"""Install, run `just ci` and `just gitleaks`, then post a green `signoff` on the pushed HEAD.
 
 The status is the merge gate for pull requests into main. It belongs to one
 commit, so every push needs a new signoff.
@@ -23,7 +23,12 @@ import subprocess
 import sys
 from collections.abc import Callable
 
-CHECKS = (("just", "ci"), ("just", "gitleaks"))
+# The install runs first so a dependency bump is checked against its own lockfile
+CHECKS = (
+    ("bun", "install", "--frozen-lockfile"),
+    ("just", "ci"),
+    ("just", "gitleaks"),
+)
 
 
 class Refused(Exception):
@@ -39,6 +44,7 @@ def git(*args: str) -> str:
 
 def require_tools() -> None:
     for tool, fix in (
+        ("bun", "install Bun: brew install bun"),
         ("gh", "install the GitHub CLI: brew install gh"),
         ("gitleaks", "install gitleaks: brew install gitleaks"),
         ("just", "install just: brew install just"),
@@ -69,7 +75,8 @@ def require_pushed_head() -> None:
     except Refused:
         raise Refused(
             "HEAD has no push branch; run: git push -u origin HEAD. "
-            "For a PR from a fork, run: just ci && just gitleaks && gh signoff"
+            "For a PR from a fork, run: "
+            "bun install --frozen-lockfile && just ci && just gitleaks && gh signoff"
         ) from None
     remote, _, branch = push_ref.partition("/")
     if not is_ancestor("HEAD", push_ref):
