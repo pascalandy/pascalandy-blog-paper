@@ -31,6 +31,8 @@ Agents pick the first `open` ticket; each fix ships with its own check. Triage a
 | B16 | needs Pascal | "star ac est un projet": a post, a page, or a tag? | Pascal chooses the format |
 | B17 | needs Pascal | Graphite (git stacking): evaluate or adopt? | Pascal decides |
 | B18 | needs Pascal | Mobile checks through `agent-browser -p ios`: the verify-blog skill (#70, M4) documents them | The skill's desktop and iOS agent-browser steps run once on the Mac |
+| B22 | open | Production deploys `branch: main`, not the commit `check` tested: a push that lands while a check runs can go live under the earlier green result | Production ships only a commit that passed `check`; a probe with two quick pushes shows it |
+| B23 | open | The `@claude` workflow's checkout keeps the job token in `.git/config` (`claude.yml`) | A live `@claude` run passes with `persist-credentials: false`, or a comment says why the action needs the token |
 | B19 | done | Astro docs MCP server | `.mcp.json` configures `astro-docs` (#70, M3) |
 | B20 | done | Sitemap integration | `@astrojs/sitemap` runs in `astro.config.ts` |
 | B21 | done | Remove the "Share this post on" block from posts | 0 posts contain it |
