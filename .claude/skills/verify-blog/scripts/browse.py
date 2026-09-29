@@ -26,6 +26,9 @@ Steps run in order, each as ACTION:ARGUMENT, with Playwright selectors such as
   wait:SELECTOR           wait until the element is visible
   goto:PATH               open a path on the same site, such as /tags
 
+A role= name must equal the whole accessible name; a regex, such as
+role=link[name=/^Next/], matches part of it.
+
 Then OUT receives screenshot.png (the viewport, at most 1920 CSS pixels a side),
 aria.txt (the accessibility snapshot), and state.json (url, title, theme, and
 console errors). The paths print on stdout.

@@ -29,7 +29,7 @@ Preconditions:
 - **Check a Mermaid post.** Run `agent-browser open "$URL/blog/dev-workflows/using-mermaid"` and `agent-browser wait ".mermaid-diagram svg"`. Each diagram renders as an SVG inside `.mermaid-diagram`.
 - **Check a draft.** Pick a path from `just overview --json | jq '.posts.buckets.draft[0].url'` and open it. The site answers with its 404 page.
 - **Proof.** Run `agent-browser snapshot -i` and `agent-browser screenshot cache/verify-blog/$RUN/post/post.png`.
-- **Fallback.** Run `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/blog/lhorizon-cest-toi" --out cache/verify-blog/$RUN/post --step 'click:role=link[name="Next"]'`. `state.json` holds the next post's URL and title.
+- **Fallback.** Run `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/blog/lhorizon-cest-toi" --out cache/verify-blog/$RUN/post --step 'click:role=link[name=/^Next/]'`. `state.json` holds the next post's URL and title.
 
 ## Gotchas
 
