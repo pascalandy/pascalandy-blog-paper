@@ -79,7 +79,7 @@ archive:
 
 # === Ship ===
 
-# Run `just ci` and `just gitleaks`, then mark the pushed HEAD green on GitHub; push first
+# Install, run `just ci` and `just gitleaks`, then mark the pushed HEAD green on GitHub; push first
 signoff:
     uv run --quiet scripts/signoff.py
 
