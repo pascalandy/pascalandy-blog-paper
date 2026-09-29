@@ -88,6 +88,8 @@ def read() -> dict[str, Any]:
         raise Failure(
             "bun not found on PATH; install Bun (https://bun.sh), then run: just install"
         )
+    if not (ROOT / "node_modules").is_dir():
+        raise Failure("dependencies are not installed; run: just install")
     result = subprocess.run(
         ["bun", "-e", READ], cwd=ROOT, capture_output=True, text=True, check=False
     )
