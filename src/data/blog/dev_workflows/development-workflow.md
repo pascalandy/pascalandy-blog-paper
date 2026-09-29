@@ -108,44 +108,84 @@ git commit --no-verify -m "message"
 git push --no-verify
 ```
 
-## Preview Deployment
+## Merge Gate: Sign Off
 
-Deploy a preview build to Sevalla on demand using PR labels.
+GitHub Actions no longer runs on pull requests. Your machine runs the checks, and [gh-signoff](https://github.com/basecamp/gh-signoff) posts the result to GitHub as a green `signoff` commit status. `main` merges a PR only when its head commit carries one.
 
-### How it works
-
-1. Create a PR — CI runs checks (lint, format, typecheck, build) but **no deploy**
-2. Add `preview` label — triggers deployment to Sevalla preview instance
-3. Push more commits — continues deploying (label persists)
-4. Remove label — stops future preview deploys
-
-### Commands
+Push the branch, then run:
 
 ```bash
-# Add preview label to current branch's PR
-gh pr edit --add-label "preview"
-
-# Add preview label by PR number
-gh pr edit 123 --add-label "preview"
-
-# Create PR with preview label
-gh pr create --title "Your title" --label "preview"
-
-# Remove preview label
-gh pr edit --remove-label "preview"
+just signoff
 ```
 
-### AI Assistant Prompt
+It refuses in about a second when a tool is missing, the working tree has changes, or HEAD is not pushed. Then it runs `just ci` and `just gitleaks`, and only when both pass does `gh signoff` mark HEAD green. The status belongs to that one commit, so every push needs a new signoff. Leave the checkout alone until it finishes: if HEAD moves during the run, it signs nothing.
 
-```
-Add the preview label to this PR
+| Situation                               | Do                                                                                  |
+| --------------------------------------- | ----------------------------------------------------------------------------------- |
+| Refused: HEAD not pushed                | `git push`, or `git push -u origin HEAD` for a new branch, then `just signoff`      |
+| Refused: uncommitted or untracked files | Commit or remove them, push, then `just signoff`                                    |
+| A check failed                          | Fix it, commit, push, then `just signoff`                                           |
+| Pushed more commits                     | `just signoff` again                                                                |
+| A PR from an agent or Renovate          | `gh pr checkout <number> && just signoff`; auto-merge completes once it is green    |
+| Stacked PRs                             | Sign off each layer; a restack changes every head, so sign off each again           |
+| Did this commit get signed off?         | `gh signoff status`                                                                 |
+| Merge blocked on `signoff`              | Sign off the PR head, then merge; never merge with `gh pr merge --admin` to skip it |
+| Want a run on a clean machine           | `just gh-ci <branch>`, then `gh run watch`                                          |
+
+Agents in Claude Code on the web have no `gh`, so they run `just ci` and report the result; Pascal signs off.
+
+### One-time setup
+
+```bash
+brew install gh gitleaks uv
+gh extension install basecamp/gh-signoff
+
+# Once per repository: require signoff to merge into main
+gh signoff install
+gh signoff check
 ```
 
-Or if no PR exists:
+`gh signoff install` creates the `signoff` ruleset on `main`: it requires the `signoff` status to merge a PR, and it blocks force pushes and deleting `main`. Repository admins bypass it, so a direct push to `main` still works.
 
+## Deploy
+
+Merging no longer deploys. Sevalla builds from GitHub, so push first, then deploy from the terminal:
+
+```bash
+# Ship GitHub's main to production and wait for the build
+just deploy
+
+# Ship a pushed branch, the current one by default, to the preview site
+just deploy-preview
+just deploy-preview my-branch
+
+# Check the setup without deploying
+just deploy --dry-run
 ```
-Create a PR with the preview label
+
+`just deploy-preview` refuses a branch that GitHub does not have, or whose local tip differs from GitHub's, so the preview matches your checkout. Add `--no-wait` to return as soon as Sevalla accepts the deployment.
+
+### Setup
+
+Export a Sevalla API key in `~/.zshrc`:
+
+```bash
+export SEVALLA_TOKEN="..."
 ```
+
+The site IDs come from the `SEVALLA_STATIC_SITE_ID` and `SEVALLA_STATIC_SITE_ID_PREVIEW` repository variables through `gh variable get`; export either variable to override it. If you create a new API key, also run `gh secret set SEVALLA_TOKEN` so the manual CI workflow deploys with it.
+
+## GitHub Actions (manual only)
+
+Every workflow runs only when started by hand, except `claude.yml`, which answers `@claude` mentions. GitHub runs a workflow from the branch you name, but it lists a manual workflow only once `main` has it.
+
+| Recipe                      | Workflow         | What it does                                                                             |
+| --------------------------- | ---------------- | ---------------------------------------------------------------------------------------- |
+| `just gh-ci [ref] [deploy]` | `ci.yml`         | Lint, format check, typecheck, and build; `deploy` is `none`, `preview`, or `production` |
+| `just gh-gitleaks [ref]`    | `gitleaks.yml`   | Scan the full git history for secrets                                                    |
+| `just gh-labels <pr>`       | `pr-labeler.yml` | Label a PR from the paths it changes, per `.github/labeler.yml`                          |
+
+`ref` defaults to the current branch. `production` deploys only `main` and fails on any other ref. The local equivalents are `just ci`, `just gitleaks`, and `just deploy`.
 
 ## Notes
 
