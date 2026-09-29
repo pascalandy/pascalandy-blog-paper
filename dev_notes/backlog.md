@@ -30,7 +30,7 @@ Agents pick the first `open` ticket; each fix ships with its own check. Triage a
 | B15 | needs Pascal | "Rester en contact": an email sign-up form | Pascal decides on the form and its copy |
 | B16 | needs Pascal | "star ac est un projet": a post, a page, or a tag? | Pascal chooses the format |
 | B17 | needs Pascal | Graphite (git stacking): evaluate or adopt? | Pascal decides |
-| B18 | in progress | Mobile checks through `agent-browser -p ios` | The verify-blog skill (#70, M4) drives the iOS profile |
+| B18 | needs Pascal | Mobile checks through `agent-browser -p ios`: the verify-blog skill (#70, M4) documents them | The skill's desktop and iOS agent-browser steps run once on the Mac |
 | B19 | done | Astro docs MCP server | `.mcp.json` configures `astro-docs` (#70, M3) |
 | B20 | done | Sitemap integration | `@astrojs/sitemap` runs in `astro.config.ts` |
 | B21 | done | Remove the "Share this post on" block from posts | 0 posts contain it |
