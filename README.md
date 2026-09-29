@@ -18,7 +18,7 @@ brew install bun just uv gh gitleaks
 gh extension install basecamp/gh-signoff
 
 # Verify installation
-bun --version && just --version && uv --version && gh signoff --help >/dev/null && gitleaks version
+bun --version && just --version && uv --version && gh signoff version && gitleaks version
 ```
 
 ## Quick Start

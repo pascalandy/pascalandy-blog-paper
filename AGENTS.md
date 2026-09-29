@@ -39,7 +39,7 @@ Atomic commits only. "and" in msg = split it.
 For files under `dev_notes`, simply commit with -m "update dev_notes". This is my scratchpad.
 
 ### Merge and deploy
-GitHub Actions runs only by hand (`just gh-ci`). `main` merges a PR only when its head commit carries a green `signoff` status.
+The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just gh-gitleaks`, `just gh-labels`). `main` merges a PR only when its head commit carries a green `signoff` status.
 - Agents run `just ci` and report the result; Pascal runs `just signoff` on the pushed head
 - Never merge with `gh pr merge --admin` to skip the gate
 - Merging does not deploy: `just deploy` ships main

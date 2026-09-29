@@ -128,6 +128,7 @@ It refuses in about a second when a tool is missing, the working tree has change
 | Pushed more commits                     | `just signoff` again                                                                |
 | A PR from an agent or Renovate          | `gh pr checkout <number> && just signoff`; auto-merge completes once it is green    |
 | Stacked PRs                             | Sign off each layer; a restack changes every head, so sign off each again           |
+| A PR from a fork                        | `gh pr checkout <number>`, then `just ci && just gitleaks && gh signoff`            |
 | Did this commit get signed off?         | `gh signoff status`                                                                 |
 | Merge blocked on `signoff`              | Sign off the PR head, then merge; never merge with `gh pr merge --admin` to skip it |
 | Want a run on a clean machine           | `just gh-ci <branch>`, then `gh run watch`                                          |
@@ -136,11 +137,9 @@ Agents in Claude Code on the web have no `gh`, so they run `just ci` and report 
 
 ### One-time setup
 
-```bash
-brew install gh gitleaks uv
-gh extension install basecamp/gh-signoff
+Install the prerequisites listed in the README, including the gh-signoff extension. Then, once per repository, require signoff to merge into `main`:
 
-# Once per repository: require signoff to merge into main
+```bash
 gh signoff install
 gh signoff check
 ```
