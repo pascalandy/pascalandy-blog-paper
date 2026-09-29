@@ -39,9 +39,10 @@ Atomic commits only. "and" in msg = split it.
 For files under `dev_notes`, simply commit with -m "update dev_notes". This is my scratchpad.
 
 ### Merge and deploy
-The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just gh-gitleaks`, `just gh-labels`). `main` merges a PR only when its head commit carries a green `signoff` status.
+The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just gh-gitleaks`, `just gh-labels`). A PR merges into `main` only with a green `signoff` status on its head commit; admins can bypass that rule, so never bypass it.
 - Agents run `just ci` and report the result; Pascal runs `just signoff` on the pushed head
-- Never merge with `gh pr merge --admin` to skip the gate
+- Agents never merge PRs, run `just signoff` or `gh signoff`, or run `just deploy`, unless Pascal asks
+- Never merge with `gh pr merge --admin` or the bypass option to skip the gate
 - Merging does not deploy: `just deploy` ships main
 - Details: `src/data/blog/dev_workflows/development-workflow.md`
 

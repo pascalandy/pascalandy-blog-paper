@@ -110,7 +110,7 @@ git push --no-verify
 
 ## Merge Gate: Sign Off
 
-GitHub Actions no longer runs on pull requests. Your machine runs the checks, and [gh-signoff](https://github.com/basecamp/gh-signoff) posts the result to GitHub as a green `signoff` commit status. `main` merges a PR only when its head commit carries one.
+CI no longer runs on pull requests. Your machine runs the checks, and [gh-signoff](https://github.com/basecamp/gh-signoff) posts the result to GitHub as a green `signoff` commit status. Once the one-time setup below is done, `main` merges a PR only when its head commit carries one. Repository admins can bypass that rule, so the gate holds only if nobody bypasses it.
 
 Push the branch, then run:
 
@@ -118,22 +118,23 @@ Push the branch, then run:
 just signoff
 ```
 
-It refuses in about a second when a tool is missing, the working tree has changes, or HEAD is not pushed. Then it runs `just ci` and `just gitleaks`, and only when both pass does `gh signoff` mark HEAD green. The status belongs to that one commit, so every push needs a new signoff. Leave the checkout alone until it finishes: if HEAD moves during the run, it signs nothing.
+It refuses in about a second when a tool is missing, `gh` is signed out, the working tree has changes, or HEAD is not exactly the commit GitHub has for the branch. Then it runs `bun install --frozen-lockfile`, `just ci`, and `just gitleaks`, and only when all three pass does `gh signoff` mark HEAD green. The install step means a dependency bump is built with its new packages, and a `package.json` change without its `bun.lock` fails. The status belongs to that one commit, so every push needs a new signoff. Leave the checkout alone until it finishes: if HEAD moves during the run, it signs nothing.
 
-| Situation                               | Do                                                                                  |
-| --------------------------------------- | ----------------------------------------------------------------------------------- |
-| Refused: HEAD not pushed                | `git push`, or `git push -u origin HEAD` for a new branch, then `just signoff`      |
-| Refused: uncommitted or untracked files | Commit or remove them, push, then `just signoff`                                    |
-| A check failed                          | Fix it, commit, push, then `just signoff`                                           |
-| Pushed more commits                     | `just signoff` again                                                                |
-| A PR from an agent or Renovate          | `gh pr checkout <number> && just signoff`; auto-merge completes once it is green    |
-| Stacked PRs                             | Sign off each layer; a restack changes every head, so sign off each again           |
-| A PR from a fork                        | `gh pr checkout <number>`, then `just ci && just gitleaks && gh signoff`            |
-| Did this commit get signed off?         | `gh signoff status`                                                                 |
-| Merge blocked on `signoff`              | Sign off the PR head, then merge; never merge with `gh pr merge --admin` to skip it |
-| Want a run on a clean machine           | `just gh-ci <branch>`, then `gh run watch`                                          |
+| Situation                               | Do                                                                                                                                                                                     |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Refused: HEAD not pushed                | `git push`, or `git push -u origin HEAD` for a new branch, then `just signoff`                                                                                                         |
+| Refused: GitHub has newer commits       | `git pull`, then `just signoff`                                                                                                                                                        |
+| Refused: uncommitted or untracked files | Commit or remove them, push, then `just signoff`                                                                                                                                       |
+| A check failed                          | Fix it, commit, push, then `just signoff`                                                                                                                                              |
+| Pushed more commits                     | `just signoff` again                                                                                                                                                                   |
+| A PR from an agent or Renovate          | `gh pr checkout <number> && just signoff`; Renovate's automerge PRs then merge by themselves                                                                                           |
+| Stacked PRs                             | Sign off each layer; a restack changes every head, so sign off each again                                                                                                              |
+| A PR from a fork                        | Read the whole diff first, since the checks run its code on your machine; then `gh pr checkout <number>` and `bun install --frozen-lockfile && just ci && just gitleaks && gh signoff` |
+| Did this commit get signed off?         | `gh signoff status`                                                                                                                                                                    |
+| Merge blocked on `signoff`              | Sign off the PR head, then merge; never merge with `gh pr merge --admin` to skip it                                                                                                    |
+| Want a run on a clean machine           | `just gh-ci <branch>`, then `gh run watch`                                                                                                                                             |
 
-Agents in Claude Code on the web have no `gh`, so they run `just ci` and report the result; Pascal signs off.
+Agents run `just ci` and report the result; Pascal signs off. Claude Code on the web has no `gh`, and agents never sign off, merge, or deploy unless Pascal asks.
 
 ### One-time setup
 
@@ -162,15 +163,19 @@ just deploy-preview my-branch
 just deploy --dry-run
 ```
 
-`just deploy-preview` refuses a branch that GitHub does not have, or whose local tip differs from GitHub's, so the preview matches your checkout. Add `--no-wait` to return as soon as Sevalla accepts the deployment.
+`just deploy-preview` refuses a branch that GitHub does not have, or a local branch whose last commit differs from GitHub's. Uncommitted changes never ship. Add `--no-wait` to return as soon as Sevalla accepts the deployment.
+
+Each PR was signed off on its own, so two PRs can pass separately and still clash once both are on `main`. After several merges, run `just ci` on an up-to-date `main`, or `just gh-ci main`, before `just deploy`.
 
 ### Setup
 
-Export a Sevalla API key in `~/.zshrc`:
+Store a Sevalla API key in the macOS Keychain. The command prompts for the key, so it stays out of your shell history:
 
 ```bash
-export SEVALLA_TOKEN="..."
+security add-generic-password -s sevalla-api-token -a "$USER" -w
 ```
+
+`just deploy` reads it from there. Setting `SEVALLA_TOKEN` overrides the Keychain, but avoid exporting it in `~/.zshrc`: every command you run, including a checked-out PR's scripts, would inherit the production key.
 
 The site IDs come from the `SEVALLA_STATIC_SITE_ID` and `SEVALLA_STATIC_SITE_ID_PREVIEW` repository variables through `gh variable get`; export either variable to override it. If you create a new API key, also run `gh secret set SEVALLA_TOKEN` so the manual CI workflow deploys with it.
 
