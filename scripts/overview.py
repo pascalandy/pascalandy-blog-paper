@@ -19,21 +19,41 @@ from typing import Any, NoReturn
 
 ROOT = Path(__file__).resolve().parent.parent
 BLOG = "src/data/blog"
+# The files the content collection loads: `_` names are skipped
+POSTS = f"{BLOG}/**/[!_]*.md"
 PLAYBOOKS = f"{BLOG}/dev_workflows/"
 
-# The registry, the site config, and every post's frontmatter, read by Bun from
-# the source files, so no value is copied here. Frontmatter goes through the regex
-# and the js-yaml parser behind Astro's parseFrontmatter
-READ = (
-    'const { TAGS } = await import("./src/tags.ts"); '
-    'const { SITE, ACTIVE_THEME } = await import("./src/config.ts"); '
-    'const yaml = (await import("js-yaml")).default; '
-    "const posts = []; "
-    f'for await (const file of new Bun.Glob("{BLOG}/**/*.md").scan(".")) '
-    "posts.push({ file, data: yaml.load("
-    "/(?:^\\uFEFF?|^\\s*\\n)---([\\s\\S]*?\\n)---/.exec(await Bun.file(file).text())[1]) }); "
-    "console.log(JSON.stringify({ site: SITE, theme: ACTIVE_THEME, tags: TAGS, posts }));"
-)
+# The registry, the site config, and the frontmatter of each post matching the
+# glob in argv, read by Bun from the source files, so no value is copied here.
+# Frontmatter goes through the regex and the js-yaml parser behind Astro's
+# parseFrontmatter. Errors print as FILE:LINE:COLUMN: MESSAGE, with no stack trace
+READ = """
+try {
+  const { TAGS } = await import("./src/tags.ts");
+  const { SITE, ACTIVE_THEME } = await import("./src/config.ts");
+  const yaml = (await import("js-yaml")).default;
+  const posts = [];
+  for await (const file of new Bun.Glob(process.argv[1]).scan(".")) {
+    const text = await Bun.file(file).text();
+    const match = /(?:^\\uFEFF?|^\\s*\\n)---([\\s\\S]*?\\n)---/.exec(text);
+    try {
+      posts.push({ file, data: (match && yaml.load(match[1])) || {} });
+    } catch (error) {
+      throw new Error(`${file}: ${error.message}`);
+    }
+  }
+  console.log(JSON.stringify({ site: SITE, theme: ACTIVE_THEME, tags: TAGS, posts }));
+} catch (error) {
+  for (const cause of error.errors ?? [error]) {
+    const at = cause.position ?? {};
+    const where = at.file ? `${at.file}:${at.line}:${at.column}: ` : "";
+    console.error(where + cause.message);
+  }
+  process.exit(1);
+}
+"""
+# The fields this script reads; the schema requires each of them
+FIELDS = ("title", "date_created", "tags", "description")
 
 BUCKETS = ("draft", "scheduled", "excluded_by_tag", "blog_roll")
 
@@ -91,7 +111,11 @@ def read() -> dict[str, Any]:
     if not (ROOT / "node_modules").is_dir():
         raise Failure("dependencies are not installed; run: just install")
     result = subprocess.run(
-        ["bun", "-e", READ], cwd=ROOT, capture_output=True, text=True, check=False
+        ["bun", "-e", READ, POSTS],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
     )
     if result.returncode != 0:
         sys.stderr.write(result.stderr)
@@ -125,10 +149,21 @@ def overview(state: dict[str, Any], now: datetime) -> dict[str, Any]:
     featured, docs = [], []
     counts: dict[str, int] = dict.fromkeys(registry, 0)
     for entry in sorted(state["posts"], key=lambda post: post["file"]):
-        if Path(entry["file"]).name.startswith("_"):
-            continue
-        data = entry["data"]
+        data = entry["data"] if isinstance(entry["data"], dict) else {}
+        missing = [field for field in FIELDS if field not in data]
+        if missing:
+            raise Failure(
+                f"{entry['file']} lacks {', '.join(missing)}; "
+                "run: just check --only content"
+            )
         date = str(data["date_created"])
+        try:
+            listed = published(date, margin, now)
+        except ValueError:
+            raise Failure(
+                f"{entry['file']}: date_created {date!r} is not a date; "
+                "run: just check --only content"
+            ) from None
         post = {
             "title": data["title"],
             "date": date[:10],
@@ -138,7 +173,7 @@ def overview(state: dict[str, Any], now: datetime) -> dict[str, Any]:
         }
         if data.get("draft"):
             bucket = "draft"
-        elif not published(date, margin, now):
+        elif not listed:
             bucket = "scheduled"
         elif set(data["tags"]) & excluded:
             bucket = "excluded_by_tag"
