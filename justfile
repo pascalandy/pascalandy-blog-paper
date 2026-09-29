@@ -1,78 +1,68 @@
-# Justfile for Astro blog
-# Run `just` to see available recipes
+# Bare `just` lists these in file order: the commands you run most, then checks.
+# Each recipe is one line that calls one script or tool; logic lives in scripts/.
+# Without just installed: uvx --from rust-just just <recipe>
+set positional-arguments
+# Every script and tool reports its own errors
+set no-exit-message
 
-set shell := ["bash", "-euo", "pipefail", "-c"]
+[private]
+default:
+    @{{ just_executable() }} --list --unsorted
 
-# === Setup ===
-
-# Install dependencies
-install:
-    bun install
+# Install dependencies; this also installs the git hooks
+[group('commands')]
+install *args:
+    @bun install "$@"
 
 alias i := install
 
-# === Code Quality (base recipes) ===
+# Start the dev server, on port 4320 unless given another; Pascal runs it, agents do not
+[group('commands')]
+dev port="4320" *args:
+    @uv run --quiet scripts/pretty.py bun run dev --port "$@"
 
-# Run ESLint
-lint:
-    bun run lint | tspin
+# Format, then run the verdict: the last step before a commit
+[group('commands')]
+qa: format check
 
-# Format code with Prettier
-format:
-    bun run format | tspin
+# Format files, or the whole repo, with Prettier and ruff
+[group('commands')]
+format *files:
+    @uv run --quiet scripts/tidy.py format "$@"
 
-# Check formatting without changes
-format-check:
-    bun run format:check | tspin
+# Build the production site into dist/
+[group('commands')]
+build *args:
+    @uv run --quiet scripts/pretty.py bun run build "$@"
 
-# Validate tags
-check-tags:
-    ./scripts/check-tags.sh
+# Serve the production build from dist/
+[group('commands')]
+preview *args:
+    @uv run --quiet scripts/pretty.py bun run preview "$@"
 
-# === Build (base recipes) ===
-
-# Build for production
-build:
-    bun run build | tspin
-
-# Run Astro check
-check:
-    bun run sync && bun astro check | tspin
-
-# Preview production build
-preview:
-    bun run preview | tspin
-
-# === Development (composite recipes) ===
-
-# Full workflow: lint, format, then dev server
-dev port="4320":
-    just lint
-    just format
-    just format-check
-    bun run dev --port {{port}} | tspin
-
-# QA workflow for agents (with autoformat, no server)
-qa:
-    just lint
-    just format
-    just format-check
-    just check-tags
-    just build
-
-# CI workflow (no autoformat)
-ci:
-    just lint
-    just format-check
-    just check-tags
-    just build
-
-# === Cleanup ===
-
-# Remove build artifacts and cache
+# Delete build output and caches
+[group('commands')]
 clean:
-    rm -rf dist cache .astro
+    @rm -rf dist cache .astro
 
-# Deep clean before archiving workspace (removes node_modules)
+# Delete build output, caches, and dependencies before archiving a workspace
+[group('commands')]
 archive:
-    rm -rf dist node_modules cache .astro
+    @rm -rf dist cache .astro node_modules
+
+# Run the same verdict as CI; --list names each check, --only NAME reruns one
+[group('checks')]
+check *args:
+    @uv run --quiet scripts/check.py "$@"
+
+alias ci := check
+
+# Lint files, or the whole repo, with ESLint and ruff
+[group('checks')]
+lint *files:
+    @uv run --quiet scripts/tidy.py lint "$@"
+
+# Scan staged changes for secrets; lefthook runs it on every commit
+[group('checks')]
+gitleaks-staged:
+    @gitleaks git --staged --no-banner --redact --log-level warn --verbose --no-color
