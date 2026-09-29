@@ -4,9 +4,10 @@ Pascal Andy's blog, [pascalandy.com/blog](https://pascalandy.com/blog/): Astro 5
 
 ## First moves
 
-1. Run `just` to list the recipes, and `just check --list` to list the checks
-2. Read only the route below that matches your task
-3. Before you report done, run `just check`: it prints nothing when every check passes, and a failure prints `NAME failed; rerun: just check --only NAME`
+1. Run `just overview` for the blog's state: posts by bucket, featured and latest posts, tags with their flags, site language and theme, and the docs index (`--json` for one object)
+2. Run `just` to list the recipes, and `just check --list` to list the checks
+3. Read only the route below that matches your task
+4. Before you report done, run `just check`: it prints nothing when every check passes, and a failure prints `NAME failed; rerun: just check --only NAME`
 
 ## Trust map
 
@@ -42,13 +43,7 @@ When sources disagree, trust them in this order:
 | Dependencies              | [updating dependencies](src/data/blog/dev_workflows/how-to-update-dependencies.md), [`renovate.json`](renovate.json)                    |
 | Astro APIs                | the `astro-docs` MCP server in `.mcp.json`; fallback https://docs.astro.build/llms-small.txt                                            |
 | Pick work                 | `dev_notes/backlog.md`                                                                                                                  |
-| Check the UI in a browser | Browser checks, below                                                                                                                   |
-
-## Browser checks
-
-- Drive the site with `agent-browser` (run `agent-browser --help`); Pascal's dev server answers on http://localhost:4320/
-- Keep the viewport at most 1920×1920: larger crashes the browser
-- Shrink each screenshot before reading it: `magick mogrify -resize '1920x1920>' -quality 70 FILE`
+| Check the UI in a browser | the [verify-blog skill](.claude/skills/verify-blog/SKILL.md): launch, drive, and capture evidence without touching the dev server      |
 
 ## Git and pull requests
 
