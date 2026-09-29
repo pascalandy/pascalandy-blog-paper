@@ -68,7 +68,7 @@ astro.config.ts → src/config.ts + content.config + src/constants
 `/` home | `/blog/[...page]` list | `/blog/[...slug]/` post | `/tags/[tag]/` filter | `/search/` | `/rss.xml`
 
 ## Post Visibility
-- Drafts: dev only | Scheduled: visible after pubDatetime-15min
+- Drafts: never built, dev included | Future `date_created`: unlisted until 15 min before, page still built
 
 ## Dev Cmds
 - USER runs dev server, not agent (if not ask)
@@ -89,7 +89,7 @@ astro.config.ts → src/config.ts + content.config + src/constants
 `src/config.ts` THEMES/ACTIVE_THEME | 19 OKLCH vars per mode | shadcn compatible
 
 ## Content
-Posts: `src/data/blog/` | Zod validated | `_` prefix = ignored | subdirs preserved in URL
+Posts: `src/data/blog/` | strict schema `src/content.config.ts`: unknown keys and unregistered tags fail `just check --only content` | register tags in `src/tags.ts` | `_` prefix = ignored | subdirs preserved in URL
 
 ## Dev Workflow Docs
 Documentation for development workflows is published publicly on the blog:
