@@ -42,3 +42,6 @@ public/pagefind
 
 # personal Claude Code permissions
 .claude/settings.local.json
+
+# Python bytecode from scripts that import each other
+__pycache__/

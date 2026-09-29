@@ -10,7 +10,6 @@ on:
       - "LICENSE"
       - ".vscode/**"
       - ".github/*.md"
-      - ".github/ISSUE_TEMPLATE/**"
       - "dev_notes/**"
   # Every pull request, whatever its base branch, so stacked PRs get a verdict
   pull_request:

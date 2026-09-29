@@ -1,103 +1,75 @@
-## Project overview using progressive disclosure
+# pascalandy-blog-paper
 
-1. Read and understand: `.napkin/NAPKIN.md`
-2. run `napkin overview --json`
+Pascal Andy's blog, [pascalandy.com/blog](https://pascalandy.com/blog/): Astro 5, TypeScript strict, Tailwind v4, Pagefind, Bun. It began as a fork of AstroPaper. `CLAUDE.md` and `GEMINI.md` are symlinks to this file, so every agent reads the same contract.
 
----
+## First moves
 
-# Project Preferences
+1. Run `just overview` for the blog's state: posts by bucket, featured and latest posts, tags with their flags, site language and theme, and the docs index (`--json` for one object)
+2. Run `just` to list the recipes, and `just check --list` to list the checks
+3. Read only the route below that matches your task
+4. Before you report done, run `just check`: it prints nothing when every check passes, and a failure prints `NAME failed; rerun: just check --only NAME`
 
-## Project overview using progressive disclosure
+## Trust map
 
-1. Read and understand: `.napkin/NAPKIN.md`
-2. run `napkin overview --json`
+When sources disagree, trust them in this order:
 
-## Browser, esign/Style
-- the user will ask you to test something on the website, like:
-  - http://localhost:4320/
-  - http://localhost:4320/blog/lhorizon-cest-toi
-  - http://localhost:4320/tags
-- run` agent-browser --help` to see avail cmd, go!
+1. Code and config: `src/`, `astro.config.ts`, `justfile`, `scripts/`, `lefthook.yml`, `.github/workflows/`
+2. The output of `just check`
+3. This contract, then the playbooks in `src/data/blog/dev_workflows/`
+4. The [decision log](src/data/blog/dev_workflows/decision-log.md), for why things are the way they are
+5. `dev_notes/`: Pascal's scratchpad, never authoritative and often stale
 
-**Rules**:
-- Max viewport: 1920X1920 (prevents crash)
-- resize_page before screenshots
-  - magick mogrify -resize '1920x1920>' -quality 70 {filename}
+## Judgment rules
 
-## Just Recipes
-- Run `just` to list recipes. `just qa` = format, then `just check`
+- Posts are in Québec French; code, docs, and commits are in English
+- Pascal runs the dev server on port 4320; agents start it only when he asks
+- Never hardcode colors: use the theme variables from `src/config.ts`
+- Prefer a check over a sentence: when a rule matters, add a row to `scripts/check.py` or a constraint to `src/content.config.ts`
+- Do not re-propose a settled decision; read its line in the decision log first
+- Keep scope: a defect outside the task becomes a ticket in `dev_notes/backlog.md`, not a drive-by fix
+- Code conventions that no tool enforces: imports go external, then `@/`, then relative, then types; components are PascalCase, utils camelCase, constants SCREAMING_SNAKE; Tailwind conditionals use `class:list`; `app-layout` is the container utility
 
-## To test this app
-- Run `just check`: the CI verdict, silent on success. A failure prints its rerun command, `just check --only NAME`; `just check --list` names the checks
+## Routes: read on demand
 
-## Git
-Atomic commits only. "and" in msg = split it.
-- `git status` + `git diff --stat`
-- Group by purpose, not filetype
-- Separate commits per logical change
+| Task                      | Read                                                                                                                                    |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Write or edit a post      | `src/content.config.ts` (schema), `src/tags.ts` (tag registry), [frontmatter schema](src/data/blog/dev_workflows/frontmatter-schema.md) |
+| Tags and their visibility | [tag visibility](src/data/blog/dev_workflows/tag-visibility-system.md)                                                                  |
+| Images in posts           | [image paths](src/data/blog/dev_workflows/image_path.md)                                                                                |
+| Theme and colors          | [theme system](src/data/blog/dev_workflows/shadcn-theme-system.md)                                                                      |
+| Mermaid diagrams          | [Mermaid](src/data/blog/dev_workflows/using-mermaid.md)                                                                                 |
+| Recipes, hooks, CI        | [development workflow](src/data/blog/dev_workflows/development-workflow.md)                                                             |
+| Parallel work             | [worktrees](src/data/blog/dev_workflows/worktree-workflow.md), or the [`/worktree`](.claude/commands/worktree.md) command               |
+| Dependencies              | [updating dependencies](src/data/blog/dev_workflows/how-to-update-dependencies.md), [`renovate.json`](renovate.json)                    |
+| Astro APIs                | the `astro-docs` MCP server in `.mcp.json`; fallback https://docs.astro.build/llms-small.txt                                            |
+| Pick work                 | `dev_notes/backlog.md`                                                                                                                  |
+| Check the UI in a browser | the [verify-blog skill](.claude/skills/verify-blog/SKILL.md): launch, drive, and capture evidence without touching the dev server      |
 
-For files under `dev_notes`, simply commit with -m "update dev_notes". This is my scratchpad.
+## Git and pull requests
 
-### PR File Limit
-Max 96 files per PR (Greptile skips review above this).
+- Commits follow Pascal's [commit skill](https://github.com/pascalandy/skills/tree/main/skills/commit): one logical change per commit, and a subject that needs "and" means two commits
+- Commit files under `dev_notes/` with the message `update dev_notes`
+- Never skip hooks with `--no-verify` unless Pascal says so
+- Keep a PR under 96 files, since Greptile skips larger ones: past 90, push a subset, get the review, then push the rest
+- Split large work into stacked PRs, each based on the branch below it
+- Fill the PR template: summary, evidence, and what you could not confirm
 
-**When exceeding 90 files** (common with bulk content updates):
-1. Stage only a subset of files (< 90) for initial PR
-2. Push, wait for CI + Greptile review
-3. Once approved, commit remaining files
-4. Push again (Greptile already reviewed the logic)
+## Gotchas
 
-Example: 110 content files changed → push 80 first, get review, then push remaining 30.
+- Drafts never build, dev included. A future `date_created` keeps a post out of listings and RSS until 15 minutes before, but its page still builds
+- A post may use only the frontmatter keys in `src/content.config.ts` and the tags in `src/tags.ts`; `just check --only content` names any other
+- A `_` prefix removes a file from the collection; a `_` folder stays in it but drops out of the URL
+- Folder names are slugified in URLs: `dev_workflows/` publishes at `/blog/dev-workflows/`
+- Posts that share a `date_created` can swap places between builds (backlog B9)
+- ruff formats Python code blocks inside Markdown by default; `ruff.toml` limits it to `*.py`
+- The build fetches Google Fonts for OG images; `cache/` keeps them, with the optimized images, between builds
+- The playbooks are public blog posts: write them for readers
 
-## Stack
-- Astro 5 | TS strict | Tailwind v4 | Pagefind
+## Leave a trace
 
-## Astro Docs
-- Index: docs.astro.build/llms-small.txt
+Before you finish, record what the next session needs:
 
-## Architecture
-```
-astro.config.ts → src/config.ts + content.config + src/constants
-                         ↓
-              src/layouts/ (SEO, themes, transitions)
-                         ↓
-         src/pages/ + src/components/ + src/utils/
-```
-
-## Routes
-`/` home | `/blog/[...page]` list | `/blog/[...slug]/` post | `/tags/[tag]/` filter | `/search/` | `/rss.xml`
-
-## Post Visibility
-- Drafts: never built, dev included | Future `date_created`: unlisted until 15 min before, page still built
-
-## Dev Cmds
-- USER runs dev server, not agent (if not ask)
-
-## Code Style
-- TS strict, `@/*` alias, `type` not interface
-- Imports: external → @/ → relative → type
-- Prettier: semicolons, double quotes, 2 spaces, 80 chars
-- ESLint: no console.log
-- Names: Components=PascalCase | utils=camelCase | CONSTANTS=SCREAMING_SNAKE
-
-## Tailwind
-- `class:list` for conditionals
-- Never hardcode colors → use theme vars
-- `app-layout` = container util
-
-## Themes
-`src/config.ts` THEMES/ACTIVE_THEME | 19 OKLCH vars per mode | shadcn compatible
-
-## Content
-Posts: `src/data/blog/` | strict schema `src/content.config.ts`: unknown keys and unregistered tags fail `just check --only content` | register tags in `src/tags.ts` | `_` prefix = ignored | subdirs preserved in URL
-
-## Dev Workflow Docs
-Documentation for development workflows is published publicly on the blog:
-`src/data/blog/dev_workflows/`
-
-Includes: development commands, git hooks, worktrees, themes, etc.
-
-When adding or updating a workflow, document it there.
-
----
-
+- A gotcha you hit: a line in Gotchas above
+- A decision Pascal settles: a dated line in the decision log, linked to its PR
+- Work you defer: a ticket in `dev_notes/backlog.md`
+- A new workflow: a playbook in `src/data/blog/dev_workflows/`

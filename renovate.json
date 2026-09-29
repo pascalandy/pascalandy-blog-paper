@@ -10,37 +10,37 @@
   "packageRules": [
     {
       "description": "Astro ecosystem",
-      "matchPackagePatterns": ["^astro", "^@astrojs/"],
+      "matchPackageNames": ["/^astro/", "/^@astrojs//"],
       "groupName": "astro ecosystem",
       "labels": ["dependencies", "astro"]
     },
     {
       "description": "Tailwind ecosystem",
-      "matchPackagePatterns": ["^tailwindcss", "^@tailwindcss/"],
+      "matchPackageNames": ["/^tailwindcss/", "/^@tailwindcss//"],
       "groupName": "tailwind ecosystem",
       "labels": ["dependencies", "tailwind"]
     },
     {
       "description": "ESLint plugins and configs",
-      "matchPackagePatterns": ["^eslint", "^@typescript-eslint/"],
+      "matchPackageNames": ["/^eslint/", "/^@typescript-eslint//"],
       "groupName": "eslint ecosystem",
       "labels": ["dependencies", "eslint"]
     },
     {
       "description": "Prettier plugins",
-      "matchPackagePatterns": ["^prettier"],
+      "matchPackageNames": ["/^prettier/"],
       "groupName": "prettier ecosystem",
       "labels": ["dependencies", "prettier"]
     },
     {
       "description": "TypeScript",
-      "matchPackagePatterns": ["^typescript"],
+      "matchPackageNames": ["/^typescript/"],
       "groupName": "typescript",
       "labels": ["dependencies", "typescript"]
     },
     {
       "description": "Shiki (syntax highlighting)",
-      "matchPackagePatterns": ["^shiki", "^@shikijs/"],
+      "matchPackageNames": ["/^shiki/", "/^@shikijs//"],
       "groupName": "shiki ecosystem",
       "labels": ["dependencies"]
     },
