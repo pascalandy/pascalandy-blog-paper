@@ -8,9 +8,9 @@ Source: https://github.com/pascalandy/pascalandy-blog-paper
 
 - [Bun](https://bun.sh/) - Package manager & runtime
 - [Just](https://just.systems/) - Command runner (required for hooks and CI)
-- [uv](https://docs.astral.sh/uv/) - Runs the Python scripts behind `just signoff` and `just deploy`
+- [uv](https://docs.astral.sh/uv/) - Runs the Python scripts behind the recipes
 - [GitHub CLI](https://cli.github.com/) with [gh-signoff](https://github.com/basecamp/gh-signoff) - Posts the `signoff` status that gates merges
-- [gitleaks](https://github.com/gitleaks/gitleaks) - Scans a branch for secrets before signoff
+- [gitleaks](https://github.com/gitleaks/gitleaks) - Scans staged changes for secrets before each commit, and a branch before signoff
 
 ```bash
 # macOS
@@ -21,12 +21,14 @@ gh extension install basecamp/gh-signoff
 bun --version && just --version && uv --version && gh signoff version && gitleaks version
 ```
 
+Without Just, run any recipe through uv: `uvx --from rust-just just check`.
+
 ## Quick Start
 
 ```bash
-just install
-just dev
-just qa
+just install # dependencies and git hooks
+just dev     # dev server on port 4320
+just qa      # format, then run the same checks as CI
 ```
 
 ## Tech Stack
@@ -40,7 +42,7 @@ just qa
 
 ## Documentation
 
-- See [AGENTS.md](AGENTS.md) for development guidelines and architecture details.
+- See [AGENTS.md](AGENTS.md) for the working contract: first moves, rules, and where to read more.
 - Original theme by [Sat Naing](https://satnaing.dev) and [contributors](https://github.com/satnaing/astro-paper/graphs/contributors). A fork of [AstroPaper](https://github.com/satnaing/astro-paper).
 
 ## License

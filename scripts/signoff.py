@@ -40,14 +40,14 @@ class Refused(Exception):
 
 
 def git(*args: str) -> str:
-    result = subprocess.run(("git", *args), capture_output=True, text=True)
+    result = subprocess.run(("git", *args), capture_output=True, text=True, check=False)
     if result.returncode != 0:
         raise Refused(f"git {' '.join(args)} failed: {result.stderr.strip()}")
     return result.stdout.strip()
 
 
 def succeeds(*command: str) -> bool:
-    return subprocess.run(command, capture_output=True).returncode == 0
+    return subprocess.run(command, capture_output=True, check=False).returncode == 0
 
 
 def require_tools() -> None:
@@ -60,7 +60,7 @@ def require_tools() -> None:
         if shutil.which(tool) is None:
             raise Refused(f"{tool} not found; {fix}")
     extensions = subprocess.run(
-        ("gh", "extension", "list"), capture_output=True, text=True
+        ("gh", "extension", "list"), capture_output=True, text=True, check=False
     ).stdout
     if "gh-signoff" not in extensions:
         raise Refused(
@@ -89,6 +89,7 @@ def require_pushed_head() -> None:
         ("git", "symbolic-ref", "--quiet", "--short", "HEAD"),
         capture_output=True,
         text=True,
+        check=False,
     ).stdout.strip()
     if not branch:
         raise Refused(
@@ -128,7 +129,7 @@ def signoff() -> int:
     head = git("rev-parse", "HEAD")
 
     for check in CHECKS:
-        if subprocess.run(check).returncode != 0:
+        if subprocess.run(check, check=False).returncode != 0:
             print(
                 f"error: `{' '.join(check)}` failed; nothing was signed off",
                 file=sys.stderr,
@@ -139,7 +140,7 @@ def signoff() -> int:
         raise Refused(
             f"HEAD moved from {head[:7]} while the checks ran; run: just signoff"
         )
-    return subprocess.run(("gh", "signoff")).returncode
+    return subprocess.run(("gh", "signoff"), check=False).returncode
 
 
 def main() -> int:

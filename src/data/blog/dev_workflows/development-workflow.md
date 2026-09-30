@@ -9,104 +9,47 @@ description: "Commands and workflow for developing, testing, and building the bl
 
 # Development Workflow
 
-> Quick reference for all development commands.
+> Run `just` to list the recipes: the commands first, then the checks, shipping, and the GitHub workflows. This page explains how they fit together.
 
-## Daily Development
+## Verify
 
-```bash
-# Start dev server (hot reload)
-bun run lint && bun run format | tspin && bun run build | tspin && bun run dev | tspin
+`just check` runs the same checks as CI, in the same order. It prints nothing when they all pass. A failing check prints an excerpt of its output, then the command that reruns only that check:
 
-# Preview production build locally
-bun run preview
+```text
+error: content failed; rerun: just check --only content
 ```
 
-## Quality Checks
+The full output of each check stays in `cache/check/`.
 
-Run these before committing:
+- `just check --list` names the checks; add `-v` to see their commands
+- `just check --only content` validates every post against the schema; repeat `--only` to run several checks
+- `just check -v` streams the output of every command
+- `just qa` formats the repo, then runs `just check`
 
-```bash
-# Type checking (Astro + TypeScript)
-bun astro check
+Without Just installed, run any recipe through uv: `uvx --from rust-just just check`.
 
-# Linting (ESLint)
-bun run lint
+## Git Hooks
 
-# Format check (Prettier)
-bun run format:check
-# stop on error
+`just install` installs the dependencies, and [Lefthook](https://lefthook.dev) installs the hooks listed in `lefthook.yml`.
 
-# Auto-format all files
-bun run format | tspin
-```
+Before each commit:
 
-## Production Build
+1. gitleaks scans the staged changes for secrets
+2. The staged files are formatted, and the fixes are staged again
+3. The staged code is linted
+4. When a post, the tag registry, or the schema is staged, the `content` check runs
 
-```bash
-# Full build pipeline
-bun run build
-```
+Before each push, `just check` runs.
 
-This runs:
+The staged hook and `just gitleaks` use Gitleaks's built-in rules. They ignore configuration, ignore files, and `gitleaks:allow` comments from the checked-out branch.
 
-1. `astro check` — TypeScript validation
-2. `astro build` — Generate static site in `dist/`
-3. `pagefind --site dist` — Build search index
-4. `cp -r dist/pagefind public/` — Copy search index to public
+Skip a hook only when you must: `git commit --no-verify` or `git push --no-verify`.
 
-## Sync Content Collections
+## CI
 
-```bash
-# Regenerate TypeScript types for content
-bun run sync
-```
+The CI workflow runs `just check` in a single `check` job, only when started by hand with `just gh-ci`; see [GitHub Actions](#github-actions-manual-only) below. Its deploys wait for the check.
 
-Use after modifying `src/content.config.ts` or adding new content fields.
-
-## Command Summary
-
-| Command                | Purpose                          |
-| ---------------------- | -------------------------------- |
-| `bun run dev`          | Start dev server with hot reload |
-| `bun run build`        | Full production build            |
-| `bun run preview`      | Preview production build         |
-| `bun run sync`         | Sync content collection types    |
-| `bun astro check`      | TypeScript type checking         |
-| `bun run lint`         | ESLint code linting              |
-| `bun run format`       | Auto-format with Prettier        |
-| `bun run format:check` | Check formatting without changes |
-
-## Git Hooks (Automated Quality Checks)
-
-Git hooks are configured via [Lefthook](https://github.com/evilmartians/lefthook) to automatically run quality checks.
-
-### Pre-commit (runs on every commit)
-
-1. `bun run format:check` — Verify formatting
-2. `bun run lint` — Check for linting errors
-
-### Pre-push (runs before pushing)
-
-1. `bun astro check` — TypeScript validation
-2. `bun run build` — Full production build
-
-### Setup
-
-Hooks are installed automatically when you run `bun install` (via the `prepare` script). To manually reinstall:
-
-```bash
-bunx lefthook install
-```
-
-### Bypassing Hooks (use sparingly)
-
-```bash
-# Skip pre-commit hooks
-git commit --no-verify -m "message"
-
-# Skip pre-push hooks
-git push --no-verify
-```
+Claude Code on the web runs `.claude/hooks/session-start.sh` when a session starts: it installs uv, Just, gitleaks, and the dependencies with their hooks.
 
 ## Merge Gate: Sign Off
 
@@ -169,30 +112,32 @@ Each PR was signed off on its own, so two PRs can pass separately and still clas
 
 ### Setup
 
-Store a Sevalla API key in the macOS Keychain. The command prompts for the key, so it stays out of your shell history:
+The Sevalla API key is available through chezmoi's keyring on all three machines. Pass it to one deploy command:
 
 ```bash
-security add-generic-password -s sevalla-api-token -a "$USER" -w
+SEVALLA_TOKEN="$(chezmoi secret keyring get --service=SEVALLA_API_KEY --user=api_key)" just deploy
 ```
 
-`just deploy` reads it from there. Setting `SEVALLA_TOKEN` overrides the Keychain, but avoid exporting it in `~/.zshrc`: every command you run, including a checked-out PR's scripts, would inherit the production key.
+Use the same prefix with `just deploy-preview` or `just deploy --dry-run`. The deploy script also reads the macOS Keychain when `SEVALLA_TOKEN` is unset. Keep the token out of shell startup files: every command, including a checked-out PR's scripts, would inherit it.
 
 The site IDs come from the `SEVALLA_STATIC_SITE_ID` and `SEVALLA_STATIC_SITE_ID_PREVIEW` repository variables through `gh variable get`; export either variable to override it. If you create a new API key, also run `gh secret set SEVALLA_TOKEN` so the manual CI workflow deploys with it.
+
+The CI production job uses GitHub's `production` Environment, which permits deployments only from `main`. The Sevalla token remains a repository secret shared with the preview job; separate production and preview tokens are needed to restrict credential access by branch.
 
 ## GitHub Actions (manual only)
 
 Every workflow runs only when started by hand, except `claude.yml`, which answers `@claude` mentions. GitHub runs a workflow from the branch you name, but it lists a manual workflow only once `main` has it.
 
-| Recipe                      | Workflow         | What it does                                                                             |
-| --------------------------- | ---------------- | ---------------------------------------------------------------------------------------- |
-| `just gh-ci [ref] [deploy]` | `ci.yml`         | Lint, format check, typecheck, and build; `deploy` is `none`, `preview`, or `production` |
-| `just gh-gitleaks [ref]`    | `gitleaks.yml`   | Scan the full git history for secrets                                                    |
-| `just gh-labels <pr>`       | `pr-labeler.yml` | Label a PR from the paths it changes, per `.github/labeler.yml`                          |
+| Recipe                      | Workflow         | What it does                                                                                      |
+| --------------------------- | ---------------- | ------------------------------------------------------------------------------------------------- |
+| `just gh-ci [ref] [deploy]` | `ci.yml`         | `just check`, the same verdict as on your machine; `deploy` is `none`, `preview`, or `production` |
+| `just gh-gitleaks [ref]`    | `gitleaks.yml`   | Scan the full git history for secrets                                                             |
+| `just gh-labels <pr>`       | `pr-labeler.yml` | Label a PR from the paths it changes, per `.github/labeler.yml`                                   |
 
 `ref` defaults to the current branch. `production` deploys only `main` and fails on any other ref. The local equivalents are `just ci`, `just gitleaks`, and `just deploy`.
 
 ## Notes
 
-- Build output goes to `dist/` directory
-- Search index is generated by Pagefind during build
+- Build output goes to `dist/`
+- Pagefind builds the search index during the build
 - The `public/` folder contents are copied as-is to `dist/`

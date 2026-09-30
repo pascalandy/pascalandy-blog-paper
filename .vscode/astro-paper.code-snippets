@@ -4,18 +4,18 @@
     "prefix": "frontmatter",
     "body": [
       "---",
-      "author: $1",
-      "pubDatetime: $CURRENT_YEAR-$CURRENT_MONTH-${CURRENT_DATE}T$CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND.000$CURRENT_TIMEZONE_OFFSET",
-      "modDatetime: $3",
-      "title: $4",
-      "featured: ${5|false,true|}",
-      "draft: ${6|true,false|}",
+      "title: \"$1\"",
       "tags:",
-      "  - $7",
-      "description: $8",
+      "  - $2",
+      "date_created: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+      "author: Pascal Andy",
+      "description: \"$3\"",
+      "draft: ${4|true,false|}",
       "---",
+      "",
+      "$0",
     ],
-    "description": "Adds the frontmatter block for the AstroPaper Blog post"
+    "description": "Adds a blog post frontmatter block; the schema is src/content.config.ts and each tag must be registered in src/tags.ts"
   },
   "Blog Template": {
     "scope": "markdown",
@@ -29,6 +29,6 @@
       "",
       "## ${3: heading 1}",
     ],
-    "description": "Adds the template for the AstroPaper Blog post. You will need to trigger the snippet modal on the 'frontmatter' line to insert the other snipper."
+    "description": "Adds a blog post template; trigger the snippet modal on the 'frontmatter' line to insert the frontmatter snippet"
   }
 }

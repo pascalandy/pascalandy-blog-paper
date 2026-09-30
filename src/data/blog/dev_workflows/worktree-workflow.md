@@ -4,7 +4,7 @@ tags:
   - dev-notes
 date_created: 2026-01-14
 author: Pascal Andy
-description: "understadning this git worktree workflow"
+description: "Understanding this git worktree workflow"
 ---
 
 # Complete Worktree Workflow for Blog Posts
@@ -42,11 +42,12 @@ When user says "create a new tree" for feature `[feature_name]`:
    git worktree add ~/devtree/tree[N]_[feature_name] -b feature/[feature_name]
    ```
 
-5. **Copy dependencies from main repo** (saves reinstall time):
+5. **Copy dependencies and the build cache from the main checkout** (saves a reinstall and a cold build; `cache/` holds the optimized images, OG images, and fonts):
 
    ```bash
-   cp -r ~/Documents/github_local/pascalandy-blog-paper/node_modules ~/devtree/tree[N]_[feature_name]/
-   cp -r ~/Documents/github_local/pascalandy-blog-paper/.astro ~/devtree/tree[N]_[feature_name]/ 2>/dev/null || true
+   main="$(git worktree list --porcelain | awk 'NR == 1 {print $2}')"
+   cp -R "$main/node_modules" ~/devtree/tree[N]_[feature_name]/
+   cp -R "$main/cache" ~/devtree/tree[N]_[feature_name]/ 2>/dev/null || true
    ```
 
 6. **Confirm and report:**
@@ -83,7 +84,8 @@ When user says "create a new tree" for feature `[feature_name]`:
 13. Update local main:
 
     ```bash
-    cd ~/Documents/github_local/pascalandy-blog-paper
+    main="$(git worktree list --porcelain | awk 'NR == 1 {print $2}')"
+    cd "$main"
     git pull origin main
     ```
 
@@ -116,9 +118,9 @@ git worktree list
 # Agent creates:
 git worktree add ~/devtree/tree1_blue-sky -b feature/blue-sky
 
-# Agent copies dependencies (no reinstall needed):
-cp -r ~/Documents/github_local/pascalandy-blog-paper/node_modules ~/devtree/tree1_blue-sky/
-cp -r ~/Documents/github_local/pascalandy-blog-paper/.astro ~/devtree/tree1_blue-sky/ 2>/dev/null || true
+# Agent copies dependencies and the build cache (no reinstall, no cold build):
+main="$(git worktree list --porcelain | awk 'NR == 1 {print $2}')"
+cp -R "$main/node_modules" "$main/cache" ~/devtree/tree1_blue-sky/
 ```
 
 ### Example: Third Tree
@@ -129,16 +131,16 @@ User: "Create a new tree for yellow-sun"
 # Agent runs:
 git worktree list
 # Output shows:
-# ~/Documents/github_local/pascalandy-blog-paper  main
+# /path/to/pascalandy-blog-paper                 main
 # ~/devtree/tree1_blue-sky                        feature/blue-sky
 # ~/devtree/tree2_green-field                     feature/green-field
 
 # Agent creates:
 git worktree add ~/devtree/tree3_yellow-sun -b feature/yellow-sun
 
-# Agent copies dependencies:
-cp -r ~/Documents/github_local/pascalandy-blog-paper/node_modules ~/devtree/tree3_yellow-sun/
-cp -r ~/Documents/github_local/pascalandy-blog-paper/.astro ~/devtree/tree3_yellow-sun/ 2>/dev/null || true
+# Agent copies dependencies and the build cache:
+main="$(git worktree list --porcelain | awk 'NR == 1 {print $2}')"
+cp -R "$main/node_modules" "$main/cache" ~/devtree/tree3_yellow-sun/
 ```
 
 ---
@@ -153,8 +155,8 @@ After creating 3 worktrees:
 ├── tree2_green-field/   # feature/green-field  (port 4322 if running server)
 └── tree3_yellow-sun/    # feature/yellow-sun   (port 4323 if running server)
 
-~/Documents/github_local/
-└── pascalandy-blog-paper/   # main branch (port 4320)
+/path/to/
+└── pascalandy-blog-paper/   # main checkout, main branch (port 4320)
 ```
 
 ---
@@ -191,7 +193,7 @@ git commit -m "rewrite intro section"
 The worktrees at `~/devtree/` are just for **editing files**. You don't run a server there.
 
 ```
-~/Documents/github_local/pascalandy-blog-paper/   # main branch
+/path/to/pascalandy-blog-paper/   # main checkout, main branch
 └── runs dev server at localhost:4320
 
 ~/devtree/tree1_blue-sky/      # just edit files here
@@ -202,8 +204,9 @@ The worktrees at `~/devtree/` are just for **editing files**. You don't run a se
 **To preview a post before publishing:**
 
 ```bash
-# In your main repo (where dev server is running)
-cd ~/Documents/github_local/pascalandy-blog-paper
+# In your main checkout (where dev server is running)
+main="$(git worktree list --porcelain | awk 'NR == 1 {print $2}')"
+cd "$main"
 
 # Temporarily merge the branch (without committing)
 git merge feature/blue-sky --no-commit --no-ff
@@ -220,7 +223,7 @@ Your main repo stays on `main`, server keeps running, you just temporarily pull 
 
 ```bash
 cd ~/devtree/tree1_blue-sky
-bun run dev --port 4321
+just dev 4321
 ```
 
 ---
@@ -264,32 +267,31 @@ git branch -a
 | Never commit to main directly    | All changes go through PRs          |
 | Naming: `tree[N]_[feature]`      | Auto-increment, predictable ports   |
 | Port: `4320 + tree_number`       | No conflicts between worktrees      |
-| Copy node_modules on creation    | Skip reinstall, ready to run        |
+| Copy node_modules and cache      | Skip reinstall and cold build       |
 
 ---
 
 ## Dependency Management
 
-**On worktree creation:** Dependencies are copied from main repo automatically.
+**On worktree creation:** Dependencies and the build cache are copied from the main checkout automatically.
 
 **When to re-sync dependencies:**
 
 If `package.json` changes in main (new packages added), re-copy to worktrees:
 
 ```bash
-# From main repo after pulling changes with new dependencies
-bun install
-cp -r ~/Documents/github_local/pascalandy-blog-paper/node_modules ~/devtree/tree1_[feature]/
+# From the main checkout after pulling changes with new dependencies
+just install
+cp -R node_modules ~/devtree/tree1_[feature]/
 ```
 
 **What gets copied:**
 
-| Item           | Purpose                      |
-| -------------- | ---------------------------- |
-| `node_modules` | All installed packages       |
-| `.astro`       | Astro build cache (optional) |
+| Item           | Purpose                                             |
+| -------------- | --------------------------------------------------- |
+| `node_modules` | All installed packages                              |
+| `cache`        | Build cache: optimized images, OG images, and fonts |
 
 **Not copied (regenerated as needed):**
 
 - `dist/` - build output
-- `.vercel/` - deployment cache

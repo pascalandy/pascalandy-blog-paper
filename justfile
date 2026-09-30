@@ -1,118 +1,112 @@
-# Justfile for Astro blog
-# Run `just` to see available recipes
+# Bare `just` lists these in file order: the commands you run most, the checks,
+# shipping, then the GitHub workflows, which run only by hand.
+# Each recipe calls one script or tool; logic lives in scripts/.
+# Without just installed: uvx --from rust-just just <recipe>
+set positional-arguments
+# Every script and tool reports its own errors
+set no-exit-message
 
-set shell := ["bash", "-euo", "pipefail", "-c"]
+[private]
+default:
+    @{{ just_executable() }} --list --unsorted
 
-# === Setup ===
+# Print the blog's state: posts by bucket, tags, site, docs index; --json for one object
+[group('commands')]
+overview *args:
+    @uv run --quiet scripts/overview.py "$@"
 
-# Install dependencies
-install:
-    bun install
+# Install dependencies; this also installs the git hooks
+[group('commands')]
+install *args:
+    @bun install "$@"
 
 alias i := install
 
-# === Code Quality (base recipes) ===
+# Start the dev server, on port 4320 unless given another; Pascal runs it, agents do not
+[group('commands')]
+dev port="4320" *args:
+    @uv run --quiet scripts/pretty.py bun run dev --port "$@"
 
-# Run ESLint
-lint:
-    bun run lint | tspin
+# Format, then run the verdict: the last step before a commit
+[group('commands')]
+qa: format check
 
-# Format code with Prettier
-format:
-    bun run format | tspin
+# Format files, or the whole repo, with Prettier and ruff
+[group('commands')]
+format *files:
+    @uv run --quiet scripts/tidy.py format "$@"
 
-# Check formatting without changes
-format-check:
-    bun run format:check | tspin
+# Build the production site into dist/
+[group('commands')]
+build *args:
+    @uv run --quiet scripts/pretty.py bun run build "$@"
 
-# Validate tags
-check-tags:
-    ./scripts/check-tags.sh
+# Serve the production build from dist/
+[group('commands')]
+preview *args:
+    @uv run --quiet scripts/pretty.py bun run preview "$@"
 
-# === Build (base recipes) ===
-
-# Build for production
-build:
-    bun run build | tspin
-
-# Run Astro check
-check:
-    bun run sync && bun astro check | tspin
-
-# Preview production build
-preview:
-    bun run preview | tspin
-
-# === Development (composite recipes) ===
-
-# Full workflow: lint, format, then dev server
-dev port="4320":
-    just lint
-    just format
-    just format-check
-    bun run dev --port {{port}} | tspin
-
-# QA workflow for agents (with autoformat, no server)
-qa:
-    just lint
-    just format
-    just format-check
-    just check-tags
-    just build
-
-# CI workflow (no autoformat)
-ci:
-    just lint
-    just format-check
-    just check-tags
-    just build
-
-# === Cleanup ===
-
-# Remove build artifacts and cache
+# Delete build output and caches
+[group('commands')]
 clean:
-    rm -rf dist cache .astro
+    @rm -rf dist cache .astro
 
-# Deep clean before archiving workspace (removes node_modules)
+# Delete build output, caches, and dependencies before archiving a workspace
+[group('commands')]
 archive:
-    rm -rf dist node_modules cache .astro
+    @rm -rf dist cache .astro node_modules
 
-# === Ship ===
+# Run the same verdict as CI; --list names each check, --only NAME reruns one
+[group('checks')]
+check *args:
+    @uv run --quiet scripts/check.py "$@"
 
-# Install, run `just ci` and `just gitleaks`, then mark the pushed HEAD green on GitHub; push first
-signoff:
-    uv run --quiet scripts/signoff.py
+alias ci := check
+
+# Lint files, or the whole repo, with ESLint and ruff
+[group('checks')]
+lint *files:
+    @uv run --quiet scripts/tidy.py lint "$@"
+
+# Scan staged changes for secrets; lefthook runs it on every commit
+[group('checks')]
+gitleaks-staged:
+    @env -u GITLEAKS_CONFIG GITLEAKS_CONFIG_TOML="$(printf '[extend]\nuseDefault = true\n')" gitleaks git "$(git rev-parse --git-dir)" --staged --gitleaks-ignore-path /dev/null --ignore-gitleaks-allow --no-banner --redact --log-level warn --verbose --no-color
 
 # Scan this branch's commits since origin/main for secrets
+[group('checks')]
 gitleaks:
-    gitleaks git --log-opts="origin/main..HEAD" --no-banner --redact --verbose
+    @env -u GITLEAKS_CONFIG GITLEAKS_CONFIG_TOML="$(printf '[extend]\nuseDefault = true\n')" gitleaks git "$(git rev-parse --git-dir)" --log-opts="origin/main..HEAD" --gitleaks-ignore-path /dev/null --ignore-gitleaks-allow --no-banner --redact --verbose
+
+# Install, run `just ci` and `just gitleaks`, then mark the pushed HEAD green on GitHub; push first
+[group('ship')]
+signoff:
+    @uv run --quiet scripts/signoff.py
 
 # Deploy GitHub's main to production on Sevalla and wait for the build; --dry-run checks the setup
-[positional-arguments]
+[group('ship')]
 deploy *args:
-    uv run --quiet scripts/deploy.py production "$@"
+    @uv run --quiet scripts/deploy.py production "$@"
 
 # Deploy a pushed branch, the current one by default, to the Sevalla preview site
-[positional-arguments]
+[group('ship')]
 deploy-preview *args:
-    uv run --quiet scripts/deploy.py preview "$@"
-
-# === GitHub Actions (manual only) ===
+    @uv run --quiet scripts/deploy.py preview "$@"
 
 # Run the CI workflow on GitHub for a pushed ref; deploy is none, preview, or production (main only)
-[positional-arguments]
+[group('github')]
 gh-ci ref=`git branch --show-current` deploy="none":
     @test -n "$1" || { echo "error: HEAD is detached; pass a ref" >&2; exit 1; }
     @test "$2" != production || test "$1" = main || { echo "error: production deploys only main" >&2; exit 1; }
-    gh workflow run ci.yml --ref "$1" -f "deploy=$2"
+    @gh workflow run ci.yml --ref "$1" -f "deploy=$2"
 
 # Scan the full history of a pushed ref for secrets on GitHub
-[positional-arguments]
+[group('github')]
 gh-gitleaks ref=`git branch --show-current`:
     @test -n "$1" || { echo "error: HEAD is detached; pass a ref" >&2; exit 1; }
-    gh workflow run gitleaks.yml --ref "$1"
+    @gh workflow run gitleaks.yml --ref "$1"
 
 # Label a pull request on GitHub from the paths it changes
-[positional-arguments]
+[group('github')]
 gh-labels pr:
-    gh workflow run pr-labeler.yml -f "pr=$1"
+    @gh workflow run pr-labeler.yml -f "pr=$1"

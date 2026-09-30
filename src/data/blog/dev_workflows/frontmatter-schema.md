@@ -9,30 +9,34 @@ description: "Reference for blog post frontmatter fields"
 
 # Frontmatter Schema
 
-> Reference for blog post frontmatter fields in AstroPaper.
+> Reference for blog post frontmatter fields.
 
-Based on `src/content.config.ts`.
+The schema lives in `src/content.config.ts`, and it is strict: an unknown key or an unregistered tag fails the build. After editing frontmatter, run `just check --only content`; a failure names the post, the field, and the fix.
 
 ## Required Fields
 
-| Field          | Type       | Format       | Description                               |
-| -------------- | ---------- | ------------ | ----------------------------------------- |
-| `title`        | `string`   | —            | Post title                                |
-| `tags`         | `string[]` | —            | Post tags (min 1, use `untagged` if none) |
-| `date_created` | `date`     | `2026-01-11` | Publication date                          |
-| `author`       | `string`   | —            | Post author (default: `Pascal Andy`)      |
-| `description`  | `string`   | —            | SEO meta + post cards (not shown in body) |
+| Field          | Type       | Format       | Description                                          |
+| -------------- | ---------- | ------------ | ---------------------------------------------------- |
+| `title`        | `string`   | —            | Post title                                           |
+| `tags`         | `string[]` | —            | At least 1 tag; each must be a slug in `src/tags.ts` |
+| `date_created` | `date`     | `2026-01-11` | Publication date                                     |
+| `author`       | `string`   | —            | Post author, usually `Pascal Andy`                   |
+| `description`  | `string`   | —            | SEO meta and post cards (not shown in the body)      |
 
 ## Optional Fields
 
-| Field          | Type              | Default | Description                                                                                                   |
-| -------------- | ----------------- | ------- | ------------------------------------------------------------------------------------------------------------- |
-| `featured`     | `boolean`         | —       | Show on homepage featured section                                                                             |
-| `draft`        | `boolean`         | —       | Hide in production (visible in dev)                                                                           |
-| `ogImage`      | `image \| string` | —       | Custom OG image (local or URL)                                                                                |
-| `canonicalURL` | `string`          | —       | canonicalURL is for SEO when you have duplicate content. It tells search engines "this is the original source |
-| `hideEditPost` | `boolean`         | —       | Hide "Edit post" link                                                                                         |
-| `mermaid`      | `boolean`         | `false` | Enable Mermaid diagram rendering                                                                              |
+| Field          | Type              | Default | Description                                                                  |
+| -------------- | ----------------- | ------- | ---------------------------------------------------------------------------- |
+| `featured`     | `boolean`         | —       | Show on the homepage featured section                                        |
+| `draft`        | `boolean`         | —       | Exclude the post from every build, dev included: no page, no listing, no RSS |
+| `ogImage`      | `image \| string` | —       | Custom OG image (local or URL)                                               |
+| `canonicalURL` | `string`          | —       | The original source of duplicated content, so search engines credit it       |
+| `hideEditPost` | `boolean`         | —       | Hide the "Edit post" link                                                    |
+| `mermaid`      | `boolean`         | `false` | Enable Mermaid diagram rendering                                             |
+
+## Scheduled Posts
+
+A post whose `date_created` is in the future stays out of the home page, the blog roll, the tag pages, and RSS in production until 15 minutes before that date (`SITE.scheduledPostMargin` in `src/config.ts`). Its page is still built at its URL. The dev server lists it right away.
 
 ## Examples
 
@@ -44,7 +48,7 @@ Based on `src/content.config.ts`.
 ---
 title: "My Post Title"
 tags:
-  - untagged
+  - random
 date_created: 2025-01-15
 author: Pascal Andy
 description: "Brief description for SEO and cards"
@@ -57,10 +61,10 @@ description: "Brief description for SEO and cards"
 ---
 title: "My Post Title"
 tags:
-  - astro
-  - tutorial
+  - technologie
+  - dev-notes
 date_created: 2025-01-15
-author: "Your Name"
+author: Pascal Andy
 featured: true
 draft: false
 ogImage: "./custom-og.png"
@@ -74,6 +78,7 @@ description: "Brief description for SEO and cards"
 ## Notes
 
 - **`slug`** is NOT in the schema — derived from filename/path automatically
+- **Tags** must be registered first: see [Tag Visibility System](/blog/dev-workflows/tag-visibility-system/)
 - **Files prefixed with `_`** are excluded from the collection (e.g., `_draft-post.md`)
 - **Subdirectories starting with `_`** are NOT excluded — only filenames matter
-- **Subdirectories** affect the URL path (e.g., `blog/2025/post.md` -> `/blog/2025/post/`)
+- **Subdirectories** affect the URL path, slugified (e.g., `src/data/blog/dev_workflows/frontmatter-schema.md` -> `/blog/dev-workflows/frontmatter-schema/`)
