@@ -183,6 +183,14 @@ class MergeTest(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("PR #7 was merged during the checks", stderr)
 
+    def test_a_merge_into_another_branch_is_not_reported_as_merged(self) -> None:
+        self.sandbox.git("push", "--quiet", "origin", "main:layer-1")
+        self.sandbox.update(hooks={"gh pr merge": {"baseRefName": "layer-1"}})
+        code, stdout, stderr = self.merge()
+        self.assertEqual(code, 1)
+        self.assertNotIn("merged PR #7", stdout)
+        self.assertIn("PR #7 was merged into layer-1, not main", stderr)
+
     def test_refuses_a_pr_merged_into_another_branch(self) -> None:
         self.open_pr(
             state="MERGED",

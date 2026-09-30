@@ -201,6 +201,9 @@ def land(repo: str, pr: PullRequest, sha: str, subject: str) -> None:
             f"{failure}; PR #{pr.number} is still {after.state.lower()}, so it was "
             "not merged; rerun just merge once that is fixed"
         )
+    # --match-head-commit pins the head, not the base
+    if after.base != "main":
+        raise Refused(f"PR #{pr.number} was merged into {after.base}, not main")
     if after.head != sha:
         raise Refused(
             f"PR #{pr.number} was merged at {after.head[:7]}, not at the tested "
