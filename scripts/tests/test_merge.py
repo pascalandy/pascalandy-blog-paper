@@ -80,6 +80,13 @@ class MergeTest(unittest.TestCase):
         self.assertEqual(self.sandbox.checks_run(), [])
         self.assertEqual(self.main(), merged)
 
+    def test_a_rerun_reports_the_merge_before_checking_the_setup(self) -> None:
+        self.merge()
+        self.sandbox.update(rules=[])
+        code, stdout, _ = self.merge()
+        self.assertEqual(code, 0)
+        self.assertIn("PR #7 is already merged", stdout)
+
     def test_refuses_before_the_checks_when_the_pr_cannot_merge_as_is(self) -> None:
         cases = {
             "comes from a fork": {"isCrossRepository": True},

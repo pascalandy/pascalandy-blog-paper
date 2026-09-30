@@ -210,11 +210,9 @@ def land(repo: str, pr: PullRequest, sha: str, subject: str) -> None:
 
 
 def merge(subject: str | None) -> None:
-    require_tools()
     repo = github_repo()
-    if any(rule.get("type") == "merge_queue" for rule in require_signoff_rule(repo)):
-        raise Refused("main uses a merge queue, which just merge does not support")
     branch = current_branch()
+    # A rerun after a merge needs only gh to report it
     pr = branch_pr(repo, branch)
     head = git("rev-parse", "HEAD")
     if pr.state == "MERGED":
@@ -227,6 +225,9 @@ def merge(subject: str | None) -> None:
             )
         print(f"PR #{pr.number} is already merged as {pr.merge_commit[:7]}: {pr.url}")
         return
+    require_tools()
+    if any(rule.get("type") == "merge_queue" for rule in require_signoff_rule(repo)):
+        raise Refused("main uses a merge queue, which just merge does not support")
     if pr.fork:
         raise Refused(f"PR #{pr.number} comes from a fork; merge it in GitHub")
     if pr.base != "main":
