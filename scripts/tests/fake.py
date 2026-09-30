@@ -23,12 +23,6 @@ SIGNOFF_RULES = [
 ]
 
 
-def git(*args: str) -> str:
-    return subprocess.run(
-        ("git", *args), capture_output=True, text=True, check=True
-    ).stdout.strip()
-
-
 def gh(state: dict, args: list[str]) -> int:
     if args[:2] == ["auth", "status"]:
         if state["signed_in"]:
@@ -53,10 +47,9 @@ def gh(state: dict, args: list[str]) -> int:
         state["rules"] = SIGNOFF_RULES
         print("✓ Required signoff on main")
         return 0
-    if args == ["signoff"]:
-        sha = git("rev-parse", "HEAD")
-        state["statuses"][sha] = "success"
-        print(f"✓ Signed off on {sha}")
+    if args[:2] == ["signoff", "--commit"]:
+        state["statuses"][args[2]] = "success"
+        print(f"✓ Signed off on {args[2]}")
         return 0
     print(f"fake gh does not support: {' '.join(args)}", file=sys.stderr)
     return 2

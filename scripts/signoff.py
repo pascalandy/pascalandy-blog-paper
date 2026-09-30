@@ -152,8 +152,7 @@ def require_clean_tree() -> None:
         )
 
 
-def require_pushed_head() -> None:
-    """Require HEAD to be exactly the tip GitHub has for this branch's upstream."""
+def current_branch() -> str:
     branch = subprocess.run(
         ("git", "symbolic-ref", "--quiet", "--short", "HEAD"),
         capture_output=True,
@@ -161,9 +160,13 @@ def require_pushed_head() -> None:
         check=False,
     ).stdout.strip()
     if not branch:
-        raise Refused(
-            "HEAD is detached; check out the PR branch, then run: just signoff"
-        )
+        raise Refused("HEAD is detached; check out the PR branch first")
+    return branch
+
+
+def upstream_tip() -> tuple[str, str]:
+    """Fetch the current branch's upstream; return its name and the commit GitHub has."""
+    branch = current_branch()
     # The upstream names the remote branch exactly; git push -u and gh pr checkout
     # both set it
     remote, _, remote_ref = git(
@@ -176,13 +179,39 @@ def require_pushed_head() -> None:
             f"{branch} has no upstream; run: git push -u origin HEAD. {FORK_HINT}"
         )
     git("fetch", "--quiet", remote, remote_ref)
-    head, tip = git("rev-parse", "HEAD"), git("rev-parse", "FETCH_HEAD")
+    upstream = f"{remote}/{remote_ref.removeprefix('refs/heads/')}"
+    return upstream, git("rev-parse", "FETCH_HEAD")
+
+
+def pushed_head() -> str:
+    """Return HEAD once it is exactly the commit GitHub has for this branch."""
+    upstream, tip = upstream_tip()
+    head = git("rev-parse", "HEAD")
     if head == tip:
-        return
-    shown = remote_ref.removeprefix("refs/heads/")
+        return head
     if succeeds("git", "merge-base", "--is-ancestor", head, tip):
-        raise Refused(f"GitHub has newer commits on {remote}/{shown}; run: git pull")
-    raise Refused(f"HEAD is not pushed to {remote}/{shown}; run: git push")
+        raise Refused(f"GitHub has newer commits on {upstream}; run: git pull")
+    raise Refused(f"HEAD is not pushed to {upstream}; run: git push")
+
+
+def sign(repo: str, sha: str) -> None:
+    """Run the checks on the checkout of sha, then sign off sha if nothing moved."""
+    for command in CHECKS:
+        if subprocess.run(command, check=False).returncode != 0:
+            raise Refused(f"`{' '.join(command)}` failed; nothing was signed off")
+    # The checks take minutes; the status must name the commit they tested
+    if git("rev-parse", "HEAD") != sha:
+        raise Refused(
+            f"HEAD moved from {sha[:7]} while the checks ran; nothing was signed off"
+        )
+    require_clean_tree()
+    upstream, tip = upstream_tip()
+    if tip != sha:
+        raise Refused(
+            f"{upstream} moved from {sha[:7]} to {tip[:7]} while the checks ran; "
+            "nothing was signed off"
+        )
+    print(gh(repo, "signoff", "--commit", sha), end="")
 
 
 def signoff() -> None:
@@ -190,18 +219,7 @@ def signoff() -> None:
     repo = github_repo()
     require_signoff_rule(repo)
     require_clean_tree()
-    require_pushed_head()
-    head = git("rev-parse", "HEAD")
-
-    for command in CHECKS:
-        if subprocess.run(command, check=False).returncode != 0:
-            raise Refused(f"`{' '.join(command)}` failed; nothing was signed off")
-
-    if git("rev-parse", "HEAD") != head:
-        raise Refused(
-            f"HEAD moved from {head[:7]} while the checks ran; run: just signoff"
-        )
-    print(gh(repo, "signoff"), end="")
+    sign(repo, pushed_head())
 
 
 def check_rule() -> None:

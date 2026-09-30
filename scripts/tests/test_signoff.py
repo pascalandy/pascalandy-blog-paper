@@ -123,10 +123,37 @@ class SignoffTest(unittest.TestCase):
         )
 
     def test_signs_nothing_when_head_moves_during_the_checks(self) -> None:
+        head = self.sandbox.head()
         self.sandbox.update(hooks={"just ci": "git commit -q --allow-empty -m moved"})
         code, stderr = self.signoff()
         self.assertEqual(code, 1)
-        self.assertIn("while the checks ran", stderr)
+        self.assertIn(
+            f"HEAD moved from {head[:7]} while the checks ran; nothing was signed off",
+            stderr,
+        )
+        self.assertEqual(self.sandbox.load()["statuses"], {})
+
+    def test_signs_nothing_when_github_moves_during_the_checks(self) -> None:
+        head = self.sandbox.head()
+        push_elsewhere = (
+            "git commit -q --allow-empty -m elsewhere && git push -q "
+            "&& git reset -q --hard HEAD~1"
+        )
+        self.sandbox.update(hooks={"just ci": push_elsewhere})
+        code, stderr = self.signoff()
+        self.assertEqual(code, 1)
+        tip = self.sandbox.git("rev-parse", "origin/feature")
+        self.assertIn(
+            f"origin/feature moved from {head[:7]} to {tip[:7]} while the checks ran",
+            stderr,
+        )
+        self.assertEqual(self.sandbox.load()["statuses"], {})
+
+    def test_signs_nothing_when_the_checks_change_files(self) -> None:
+        self.sandbox.update(hooks={"just ci": "echo built > stray.txt"})
+        code, stderr = self.signoff()
+        self.assertEqual(code, 1)
+        self.assertIn("uncommitted or untracked files: stray.txt", stderr)
         self.assertEqual(self.sandbox.load()["statuses"], {})
 
 
