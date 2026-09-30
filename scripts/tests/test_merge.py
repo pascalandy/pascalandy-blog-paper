@@ -58,6 +58,12 @@ class MergeTest(unittest.TestCase):
             ),
             f"{main} {head}\n🔀 merge: add the thing (#7)",
         )
+        self.assertEqual(
+            self.sandbox.git("rev-parse", f"{head}^{{tree}}"),
+            self.sandbox.git(
+                "--git-dir", str(self.sandbox.origin), "rev-parse", f"{merged}^{{tree}}"
+            ),
+        )
         self.assertTrue(
             stdout.endswith(f"merged PR #7 at {head[:7]} as {merged[:7]}: {URL}\n")
         )

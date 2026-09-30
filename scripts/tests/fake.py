@@ -57,7 +57,7 @@ def pull_request(state: dict, number: str) -> dict:
 
 
 def merge(state: dict, number: str, sha: str, subject: str) -> int:
-    """Merge as GitHub does: only an unmoved head, and only when the rules allow it."""
+    """Merge an unmoved head into the PR's current base, when the rules allow it."""
     if state["merge_error"] == "refused":
         print("error connecting to api.github.com", file=sys.stderr)
         return 1
@@ -68,10 +68,11 @@ def merge(state: dict, number: str, sha: str, subject: str) -> int:
     if pr["mergeStateStatus"] != "CLEAN":
         print("the base branch policy prohibits the merge", file=sys.stderr)
         return 1
-    main = origin(state, "rev-parse", "refs/heads/main")
-    tree = origin(state, "rev-parse", f"{sha}^{{tree}}")
-    commit = origin(state, "commit-tree", tree, "-p", main, "-p", sha, "-m", subject)
-    origin(state, "update-ref", "refs/heads/main", commit)
+    base_ref = f"refs/heads/{pr['baseRefName']}"
+    base = origin(state, "rev-parse", base_ref)
+    tree = origin(state, "merge-tree", "--write-tree", base, sha)
+    commit = origin(state, "commit-tree", tree, "-p", base, "-p", sha, "-m", subject)
+    origin(state, "update-ref", base_ref, commit)
     stored = next(pr for pr in state["prs"] if str(pr["number"]) == number)
     stored.update(state="MERGED", headRefOid=sha, mergeCommit={"oid": commit})
     if state["merge_error"] == "lost":
