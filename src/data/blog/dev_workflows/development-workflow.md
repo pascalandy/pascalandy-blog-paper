@@ -116,7 +116,7 @@ Since the branch must contain the tip of `main`, the tree that lands on `main` i
 | Refused: the PR targets another branch    | Merge the layer below first; then merge `origin/main` into this branch, push, and run `gh pr edit <number> --base main` |
 | Interrupted, or `gh` lost its answer      | Run `just merge` again: it reports a PR that is already merged instead of checking it again                             |
 | Refused: auto-merge is on                 | Run `just signoff` and let GitHub merge it, as for Renovate, or turn auto-merge off and run `just merge`                |
-| Refused after the checks                  | The PR was not merged; fix what the message names, then run `just merge` again                                          |
+| Refused after the checks                  | Fix what the message names, then run `just merge` again; a rerun also reports a PR that merged in the meantime          |
 
 When Pascal authorizes a merge, agents run `just merge`; the authorization covers its checks and signoff. A request to write code does not authorize a merge.
 
