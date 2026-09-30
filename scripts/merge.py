@@ -256,7 +256,8 @@ def merge(subject: str | None) -> None:
             f"{sha[:7]}; rerun just merge once GitHub catches up"
         )
     require_contains_main(sha)
-    print(f"PR #{pr.number}: checking {sha[:7]} before the merge")
+    # Flush: piped output would otherwise show this line after the checks' output
+    print(f"PR #{pr.number}: checking {sha[:7]} before the merge", flush=True)
     sign(repo, sha)
     pr = wait_until_mergeable(repo, pr.number, sha)
     # main can move while the checks run
