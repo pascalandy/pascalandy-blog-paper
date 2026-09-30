@@ -83,6 +83,16 @@ gitleaks:
 signoff:
     @uv run --quiet scripts/signoff.py
 
+# Verify that main requires the signoff status to merge; reads GitHub, changes nothing
+[group('ship')]
+signoff-check:
+    @uv run --quiet scripts/signoff.py check
+
+# Require the signoff status to merge into main, then verify it; once per repository
+[group('ship')]
+signoff-setup:
+    @uv run --quiet scripts/signoff.py setup
+
 # Deploy GitHub's main to production on Sevalla and wait for the build; --dry-run checks the setup
 [group('ship')]
 deploy *args:
