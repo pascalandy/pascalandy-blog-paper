@@ -48,7 +48,8 @@ def git(*args: str) -> str:
     result = subprocess.run(("git", *args), capture_output=True, text=True, check=False)
     if result.returncode != 0:
         raise Refused(f"git {' '.join(args)} failed: {result.stderr.strip()}")
-    return result.stdout.strip()
+    # Not strip: a porcelain status line can start with a space
+    return result.stdout.rstrip()
 
 
 def succeeds(*command: str) -> bool:
@@ -136,10 +137,18 @@ def require_tools() -> None:
 
 
 def require_clean_tree() -> None:
-    if git("status", "--porcelain", "--untracked-files=all"):
+    """Refuse changed or untracked files, and name them; the checks would test them."""
+    paths = [
+        line[3:]
+        for line in git("status", "--porcelain", "--untracked-files=all").splitlines()
+    ]
+    if paths:
+        shown = ", ".join(paths[:10]) + (
+            f", and {len(paths) - 10} more" if len(paths) > 10 else ""
+        )
         raise Refused(
-            "the working tree has uncommitted or untracked files; "
-            "commit or stash them, push, then run: just signoff"
+            f"the working tree has uncommitted or untracked files: {shown}; "
+            "commit or remove them, then push"
         )
 
 

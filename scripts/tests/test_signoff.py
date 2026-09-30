@@ -39,7 +39,11 @@ class SignoffTest(unittest.TestCase):
         notes.write_text("draft\n", encoding="utf-8")
         code, stderr = self.signoff()
         self.assertEqual(code, 1)
-        self.assertIn("uncommitted or untracked files", stderr)
+        self.assertIn(
+            "uncommitted or untracked files: .napkin/notes.md; "
+            "commit or remove them, then push",
+            stderr,
+        )
         self.assertEqual(self.sandbox.checks_run(), [])
         self.assertEqual(notes.read_text(encoding="utf-8"), "draft\n")
 
