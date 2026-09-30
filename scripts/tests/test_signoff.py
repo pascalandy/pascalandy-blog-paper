@@ -4,9 +4,7 @@ from __future__ import annotations
 
 import unittest
 
-from harness import Sandbox
-
-CHECKS = ["bun install --frozen-lockfile", "just ci", "just gitleaks"]
+from harness import CHECKS, Sandbox
 
 
 class SignoffTest(unittest.TestCase):

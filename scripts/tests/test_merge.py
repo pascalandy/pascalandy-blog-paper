@@ -4,10 +4,9 @@ from __future__ import annotations
 
 import unittest
 
-from harness import Sandbox
+from harness import CHECKS, Sandbox
 from merge import merge_subject
 
-CHECKS = ["bun install --frozen-lockfile", "just ci", "just gitleaks"]
 URL = "https://github.com/pascalandy/blog/pull/7"
 
 

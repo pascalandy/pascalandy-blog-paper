@@ -9,14 +9,16 @@ import sys
 import tempfile
 from pathlib import Path
 
-from fake import SIGNOFF_RULES
+from fake import REPO, SIGNOFF_RULES
 
 SCRIPTS = Path(__file__).resolve().parent.parent
 # The tests import the scripts they cover
 sys.path.insert(0, str(SCRIPTS))
 FAKE = Path(__file__).with_name("fake.py")
-REMOTE = "git@github.com:pascalandy/blog.git"
+REMOTE = f"git@github.com:{REPO}.git"
 PROGRAMS = ("gh", "bun", "just", "gitleaks")
+# What a signoff runs, in order
+CHECKS = ["bun install --frozen-lockfile", "just ci", "just gitleaks"]
 
 
 class Sandbox:
