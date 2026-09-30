@@ -98,7 +98,11 @@ class Sandbox:
         ).stdout.strip()
 
     def commit(self, message: str) -> str:
-        self.git("commit", "--quiet", "--allow-empty", "--message", message)
+        """Commit a new file named after message, so every commit changes the tree."""
+        name = message.replace(" ", "-")
+        (self.work / f"{name}.txt").write_text(f"{message}\n", encoding="utf-8")
+        self.git("add", f"{name}.txt")
+        self.git("commit", "--quiet", "--message", message)
         return self.head()
 
     def head(self) -> str:
