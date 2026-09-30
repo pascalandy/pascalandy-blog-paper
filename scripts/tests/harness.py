@@ -12,6 +12,8 @@ from pathlib import Path
 from fake import SIGNOFF_RULES
 
 SCRIPTS = Path(__file__).resolve().parent.parent
+# The tests import the scripts they cover
+sys.path.insert(0, str(SCRIPTS))
 FAKE = Path(__file__).with_name("fake.py")
 REMOTE = "git@github.com:pascalandy/blog.git"
 PROGRAMS = ("gh", "bun", "just", "gitleaks")
@@ -68,9 +70,12 @@ class Sandbox:
         self.git("push", "--quiet", "--set-upstream", "origin", "feature")
         self.save(
             {
+                "origin": str(self.origin),
                 "signed_in": True,
                 "rules": SIGNOFF_RULES,
                 "statuses": {},
+                "prs": [],
+                "merge_error": None,
                 "hooks": {},
                 "failing": [],
                 "calls": [],

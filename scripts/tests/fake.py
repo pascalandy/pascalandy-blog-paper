@@ -1,9 +1,10 @@
 """Stand in for gh, bun, just, and gitleaks in the ship-script tests.
 
 Run as `fake.py PROGRAM ARGS...`. Each call appends its argv and GH_REPO to the
-calls in the JSON state named by FAKE_STATE, then answers from that state:
-gh from main's rules and the commit statuses it records, and every other
-program by running its hook and failing when it is listed in `failing`.
+calls in the JSON state named by FAKE_STATE, runs the first hook whose key
+starts the command line, then answers from the state. gh answers from main's
+rules, the commit statuses, and the pull requests, whose open heads are branch
+tips in the bare origin. Every other program fails when listed in `failing`.
 """
 
 from __future__ import annotations
@@ -23,6 +24,62 @@ SIGNOFF_RULES = [
 ]
 
 
+def origin(state: dict, *args: str) -> str:
+    return subprocess.run(
+        ("git", "--git-dir", state["origin"], *args),
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.strip()
+
+
+def pull_request(state: dict, number: str) -> dict:
+    """The PR as `gh pr view --json` prints it; an open PR's head follows its branch."""
+    pr = next(pr for pr in state["prs"] if str(pr["number"]) == number)
+    if pr["state"] == "OPEN":
+        pr["headRefOid"] = origin(state, "rev-parse", f"refs/heads/{pr['headRefName']}")
+    signed_off = state["statuses"].get(pr["headRefOid"]) == "success"
+    if pr["state"] != "OPEN":
+        merge_state = "UNKNOWN"
+    elif pr["isDraft"]:
+        merge_state = "DRAFT"
+    elif pr["conflicts"]:
+        merge_state = "DIRTY"
+    else:
+        merge_state = "CLEAN" if signed_off else "BLOCKED"
+    rollup = [{"__typename": "StatusContext", "context": "signoff", "state": "SUCCESS"}]
+    return {
+        **pr,
+        "url": f"https://github.com/{REPO}/pull/{number}",
+        "mergeStateStatus": merge_state,
+        "statusCheckRollup": rollup if signed_off else [],
+    }
+
+
+def merge(state: dict, number: str, sha: str, subject: str) -> int:
+    """Merge as GitHub does: only an unmoved head, and only when the rules allow it."""
+    if state["merge_error"] == "refused":
+        print("error connecting to api.github.com", file=sys.stderr)
+        return 1
+    pr = pull_request(state, number)
+    if pr["headRefOid"] != sha:
+        print("GraphQL: Head branch was modified", file=sys.stderr)
+        return 1
+    if pr["mergeStateStatus"] != "CLEAN":
+        print("the base branch policy prohibits the merge", file=sys.stderr)
+        return 1
+    main = origin(state, "rev-parse", "refs/heads/main")
+    tree = origin(state, "rev-parse", f"{sha}^{{tree}}")
+    commit = origin(state, "commit-tree", tree, "-p", main, "-p", sha, "-m", subject)
+    origin(state, "update-ref", "refs/heads/main", commit)
+    stored = next(pr for pr in state["prs"] if str(pr["number"]) == number)
+    stored.update(state="MERGED", headRefOid=sha, mergeCommit={"oid": commit})
+    if state["merge_error"] == "lost":
+        print("error: the request timed out", file=sys.stderr)
+        return 1
+    return 0
+
+
 def gh(state: dict, args: list[str]) -> int:
     if args[:2] == ["auth", "status"]:
         if state["signed_in"]:
@@ -37,29 +94,41 @@ def gh(state: dict, args: list[str]) -> int:
     if os.environ.get("GH_REPO") != REPO:
         print("fake gh: GH_REPO does not name the repository", file=sys.stderr)
         return 1
-    if args == ["api", f"repos/{REPO}/rules/branches/main"]:
-        if state["rules"] is None:
-            print("gh: Bad credentials (HTTP 401)", file=sys.stderr)
-            return 1
-        print(json.dumps(state["rules"]))
-        return 0
-    if args == ["signoff", "install"]:
-        state["rules"] = SIGNOFF_RULES
-        print("✓ Required signoff on main")
-        return 0
-    if args[:2] == ["signoff", "--commit"]:
-        state["statuses"][args[2]] = "success"
-        print(f"✓ Signed off on {args[2]}")
-        return 0
-    print(f"fake gh does not support: {' '.join(args)}", file=sys.stderr)
-    return 2
-
-
-def program(state: dict, argv: list[str]) -> int:
-    command = " ".join(argv)
-    if hook := state["hooks"].get(command):
-        subprocess.run(hook, shell=True, check=True)
-    return 1 if command in state["failing"] else 0
+    match args:
+        case ["api", path] if path == f"repos/{REPO}/rules/branches/main":
+            if state["rules"] is None:
+                print("gh: Bad credentials (HTTP 401)", file=sys.stderr)
+                return 1
+            print(json.dumps(state["rules"]))
+        case ["signoff", "install"]:
+            state["rules"] = SIGNOFF_RULES
+            print("✓ Required signoff on main")
+        case ["signoff", "--commit", sha]:
+            state["statuses"][sha] = "success"
+            print(f"✓ Signed off on {sha}")
+        case ["pr", "list", "--head", branch, "--state", "all", "--json", _]:
+            # Newest first, as gh lists them
+            numbers = [str(pr["number"]) for pr in state["prs"]]
+            listed = [pull_request(state, number) for number in reversed(numbers)]
+            print(json.dumps([pr for pr in listed if pr["headRefName"] == branch]))
+        case ["pr", "view", number, "--json", _]:
+            print(json.dumps(pull_request(state, number)))
+        # Any other flag, such as --admin, is unsupported
+        case [
+            "pr",
+            "merge",
+            number,
+            "--merge",
+            "--match-head-commit",
+            sha,
+            "--subject",
+            subject,
+        ]:
+            return merge(state, number, sha, subject)
+        case _:
+            print(f"fake gh does not support: {' '.join(args)}", file=sys.stderr)
+            return 2
+    return 0
 
 
 def main() -> int:
@@ -67,7 +136,15 @@ def main() -> int:
     state = json.loads(path.read_text(encoding="utf-8"))
     argv = sys.argv[1:]
     state["calls"].append({"argv": argv, "repo": os.environ.get("GH_REPO")})
-    code = gh(state, argv[1:]) if argv[0] == "gh" else program(state, argv)
+    command = " ".join(argv)
+    for start, hook in state["hooks"].items():
+        if command.startswith(start):
+            subprocess.run(hook, shell=True, check=True)
+            break
+    if argv[0] == "gh":
+        code = gh(state, argv[1:])
+    else:
+        code = 1 if command in state["failing"] else 0
     path.write_text(json.dumps(state), encoding="utf-8")
     return code
 
