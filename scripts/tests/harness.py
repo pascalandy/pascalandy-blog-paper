@@ -9,6 +9,8 @@ import sys
 import tempfile
 from pathlib import Path
 
+from fake import SIGNOFF_RULES
+
 SCRIPTS = Path(__file__).resolve().parent.parent
 FAKE = Path(__file__).with_name("fake.py")
 REMOTE = "git@github.com:pascalandy/blog.git"
@@ -67,6 +69,7 @@ class Sandbox:
         self.save(
             {
                 "signed_in": True,
+                "rules": SIGNOFF_RULES,
                 "statuses": {},
                 "hooks": {},
                 "failing": [],
