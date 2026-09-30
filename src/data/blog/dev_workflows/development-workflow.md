@@ -75,10 +75,10 @@ It refuses in about a second when a tool is missing, `gh` is signed out, `main` 
 | Stacked PRs                             | Sign off each layer; a restack changes every head, so sign off each again                                                                                                              |
 | A PR from a fork                        | Read the whole diff first, since the checks run its code on your machine; then `gh pr checkout <number>` and `bun install --frozen-lockfile && just ci && just gitleaks && gh signoff` |
 | Did this commit get signed off?         | `gh signoff status`                                                                                                                                                                    |
-| Merge blocked on `signoff`              | Sign off the PR head, then merge; never merge with `gh pr merge --admin` to skip it                                                                                                    |
+| Merge blocked on `signoff`              | `just merge` signs off the PR head, then merges it; never merge with `gh pr merge --admin` to skip it                                                                                  |
 | Want a run on a clean machine           | `just gh-ci <branch>`, then `gh run watch`                                                                                                                                             |
 
-Agents run `just ci` and report the result; Pascal signs off. Claude Code on the web has no `gh`, and agents never sign off, merge, or deploy unless Pascal asks.
+Agents run `just ci` and `just signoff-check` and report the result; Pascal signs off. When Pascal authorizes a merge, agents run `just merge`, which signs off and merges. Claude Code on the web has no `gh`, and agents never deploy unless Pascal asks.
 
 ### One-time setup
 
@@ -91,6 +91,33 @@ just signoff-setup
 It runs `gh signoff install`, which creates the `signoff` ruleset on `main`: the ruleset requires the `signoff` status to merge a PR, and it blocks force pushes and deleting `main`. Repository admins bypass it, so a direct push to `main` still works. Then it verifies the rule the way `just signoff-check` does.
 
 `just signoff-check` reads the rules GitHub enforces on `main` and changes nothing. It fails when they do not require `signoff`, and it reports a `gh` error, such as a signed-out `gh`, as that error rather than as a missing rule. `gh signoff check` can do neither: it reads a failed API call as "not required", and it exits 0 when `main` requires only other signoff contexts.
+
+## Merge
+
+Merge the current branch's PR into `main` with one command:
+
+```bash
+just merge
+```
+
+It merges only the commit it tested:
+
+1. It refuses in a few seconds when a tool is missing, `main` does not require `signoff` or uses a merge queue, or the PR is a draft, comes from a fork, or targets another branch. It also refuses when the working tree has changes, HEAD is not the PR head on GitHub, or the branch does not contain the tip of `main`
+2. It runs the `just signoff` steps on that head: the install, `just ci`, `just gitleaks`, then the status
+3. It waits up to a minute for GitHub to count the status. It stops when the PR head moves, a review or check blocks the PR, or the PR conflicts with `main`
+4. It checks that `main` did not move during the checks, then runs `gh pr merge --merge --match-head-commit <sha>`, so GitHub refuses any other head
+5. It reads the PR back and prints the merge commit and the PR URL
+
+Since the branch must contain the tip of `main`, the tree that lands on `main` is the tree the checks built. The merge commit subject is `🔀 merge: <PR title> (#N)`, without the title's type, scope, or stack position; `--subject` sets another. It never deletes the branch, and merging does not deploy.
+
+| Situation                                 | Do                                                                                                                      |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Refused: the branch lacks the tip of main | `git merge origin/main`, push, then `just merge`                                                                        |
+| Refused: the PR targets another branch    | Merge the layer below first; then merge `origin/main` into this branch, push, and run `gh pr edit <number> --base main` |
+| Interrupted, or `gh` lost its answer      | Run `just merge` again: it reports a PR that is already merged instead of checking it again                             |
+| Refused after the checks                  | Nothing merged; fix what the message names, then run `just merge` again                                                 |
+
+When Pascal authorizes a merge, agents run `just merge`; the authorization covers its checks and signoff. A request to write code does not authorize a merge.
 
 ## Deploy
 
