@@ -9,19 +9,22 @@ The status is the merge gate for pull requests into main. It belongs to one
 commit, so every push needs a new signoff.
 
 Usage:
-    just signoff
-    uv run scripts/signoff.py --help
+    just signoff          check the pushed HEAD, then sign it off
+    just signoff-check    verify that main requires the signoff status
+    just signoff-setup    require the signoff status on main, then verify it
 
-Exit codes: 0 signed off, 1 refused or a check failed, 2 bad usage.
+Exit codes: 0 success, 1 refused or a check failed, 2 bad usage.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
+import os
+import re
 import shutil
 import subprocess
 import sys
-from collections.abc import Callable
 
 # The install runs first so a dependency bump is checked against its own lockfile
 CHECKS = (
@@ -33,6 +36,8 @@ FORK_HINT = (
     "For a PR from a fork, read its whole diff first, since the checks run its code, "
     "then run: bun install --frozen-lockfile && just ci && just gitleaks && gh signoff"
 )
+# owner/name in an SSH or HTTPS GitHub URL
+GITHUB_URL = re.compile(r"github\.com[:/]([^/]+/[^/]+?)(?:\.git)?/?$")
 
 
 class Refused(Exception):
@@ -48,6 +53,61 @@ def git(*args: str) -> str:
 
 def succeeds(*command: str) -> bool:
     return subprocess.run(command, capture_output=True, check=False).returncode == 0
+
+
+def github_repo() -> str:
+    """The owner/name of origin, the repository whose main the rules protect."""
+    url = subprocess.run(
+        ("git", "config", "--get", "remote.origin.url"),
+        capture_output=True,
+        text=True,
+        check=False,
+    ).stdout.strip()
+    if match := GITHUB_URL.search(url):
+        return match.group(1)
+    raise Refused(f"origin is not a GitHub repository: {url or 'no origin remote'}")
+
+
+def gh(repo: str, *args: str) -> str:
+    """Run gh against repo and return its output.
+
+    GH_REPO pins the repository: this one is a fork, and a second remote such as
+    upstream would otherwise make gh guess."""
+    try:
+        result = subprocess.run(
+            ("gh", *args),
+            capture_output=True,
+            text=True,
+            check=False,
+            env={**os.environ, "GH_REPO": repo},
+        )
+    except FileNotFoundError:
+        raise Refused("gh not found; install the GitHub CLI: brew install gh") from None
+    if result.returncode != 0:
+        raise Refused(f"`gh {' '.join(args)}` failed: {result.stderr.strip()}")
+    return result.stdout
+
+
+def require_signoff_rule(repo: str) -> list[dict]:
+    """Return the rules GitHub enforces on main, once they require the signoff status.
+
+    `gh signoff check` reads a failed API call as "not required", and it exits 0
+    when main requires only other signoff contexts, so read the rules directly."""
+    rules = json.loads(gh(repo, "api", f"repos/{repo}/rules/branches/main"))
+    required = {
+        status.get("context")
+        for rule in rules
+        if rule.get("type") == "required_status_checks"
+        for status in rule.get("parameters", {}).get("required_status_checks", [])
+        # A check bound to an app accepts only that app's status, never gh signoff's
+        if status.get("integration_id") is None
+    }
+    if "signoff" not in required:
+        raise Refused(
+            f"main on {repo} does not require the signoff status; "
+            "run: just signoff-setup"
+        )
+    return rules
 
 
 def require_tools() -> None:
@@ -116,46 +176,61 @@ def require_pushed_head() -> None:
     raise Refused(f"HEAD is not pushed to {remote}/{shown}; run: git push")
 
 
-PRECONDITIONS: tuple[Callable[[], None], ...] = (
-    require_tools,
-    require_clean_tree,
-    require_pushed_head,
-)
-
-
-def signoff() -> int:
-    for precondition in PRECONDITIONS:
-        precondition()
+def signoff() -> None:
+    require_tools()
+    repo = github_repo()
+    require_signoff_rule(repo)
+    require_clean_tree()
+    require_pushed_head()
     head = git("rev-parse", "HEAD")
 
-    for check in CHECKS:
-        if subprocess.run(check, check=False).returncode != 0:
-            print(
-                f"error: `{' '.join(check)}` failed; nothing was signed off",
-                file=sys.stderr,
-            )
-            return 1
+    for command in CHECKS:
+        if subprocess.run(command, check=False).returncode != 0:
+            raise Refused(f"`{' '.join(command)}` failed; nothing was signed off")
 
     if git("rev-parse", "HEAD") != head:
         raise Refused(
             f"HEAD moved from {head[:7]} while the checks ran; run: just signoff"
         )
-    return subprocess.run(("gh", "signoff"), check=False).returncode
+    print(gh(repo, "signoff"), end="")
+
+
+def check_rule() -> None:
+    repo = github_repo()
+    require_signoff_rule(repo)
+    print(f"main on {repo} requires the signoff status")
+
+
+def setup() -> None:
+    print(gh(github_repo(), "signoff", "install"), end="")
+    check_rule()
+
+
+COMMANDS = {"sign": signoff, "check": check_rule, "setup": setup}
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        prog="just signoff",
+        prog="scripts/signoff.py",
         description=__doc__.split("\n\n")[0],
     )
-    parser.parse_args()
+    parser.add_argument(
+        "command",
+        nargs="?",
+        default="sign",
+        choices=COMMANDS,
+        help="sign (the default) checks and signs off HEAD; "
+        "check reads main's rules; setup installs the signoff rule on main",
+    )
+    args = parser.parse_args()
     try:
-        return signoff()
+        COMMANDS[args.command]()
     except Refused as refused:
         print(f"error: {refused}", file=sys.stderr)
         return 1
     except KeyboardInterrupt:
         return 130
+    return 0
 
 
 if __name__ == "__main__":

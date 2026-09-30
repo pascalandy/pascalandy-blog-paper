@@ -62,7 +62,7 @@ Push the branch, then run:
 just signoff
 ```
 
-It refuses in about a second when a tool is missing, `gh` is signed out, the working tree has changes, or HEAD is not exactly the commit GitHub has for the branch. Then it runs `bun install --frozen-lockfile`, `just ci`, and `just gitleaks`, and only when all three pass does `gh signoff` mark HEAD green. The install step means a dependency bump is built with its new packages, and a `package.json` change without its `bun.lock` fails. The status belongs to that one commit, so every push needs a new signoff. Leave the checkout alone until it finishes: if HEAD moves during the run, it signs nothing.
+It refuses in about a second when a tool is missing, `gh` is signed out, `main` does not require the `signoff` status, the working tree has changes, or HEAD is not exactly the commit GitHub has for the branch. Then it runs `bun install --frozen-lockfile`, `just ci`, and `just gitleaks`, and only when all three pass does `gh signoff` mark HEAD green. The install step means a dependency bump is built with its new packages, and a `package.json` change without its `bun.lock` fails. The status belongs to that one commit, so every push needs a new signoff. Leave the checkout alone until it finishes: if HEAD moves during the run, it signs nothing.
 
 | Situation                               | Do                                                                                                                                                                                     |
 | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -85,11 +85,12 @@ Agents run `just ci` and report the result; Pascal signs off. Claude Code on the
 Install the prerequisites listed in the README, including the gh-signoff extension. Then, once per repository, require signoff to merge into `main`:
 
 ```bash
-gh signoff install
-gh signoff check
+just signoff-setup
 ```
 
-`gh signoff install` creates the `signoff` ruleset on `main`: it requires the `signoff` status to merge a PR, and it blocks force pushes and deleting `main`. Repository admins bypass it, so a direct push to `main` still works.
+It runs `gh signoff install`, which creates the `signoff` ruleset on `main`: the ruleset requires the `signoff` status to merge a PR, and it blocks force pushes and deleting `main`. Repository admins bypass it, so a direct push to `main` still works. Then it verifies the rule the way `just signoff-check` does.
+
+`just signoff-check` reads the rules GitHub enforces on `main` and changes nothing. It fails when they do not require `signoff`, and it reports a `gh` error, such as a signed-out `gh`, as that error rather than as a missing rule. `gh signoff check` can do neither: it reads a failed API call as "not required", and it exits 0 when `main` requires only other signoff contexts.
 
 ## Deploy
 

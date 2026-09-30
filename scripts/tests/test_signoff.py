@@ -58,6 +58,66 @@ class SignoffTest(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("GitHub has newer commits on origin/feature", stderr)
 
+    def test_refuses_before_the_checks_when_main_does_not_require_signoff(
+        self,
+    ) -> None:
+        self.sandbox.update(rules=[])
+        code, stderr = self.signoff()
+        self.assertEqual(code, 1)
+        self.assertIn(
+            "main on pascalandy/blog does not require the signoff status; "
+            "run: just signoff-setup",
+            stderr,
+        )
+        self.assertEqual(self.sandbox.checks_run(), [])
+
+    def test_a_signoff_check_bound_to_an_app_does_not_count(self) -> None:
+        required = [{"context": "signoff", "integration_id": 15368}]
+        self.sandbox.update(
+            rules=[
+                {
+                    "type": "required_status_checks",
+                    "parameters": {"required_status_checks": required},
+                }
+            ]
+        )
+        result = self.sandbox.run("signoff.py", "check")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("run: just signoff-setup", result.stderr)
+
+    def test_an_unreadable_rule_is_an_access_failure_not_missing_setup(self) -> None:
+        self.sandbox.update(rules=None)
+        result = self.sandbox.run("signoff.py", "check")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn("Bad credentials (HTTP 401)", result.stderr)
+        self.assertNotIn("signoff-setup", result.stderr)
+
+    def test_check_reads_the_repository_from_origin(self) -> None:
+        self.sandbox.git(
+            "remote", "set-url", "origin", "https://github.com/pascalandy/blog"
+        )
+        result = self.sandbox.run("signoff.py", "check")
+        self.assertEqual(
+            (result.returncode, result.stdout),
+            (0, "main on pascalandy/blog requires the signoff status\n"),
+        )
+        self.sandbox.git("remote", "set-url", "origin", "/srv/git/blog.git")
+        result = self.sandbox.run("signoff.py", "check")
+        self.assertEqual(result.returncode, 1)
+        self.assertIn(
+            "origin is not a GitHub repository: /srv/git/blog.git", result.stderr
+        )
+
+    def test_setup_installs_the_rule_then_verifies_it(self) -> None:
+        self.sandbox.update(rules=[])
+        result = self.sandbox.run("signoff.py", "setup")
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(
+            result.stdout,
+            "✓ Required signoff on main\n"
+            "main on pascalandy/blog requires the signoff status\n",
+        )
+
     def test_signs_nothing_when_head_moves_during_the_checks(self) -> None:
         self.sandbox.update(hooks={"just ci": "git commit -q --allow-empty -m moved"})
         code, stderr = self.signoff()
