@@ -2,7 +2,8 @@
 
 Run as `fake.py PROGRAM ARGS...`. Each call appends its argv and GH_REPO to the
 calls in the JSON state named by FAKE_STATE, runs the first hook whose key
-starts the command line, then answers from the state. gh answers from main's
+starts the command line, then answers from the state. A hook is a shell
+command, or fields to change on the PR, as someone editing it on GitHub would. gh answers from main's
 rules, the commit statuses, and the pull requests, whose open heads are branch
 tips in the bare origin. Every other program fails when listed in `failing`.
 """
@@ -139,9 +140,13 @@ def main() -> int:
     state["calls"].append({"argv": argv, "repo": os.environ.get("GH_REPO")})
     command = " ".join(argv)
     for start, hook in state["hooks"].items():
-        if command.startswith(start):
+        if not command.startswith(start):
+            continue
+        if isinstance(hook, dict):
+            state["prs"][0].update(hook)
+        else:
             subprocess.run(hook, shell=True, check=True)
-            break
+        break
     if argv[0] == "gh":
         code = gh(state, argv[1:])
     else:

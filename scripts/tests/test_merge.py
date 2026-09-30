@@ -161,6 +161,30 @@ class MergeTest(unittest.TestCase):
         )
         self.assertEqual(self.main(), main)
 
+    def test_merges_nothing_when_the_pr_is_retargeted_during_the_checks(self) -> None:
+        self.sandbox.update(hooks={"just ci": {"baseRefName": "layer-1"}})
+        code, _, stderr = self.merge()
+        self.assertEqual(code, 1)
+        self.assertIn("PR #7 now targets layer-1, not main", stderr)
+        self.assertEqual(self.sandbox.load()["prs"][0]["state"], "OPEN")
+
+    def test_stops_when_the_pr_is_merged_elsewhere_during_the_checks(self) -> None:
+        self.sandbox.update(hooks={"just ci": {"state": "MERGED"}})
+        code, _, stderr = self.merge()
+        self.assertEqual(code, 1)
+        self.assertIn("PR #7 was merged during the checks", stderr)
+
+    def test_refuses_a_pr_merged_into_another_branch(self) -> None:
+        self.open_pr(
+            state="MERGED",
+            baseRefName="layer-1",
+            headRefOid=self.sandbox.head(),
+            mergeCommit={"oid": "0" * 40},
+        )
+        code, _, stderr = self.merge()
+        self.assertEqual(code, 1)
+        self.assertIn("PR #7 was merged into layer-1, not main", stderr)
+
     def test_stops_at_a_conflict_without_merging(self) -> None:
         self.open_pr(conflicts=True)
         main = self.main()

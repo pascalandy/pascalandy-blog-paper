@@ -147,6 +147,16 @@ def wait_until_mergeable(repo: str, number: int, sha: str) -> PullRequest:
     deadline = time.monotonic() + WAIT_SECONDS
     while True:
         pr = view(repo, number)
+        if pr.state != "OPEN":
+            raise Refused(
+                f"PR #{number} was {pr.state.lower()} during the checks; "
+                "rerun just merge to see where it stands"
+            )
+        if pr.base != "main":
+            raise Refused(
+                f"PR #{number} now targets {pr.base}, not main; retarget it to main, "
+                "then rerun just merge"
+            )
         if pr.head != sha:
             raise Refused(
                 f"PR #{number} moved from {sha[:7]} to {pr.head[:7]} after the "
@@ -206,6 +216,8 @@ def merge(subject: str | None) -> None:
     pr = branch_pr(repo, branch)
     head = git("rev-parse", "HEAD")
     if pr.state == "MERGED":
+        if pr.base != "main":
+            raise Refused(f"PR #{pr.number} was merged into {pr.base}, not main")
         if pr.head != head:
             raise Refused(
                 f"PR #{pr.number} was merged at {pr.head[:7]}, but HEAD is "
