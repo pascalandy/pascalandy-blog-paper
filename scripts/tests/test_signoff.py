@@ -52,6 +52,20 @@ class SignoffTest(unittest.TestCase):
         self.assertIn("HEAD is not pushed to origin/feature; run: git push", stderr)
         self.assertEqual(self.sandbox.checks_run(), [])
 
+    def test_refuses_a_detached_head(self) -> None:
+        self.sandbox.git("switch", "--quiet", "--detach")
+        code, stderr = self.signoff()
+        self.assertEqual(code, 1)
+        self.assertIn("HEAD is detached; check out the PR branch first", stderr)
+        self.assertEqual(self.sandbox.checks_run(), [])
+
+    def test_refuses_a_signed_out_gh(self) -> None:
+        self.sandbox.update(signed_in=False)
+        code, stderr = self.signoff()
+        self.assertEqual(code, 1)
+        self.assertIn("gh is not signed in to github.com; run: gh auth login", stderr)
+        self.assertEqual(self.sandbox.checks_run(), [])
+
     def test_refuses_when_github_has_newer_commits(self) -> None:
         self.sandbox.commit("pushed from elsewhere")
         self.sandbox.git("push", "--quiet")
