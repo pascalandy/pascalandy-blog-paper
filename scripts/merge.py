@@ -131,13 +131,13 @@ def branch_pr(repo: str, branch: str) -> PullRequest:
     return (open_prs or merged)[0]
 
 
-def require_contains_main() -> None:
-    """Require HEAD to contain main's tip, so the merge brings in no untested code."""
+def require_contains_main(sha: str) -> None:
+    """Require sha to contain main's tip, so the merge brings in no untested code."""
     git("fetch", "--quiet", "origin", "main")
     main = git("rev-parse", "FETCH_HEAD")
-    if not succeeds("git", "merge-base", "--is-ancestor", main, "HEAD"):
+    if not succeeds("git", "merge-base", "--is-ancestor", main, sha):
         raise Refused(
-            f"the branch does not contain main's tip {main[:7]}; "
+            f"the branch at {sha[:7]} does not contain main's tip {main[:7]}; "
             "run: git merge origin/main, push, then rerun just merge"
         )
 
@@ -231,12 +231,12 @@ def merge(subject: str | None) -> None:
             f"PR #{pr.number} is at {pr.head[:7]}, but {branch} on GitHub is at "
             f"{sha[:7]}; rerun just merge once GitHub catches up"
         )
-    require_contains_main()
+    require_contains_main(sha)
     print(f"PR #{pr.number}: checking {sha[:7]} before the merge")
     sign(repo, sha)
     pr = wait_until_mergeable(repo, pr.number, sha)
     # main can move while the checks run
-    require_contains_main()
+    require_contains_main(sha)
     land(repo, pr, sha, subject or merge_subject(pr.title, pr.number))
 
 

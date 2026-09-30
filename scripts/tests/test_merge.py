@@ -118,7 +118,7 @@ class MergeTest(unittest.TestCase):
         code, _, stderr = self.merge()
         self.assertEqual(code, 1)
         self.assertIn(
-            f"the branch does not contain main's tip {tip[:7]}; run: git merge origin/main",
+            f"does not contain main's tip {tip[:7]}; run: git merge origin/main",
             stderr,
         )
         self.assertEqual(self.sandbox.checks_run(), [])
@@ -131,7 +131,18 @@ class MergeTest(unittest.TestCase):
         self.sandbox.update(hooks={"just ci": move_main})
         code, _, stderr = self.merge()
         self.assertEqual(code, 1)
-        self.assertIn("the branch does not contain main's tip", stderr)
+        self.assertIn("does not contain main's tip", stderr)
+        self.assertEqual(self.sandbox.load()["prs"][0]["state"], "OPEN")
+
+    def test_checks_the_tested_commit_not_head_against_main(self) -> None:
+        catch_up_locally = (
+            "git switch -q main && git commit -q --allow-empty -m moved && git push -q "
+            "&& git switch -q feature && git merge -q --no-edit main"
+        )
+        self.sandbox.update(hooks={"gh signoff": catch_up_locally})
+        code, _, stderr = self.merge()
+        self.assertEqual(code, 1)
+        self.assertIn("does not contain main's tip", stderr)
         self.assertEqual(self.sandbox.load()["prs"][0]["state"], "OPEN")
 
     def test_merges_nothing_when_the_pr_moves_after_the_signoff(self) -> None:
