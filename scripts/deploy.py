@@ -12,8 +12,9 @@ Usage:
     just deploy [--dry-run] [--no-wait]
     just deploy-preview [branch] [--dry-run] [--no-wait]
 
-Setup: store a Sevalla API key in the macOS Keychain under the service
-sevalla-api-token, or set SEVALLA_TOKEN. The site IDs come from
+Setup: set SEVALLA_TOKEN for one command from
+`chezmoi secret keyring get --service=SEVALLA_API_KEY --user=api_key`.
+The macOS Keychain service sevalla-api-token is a fallback. Site IDs come from
 SEVALLA_STATIC_SITE_ID and SEVALLA_STATIC_SITE_ID_PREVIEW in the environment,
 or else from the GitHub repository variables of the same names through gh.
 
