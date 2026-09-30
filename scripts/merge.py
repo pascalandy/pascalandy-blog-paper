@@ -198,8 +198,8 @@ def land(repo: str, pr: PullRequest, sha: str, subject: str) -> None:
         ) from None
     if after.state != "MERGED":
         raise Refused(
-            f"{failure}; PR #{pr.number} is still {after.state.lower()} and main "
-            "did not change, so rerun just merge once that is fixed"
+            f"{failure}; PR #{pr.number} is still {after.state.lower()}, so it was "
+            "not merged; rerun just merge once that is fixed"
         )
     if after.head != sha:
         raise Refused(

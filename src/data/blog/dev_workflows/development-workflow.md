@@ -102,20 +102,21 @@ just merge
 
 It merges only the commit it tested:
 
-1. It refuses in a few seconds when a tool is missing, `main` does not require `signoff` or uses a merge queue, or the PR is a draft, comes from a fork, or targets another branch. It also refuses when the working tree has changes, HEAD is not the PR head on GitHub, or the branch does not contain the tip of `main`
+1. It refuses in a few seconds when a tool is missing, `main` does not require `signoff` or uses a merge queue, or the PR is a draft, comes from a fork, targets another branch, or has auto-merge on. It also refuses when the working tree has changes, HEAD is not the PR head on GitHub, or the branch does not contain the tip of `main`
 2. It runs the `just signoff` steps on that head: the install, `just ci`, `just gitleaks`, then the status
-3. It waits up to a minute for GitHub to count the status. It stops when the PR head moves, a review or check blocks the PR, or the PR conflicts with `main`
+3. It waits up to a minute for GitHub to count the status. It stops when the PR head or base changes, the PR closes, a review or check blocks it, or it conflicts with `main`
 4. It checks that `main` did not move during the checks, then runs `gh pr merge --merge --match-head-commit <sha>`, so GitHub refuses any other head
 5. It reads the PR back and prints the merge commit and the PR URL
 
-Since the branch must contain the tip of `main`, the tree that lands on `main` is the tree the checks built. The merge commit subject is `🔀 merge: <PR title> (#N)`, without the title's type, scope, or stack position; `--subject` sets another. It never deletes the branch, and merging does not deploy.
+Since the branch must contain the tip of `main`, the tree that lands on `main` is the tree the checks built, unless another PR merges in the seconds between that last check and the merge: `--match-head-commit` pins the PR head, not `main`. The merge commit subject is `🔀 merge: <PR title> (#N)`, without the title's type, scope, or stack position; `--subject` sets another. It never deletes the branch, and merging does not deploy.
 
 | Situation                                 | Do                                                                                                                      |
 | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
 | Refused: the branch lacks the tip of main | `git merge origin/main`, push, then `just merge`                                                                        |
 | Refused: the PR targets another branch    | Merge the layer below first; then merge `origin/main` into this branch, push, and run `gh pr edit <number> --base main` |
 | Interrupted, or `gh` lost its answer      | Run `just merge` again: it reports a PR that is already merged instead of checking it again                             |
-| Refused after the checks                  | Nothing merged; fix what the message names, then run `just merge` again                                                 |
+| Refused: auto-merge is on                 | Run `just signoff` and let GitHub merge it, as for Renovate, or turn auto-merge off and run `just merge`                |
+| Refused after the checks                  | The PR was not merged; fix what the message names, then run `just merge` again                                          |
 
 When Pascal authorizes a merge, agents run `just merge`; the authorization covers its checks and signoff. A request to write code does not authorize a merge.
 
