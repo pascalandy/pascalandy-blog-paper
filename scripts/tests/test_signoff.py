@@ -63,7 +63,9 @@ class SignoffTest(unittest.TestCase):
         self.sandbox.update(signed_in=False)
         code, stderr = self.signoff()
         self.assertEqual(code, 1)
-        self.assertIn("gh is not signed in to github.com; run: gh auth login", stderr)
+        self.assertIn(
+            "`gh auth status` fails for github.com: sign in with gh auth login", stderr
+        )
         self.assertEqual(self.sandbox.checks_run(), [])
 
     def test_refuses_when_github_has_newer_commits(self) -> None:

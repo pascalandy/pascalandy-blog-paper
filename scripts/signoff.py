@@ -129,7 +129,11 @@ def require_tools() -> None:
             "run: gh extension install basecamp/gh-signoff"
         )
     if not succeeds("gh", "auth", "status", "--hostname", "github.com"):
-        raise Refused("gh is not signed in to github.com; run: gh auth login")
+        # It also fails offline, so name both causes
+        raise Refused(
+            "`gh auth status` fails for github.com: sign in with gh auth login, "
+            "or check your network"
+        )
     if not succeeds("git", "config", "user.name"):
         raise Refused(
             'git user.name is not set; run: git config --global user.name "..."'
