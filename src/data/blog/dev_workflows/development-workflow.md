@@ -23,6 +23,7 @@ The full output of each check stays in `cache/check/`.
 
 - `just check --list` names the checks; add `-v` to see their commands
 - `just check --only content` validates every post against the schema; repeat `--only` to run several checks
+- `just check --only scripts` tests the shipping scripts in `scripts/tests/`, against a throwaway git origin and a fake `gh`
 - `just check -v` streams the output of every command
 - `just qa` formats the repo, then runs `just check`
 

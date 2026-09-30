@@ -37,6 +37,21 @@ ACTIONLINT: Command = (
     "-pyflakes=",
 )
 
+# The scripts' tests use only the standard library
+UNITTEST: Command = (
+    "uv",
+    "run",
+    "--quiet",
+    "--no-project",
+    "--python",
+    ">=3.11",
+    "python",
+    "-m",
+    "unittest",
+    "discover",
+    "--start-directory",
+)
+
 
 @dataclass(frozen=True)
 class Check:
@@ -64,6 +79,8 @@ CHECKS = [
     # src/tags.ts leaves unchanged posts unvalidated
     row("content", ("bun", "run", "sync", "--force")),
     row("docs", uv_run("scripts/check_docs.py")),
+    # The ship scripts against a bare origin and fake tools
+    row("scripts", (*UNITTEST, "scripts/tests")),
     row("typecheck", ("bun", "run", "astro", "check")),
     row("build", ("bun", "run", "build:ci")),
 ]
