@@ -110,13 +110,14 @@ It merges only the commit it tested:
 
 Since the branch must contain the tip of `main`, the tree that lands on `main` is the tree the checks built, unless another PR merges in the seconds between that last check and the merge: `--match-head-commit` pins the PR head, not `main`. The merge commit subject is `🔀 merge: <PR title> (#N)`, without the title's type, scope, or stack position; `--subject` sets another. It never deletes the branch, and merging does not deploy.
 
-| Situation                                 | Do                                                                                                                      |
-| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Refused: the branch lacks the tip of main | `git merge origin/main`, push, then `just merge`                                                                        |
-| Refused: the PR targets another branch    | Merge the layer below first; then merge `origin/main` into this branch, push, and run `gh pr edit <number> --base main` |
-| Interrupted, or `gh` lost its answer      | Run `just merge` again: it reports a PR that is already merged instead of checking it again                             |
-| Refused: auto-merge is on                 | Run `just signoff` and let GitHub merge it, as for Renovate, or turn auto-merge off and run `just merge`                |
-| Refused after the checks                  | Fix what the message names, then run `just merge` again; a rerun also reports a PR that merged in the meantime          |
+| Situation                                 | Do                                                                                                                                                  |
+| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Refused: the branch lacks the tip of main | `git merge origin/main`, push, then `just merge`                                                                                                    |
+| Refused: the PR targets another branch    | Merge the layer below first; then merge `origin/main` into this branch, push, and run `gh pr edit <number> --base main`                             |
+| Interrupted, or `gh` lost its answer      | Run `just merge` again: it reports a PR that is already merged instead of checking it again                                                         |
+| Refused: auto-merge is on                 | Run `just signoff` and let GitHub merge it, as for Renovate, or turn auto-merge off and run `just merge`                                            |
+| Refused: part of a GitHub stack           | GitHub merges a PR in a stack only through its stack: run `gh stack unstack <stack>` to merge layer by layer with `just merge`, or `gh stack merge` |
+| Refused after the checks                  | Fix what the message names, then run `just merge` again; a rerun also reports a PR that merged in the meantime                                      |
 
 When Pascal authorizes a merge, agents run `just merge`; the authorization covers its checks and signoff. A request to write code does not authorize a merge.
 
