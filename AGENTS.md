@@ -58,9 +58,10 @@ When sources disagree, trust them in this order:
 
 The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just gh-gitleaks`, `just gh-labels`). A PR merges into `main` only with a green `signoff` status on its head commit; admins can bypass that rule, so never bypass it.
 
-- Agents run `just check` and report the result; Pascal runs `just signoff` on the pushed head
-- Agents never merge PRs, run `just signoff` or `gh signoff`, or run `just deploy`, unless Pascal asks
-- Never merge with `gh pr merge --admin` or the bypass option to skip the gate
+- Agents run `just check` and `just signoff-check` and report the result; Pascal runs `just signoff` on the pushed head
+- When Pascal explicitly authorizes merging a PR, run `just merge` on its branch. That authorization covers its checks and signoff. Ordinary implementation requests do not authorize merging
+- Otherwise agents never merge PRs, run `just signoff` or `gh signoff`, or run `just deploy`, unless Pascal asks
+- Never merge with `gh pr merge --admin` or the bypass option to skip the gate; when `just merge` refuses, report its message
 - Merging does not deploy: `just deploy` ships main
 - Details: the [development workflow](src/data/blog/dev_workflows/development-workflow.md)
 

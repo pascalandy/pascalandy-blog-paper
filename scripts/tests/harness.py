@@ -9,12 +9,16 @@ import sys
 import tempfile
 from pathlib import Path
 
-from fake import SIGNOFF_RULES
+from fake import REPO, SIGNOFF_RULES
 
 SCRIPTS = Path(__file__).resolve().parent.parent
+# The tests import the scripts they cover
+sys.path.insert(0, str(SCRIPTS))
 FAKE = Path(__file__).with_name("fake.py")
-REMOTE = "git@github.com:pascalandy/blog.git"
+REMOTE = f"git@github.com:{REPO}.git"
 PROGRAMS = ("gh", "bun", "just", "gitleaks")
+# What a signoff runs, in order
+CHECKS = ["bun install --frozen-lockfile", "just ci", "just gitleaks"]
 
 
 class Sandbox:
@@ -68,9 +72,12 @@ class Sandbox:
         self.git("push", "--quiet", "--set-upstream", "origin", "feature")
         self.save(
             {
+                "origin": str(self.origin),
                 "signed_in": True,
                 "rules": SIGNOFF_RULES,
                 "statuses": {},
+                "prs": [],
+                "merge_error": None,
                 "hooks": {},
                 "failing": [],
                 "calls": [],
@@ -91,7 +98,11 @@ class Sandbox:
         ).stdout.strip()
 
     def commit(self, message: str) -> str:
-        self.git("commit", "--quiet", "--allow-empty", "--message", message)
+        """Commit a new file named after message, so every commit changes the tree."""
+        name = message.replace(" ", "-")
+        (self.work / f"{name}.txt").write_text(f"{message}\n", encoding="utf-8")
+        self.git("add", f"{name}.txt")
+        self.git("commit", "--quiet", "--message", message)
         return self.head()
 
     def head(self) -> str:
