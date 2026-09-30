@@ -93,6 +93,11 @@ signoff-check:
 signoff-setup:
     @uv run --quiet scripts/signoff.py setup
 
+# Merge this branch's PR into main: sign off its pushed head, then merge exactly that commit
+[group('ship')]
+merge *args:
+    @uv run --quiet scripts/merge.py "$@"
+
 # Deploy GitHub's main to production on Sevalla and wait for the build; --dry-run checks the setup
 [group('ship')]
 deploy *args:
