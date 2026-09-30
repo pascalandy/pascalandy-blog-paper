@@ -71,12 +71,12 @@ lint *files:
 # Scan staged changes for secrets; lefthook runs it on every commit
 [group('checks')]
 gitleaks-staged:
-    @env -u GITLEAKS_CONFIG GITLEAKS_CONFIG_TOML="$(printf '[extend]\nuseDefault = true\n')" gitleaks git --staged --gitleaks-ignore-path /dev/null --no-banner --redact --log-level warn --verbose --no-color
+    @env -u GITLEAKS_CONFIG GITLEAKS_CONFIG_TOML="$(printf '[extend]\nuseDefault = true\n')" gitleaks git "$(git rev-parse --git-dir)" --staged --gitleaks-ignore-path /dev/null --ignore-gitleaks-allow --no-banner --redact --log-level warn --verbose --no-color
 
 # Scan this branch's commits since origin/main for secrets
 [group('checks')]
 gitleaks:
-    @env -u GITLEAKS_CONFIG GITLEAKS_CONFIG_TOML="$(printf '[extend]\nuseDefault = true\n')" gitleaks git --log-opts="origin/main..HEAD" --gitleaks-ignore-path /dev/null --no-banner --redact --verbose
+    @env -u GITLEAKS_CONFIG GITLEAKS_CONFIG_TOML="$(printf '[extend]\nuseDefault = true\n')" gitleaks git "$(git rev-parse --git-dir)" --log-opts="origin/main..HEAD" --gitleaks-ignore-path /dev/null --ignore-gitleaks-allow --no-banner --redact --verbose
 
 # Install, run `just ci` and `just gitleaks`, then mark the pushed HEAD green on GitHub; push first
 [group('ship')]
