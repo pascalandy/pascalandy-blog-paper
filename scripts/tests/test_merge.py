@@ -28,6 +28,7 @@ class MergeTest(unittest.TestCase):
             "isCrossRepository": False,
             "conflicts": False,
             "mergeCommit": None,
+            "autoMergeRequest": None,
         }
         self.sandbox.update(prs=[{**pr, **changes}], calls=[])
 
@@ -84,6 +85,7 @@ class MergeTest(unittest.TestCase):
             "comes from a fork": {"isCrossRepository": True},
             "targets layer-1, not main": {"baseRefName": "layer-1"},
             "is a draft": {"isDraft": True},
+            "has auto-merge on": {"autoMergeRequest": {"mergeMethod": "MERGE"}},
         }
         for refusal, changes in cases.items():
             with self.subTest(refusal):

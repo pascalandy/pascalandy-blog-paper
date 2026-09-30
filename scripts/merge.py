@@ -40,7 +40,7 @@ from signoff import (
 
 FIELDS = (
     "number,url,title,state,isDraft,baseRefName,headRefOid,isCrossRepository,"
-    "mergeStateStatus,mergeCommit,statusCheckRollup"
+    "mergeStateStatus,mergeCommit,statusCheckRollup,autoMergeRequest"
 )
 # The merge states in which GitHub merges without a bypass
 MERGEABLE = {"CLEAN", "HAS_HOOKS"}
@@ -77,6 +77,7 @@ class PullRequest:
     merge_state: str
     merge_commit: str | None
     signed_off: bool
+    auto_merge: bool
 
     @classmethod
     def parse(cls, raw: dict) -> PullRequest:
@@ -95,6 +96,7 @@ class PullRequest:
                 check.get("context") == "signoff" and check.get("state") == "SUCCESS"
                 for check in raw.get("statusCheckRollup") or []
             ),
+            auto_merge=raw.get("autoMergeRequest") is not None,
         )
 
 
@@ -235,6 +237,12 @@ def merge(subject: str | None) -> None:
     if pr.draft:
         raise Refused(
             f"PR #{pr.number} is a draft; mark it ready with: gh pr ready {pr.number}"
+        )
+    # GitHub would merge it the moment the signoff lands, before the last check
+    if pr.auto_merge:
+        raise Refused(
+            f"PR #{pr.number} has auto-merge on; run just signoff and let it merge, "
+            f"or turn it off with: gh pr merge {pr.number} --disable-auto"
         )
     require_clean_tree()
     sha = pushed_head()
