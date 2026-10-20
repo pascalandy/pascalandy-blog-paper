@@ -5,7 +5,7 @@
 # [tool.uv]
 # exclude-newer = "1 week"
 # ///
-"""Capture a dist with verify-blog's driver, or compare two screenshot sets."""
+"""Capture a dist with verify-blog's browser setup, or compare screenshot sets."""
 
 from __future__ import annotations
 
@@ -13,7 +13,6 @@ import argparse
 import functools
 import hashlib
 import http.server
-import importlib.util
 import json
 import math
 import subprocess
@@ -22,12 +21,12 @@ import threading
 from pathlib import Path
 from typing import Any
 
+import browse
 from PIL import Image, ImageChops, ImageDraw, ImageEnhance
 from playwright.sync_api import Error as PlaywrightError
 from playwright.sync_api import Page, sync_playwright
 
 ROOT = Path(__file__).resolve().parent
-DEFAULT_DRIVER = ROOT / "browse.py"
 MATRIX = ROOT.parent / "shots.json"
 
 
@@ -96,11 +95,6 @@ def capture(args: argparse.Namespace) -> int:
         source_commit = observed
     if args.out.exists() and any(args.out.iterdir()):
         raise ValueError(f"output must be empty to prevent stale evidence: {args.out}")
-    spec = importlib.util.spec_from_file_location("verify_blog_driver", args.driver)
-    if spec is None or spec.loader is None:
-        raise ValueError(f"cannot load driver: {args.driver}")
-    driver = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(driver)
     args.out.mkdir(parents=True, exist_ok=True)
     specification = matrix()
     pages = (
@@ -120,8 +114,8 @@ def capture(args: argparse.Namespace) -> int:
     manifest: dict[str, Any] = {
         "dist": str(dist),
         "base": base,
-        "driver": str(args.driver),
-        "driver_sha256": hashlib.sha256(args.driver.read_bytes()).hexdigest(),
+        "driver": str(ROOT / "browse.py"),
+        "driver_sha256": hashlib.sha256((ROOT / "browse.py").read_bytes()).hexdigest(),
         "browser": "Chromium via Playwright 1.56.0",
         "device_scale_factor": args.dpr,
         "screenshot_scale": args.scale,
@@ -134,7 +128,7 @@ def capture(args: argparse.Namespace) -> int:
     }
     try:
         with sync_playwright() as playwright:
-            browser = playwright.chromium.launch()
+            browser = browse.launch_chromium(playwright)
             manifest["browser_version"] = browser.version
             for viewport in specification["viewports"]:
                 width, height = viewport["width"], viewport["height"]
@@ -152,18 +146,7 @@ def capture(args: argparse.Namespace) -> int:
                         )
                         page = context.new_page()
                         errors: list[str] = []
-                        page.on(
-                            "pageerror",
-                            lambda error, errors=errors: errors.append(str(error)),
-                        )
-                        page.on(
-                            "console",
-                            lambda message, errors=errors: (
-                                errors.append(message.text)
-                                if message.type == "error"
-                                else None
-                            ),
-                        )
+                        browse.collect_page_errors(page, errors)
                         stem = f"{label}-{width}-{theme}"
                         try:
                             response = page.goto(base + path, timeout=30000)
@@ -174,17 +157,22 @@ def capture(args: argparse.Namespace) -> int:
                                 )
                             settle(page)
                             if label == "search":
-                                driver.run(
+                                browse.run(
                                     page,
                                     base,
                                     "fill",
                                     ".pagefind-ui__search-input=bitcoin",
+                                    [],
                                 )
-                                driver.run(page, base, "wait", ".pagefind-ui__result")
+                                browse.run(
+                                    page, base, "wait", ".pagefind-ui__result", []
+                                )
                                 if "q=bitcoin" not in page.url:
                                     raise ValueError("search did not update the URL")
                             if label == "mermaid":
-                                driver.run(page, base, "wait", ".mermaid-diagram svg")
+                                browse.run(
+                                    page, base, "wait", ".mermaid-diagram svg", []
+                                )
                                 expected = page.locator(".mermaid-diagram svg").count()
                                 if expected < 2:
                                     raise ValueError(
@@ -206,7 +194,6 @@ def capture(args: argparse.Namespace) -> int:
                                     ).first.scroll_into_view_if_needed()
                                 else:
                                     page.evaluate("scrollTo(0,0)")
-                                # Pointer and focus outside content; screenshot disables finite animations.
                                 page.mouse.move(0, 0)
                                 settle(page)
                                 name = stem + "-" + position
@@ -464,7 +451,6 @@ def main() -> int:
         default="css",
         help="screenshot pixel scale; device preserves native DPR pixels",
     )
-    shoot.add_argument("--driver", type=Path, default=DEFAULT_DRIVER)
     shoot.add_argument(
         "--pages",
         type=Path,

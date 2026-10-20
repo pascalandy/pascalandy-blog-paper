@@ -16,7 +16,7 @@ from pathlib import Path
 from typing import NoReturn
 from urllib.parse import urljoin, urlsplit
 
-from playwright.sync_api import Error, Page, sync_playwright
+from playwright.sync_api import Browser, Error, Page, Playwright, sync_playwright
 
 EPILOG = """\
 Steps run in order, each as ACTION:ARGUMENT, with Playwright selectors such as
@@ -54,6 +54,8 @@ exit codes:
 
 VIEWPORTS = {"desktop": {"width": 1440, "height": 900}}
 ACTIONS = ("click", "fill", "press", "wait", "goto", "reload", "back", "eval")
+# The browser matching the pinned Playwright, with the system libraries it needs
+# on Linux; a cloud sandbox may ship both already
 INSTALL = (
     "uv run --with playwright==1.56.0 python -m playwright install --with-deps chromium"
 )
@@ -76,12 +78,31 @@ def step(value: str) -> tuple[str, str]:
     return action, argument
 
 
-def await_navigation(page: Page, events: list[dict], start: int) -> None:
+def launch_chromium(playwright: Playwright) -> Browser:
+    try:
+        return playwright.chromium.launch()
+    except Error as error:
+        raise ValueError(
+            f"{str(error).splitlines()[0]}; Chromium did not start; run: {INSTALL}"
+        ) from error
+
+
+def collect_page_errors(page: Page, errors: list[str]) -> None:
+    page.on(
+        "console",
+        lambda message: message.type == "error" and errors.append(message.text),
+    )
+    page.on("pageerror", lambda error: errors.append(str(error)))
+
+
+def await_navigation(
+    page: Page, events: list[dict], start: int, previous_url: str | None = None
+) -> None:
     deadline = time.monotonic() + 20
     while time.monotonic() < deadline:
         if any(
             event["event"] in ("astro:page-load", "load") for event in events[start:]
-        ):
+        ) or (previous_url is not None and page.url != previous_url):
             page.wait_for_load_state("networkidle")
             return
         page.wait_for_timeout(50)
@@ -89,9 +110,8 @@ def await_navigation(page: Page, events: list[dict], start: int) -> None:
 
 
 def run(
-    page: Page, base: str, action: str, argument: str, events: list[dict] | None = None
+    page: Page, base: str, action: str, argument: str, events: list[dict]
 ) -> object:
-    events = events if events is not None else []
     if action == "click":
         target = page.locator(argument).first
         href = target.evaluate("element => element.closest('a')?.href ?? null")
@@ -99,7 +119,10 @@ def run(
         destination = urlsplit(href) if href else current
         navigates = bool(
             href
-            and (destination.path, destination.query) != (current.path, current.query)
+            and (
+                (destination.path, destination.query) != (current.path, current.query)
+                or not destination.fragment
+            )
         )
         start = len(events)
         target.click()
@@ -113,13 +136,15 @@ def run(
     elif action == "wait":
         page.locator(argument).first.wait_for(state="visible")
     elif action == "goto":
+        # /tags resolves against the site's origin, whatever page it starts from
         page.goto(urljoin(base, argument), wait_until="load")
     elif action == "reload":
         page.reload(wait_until="load")
     elif action == "back":
         start = len(events)
+        previous_url = page.url
         page.evaluate("history.back()")
-        await_navigation(page, events, start)
+        await_navigation(page, events, start, previous_url)
     elif action == "eval":
         result = page.evaluate(argument)
         page.wait_for_load_state("networkidle")
@@ -177,6 +202,7 @@ def drive(args: argparse.Namespace) -> int:
     args.out.mkdir(parents=True, exist_ok=True)
     errors: list[str] = []
     network: list[dict] = []
+    failed_requests: list[dict] = []
     probes: list[dict] = []
     events: list[dict] = []
     evaluations: list[dict] = []
@@ -184,10 +210,9 @@ def drive(args: argparse.Namespace) -> int:
     failure = ""
     with sync_playwright() as playwright:
         try:
-            browser = playwright.chromium.launch()
-        except Error as error:
-            print(str(error).splitlines()[0], file=sys.stderr)
-            print(f"error: Chromium did not start; run: {INSTALL}", file=sys.stderr)
+            browser = launch_chromium(playwright)
+        except ValueError as error:
+            print(f"error: {error}", file=sys.stderr)
             return 1
         if args.device == "iphone":
             options = dict(playwright.devices["iPhone 15"])
@@ -222,18 +247,28 @@ def drive(args: argparse.Namespace) -> int:
           });
         })();""")
         page = context.new_page()
-        page.on(
-            "console",
-            lambda message: message.type == "error" and errors.append(message.text),
-        )
-        page.on("pageerror", lambda error: errors.append(str(error)))
+        collect_page_errors(page, errors)
         page.on(
             "response",
             lambda response: network.append(
                 {
+                    "event": "response",
                     "url": response.url,
                     "status": response.status,
                     "resource_type": response.request.resource_type,
+                    "step": current_step["value"],
+                }
+            ),
+        )
+        page.on(
+            "requestfailed",
+            lambda request: failed_requests.append(
+                {
+                    "event": "requestfailed",
+                    "url": request.url,
+                    "status": None,
+                    "failure": request.failure,
+                    "resource_type": request.resource_type,
                     "step": current_step["value"],
                 }
             ),
@@ -269,7 +304,12 @@ def drive(args: argparse.Namespace) -> int:
             json.dumps(state, ensure_ascii=False, indent=2) + "\n"
         )
         (args.out / "network.json").write_text(
-            json.dumps({"responses": network}, ensure_ascii=False, indent=2) + "\n"
+            json.dumps(
+                {"responses": network, "failures": failed_requests},
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n"
         )
         (args.out / "probes.json").write_text(
             json.dumps({"events": probes}, ensure_ascii=False, indent=2) + "\n"
