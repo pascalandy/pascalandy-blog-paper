@@ -34,6 +34,7 @@ Agents pick the first `open` ticket; each fix ships with its own check. Triage a
 | B22 | open | Production deploys `branch: main`, not the commit `check` tested: a push that lands while a check runs can go live under the earlier green result | Production ships only a commit that passed `check`; a probe with two quick pushes shows it |
 | B23 | open | The `@claude` workflow's checkout keeps the job token in `.git/config` (`claude.yml`) | A live `@claude` run passes with `persist-credentials: false`, or a comment says why the action needs the token |
 | B24 | open | Pagefind assigns different document numbers between fresh builds of identical HTML | Three fresh builds of identical HTML produce byte-identical Pagefind files; logical postings remain unchanged |
+| B25 | open | Stale B9 warnings in `.claude/skills/verify-blog/features/post.md` and `scripts/overview.py` still say tied posts can swap order | Both descriptions state that equal `date_created` values sort by ascending ID, without excusing a Previous/Next regression |
 | B19 | done | Astro docs MCP server | `.mcp.json` configures `astro-docs` (#70, M3) |
 | B20 | done | Sitemap integration | `@astrojs/sitemap` runs in `astro.config.ts` |
 | B21 | done | Remove the "Share this post on" block from posts | 0 posts contain it |
