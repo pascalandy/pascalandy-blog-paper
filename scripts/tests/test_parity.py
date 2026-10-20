@@ -39,10 +39,8 @@ def png(
     )
 
 
-def add_png_gamma(path: Path) -> None:
+def add_png_chunk(path: Path, kind: bytes, payload: bytes) -> None:
     original = path.read_bytes()
-    payload = struct.pack(">I", 33333)
-    kind = b"gAMA"
     chunk = (
         struct.pack(">I", len(payload))
         + kind
@@ -351,15 +349,21 @@ class ParityCommandTest(unittest.TestCase):
                 self.assertEqual(result.returncode, 1, result.stderr)
                 self.assertTrue(self.findings(report, "image_pixels"))
 
-    def test_png_gamma_affects_content_and_og_pixels(self) -> None:
-        for side in (self.before, self.after):
-            png(side / "og.png", (253, 245, 230))
-        add_png_gamma(self.after / "image.png")
-        add_png_gamma(self.after / "og.png")
-        result, report = self.run_parity()
-        self.assertEqual(result.returncode, 1, result.stderr)
-        self.assertTrue(self.findings(report, "image_pixels"))
-        self.assertTrue(self.findings(report, "og_pixels"))
+    def test_png_color_chunks_affect_content_and_og_pixels(self) -> None:
+        for kind, payload in (
+            (b"gAMA", struct.pack(">I", 33333)),
+            (b"cICP", bytes((9, 13, 0, 1))),
+        ):
+            with self.subTest(chunk=kind):
+                shutil.copyfile(self.before / "image.png", self.after / "image.png")
+                for side in (self.before, self.after):
+                    png(side / "og.png", (253, 245, 230))
+                add_png_chunk(self.after / "image.png", kind, payload)
+                add_png_chunk(self.after / "og.png", kind, payload)
+                result, report = self.run_parity()
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertTrue(self.findings(report, "image_pixels"))
+                self.assertTrue(self.findings(report, "og_pixels"))
 
     def test_exact_ledger_pair(self) -> None:
         self.html(self.after, "<title>Start</title>", "<title>Changed</title>")

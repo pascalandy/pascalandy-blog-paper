@@ -154,6 +154,28 @@ def local_file(
     return candidate
 
 
+PNG_RENDER_CHUNKS = frozenset({b"cICP", b"mDCV", b"cLLI"})
+
+
+def png_render_chunks(payload: bytes) -> list[tuple[str, str]]:
+    if not payload.startswith(b"\x89PNG\r\n\x1a\n"):
+        return []
+    result = []
+    position = 8
+    while position + 12 <= len(payload):
+        length = int.from_bytes(payload[position : position + 4], "big")
+        end = position + 12 + length
+        if end > len(payload):
+            raise ValueError("truncated PNG chunk")
+        kind = payload[position + 4 : position + 8]
+        if kind == b"IDAT":
+            break
+        if kind in PNG_RENDER_CHUNKS:
+            result.append((kind.decode("ascii"), payload[position + 8 : end - 4].hex()))
+        position = end
+    return result
+
+
 @cache
 def image_data_from_bytes(payload: bytes) -> dict[str, Any]:
     encoding_hash = hashlib.sha256(payload).hexdigest()
@@ -170,6 +192,9 @@ def image_data_from_bytes(payload: bytes) -> dict[str, Any]:
                 for key in ("gamma", "chromaticity", "srgb")
                 if key in source.info
             }
+            render_chunks = png_render_chunks(payload)
+            if render_chunks:
+                color_metadata["png_render_chunks"] = render_chunks
             pixels.update(digest(color_metadata).encode())
             frames_to_decode = (
                 [source] if source.format == "MPO" else ImageSequence.Iterator(source)
