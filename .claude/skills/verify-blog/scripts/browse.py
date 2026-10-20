@@ -34,8 +34,8 @@ A role= name must equal the whole accessible name; a regex, such as
 role=link[name=/^Next/], matches part of it.
 
 Then OUT receives screenshot.png (the viewport, at most 1920 CSS pixels a side),
-aria.txt (the accessibility snapshot), state.json, network.json (responses and
-status codes), and probes.json (DOMContentLoaded and Astro navigation events).
+aria.txt (the accessibility snapshot), state.json, network.json (response status
+codes and failed requests), and probes.json (DOMContentLoaded and Astro navigation events).
 The paths print on stdout.
 
 examples:

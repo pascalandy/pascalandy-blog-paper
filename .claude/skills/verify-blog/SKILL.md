@@ -62,7 +62,9 @@ uv run .claude/skills/verify-blog/scripts/browse.py "$URL/search" --out cache/ve
 
 It needs the Chromium build of Playwright 1.56; when `browse.py` says Chromium did not start, run `uv run --with playwright==1.56.0 python -m playwright install --with-deps chromium`; on Linux, `--with-deps` also installs the system libraries it needs, through apt. `--device iphone` emulates an iPhone viewport in Chromium; it is not Safari, so iOS proof needs the agent-browser path.
 
-`browse.py` also accepts `--step back`, `--step reload`, and `--step 'eval:<JavaScript>'`. It writes `network.json` with each response status and `probes.json` with the `<html>` theme at `DOMContentLoaded`, `astro:after-swap`, and `astro:page-load`. On `astro:after-swap`, `theme` comes from a listener registered after initial page load, following the site's theme handler in the same event dispatch; `theme_before_handlers` preserves the early init-script reading. A full reload installs both listeners in the new document. A link click and browser back wait for the navigation's `astro:page-load` or a full page load before the next step.
+`browse.py` also accepts `--step back`, `--step reload`, and `--step 'eval:<JavaScript>'`. It writes `network.json` with each response status and a separate list of failed requests. `probes.json` records the `<html>` theme at `DOMContentLoaded`, `astro:after-swap`, and `astro:page-load`.
+
+On `astro:after-swap`, `theme` comes from a listener registered after initial page load, following the site's theme handler in the same event dispatch; `theme_before_handlers` preserves the early init-script reading. A full reload installs both listeners in the new document. A link click and cross-route back wait for the navigation's `astro:page-load` or a full page load before the next step. Fragment-only back completes when the URL fragment changes.
 
 ## Compare two builds
 
