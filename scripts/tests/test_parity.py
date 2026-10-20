@@ -1,5 +1,6 @@
 """Exercise the parity command against small built-site fixtures."""
 
+import gzip
 import json
 import shutil
 import struct
@@ -50,6 +51,7 @@ class ParityCommandTest(unittest.TestCase):
 
     def pagefind(self, variant: str) -> None:
         for side, name in ((self.before, "ordered"), (self.after, variant)):
+            shutil.rmtree(side / "pagefind")
             shutil.copytree(FIXTURES / name / "pagefind", side / "pagefind")
 
     def run_parity(
@@ -142,6 +144,31 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(result.returncode, 1)
         self.assertTrue(self.findings(report, "pagefind_postings"))
 
+    def test_pagefind_fragment_content(self) -> None:
+        self.pagefind("ordered")
+        path = self.after / "pagefind/fragment/a.pf_fragment"
+        marker = b"pagefind_dcd"
+        fragment = json.loads(gzip.decompress(path.read_bytes())[len(marker) :])
+        fragment["content"] = "changed"
+        path.write_bytes(gzip.compress(marker + json.dumps(fragment).encode(), mtime=0))
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1)
+        self.assertTrue(self.findings(report, "pagefind_fragment"))
+
+    def test_pagefind_fragment_asset_name(self) -> None:
+        self.pagefind("ordered")
+        marker = b"pagefind_dcd"
+        for side, name in ((self.before, "AAAAAAAA"), (self.after, "BBBBBBBB")):
+            path = side / "pagefind/fragment/a.pf_fragment"
+            fragment = json.loads(gzip.decompress(path.read_bytes())[len(marker) :])
+            fragment["image"] = f"/_astro/image.{name}.webp"
+            path.write_bytes(
+                gzip.compress(marker + json.dumps(fragment).encode(), mtime=0)
+            )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(self.findings(report, "pagefind_fragment"))
+
     def test_removed_rss_item(self) -> None:
         path = self.after / "rss.xml"
         path.write_text(
@@ -212,8 +239,35 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(report["verdict"], "COSMETIC")
         self.assertEqual(len(report["fonts"]["b"]), 2)
 
+    def test_fetched_pairs_script_and_stylesheet_by_page_slot(self) -> None:
+        self.prepare_fonts(False)
+        (self.after / "_astro/app.ABCDEFGH.js").rename(self.after / "_astro/runtime.js")
+        (self.after / "_astro/site.ABCDEFGH.css").rename(self.after / "_astro/site.css")
+        self.html(self.after, "/_astro/app.ABCDEFGH.js", "/_astro/runtime.js")
+        self.html(self.after, "/_astro/site.ABCDEFGH.css", "/_astro/site.css")
+        result, report = self.run_parity("--fetched")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(self.findings(report, "attributes"))
+        self.assertFalse(self.findings(report, "assets"))
+
     def test_fetched_font_role_swap(self) -> None:
         self.prepare_fonts(True)
+        result, report = self.run_parity("--fetched")
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "font_roles"))
+
+    def test_fetched_checks_inline_font_faces(self) -> None:
+        rules = (
+            '<style>@font-face{font-family:Parity;font-style:normal;font-weight:400;src:url("/_astro/fonts/normal.12345678.woff2")}'
+            '@font-face{font-family:Parity;font-style:italic;font-weight:400;src:url("/_astro/fonts/italic.87654321.woff2")}</style>'
+        )
+        for side in (self.before, self.after):
+            self.html(side, "</head>", rules + "</head>")
+        fonts = self.after / "_astro/fonts"
+        normal = (fonts / "normal.12345678.woff2").read_bytes()
+        italic = (fonts / "italic.87654321.woff2").read_bytes()
+        (fonts / "normal.12345678.woff2").write_bytes(italic)
+        (fonts / "italic.87654321.woff2").write_bytes(normal)
         result, report = self.run_parity("--fetched")
         self.assertEqual(result.returncode, 1, result.stderr)
         self.assertTrue(self.findings(report, "font_roles"))

@@ -89,6 +89,16 @@ def norm(value: object) -> str:
     )
 
 
+def normalize_asset_names(value: Any) -> Any:
+    if isinstance(value, str):
+        return ASSET.sub(lambda match: match[1] + HASH.sub(r"\1HASH", match[2]), value)
+    if isinstance(value, list):
+        return [normalize_asset_names(item) for item in value]
+    if isinstance(value, dict):
+        return {key: normalize_asset_names(item) for key, item in value.items()}
+    return value
+
+
 def digest(value: object) -> str:
     return hashlib.sha256(
         json.dumps(value, sort_keys=True, ensure_ascii=False).encode()
@@ -319,8 +329,6 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
         "missing": sorted(missing),
         "content_hash": digest(norm(css_text)),
     }
-    # Expose changes outside the requested semantic fields for review as cosmetic.
-    # Attribute order, scope IDs, island UIDs, and HTML spacing cannot create noise.
     for comment in soup.find_all(string=lambda value: isinstance(value, Comment)):
         comment.extract()
     for tag in soup.find_all(True):
@@ -360,6 +368,7 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
         ],
         "css": css,
         "html": digest(normalized_html),
+        "html_content": normalized_html,
         "raw": hashlib.sha256(raw.encode()).hexdigest(),
     }
 
@@ -517,7 +526,6 @@ def pixel_diff(first: Path, second: Path, threshold: int = 0) -> dict[str, Any]:
 def sample(a: Any, b: Any) -> dict[str, Any]:
     left = json.dumps(a, ensure_ascii=False, sort_keys=True, indent=2).splitlines()
     right = json.dumps(b, ensure_ascii=False, sort_keys=True, indent=2).splitlines()
-    # Single-line text fields need a local excerpt around their first change.
     if isinstance(a, str) and isinstance(b, str):
         index = next(
             (i for i, pair in enumerate(zip(a, b)) if pair[0] != pair[1]),
@@ -586,15 +594,72 @@ def page_asset_pairs(
     return pairs
 
 
+def page_asset_refs(first_page: Path, second_page: Path) -> dict[str, str]:
+    left = BeautifulSoup(first_page.read_text(encoding="utf-8"), "html.parser")
+    right = BeautifulSoup(second_page.read_text(encoding="utf-8"), "html.parser")
+    aliases = {}
+    for selector, attribute in (
+        ("script[src]", "src"),
+        ("link[rel~=stylesheet]", "href"),
+    ):
+        for a_tag, b_tag in zip(left.select(selector), right.select(selector)):
+            aliases[norm(b_tag[attribute])] = norm(a_tag[attribute])
+    return aliases
+
+
+def replace_refs(value: Any, aliases: dict[str, str]) -> Any:
+    if isinstance(value, str):
+        for actual, local in aliases.items():
+            value = value.replace(actual, local)
+        return value
+    if isinstance(value, list):
+        return [replace_refs(item, aliases) for item in value]
+    if isinstance(value, tuple):
+        return tuple(replace_refs(item, aliases) for item in value)
+    if isinstance(value, dict):
+        return {key: replace_refs(item, aliases) for key, item in value.items()}
+    return value
+
+
 def font_names(root: Path) -> list[str]:
     return sorted(path.relative_to(root).as_posix() for path in root.rglob("*.woff2"))
 
 
+@cache
+def font_properties(path: Path) -> tuple[bool, float, float]:
+    with TTFont(path, lazy=True) as font:
+        italic = bool(font["head"].macStyle & 2 or font["OS/2"].fsSelection & 1)
+        axis = (
+            next((axis for axis in font["fvar"].axes if axis.axisTag == "wght"), None)
+            if "fvar" in font
+            else None
+        )
+        low, high = (
+            (axis.minValue, axis.maxValue)
+            if axis
+            else (font["OS/2"].usWeightClass,) * 2
+        )
+    return italic, low, high
+
+
 def font_roles(root: Path) -> tuple[list[dict[str, Any]], list[str]]:
-    roles = []
-    mismatches = []
-    for css_file in root.rglob("*.css"):
-        css = css_file.read_text(encoding="utf-8")
+    roles: dict[tuple[str, str, tuple[int, ...]], dict[str, Any]] = {}
+    mismatches: set[str] = set()
+    referenced: set[str] = set()
+
+    def sources():
+        for css_file in root.rglob("*.css"):
+            css = css_file.read_text(encoding="utf-8")
+            if "@font-face" in css:
+                yield css_file, css
+        for page in root.rglob("*.html"):
+            soup = BeautifulSoup(page.read_text(encoding="utf-8"), "html.parser")
+            for tag in soup.select("style"):
+                css = str(tag.string or tag.get_text())
+                if "@font-face" in css:
+                    yield page, css
+
+    for css_file, css in sources():
         for rule in tinycss2.parse_stylesheet(
             css, skip_comments=True, skip_whitespace=True
         ):
@@ -628,42 +693,25 @@ def font_roles(root: Path) -> tuple[list[dict[str, Any]], list[str]]:
                 font_path = local_file(root, href.replace("https://dist.invalid", ""))
                 if font_path is None or not font_path.is_file():
                     raise ValueError(f"{css_file}: missing font {url}")
-                with TTFont(font_path, lazy=True) as font:
-                    italic = bool(
-                        font["head"].macStyle & 2 or font["OS/2"].fsSelection & 1
-                    )
-                    axis = (
-                        next(
-                            (
-                                axis
-                                for axis in font["fvar"].axes
-                                if axis.axisTag == "wght"
-                            ),
-                            None,
-                        )
-                        if "fvar" in font
-                        else None
-                    )
-                    low, high = (
-                        (axis.minValue, axis.maxValue)
-                        if axis
-                        else (font["OS/2"].usWeightClass,) * 2
-                    )
+                italic, low, high = font_properties(font_path)
+                name = font_path.relative_to(root).as_posix()
+                referenced.add(name)
                 wanted_italic = style.startswith(("italic", "oblique"))
                 if italic != wanted_italic or min(weights) < low or max(weights) > high:
-                    mismatches.append(
+                    mismatches.add(
                         f"{font_path.relative_to(root)}: expected {style} {values.get('font-weight', '400')} from {css_file.relative_to(root)}, font has italic={italic} weight={low}..{high}"
                     )
-                roles.append(
-                    {
-                        "file": font_path.relative_to(root).as_posix(),
-                        "style": style,
-                        "weight": weights,
-                        "font_italic": italic,
-                        "font_weight": [low, high],
-                    }
-                )
-    return roles, mismatches
+                roles[(name, style, tuple(weights))] = {
+                    "file": name,
+                    "style": style,
+                    "weight": weights,
+                    "font_italic": italic,
+                    "font_weight": [low, high],
+                }
+    for name in font_names(root):
+        if name not in referenced:
+            mismatches.add(f"{name}: font has no @font-face rule")
+    return list(roles.values()), sorted(mismatches)
 
 
 def asset_groups(
@@ -727,6 +775,10 @@ def compare(
     inventory: dict[str, Any] = {}
     for url in sorted(b_pages.keys() & a_pages.keys()):
         a, b = page_data(a_pages[url], first), page_data(b_pages[url], second)
+        if fetched:
+            aliases = page_asset_refs(a_pages[url], b_pages[url])
+            b["attributes"] = replace_refs(b["attributes"], aliases)
+            b["html"] = digest(replace_refs(b["html_content"], aliases))
         for key in (
             "title",
             "metadata",
@@ -824,15 +876,22 @@ def compare(
     if not fetched or b_index["present"]:
         for field in ("present", "indexed_pages", "languages", "versions"):
             check("pagefind_" + field, "pagefind", a_index[field], b_index[field])
+        if not fetched:
+            for side, data in (("a", a_index), ("b", b_index)):
+                if not data["present"] or data["indexed_pages"] <= 0:
+                    check("pagefind_invalid", side, "present, nonempty index", data)
         for key in sorted(a_index["routes"].keys() | b_index["routes"].keys()):
             a_route = a_index["routes"].get(key, {})
             b_route = b_index["routes"].get(key, {})
-            check(
-                "pagefind_fragment",
-                key,
-                a_route.get("fragment"),
-                b_route.get("fragment"),
+            a_fragment, b_fragment = a_route.get("fragment"), b_route.get("fragment")
+            normalization = (
+                "asset hash filename"
+                if a_fragment != b_fragment
+                and normalize_asset_names(a_fragment)
+                == normalize_asset_names(b_fragment)
+                else None
             )
+            check("pagefind_fragment", key, a_fragment, b_fragment, normalization)
             check(
                 "pagefind_postings",
                 key,
