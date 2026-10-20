@@ -21,7 +21,7 @@ Agents pick the first `open` ticket; each fix ships with its own check. Triage a
 | B6 | open | `<html class="false">` | The attribute is gone; a check asserts it |
 | B7 | open | 41 renamed `cim` URLs lack redirects | Each old URL redirects to its new one; a check covers the list |
 | B8 | open | 178 of 531 images are unreferenced; skip `pascalandy-com_header*` on import | Each orphan is deleted or kept on purpose; a check fails on a new orphan |
-| B9 | open | Posts that share a `date_created` have no stable order, so builds can reorder them | `getSortedPosts` breaks ties; a check proves two builds order them the same |
+| B9 | done | Posts that share a `date_created` have no stable order, so builds can reorder them ([#86](https://github.com/pascalandy/pascalandy-blog-paper/pull/86)) | `getSortedPosts` breaks ties by ascending ID; three fresh builds preserve the same order |
 | B10 | open | Move the playbooks from `src/data/blog/dev_workflows/` to `/docs` | Playbooks live in `/docs`, the docs check and the contract follow, and old URLs redirect or are unpublished |
 | B11 | open | SEO audit: meta tags, canonical, og and twitter, robots, schema | Each finding is fixed or ticketed; B2 to B6 cover part of it |
 | B12 | half done | Thinner link underline in the primary color: thinner is done, the color is not | Links underline thin, in `--primary` |
@@ -33,6 +33,8 @@ Agents pick the first `open` ticket; each fix ships with its own check. Triage a
 | B18 | needs Pascal | Mobile checks through `agent-browser -p ios`: the verify-blog skill (#70, M4) documents them | The skill's desktop and iOS agent-browser steps run once on the Mac |
 | B22 | open | Production deploys `branch: main`, not the commit `check` tested: a push that lands while a check runs can go live under the earlier green result | Production ships only a commit that passed `check`; a probe with two quick pushes shows it |
 | B23 | open | The `@claude` workflow's checkout keeps the job token in `.git/config` (`claude.yml`) | A live `@claude` run passes with `persist-credentials: false`, or a comment says why the action needs the token |
+| B24 | open | Pagefind assigns different document numbers between fresh builds of identical HTML | Three fresh builds of identical HTML produce byte-identical Pagefind files; logical postings remain unchanged |
+| B25 | open | Stale B9 warnings in `.claude/skills/verify-blog/features/post.md` and `scripts/overview.py` still say tied posts can swap order | Both descriptions state that equal `date_created` values sort by ascending ID, without excusing a Previous/Next regression |
 | B19 | done | Astro docs MCP server | `.mcp.json` configures `astro-docs` (#70, M3) |
 | B20 | done | Sitemap integration | `@astrojs/sitemap` runs in `astro.config.ts` |
 | B21 | done | Remove the "Share this post on" block from posts | 0 posts contain it |

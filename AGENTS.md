@@ -71,7 +71,6 @@ The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just
 - A post may use only the frontmatter keys in `src/content.config.ts` and the tags in `src/tags.ts`; `just check --only content` names any other
 - A `_` prefix removes a file from the collection; a `_` folder stays in it but drops out of the URL
 - Folder names are slugified in URLs: `dev_workflows/` publishes at `/blog/dev-workflows/`
-- Posts that share a `date_created` can swap places between builds (backlog B9)
 - ruff formats Python code blocks inside Markdown by default; `ruff.toml` limits it to `*.py`
 - The build fetches Google Fonts for OG images; `cache/` keeps them, with the optimized images, between builds
 - The playbooks are public blog posts: write them for readers
