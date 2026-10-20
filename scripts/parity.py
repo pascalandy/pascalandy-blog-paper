@@ -20,6 +20,7 @@ import re
 import sys
 import xml.etree.ElementTree as ET
 from functools import cache
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
 from urllib.parse import unquote, urljoin, urlsplit
@@ -28,11 +29,11 @@ import cbor2
 import tinycss2
 from bs4 import BeautifulSoup, Comment, NavigableString, Tag
 from fontTools.ttLib import TTFont
-from PIL import Image, ImageChops, ImageSequence, UnidentifiedImageError
+from PIL import Image, ImageChops, ImageOps, ImageSequence, UnidentifiedImageError
 
 ASSET = re.compile(r"(/?_astro/)([^\s\"'<>?#]+)")
 HASH = re.compile(r"([._])[A-Za-z0-9_-]{8,}(?=\.)")
-CID = re.compile(r"data-astro-cid-[a-z0-9]+", re.IGNORECASE)
+FONT_REF = re.compile(r"(/_astro/fonts/)[^\s\"'<>?)]+\.woff2")
 BLOCKS = frozenset(
     [
         "article",
@@ -72,21 +73,14 @@ BLOCKS = frozenset(
 )
 HIDDEN = frozenset(["head", "script", "style", "template", "noscript"])
 PAGEFIND_MARKER = b"pagefind_dcd"
-# Only explicitly labelled build clocks are noise; publication dates remain intact.
-BUILD_CLOCK = re.compile(
-    r"((?:build[-_ ]?(?:time|timestamp|date)|built[-_ ]?at)[\s\"':=]+)"
-    r"\d{4}-\d\d-\d\d[T ][\d:.+Z-]+",
-    re.IGNORECASE,
-)
 
 
-def norm(value: object) -> str:
+def norm(value: object, *, preserve_edges: bool = False) -> str:
     text = str(value)
     text = ASSET.sub(lambda m: m[1] + HASH.sub(r"\1HASH", m[2]), text)
     text = re.sub(r"(_astro/fonts/)[0-9a-f]{16,}(?=\.)", r"\1HASH", text)
-    return " ".join(
-        BUILD_CLOCK.sub(r"\1BUILD_TIME", CID.sub("data-astro-cid-HASH", text)).split()
-    )
+    result = re.sub(r"[ \t\n\f\r]+", " ", text)
+    return result if preserve_edges else result.strip(" \t\n\f\r")
 
 
 def normalize_asset_names(value: Any) -> Any:
@@ -96,6 +90,18 @@ def normalize_asset_names(value: Any) -> Any:
         return [normalize_asset_names(item) for item in value]
     if isinstance(value, dict):
         return {key: normalize_asset_names(item) for key, item in value.items()}
+    return value
+
+
+def normalize_font_refs(value: Any) -> Any:
+    if isinstance(value, str):
+        return FONT_REF.sub(r"\1FONT.woff2", value)
+    if isinstance(value, list):
+        return [normalize_font_refs(item) for item in value]
+    if isinstance(value, tuple):
+        return tuple(normalize_font_refs(item) for item in value)
+    if isinstance(value, dict):
+        return {key: normalize_font_refs(item) for key, item in value.items()}
     return value
 
 
@@ -125,34 +131,6 @@ def local_file(root: Path, href: str, page_route: str = "/") -> Path | None:
 
 
 @cache
-def css_declarations(css: str) -> set[str]:
-    # Tokenize instead of matching var(--x) uses or strings/comments as definitions.
-    found: set[str] = set()
-
-    def walk(tokens: list[Any]) -> None:
-        for index, token in enumerate(tokens):
-            if token.type == "ident" and token.value.startswith("--"):
-                following = [
-                    t
-                    for t in tokens[index + 1 :]
-                    if t.type not in ("whitespace", "comment")
-                ]
-                if (
-                    following
-                    and following[0].type == "literal"
-                    and following[0].value == ":"
-                ):
-                    found.add(token.value)
-            for attr in ("content", "arguments"):
-                nested = getattr(token, attr, None)
-                if nested:
-                    walk(nested)
-
-    walk(tinycss2.parse_component_value_list(css))
-    return found
-
-
-@cache
 def image_data_from_bytes(payload: bytes) -> dict[str, Any]:
     encoding_hash = hashlib.sha256(payload).hexdigest()
     result: dict[str, Any] = {"bytes": len(payload), "sha256": encoding_hash}
@@ -160,15 +138,24 @@ def image_data_from_bytes(payload: bytes) -> dict[str, Any]:
         with Image.open(io.BytesIO(payload)) as source:
             pixels = hashlib.sha256()
             frames = 0
+            dimensions = list(source.size)
+            icc = hashlib.sha256(source.info.get("icc_profile") or b"").hexdigest()
+            pixels.update(bytes.fromhex(icc))
             frames_to_decode = (
                 [source] if source.format == "MPO" else ImageSequence.Iterator(source)
             )
             for frame in frames_to_decode:
-                pixels.update(frame.convert("RGBA").tobytes())
+                oriented = ImageOps.exif_transpose(frame)
+                if frames == 0:
+                    dimensions = list(oriented.size)
+                pixels.update(oriented.convert("RGBA").tobytes())
                 pixels.update(str(frame.info.get("duration", 0)).encode())
                 frames += 1
             result.update(
-                dimensions=list(source.size), frames=frames, pixels=pixels.hexdigest()
+                dimensions=dimensions,
+                frames=frames,
+                pixels=pixels.hexdigest(),
+                icc=icc,
             )
     except UnidentifiedImageError:
         # Conservatively retain byte identity for vectors the raster decoder cannot read.
@@ -235,8 +222,40 @@ def visible_text(soup: BeautifulSoup) -> str:
     return norm("".join(parts))
 
 
+def dom_structure(node: Tag | NavigableString, parent: str = "") -> Any:
+    if isinstance(node, NavigableString):
+        value = (
+            ""
+            if parent in {"title", "script", "style", "pre", "textarea"}
+            else norm(node, preserve_edges=True)
+        )
+        return ["text", value]
+    return [node.name, [dom_structure(child, node.name) for child in node.children]]
+
+
+class DuplicateAttributeProbe(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.element = 0
+        self.duplicates: list[tuple[int, str, str, list[str | None]]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values: dict[str, list[str | None]] = collections.defaultdict(list)
+        for key, value in attrs:
+            values[key].append(value)
+        for key, items in values.items():
+            if len(items) > 1:
+                self.duplicates.append((self.element, tag, key, items))
+        self.element += 1
+
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.handle_starttag(tag, attrs)
+
+
 def page_data(path: Path, root: Path) -> dict[str, Any]:
     raw = path.read_text(encoding="utf-8")
+    duplicate_probe = DuplicateAttributeProbe()
+    duplicate_probe.feed(raw)
     # Decode HTML character references once, as the browser does. Do not unescape
     # these DOM values again: &amp;#39; is literal text, unlike &#39; or an apostrophe.
     soup = BeautifulSoup(raw, "html.parser")
@@ -285,6 +304,7 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
     inline_scripts = [
         str(tag.string or tag.get_text()) for tag in soup.select("script:not([src])")
     ]
+    inline_styles = [str(tag.string or tag.get_text()) for tag in soup.select("style")]
     elements = [tag.name for tag in soup.find_all(True)]
     attributes = [
         (
@@ -292,57 +312,22 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
             sorted(
                 (key, norm(" ".join(value) if isinstance(value, list) else value))
                 for key, value in tag.attrs.items()
-                if not key.startswith("data-astro-cid-")
-                and not (tag.name == "astro-island" and key == "uid")
             ),
         )
         for tag in soup.find_all(True)
     ]
     assets = image_assets(soup, root, page_route)
-    css_chunks = [str(tag.string or tag.get_text()) for tag in soup.select("style")]
-    css_chunks.extend(str(tag.get("style")) for tag in soup.select("[style]"))
-    seen: set[Path] = set()
-    missing: list[str] = []
-
-    def load_css(href: str, context: str = page_route) -> None:
-        file = local_file(root, href, context)
-        if file is None:
-            missing.append("external:" + href)
-            return
-        if file in seen:
-            return
-        seen.add(file)
-        if not file.is_file():
-            missing.append(href)
-            return
-        css = file.read_text(encoding="utf-8")
-        css_chunks.append(css)
-        for match in re.finditer(r"@import\s+(?:url\()?['\"]([^'\"]+)['\"]", css):
-            load_css(match[1], "/" + file.relative_to(root).as_posix())
-
-    for tag in soup.select('link[rel~="stylesheet"]'):
-        load_css(str(tag.get("href", "")))
-    css_text = "\n".join(css_chunks)
-    css = {
-        "bytes": sum(len(chunk.encode()) for chunk in css_chunks),
-        "custom_properties": sorted(css_declarations(css_text)),
-        "missing": sorted(missing),
-        "content_hash": digest(norm(css_text)),
-    }
+    preformatted = [(tag.name, tag.get_text()) for tag in soup.select("pre,textarea")]
     for comment in soup.find_all(string=lambda value: isinstance(value, Comment)):
         comment.extract()
     for tag in soup.find_all(True):
         for attr in list(tag.attrs):
-            if attr.startswith("data-astro-cid-") or (
-                tag.name == "astro-island" and attr == "uid"
-            ):
-                del tag[attr]
-            else:
-                value = tag.attrs[attr]
-                tag.attrs[attr] = norm(
-                    " ".join(value) if isinstance(value, list) else value
-                )
+            value = tag.attrs[attr]
+            tag.attrs[attr] = norm(
+                " ".join(value) if isinstance(value, list) else value
+            )
         tag.attrs = dict(sorted(tag.attrs.items()))
+    structure = dom_structure(soup)
     normalized_html = norm(soup.decode())
     for tag in soup.select(
         "script,style,template,noscript,head,[hidden],[aria-hidden='true']"
@@ -356,8 +341,12 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
         "ids": ids,
         "links": links,
         "inline_scripts": inline_scripts,
+        "inline_styles": inline_styles,
         "elements": elements,
         "attributes": attributes,
+        "duplicate_attributes": duplicate_probe.duplicates,
+        "structure": structure,
+        "preformatted": preformatted,
         "images": images,
         "picture_sources": sources,
         "image_assets": assets,
@@ -366,7 +355,6 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
             norm(tag.get_text())
             for tag in soup.select("p,h1,h2,h3,h4,h5,h6,figcaption")
         ],
-        "css": css,
         "html": digest(normalized_html),
         "html_content": normalized_html,
         "raw": hashlib.sha256(raw.encode()).hexdigest(),
@@ -389,11 +377,7 @@ def feeds(root: Path) -> dict[str, Any]:
         channel = ET.parse(rss_file).getroot().find("channel")
         if channel is None:
             raise ValueError(f"{rss_file}: missing channel")
-        rss["channel"] = [
-            xml_value(e)
-            for e in channel
-            if e.tag != "item" and e.tag not in ("lastBuildDate",)
-        ]
+        rss["channel"] = [xml_value(e) for e in channel if e.tag != "item"]
         rss["items"] = [xml_value(item) for item in channel.findall("item")]
     urls: set[str] = set()
     indexes: set[str] = set()
@@ -527,19 +511,24 @@ def sample(a: Any, b: Any) -> dict[str, Any]:
     left = json.dumps(a, ensure_ascii=False, sort_keys=True, indent=2).splitlines()
     right = json.dumps(b, ensure_ascii=False, sort_keys=True, indent=2).splitlines()
     if isinstance(a, str) and isinstance(b, str):
-        index = next(
-            (i for i, pair in enumerate(zip(a, b)) if pair[0] != pair[1]),
-            min(len(a), len(b)),
-        )
         return {
-            "offset": index,
-            "a": a[max(0, index - 80) : index + 220],
-            "b": b[max(0, index - 80) : index + 220],
+            "hunks": [
+                {
+                    "a_offset": start_a,
+                    "b_offset": start_b,
+                    "a": a[max(0, start_a - 80) : end_a + 80],
+                    "b": b[max(0, start_b - 80) : end_b + 80],
+                }
+                for operation, start_a, end_a, start_b, end_b in difflib.SequenceMatcher(
+                    None, a, b
+                ).get_opcodes()
+                if operation != "equal"
+            ],
+            "a_hash": digest(a),
+            "b_hash": digest(b),
         }
     return {
-        "diff": list(difflib.unified_diff(left, right, fromfile="A", tofile="B", n=2))[
-            :35
-        ],
+        "diff": list(difflib.unified_diff(left, right, fromfile="A", tofile="B", n=2)),
         "a_hash": digest(a),
         "b_hash": digest(b),
     }
@@ -733,12 +722,12 @@ def asset_groups(
 def compare(
     first: Path,
     second: Path,
-    known_noise: dict[str, str],
     accepted: dict[str, str] | None = None,
     fetched: bool = False,
 ) -> dict[str, Any]:
     checks: list[dict[str, Any]] = []
     accepted = accepted or {}
+    page_pairs: dict[str, tuple[str, str]] = {}
 
     def check(
         kind: str, target: str, a: Any, b: Any, normalization: str | None = None
@@ -746,20 +735,19 @@ def compare(
         classification = (
             "identical" if a == b else ("cosmetic" if normalization else "material")
         )
-        fingerprint = digest([kind, target, sorted((digest(a), digest(b)))])
-        known = known_noise.get(fingerprint) if a != b else None
+        fingerprint = digest(
+            [kind, target, sorted((digest(a), digest(b))), page_pairs.get(target)]
+        )
         acceptance = accepted.get(fingerprint) if a != b else None
         item: dict[str, Any] = {
             "kind": kind,
             "target": target,
-            "classification": "cosmetic" if known or acceptance else classification,
+            "classification": "cosmetic" if acceptance else classification,
         }
         if a != b:
             item.update(sample=sample(a, b), fingerprint=fingerprint)
             if normalization:
                 item["normalization"] = normalization
-            if known:
-                item["known_noise"] = known
             if acceptance:
                 item["accepted"] = acceptance
         checks.append(item)
@@ -777,8 +765,15 @@ def compare(
         a, b = page_data(a_pages[url], first), page_data(b_pages[url], second)
         if fetched:
             aliases = page_asset_refs(a_pages[url], b_pages[url])
+            for page in (a, b):
+                for field in ("attributes", "inline_scripts", "inline_styles"):
+                    page[field] = normalize_font_refs(page[field])
             b["attributes"] = replace_refs(b["attributes"], aliases)
-            b["html"] = digest(replace_refs(b["html_content"], aliases))
+            a["html"] = digest(normalize_font_refs(a["html_content"]))
+            b["html"] = digest(
+                normalize_font_refs(replace_refs(b["html_content"], aliases))
+            )
+        page_pairs[url] = tuple(sorted((a["html"], b["html"])))
         for key in (
             "title",
             "metadata",
@@ -786,8 +781,12 @@ def compare(
             "ids",
             "links",
             "inline_scripts",
+            "inline_styles",
             "elements",
             "attributes",
+            "duplicate_attributes",
+            "structure",
+            "preformatted",
             "images",
             "picture_sources",
             "text",
@@ -813,18 +812,6 @@ def compare(
                 else None
             )
             check(kind, url, *values, normalization=normalization)
-        for key in ("bytes", "custom_properties", "missing", "content_hash"):
-            normalization = (
-                "fetched font filename"
-                if fetched
-                and key == "bytes"
-                and a["css"]["content_hash"] == b["css"]["content_hash"]
-                else None
-            )
-            check("css_" + key, url, a["css"][key], b["css"][key], normalization)
-        for side, data in (("A", a), ("B", b)):
-            if data["css"]["missing"]:
-                check("css_unresolved", url + ":" + side, [], data["css"]["missing"])
         semantic_fields = (
             "title",
             "metadata",
@@ -832,13 +819,16 @@ def compare(
             "ids",
             "links",
             "inline_scripts",
+            "inline_styles",
             "elements",
             "attributes",
+            "duplicate_attributes",
+            "structure",
+            "preformatted",
             "images",
             "picture_sources",
             "text",
             "inline_text",
-            "css",
         )
         explained = any(a[field] != b[field] for field in semantic_fields)
         check(
@@ -858,8 +848,6 @@ def compare(
             else None,
         )
         inventory[url] = {
-            "css_a": a["css"],
-            "css_b": b["css"],
             "images_a": a["image_assets"],
             "images_b": b["image_assets"],
         }
@@ -974,7 +962,12 @@ def compare(
                 and a_feed["robots"] == b_feed["robots"]
             ):
                 normalization = "robots comment or whitespace"
-        check("assets", key, a_values, b_values, normalization)
+        target = (
+            a_rows[0][0]
+            if len(a_rows) == len(b_rows) == 1 and a_rows[0][0] == b_rows[0][0]
+            else key
+        )
+        check("assets", target, a_values, b_values, normalization)
     a_fonts, b_fonts = font_names(first), font_names(second)
     font_checks: dict[str, Any] = {"a": a_fonts, "b": b_fonts}
     if fetched:
@@ -1002,7 +995,6 @@ def compare(
         "pages": inventory,
         "checks": checks,
         "inputs": {"a": str(first), "b": str(second)},
-        "known_noise_matches": sum("known_noise" in item for item in checks),
         "acceptance_matches": sum("accepted" in item for item in checks),
     }
 
@@ -1015,11 +1007,6 @@ def main() -> int:
     cli.add_argument("dist_a", type=Path)
     cli.add_argument("dist_b", type=Path)
     cli.add_argument("--json", type=Path, help="write the full machine-readable report")
-    cli.add_argument(
-        "--known-noise",
-        type=Path,
-        help="JSON fingerprint-to-evidence map; only exact measured pairs are downgraded",
-    )
     cli.add_argument("--accept", type=Path, help="exact fingerprint-to-reason ledger")
     cli.add_argument(
         "--fetched",
@@ -1031,11 +1018,6 @@ def main() -> int:
         for path in (args.dist_a, args.dist_b):
             if not path.is_dir():
                 raise ValueError(f"not a dist directory: {path}")
-        noise = (
-            json.loads(args.known_noise.read_text(encoding="utf-8"))
-            if args.known_noise
-            else {}
-        )
         accepted = (
             json.loads(args.accept.read_text(encoding="utf-8")) if args.accept else {}
         )
@@ -1050,7 +1032,7 @@ def main() -> int:
                 "accept ledger must map exact SHA-256 fingerprints to reasons"
             )
         report = compare(
-            args.dist_a.resolve(), args.dist_b.resolve(), noise, accepted, args.fetched
+            args.dist_a.resolve(), args.dist_b.resolve(), accepted, args.fetched
         )
         if args.json:
             args.json.parent.mkdir(parents=True, exist_ok=True)
@@ -1067,7 +1049,6 @@ def main() -> int:
                         "verdict",
                         "summary",
                         "routes",
-                        "known_noise_matches",
                         "acceptance_matches",
                     )
                 }
@@ -1091,7 +1072,7 @@ def main() -> int:
             )
         )
         return 1 if report["summary"].get("material") else 0
-    except (OSError, ValueError, TypeError, ET.ParseError, KeyError) as error:
+    except Exception as error:  # noqa: BLE001
         print(json.dumps({"ok": False, "errors": [str(error)]}), file=sys.stderr)
         return 2
 

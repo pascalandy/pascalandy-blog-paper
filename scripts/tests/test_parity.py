@@ -58,6 +58,7 @@ class ParityCommandTest(unittest.TestCase):
         self, *options: str
     ) -> tuple[subprocess.CompletedProcess[str], dict]:
         report_path = self.folder / "report.json"
+        report_path.unlink(missing_ok=True)
         result = subprocess.run(
             [
                 "uv",
@@ -106,11 +107,41 @@ class ParityCommandTest(unittest.TestCase):
         self.assertTrue(self.findings(report, "text"))
         self.assertTrue(self.findings(report, "inline_text"))
 
+    def test_french_spacing_is_not_collapsed(self) -> None:
+        for space in ("\u00a0", "\u202f", "\u2009"):
+            with self.subTest(space=repr(space)):
+                shutil.copyfile(FIXTURES / "base/index.html", self.after / "index.html")
+                self.html(self.after, "before <em>after", f"before{space}<em>after")
+                result, report = self.run_parity()
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertTrue(self.findings(report, "text"))
+
+    def test_preformatted_spacing_is_exact(self) -> None:
+        for side in (self.before, self.after):
+            self.html(
+                side,
+                "</body>",
+                "<pre>one\n    two</pre><textarea>a  b</textarea></body>",
+            )
+        for old, new in (("    two", "  two"), ("one\n", "one "), ("a  b", "a b")):
+            with self.subTest(change=(old, new)):
+                shutil.copyfile(self.before / "index.html", self.after / "index.html")
+                self.html(self.after, old, new)
+                result, report = self.run_parity()
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertTrue(self.findings(report, "preformatted"))
+
     def test_missing_and_empty_alt(self) -> None:
         self.html(self.after, 'height="2">', 'height="2" alt="">')
         result, report = self.run_parity()
         self.assertEqual(result.returncode, 1)
         self.assertTrue(self.findings(report, "images"))
+
+    def test_duplicate_attribute_cannot_hide_browser_first_value(self) -> None:
+        self.html(self.after, 'width="2"', 'width="3" width="2"')
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "duplicate_attributes"))
 
     def test_heading_id(self) -> None:
         self.html(self.after, 'id="start"', 'id="changed"')
@@ -124,7 +155,31 @@ class ParityCommandTest(unittest.TestCase):
         )
         result, report = self.run_parity()
         self.assertEqual(result.returncode, 1)
-        self.assertTrue(self.findings(report, "assets"))
+        self.assertEqual(
+            [item["target"] for item in self.findings(report, "assets")],
+            ["_astro/app.ABCDEFGH.js"],
+        )
+
+    def test_external_css_change_has_one_material_finding(self) -> None:
+        path = self.after / "_astro/site.ABCDEFGH.css"
+        path.write_text(path.read_text().replace("#000", "#111"))
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        material = [
+            item for item in report["checks"] if item["classification"] == "material"
+        ]
+        self.assertEqual(
+            [(item["kind"], item["target"]) for item in material],
+            [("assets", "_astro/site.ABCDEFGH.css")],
+        )
+
+    def test_inline_css_change_is_material(self) -> None:
+        for side in (self.before, self.after):
+            self.html(side, "</head>", "<style>body { color: red; }</style></head>")
+        self.html(self.after, "color: red", "color: blue")
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "inline_styles"))
 
     def test_inline_script(self) -> None:
         self.html(self.after, "window.parity = 1", "window.parity = 2")
@@ -191,6 +246,24 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(result.returncode, 1)
         self.assertTrue(self.findings(report, "image_pixels"))
 
+    def test_jpeg_orientation_and_icc_change_are_material(self) -> None:
+        for side in (self.before, self.after):
+            self.html(side, "</body>", '<img src="/photo.jpg"></body>')
+        original = (self.before / "photo.jpg").read_bytes()
+        exif = bytes.fromhex(
+            "ffe100224578696600004d4d002a00000008000101120003000000010006000000000000"
+        )
+        icc_payload = b"ICC_PROFILE\x00\x01\x01different-profile"
+        icc = b"\xff\xe2" + struct.pack(">H", len(icc_payload) + 2) + icc_payload
+        for segment in (exif, icc):
+            with self.subTest(segment=segment[:2].hex()):
+                (self.after / "photo.jpg").write_bytes(
+                    original[:2] + segment + original[2:]
+                )
+                result, report = self.run_parity()
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertTrue(self.findings(report, "image_pixels"))
+
     def test_exact_ledger_pair(self) -> None:
         self.html(self.after, "<title>Start</title>", "<title>Changed</title>")
         result, report = self.run_parity()
@@ -207,6 +280,73 @@ class ParityCommandTest(unittest.TestCase):
         result, report = self.run_parity("--accept", str(ledger))
         self.assertEqual(result.returncode, 1)
         self.assertTrue(self.findings(report, "title"))
+
+    def test_accepted_title_does_not_hide_other_page_change(self) -> None:
+        self.html(self.after, "<title>Start</title>", "<title>Changed</title>")
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1)
+        material = [
+            item for item in report["checks"] if item["classification"] == "material"
+        ]
+        self.assertEqual([item["kind"] for item in material], ["title"])
+        ledger = self.folder / "ledger.json"
+        ledger.write_text(json.dumps({material[0]["fingerprint"]: "fixture title"}))
+        result, report = self.run_parity("--accept", str(ledger))
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.html(self.after, "before <em>after</em>", "<em>before after</em>")
+        result, report = self.run_parity("--accept", str(ledger))
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "structure"))
+        self.assertTrue(self.findings(report, "title"))
+
+    def test_rejects_malformed_ledger_and_decode_errors_as_errors(self) -> None:
+        ledger = self.folder / "ledger.json"
+        ledger.write_text("[]")
+        result, report = self.run_parity("--accept", str(ledger))
+        self.assertEqual(result.returncode, 2)
+        self.assertFalse(report)
+        result, report = self.run_parity("--known-noise", str(ledger))
+        self.assertEqual(result.returncode, 2)
+        self.assertFalse(report)
+        (self.after / "pagefind/pagefind.en_0.pf_meta").write_bytes(b"invalid CBOR")
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 2)
+        self.assertFalse(report)
+
+    def test_scoped_style_attribute_is_not_deleted(self) -> None:
+        self.html(self.after, "<p>before", '<p data-astro-cid-example="">before')
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "attributes"))
+
+    def test_build_clock_and_island_uid_are_not_masked(self) -> None:
+        for side in (self.before, self.after):
+            self.html(
+                side,
+                "</body>",
+                '<p>Build time: 2025-01-01T00:00:00Z</p><astro-island uid="one"></astro-island></body>',
+            )
+        self.html(self.after, "2025-01-01", "2026-01-01")
+        self.html(self.after, 'uid="one"', 'uid="two"')
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "text"))
+        self.assertTrue(self.findings(report, "attributes"))
+
+    def test_rss_last_build_date_is_compared(self) -> None:
+        for side in (self.before, self.after):
+            path = side / "rss.xml"
+            path.write_text(
+                path.read_text().replace(
+                    "<title>Feed</title>",
+                    "<title>Feed</title><lastBuildDate>Tue, 20 Oct 2026 00:00:00 GMT</lastBuildDate>",
+                )
+            )
+        path = self.after / "rss.xml"
+        path.write_text(path.read_text().replace("20 Oct", "21 Oct"))
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "rss"))
 
     def prepare_fonts(self, swap: bool) -> None:
         css_path = "_astro/site.ABCDEFGH.css"
@@ -238,6 +378,21 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(report["verdict"], "COSMETIC")
         self.assertEqual(len(report["fonts"]["b"]), 2)
+
+    def test_fetched_inline_font_references_use_one_placeholder(self) -> None:
+        self.prepare_fonts(False)
+        for side, name in (
+            (self.before, "normal.12345678.woff2"),
+            (self.after, "normal.ABCDEFGH.woff2"),
+        ):
+            self.html(
+                side,
+                "</head>",
+                f'<style>@font-face{{font-family:Parity;font-style:normal;font-weight:400;src:url("/_astro/fonts/{name}")}}</style></head>',
+            )
+        result, report = self.run_parity("--fetched")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(self.findings(report, "inline_styles"))
 
     def test_fetched_pairs_script_and_stylesheet_by_page_slot(self) -> None:
         self.prepare_fonts(False)
