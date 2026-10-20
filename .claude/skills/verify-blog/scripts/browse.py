@@ -100,9 +100,20 @@ def await_navigation(
 ) -> None:
     deadline = time.monotonic() + 20
     while time.monotonic() < deadline:
-        if any(
-            event["event"] in ("astro:page-load", "load") for event in events[start:]
-        ) or (previous_url is not None and page.url != previous_url):
+        current = urlsplit(page.url)
+        previous = urlsplit(previous_url) if previous_url else None
+        anchor_change = bool(
+            previous
+            and (current.path, current.query) == (previous.path, previous.query)
+            and current.fragment != previous.fragment
+        )
+        if (
+            any(
+                event["event"] in ("astro:page-load", "load")
+                for event in events[start:]
+            )
+            or anchor_change
+        ):
             page.wait_for_load_state("networkidle")
             return
         page.wait_for_timeout(50)
