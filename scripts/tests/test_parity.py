@@ -1,7 +1,9 @@
 """Exercise the parity command against small built-site fixtures."""
 
+import concurrent.futures
 import gzip
 import json
+import os
 import shutil
 import struct
 import subprocess
@@ -582,6 +584,48 @@ class ParityCommandTest(unittest.TestCase):
         result, report = self.run_parity("--fetched")
         self.assertEqual(result.returncode, 1, result.stderr)
         self.assertTrue(self.findings(report, "font_roles"))
+
+
+class ParallelParitySuite(unittest.TestSuite):
+    def run(
+        self, result: unittest.TestResult, debug: bool = False
+    ) -> unittest.TestResult:
+        if debug or result.failfast:
+            return super().run(result, debug=debug)
+
+        def execute(case: unittest.TestCase) -> unittest.TestResult:
+            local = unittest.TestResult()
+            case.run(local)
+            return local
+
+        with concurrent.futures.ThreadPoolExecutor(
+            max_workers=min(8, os.cpu_count() or 1)
+        ) as workers:
+            outcomes = list(workers.map(execute, self))
+        for local in outcomes:
+            result.testsRun += local.testsRun
+            for field in (
+                "failures",
+                "errors",
+                "skipped",
+                "expectedFailures",
+                "unexpectedSuccesses",
+            ):
+                getattr(result, field).extend(getattr(local, field))
+        return result
+
+
+def load_tests(
+    loader: unittest.TestLoader, standard_tests: unittest.TestSuite, pattern: str | None
+) -> unittest.TestSuite:
+    def cases(suite: unittest.TestSuite):
+        for test in suite:
+            if isinstance(test, unittest.TestSuite):
+                yield from cases(test)
+            else:
+                yield test
+
+    return ParallelParitySuite(cases(standard_tests))
 
 
 if __name__ == "__main__":
