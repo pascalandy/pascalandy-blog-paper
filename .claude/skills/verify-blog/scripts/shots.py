@@ -20,6 +20,7 @@ import sys
 import threading
 from pathlib import Path
 from typing import Any
+from urllib.parse import unquote, urlsplit
 
 import browse
 from PIL import Image, ImageChops, ImageDraw, ImageEnhance
@@ -281,6 +282,20 @@ def capture(args: argparse.Namespace) -> int:
     return 1 if manifest["failures"] else 0
 
 
+@functools.cache
+def selected_sha(dist: str, src: str, current: str) -> str | None:
+    if not dist or urlsplit(src).scheme or urlsplit(src).netloc:
+        return None
+    selected = urlsplit(current)
+    if selected.scheme or selected.netloc:
+        return None
+    root = Path(dist).resolve()
+    file = (root / unquote(selected.path).lstrip("/")).resolve()
+    if not file.is_relative_to(root) or not file.is_file():
+        return None
+    return hashlib.sha256(file.read_bytes()).hexdigest()
+
+
 def diff(args: argparse.Namespace) -> int:
     first = {p.name: p for p in args.first.glob("*.png")}
     second = {p.name: p for p in args.second.glob("*.png")}
@@ -329,7 +344,22 @@ def diff(args: argparse.Namespace) -> int:
                         image_a.get("index") != image_b.get("index")
                         or box != image_b.get("box")
                         or not box
+                        or image_a.get("objectFit") != image_b.get("objectFit")
+                        or image_a.get("objectPosition")
+                        != image_b.get("objectPosition")
                     ):
+                        continue
+                    sha_a = selected_sha(
+                        manifests[0].get("dist", ""),
+                        image_a.get("src") or "",
+                        image_a.get("currentSrc") or "",
+                    )
+                    sha_b = selected_sha(
+                        manifests[1].get("dist", ""),
+                        image_b.get("src") or "",
+                        image_b.get("currentSrc") or "",
+                    )
+                    if sha_a is None or sha_b is None or sha_a == sha_b:
                         continue
                     rect = [
                         max(0, math.floor(box["x"] * scale_x)),
@@ -351,6 +381,8 @@ def diff(args: argparse.Namespace) -> int:
                                 "selected_b": image_b.get("currentSrc"),
                                 "box": box,
                                 "changed_pixels": changed_in_box,
+                                "sha256_a": sha_a,
+                                "sha256_b": sha_b,
                             }
                         )
                 outside = ImageChops.subtract(changed_mask, allowed)
