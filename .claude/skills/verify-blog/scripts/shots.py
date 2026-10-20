@@ -98,11 +98,28 @@ def capture(args: argparse.Namespace) -> int:
         raise ValueError(f"output must be empty to prevent stale evidence: {args.out}")
     args.out.mkdir(parents=True, exist_ok=True)
     specification = matrix()
-    pages = (
-        json.loads(args.pages.read_text(encoding="utf-8"))
-        if args.pages
-        else {route["label"]: route["path"] for route in specification["routes"]}
-    )
+    pages = {route["label"]: route["path"] for route in specification["routes"]}
+    if args.pages:
+        overrides = json.loads(args.pages.read_text(encoding="utf-8"))
+        if not isinstance(overrides, dict) or any(
+            not isinstance(label, str) or not isinstance(path, str)
+            for label, path in overrides.items()
+        ):
+            raise ValueError("--pages must map route labels to URL paths")
+        pages.update(overrides)
+    known = {route["label"] for route in specification["routes"]}
+    routes = specification["routes"] + [
+        {
+            "label": label,
+            "path": path,
+            "positions": [
+                {"name": "top"},
+                {"name": "image", "selector": "#article img"},
+            ],
+        }
+        for label, path in pages.items()
+        if label not in known
+    ]
     (args.out / "pages.json").write_text(
         json.dumps(pages, indent=2) + "\n", encoding="utf-8"
     )
@@ -134,7 +151,7 @@ def capture(args: argparse.Namespace) -> int:
             for viewport in specification["viewports"]:
                 width, height = viewport["width"], viewport["height"]
                 for theme in specification["themes"]:
-                    for route in specification["routes"]:
+                    for route in routes:
                         label = route["label"]
                         path = pages[label]
                         context = browser.new_context(
@@ -489,7 +506,7 @@ def main() -> int:
     shoot.add_argument(
         "--pages",
         type=Path,
-        help="reuse the exact pages.json from the baseline capture",
+        help="JSON route map; labels outside shots.json add top and first article-image shots",
     )
     shoot.add_argument(
         "--dpr",
