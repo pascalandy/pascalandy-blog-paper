@@ -14,8 +14,14 @@ ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = Path(__file__).parent / "fixtures" / "parity"
 
 
-def png(path: Path, color: tuple[int, int, int], level: int = 6) -> None:
-    scanlines = (b"\x00" + bytes(color) * 2) * 2
+def png(
+    path: Path,
+    color: tuple[int, int, int],
+    level: int = 6,
+    width: int = 2,
+    height: int = 2,
+) -> None:
+    scanlines = (b"\x00" + bytes(color) * width) * height
 
     def chunk(kind: bytes, data: bytes) -> bytes:
         return (
@@ -27,7 +33,7 @@ def png(path: Path, color: tuple[int, int, int], level: int = 6) -> None:
 
     path.write_bytes(
         b"\x89PNG\r\n\x1a\n"
-        + chunk(b"IHDR", struct.pack(">IIBBBBB", 2, 2, 8, 2, 0, 0, 0))
+        + chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0))
         + chunk(b"IDAT", zlib.compress(scanlines, level))
         + chunk(b"IEND", b"")
     )
@@ -173,6 +179,27 @@ class ParityCommandTest(unittest.TestCase):
             [("assets", "_astro/site.ABCDEFGH.css")],
         )
 
+    def test_multi_file_asset_group_hash_renames_are_cosmetic(self) -> None:
+        folder = self.before / "_astro"
+        png(folder / "group.ABCDEFGH.png", (10, 20, 30))
+        png(folder / "group.BCDEFGHI.png", (20, 30, 40))
+        shutil.copyfile(
+            folder / "group.ABCDEFGH.png", self.after / "_astro/group.CDEFGHIJ.png"
+        )
+        shutil.copyfile(
+            folder / "group.BCDEFGHI.png", self.after / "_astro/group.DEFGHIJK.png"
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(self.findings(report, "assets"))
+        self.assertTrue(
+            any(
+                item["kind"] == "assets"
+                and item.get("normalization") == "asset hash filename"
+                for item in report["checks"]
+            )
+        )
+
     def test_inline_css_change_is_material(self) -> None:
         for side in (self.before, self.after):
             self.html(side, "</head>", "<style>body { color: red; }</style></head>")
@@ -180,6 +207,21 @@ class ParityCommandTest(unittest.TestCase):
         result, report = self.run_parity()
         self.assertEqual(result.returncode, 1, result.stderr)
         self.assertTrue(self.findings(report, "inline_styles"))
+
+    def test_social_image_metadata_checks_local_pixels(self) -> None:
+        for side in (self.before, self.after):
+            png(side / "_astro/social.ABCDEFGH.png", (10, 20, 30), width=4, height=4)
+            png(side / "_astro/social.BCDEFGHI.png", (10, 20, 30), width=2, height=2)
+            self.html(
+                side,
+                "</head>",
+                '<link rel="canonical" href="https://example.test/"><meta property="og:image" content="https://example.test/_astro/social.ABCDEFGH.png"><meta property="twitter:image" content="https://example.test/_astro/social.ABCDEFGH.png"></head>',
+            )
+        self.html(self.after, "social.ABCDEFGH.png", "social.BCDEFGHI.png")
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertFalse(self.findings(report, "metadata"))
+        self.assertTrue(self.findings(report, "metadata_image_pixels"))
 
     def test_inline_script(self) -> None:
         self.html(self.after, "window.parity = 1", "window.parity = 2")
@@ -393,6 +435,29 @@ class ParityCommandTest(unittest.TestCase):
         result, report = self.run_parity("--fetched")
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertFalse(self.findings(report, "inline_styles"))
+
+    def test_fetched_subset_skips_images_not_downloaded(self) -> None:
+        self.prepare_fonts(False)
+        for side in (self.before, self.after):
+            self.html(
+                side,
+                "</head>",
+                '<link rel="canonical" href="https://example.test/"><meta property="og:image" content="https://example.test/image.png"></head>',
+            )
+        for name in ("image.png", "variant.png"):
+            (self.after / name).unlink()
+        result, report = self.run_parity("--fetched")
+        self.assertEqual(
+            result.returncode,
+            0,
+            [
+                (item["kind"], item["target"])
+                for item in report.get("checks", [])
+                if item["classification"] == "material"
+            ],
+        )
+        self.assertFalse(self.findings(report, "metadata_image_pixels"))
+        self.assertFalse(self.findings(report, "image_pixels"))
 
     def test_fetched_pairs_script_and_stylesheet_by_page_slot(self) -> None:
         self.prepare_fonts(False)

@@ -73,6 +73,25 @@ BLOCKS = frozenset(
 )
 HIDDEN = frozenset(["head", "script", "style", "template", "noscript"])
 PAGEFIND_MARKER = b"pagefind_dcd"
+PAGE_FIELDS = (
+    "title",
+    "metadata",
+    "metadata_image_pixels",
+    "headings",
+    "ids",
+    "links",
+    "inline_scripts",
+    "inline_styles",
+    "elements",
+    "attributes",
+    "duplicate_attributes",
+    "structure",
+    "preformatted",
+    "images",
+    "picture_sources",
+    "text",
+    "inline_text",
+)
 
 
 def norm(value: object, *, preserve_edges: bool = False) -> str:
@@ -120,9 +139,14 @@ def route(path: Path, root: Path) -> str:
     return "/" + name
 
 
-def local_file(root: Path, href: str, page_route: str = "/") -> Path | None:
+def local_file(
+    root: Path,
+    href: str,
+    page_route: str = "/",
+    allowed_hosts: frozenset[str] = frozenset(),
+) -> Path | None:
     url = urlsplit(urljoin("https://dist.invalid" + page_route, href))
-    if url.netloc != "dist.invalid":
+    if url.netloc != "dist.invalid" and url.netloc not in allowed_hosts:
         return None
     candidate = (root / unquote(url.path).lstrip("/")).resolve()
     if not candidate.is_relative_to(root.resolve()):
@@ -163,6 +187,7 @@ def image_data_from_bytes(payload: bytes) -> dict[str, Any]:
     return result
 
 
+@cache
 def image_data(path: Path) -> dict[str, Any]:
     return image_data_from_bytes(path.read_bytes())
 
@@ -281,6 +306,36 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
                     ),
                 )
             )
+    site_hosts = frozenset(
+        urlsplit(str(link.get("href", ""))).netloc
+        for link in soup.select('link[rel~="canonical"]')
+        if urlsplit(str(link.get("href", ""))).netloc
+    )
+    metadata_image_pixels = []
+    for element in soup.select("meta"):
+        key = str(element.get("property", element.get("name", ""))).lower()
+        if key not in {
+            "og:image",
+            "og:image:url",
+            "og:image:secure_url",
+            "twitter:image",
+            "twitter:image:src",
+        }:
+            continue
+        href = str(element.get("content", ""))
+        image = local_file(root, href, page_route, site_hosts)
+        entry: dict[str, Any] = {"key": key, "url": norm(href) if image else href}
+        if image is not None:
+            entry["path"] = norm(image.relative_to(root.resolve()).as_posix())
+            entry["exists"] = image.is_file()
+            if image.is_file():
+                entry.update(
+                    {
+                        field: image_data(image).get(field)
+                        for field in ("dimensions", "frames", "pixels")
+                    }
+                )
+        metadata_image_pixels.append(entry)
     headings = [
         (tag.name, tag.get("id"), norm(tag.get_text()))
         for tag in soup.select("h1,h2,h3,h4,h5,h6")
@@ -337,6 +392,7 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
     return {
         "title": title,
         "metadata": sorted(metadata, key=str),
+        "metadata_image_pixels": metadata_image_pixels,
         "headings": headings,
         "ids": ids,
         "links": links,
@@ -765,6 +821,22 @@ def compare(
         a, b = page_data(a_pages[url], first), page_data(b_pages[url], second)
         if fetched:
             aliases = page_asset_refs(a_pages[url], b_pages[url])
+            metadata_image_pairs = [
+                (left, right)
+                for left, right in zip(
+                    a["metadata_image_pixels"], b["metadata_image_pixels"]
+                )
+                if right.get("exists")
+            ]
+            a["metadata_image_pixels"] = [left for left, _ in metadata_image_pairs]
+            b["metadata_image_pixels"] = [right for _, right in metadata_image_pairs]
+            image_pairs = [
+                (left, right)
+                for left, right in zip(a["image_assets"], b["image_assets"])
+                if right.get("exists")
+            ]
+            a["image_assets"] = [left for left, _ in image_pairs]
+            b["image_assets"] = [right for _, right in image_pairs]
             for page in (a, b):
                 for field in ("attributes", "inline_scripts", "inline_styles"):
                     page[field] = normalize_font_refs(page[field])
@@ -774,24 +846,7 @@ def compare(
                 normalize_font_refs(replace_refs(b["html_content"], aliases))
             )
         page_pairs[url] = tuple(sorted((a["html"], b["html"])))
-        for key in (
-            "title",
-            "metadata",
-            "headings",
-            "ids",
-            "links",
-            "inline_scripts",
-            "inline_styles",
-            "elements",
-            "attributes",
-            "duplicate_attributes",
-            "structure",
-            "preformatted",
-            "images",
-            "picture_sources",
-            "text",
-            "inline_text",
-        ):
+        for key in PAGE_FIELDS:
             check(key, url, a[key], b[key])
         for kind, keys in (
             ("image_pixels", ("slot", "exists", "dimensions", "frames", "pixels")),
@@ -812,25 +867,7 @@ def compare(
                 else None
             )
             check(kind, url, *values, normalization=normalization)
-        semantic_fields = (
-            "title",
-            "metadata",
-            "headings",
-            "ids",
-            "links",
-            "inline_scripts",
-            "inline_styles",
-            "elements",
-            "attributes",
-            "duplicate_attributes",
-            "structure",
-            "preformatted",
-            "images",
-            "picture_sources",
-            "text",
-            "inline_text",
-        )
-        explained = any(a[field] != b[field] for field in semantic_fields)
+        explained = any(a[field] != b[field] for field in PAGE_FIELDS)
         check(
             "normalized_html",
             url,
@@ -962,6 +999,10 @@ def compare(
                 and a_feed["robots"] == b_feed["robots"]
             ):
                 normalization = "robots comment or whitespace"
+        elif len(a_rows) == len(b_rows) and collections.Counter(
+            (info["bytes"], info["sha256"]) for _, info in a_rows
+        ) == collections.Counter((info["bytes"], info["sha256"]) for _, info in b_rows):
+            normalization = "asset hash filename"
         target = (
             a_rows[0][0]
             if len(a_rows) == len(b_rows) == 1 and a_rows[0][0] == b_rows[0][0]
