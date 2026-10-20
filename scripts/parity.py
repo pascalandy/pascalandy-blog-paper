@@ -32,7 +32,7 @@ from fontTools.ttLib import TTFont
 from PIL import Image, ImageChops, ImageOps, ImageSequence, UnidentifiedImageError
 
 ASSET = re.compile(r"(/?_astro/)([^\s\"'<>?#]+)")
-HASH = re.compile(r"([._])[A-Za-z0-9_-]{8,}(?=\.)")
+HASH = re.compile(r"(\.)[A-Za-z0-9_-]{8}(?:_[A-Za-z0-9_-]{4,8})?(?=\.[A-Za-z0-9]+$)")
 FONT_REF = re.compile(r"(/_astro/fonts/)[^\s\"'<>?)]+\.woff2")
 BLOCKS = frozenset(
     [
@@ -80,9 +80,9 @@ PAGE_FIELDS = (
     "headings",
     "ids",
     "links",
+    "resources",
     "inline_scripts",
     "inline_styles",
-    "elements",
     "attributes",
     "duplicate_attributes",
     "structure",
@@ -165,6 +165,12 @@ def image_data_from_bytes(payload: bytes) -> dict[str, Any]:
             dimensions = list(source.size)
             icc = hashlib.sha256(source.info.get("icc_profile") or b"").hexdigest()
             pixels.update(bytes.fromhex(icc))
+            color_metadata = {
+                key: source.info[key]
+                for key in ("gamma", "chromaticity", "srgb")
+                if key in source.info
+            }
+            pixels.update(digest(color_metadata).encode())
             frames_to_decode = (
                 [source] if source.format == "MPO" else ImageSequence.Iterator(source)
             )
@@ -180,6 +186,7 @@ def image_data_from_bytes(payload: bytes) -> dict[str, Any]:
                 frames=frames,
                 pixels=pixels.hexdigest(),
                 icc=icc,
+                color_metadata=color_metadata,
             )
     except UnidentifiedImageError:
         # Conservatively retain byte identity for vectors the raster decoder cannot read.
@@ -285,7 +292,7 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
     # these DOM values again: &amp;#39; is literal text, unlike &#39; or an apostrophe.
     soup = BeautifulSoup(raw, "html.parser")
     page_route = route(path, root)
-    title = norm(soup.title.get_text()) if soup.title else None
+    title = [norm(tag.get_text()) for tag in soup.select("title")]
     metadata = []
     for element in soup.select("meta"):
         key = str(element.get("name", element.get("property", ""))).lower()
@@ -336,6 +343,28 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
                     }
                 )
         metadata_image_pixels.append(entry)
+    resources = []
+    for tag in soup.select("link[href],script[src]"):
+        attr = "src" if tag.name == "script" else "href"
+        href = str(tag[attr])
+        relations = tag.get("rel", [])
+        relation_names = set(
+            relations.split() if isinstance(relations, str) else relations
+        )
+        required_when_fetched = tag.name == "script" or bool(
+            relation_names & {"stylesheet", "modulepreload"}
+            or ("preload" in relation_names and tag.get("as") in {"script", "style"})
+        )
+        resource = local_file(root, href, page_route, site_hosts)
+        resources.append(
+            {
+                "tag": tag.name,
+                "href": norm(href),
+                "required_when_fetched": required_when_fetched,
+                "local": resource is not None,
+                "exists": resource.is_file() if resource is not None else None,
+            }
+        )
     headings = [
         (tag.name, tag.get("id"), norm(tag.get_text()))
         for tag in soup.select("h1,h2,h3,h4,h5,h6")
@@ -360,7 +389,6 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
         str(tag.string or tag.get_text()) for tag in soup.select("script:not([src])")
     ]
     inline_styles = [str(tag.string or tag.get_text()) for tag in soup.select("style")]
-    elements = [tag.name for tag in soup.find_all(True)]
     attributes = [
         (
             tag.name,
@@ -396,9 +424,9 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
         "headings": headings,
         "ids": ids,
         "links": links,
+        "resources": resources,
         "inline_scripts": inline_scripts,
         "inline_styles": inline_styles,
-        "elements": elements,
         "attributes": attributes,
         "duplicate_attributes": duplicate_probe.duplicates,
         "structure": structure,
@@ -556,10 +584,16 @@ def pixel_diff(first: Path, second: Path, threshold: int = 0) -> dict[str, Any]:
         for channel in channels[1:]:
             maximum = ImageChops.lighter(maximum, channel)
         changed = sum(maximum.histogram()[threshold + 1 :])
+        metadata_changed = (
+            not changed and image_data(first)["pixels"] != image_data(second)["pixels"]
+        )
+        if metadata_changed:
+            changed = a.width * a.height
         return {
             "dimensions": sizes,
             "ratio": changed / (a.width * a.height),
             "changed_pixels": changed,
+            "metadata_changed": metadata_changed,
         }
 
 
@@ -792,7 +826,7 @@ def compare(
             "identical" if a == b else ("cosmetic" if normalization else "material")
         )
         fingerprint = digest(
-            [kind, target, sorted((digest(a), digest(b))), page_pairs.get(target)]
+            [kind, target, digest(a), digest(b), page_pairs.get(target)]
         )
         acceptance = accepted.get(fingerprint) if a != b else None
         item: dict[str, Any] = {
@@ -821,6 +855,13 @@ def compare(
         a, b = page_data(a_pages[url], first), page_data(b_pages[url], second)
         if fetched:
             aliases = page_asset_refs(a_pages[url], b_pages[url])
+            resource_pairs = [
+                (left, right)
+                for left, right in zip(a["resources"], b["resources"])
+                if right["required_when_fetched"] or right.get("exists")
+            ]
+            a["resources"] = [left for left, _ in resource_pairs]
+            b["resources"] = [right for _, right in resource_pairs]
             metadata_image_pairs = [
                 (left, right)
                 for left, right in zip(
@@ -841,11 +882,12 @@ def compare(
                 for field in ("attributes", "inline_scripts", "inline_styles"):
                     page[field] = normalize_font_refs(page[field])
             b["attributes"] = replace_refs(b["attributes"], aliases)
+            b["resources"] = replace_refs(b["resources"], aliases)
             a["html"] = digest(normalize_font_refs(a["html_content"]))
             b["html"] = digest(
                 normalize_font_refs(replace_refs(b["html_content"], aliases))
             )
-        page_pairs[url] = tuple(sorted((a["html"], b["html"])))
+        page_pairs[url] = (a["html"], b["html"])
         for key in PAGE_FIELDS:
             check(key, url, a[key], b[key])
         for kind, keys in (
@@ -868,13 +910,6 @@ def compare(
             )
             check(kind, url, *values, normalization=normalization)
         explained = any(a[field] != b[field] for field in PAGE_FIELDS)
-        check(
-            "normalized_html",
-            url,
-            a["html"],
-            b["html"],
-            "covered by parsed DOM fields" if explained else None,
-        )
         check(
             "raw_html",
             url,
@@ -1017,6 +1052,13 @@ def compare(
         check("font_roles", "fetched fonts", [], mismatches_a + mismatches_b)
     counts = dict(collections.Counter(item["classification"] for item in checks))
     material = counts.get("material", 0)
+    matched_acceptance = {item["fingerprint"] for item in checks if "accepted" in item}
+    unmatched_acceptance = sorted(accepted.keys() - matched_acceptance)
+    if unmatched_acceptance and not material:
+        raise ValueError(
+            "accept ledger contains unmatched fingerprints: "
+            + ", ".join(unmatched_acceptance[:5])
+        )
     return {
         "ok": True,
         "verdict": "MATERIAL"
@@ -1037,6 +1079,7 @@ def compare(
         "checks": checks,
         "inputs": {"a": str(first), "b": str(second)},
         "acceptance_matches": sum("accepted" in item for item in checks),
+        "unmatched_acceptance": unmatched_acceptance,
     }
 
 

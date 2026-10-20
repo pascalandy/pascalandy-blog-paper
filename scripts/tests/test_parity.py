@@ -39,6 +39,19 @@ def png(
     )
 
 
+def add_png_gamma(path: Path) -> None:
+    original = path.read_bytes()
+    payload = struct.pack(">I", 33333)
+    kind = b"gAMA"
+    chunk = (
+        struct.pack(">I", len(payload))
+        + kind
+        + payload
+        + struct.pack(">I", zlib.crc32(kind + payload))
+    )
+    path.write_bytes(original[:33] + chunk + original[33:])
+
+
 class ParityCommandTest(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory()
@@ -61,17 +74,20 @@ class ParityCommandTest(unittest.TestCase):
             shutil.copytree(FIXTURES / name / "pagefind", side / "pagefind")
 
     def run_parity(
-        self, *options: str
+        self, *options: str, reverse: bool = False
     ) -> tuple[subprocess.CompletedProcess[str], dict]:
         report_path = self.folder / "report.json"
         report_path.unlink(missing_ok=True)
+        first, second = (
+            (self.after, self.before) if reverse else (self.before, self.after)
+        )
         result = subprocess.run(
             [
                 "uv",
                 "run",
                 "scripts/parity.py",
-                str(self.before),
-                str(self.after),
+                str(first),
+                str(second),
                 "--json",
                 str(report_path),
                 *options,
@@ -229,6 +245,18 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(result.returncode, 1)
         self.assertTrue(self.findings(report, "inline_scripts"))
 
+    def test_missing_stylesheet_and_script_references_are_material(self) -> None:
+        for old, new in (
+            ("site.ABCDEFGH.css", "site.ZZZZZZZZ.css"),
+            ("app.ABCDEFGH.js", "app.ZZZZZZZZ.js"),
+        ):
+            with self.subTest(resource=new):
+                shutil.copyfile(FIXTURES / "base/index.html", self.after / "index.html")
+                self.html(self.after, old, new)
+                result, report = self.run_parity()
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertTrue(self.findings(report, "resources"))
+
     def test_pagefind_renumbering(self) -> None:
         self.pagefind("renumbered")
         result, report = self.run_parity()
@@ -265,6 +293,23 @@ class ParityCommandTest(unittest.TestCase):
         result, report = self.run_parity()
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertFalse(self.findings(report, "pagefind_fragment"))
+
+    def test_pagefind_fragment_distinct_asset_sources_are_material(self) -> None:
+        self.pagefind("ordered")
+        marker = b"pagefind_dcd"
+        for side, name in (
+            (self.before, "header_2017.AAAAAAAA.png"),
+            (self.after, "header_2020.BBBBBBBB.png"),
+        ):
+            path = side / "pagefind/fragment/a.pf_fragment"
+            fragment = json.loads(gzip.decompress(path.read_bytes())[len(marker) :])
+            fragment["image"] = f"/_astro/{name}"
+            path.write_bytes(
+                gzip.compress(marker + json.dumps(fragment).encode(), mtime=0)
+            )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "pagefind_fragment"))
 
     def test_removed_rss_item(self) -> None:
         path = self.after / "rss.xml"
@@ -306,6 +351,16 @@ class ParityCommandTest(unittest.TestCase):
                 self.assertEqual(result.returncode, 1, result.stderr)
                 self.assertTrue(self.findings(report, "image_pixels"))
 
+    def test_png_gamma_affects_content_and_og_pixels(self) -> None:
+        for side in (self.before, self.after):
+            png(side / "og.png", (253, 245, 230))
+        add_png_gamma(self.after / "image.png")
+        add_png_gamma(self.after / "og.png")
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "image_pixels"))
+        self.assertTrue(self.findings(report, "og_pixels"))
+
     def test_exact_ledger_pair(self) -> None:
         self.html(self.after, "<title>Start</title>", "<title>Changed</title>")
         result, report = self.run_parity()
@@ -322,6 +377,29 @@ class ParityCommandTest(unittest.TestCase):
         result, report = self.run_parity("--accept", str(ledger))
         self.assertEqual(result.returncode, 1)
         self.assertTrue(self.findings(report, "title"))
+
+    def test_second_title_text_is_compared(self) -> None:
+        for side in (self.before, self.after):
+            self.html(side, "</head>", "<title>Second</title></head>")
+        self.html(self.after, "<title>Second</title>", "<title>Changed</title>")
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "title"))
+
+    def test_ledger_is_directional_and_rejects_stale_entries(self) -> None:
+        self.html(self.after, "<title>Start</title>", "<title>Changed</title>")
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1)
+        finding = self.findings(report, "title")[0]
+        ledger = self.folder / "ledger.json"
+        ledger.write_text(json.dumps({finding["fingerprint"]: "fixture title"}))
+        result, report = self.run_parity("--accept", str(ledger), reverse=True)
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "title"))
+        self.html(self.after, "<title>Changed</title>", "<title>Start</title>")
+        result, report = self.run_parity("--accept", str(ledger))
+        self.assertEqual(result.returncode, 2)
+        self.assertFalse(report)
 
     def test_accepted_title_does_not_hide_other_page_change(self) -> None:
         self.html(self.after, "<title>Start</title>", "<title>Changed</title>")
@@ -347,11 +425,13 @@ class ParityCommandTest(unittest.TestCase):
         result, report = self.run_parity("--accept", str(ledger))
         self.assertEqual(result.returncode, 2)
         self.assertFalse(report)
-        result, report = self.run_parity("--known-noise", str(ledger))
-        self.assertEqual(result.returncode, 2)
-        self.assertFalse(report)
         (self.after / "pagefind/pagefind.en_0.pf_meta").write_bytes(b"invalid CBOR")
         result, report = self.run_parity()
+        self.assertEqual(result.returncode, 2)
+        self.assertFalse(report)
+
+    def test_removed_known_noise_flag_is_usage_error(self) -> None:
+        result, report = self.run_parity("--known-noise", "unused.json")
         self.assertEqual(result.returncode, 2)
         self.assertFalse(report)
 
@@ -458,6 +538,13 @@ class ParityCommandTest(unittest.TestCase):
         )
         self.assertFalse(self.findings(report, "metadata_image_pixels"))
         self.assertFalse(self.findings(report, "image_pixels"))
+
+    def test_fetched_subset_requires_linked_stylesheet(self) -> None:
+        self.prepare_fonts(False)
+        self.html(self.after, "site.ABCDEFGH.css", "site.ZZZZZZZZ.css")
+        result, report = self.run_parity("--fetched")
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "resources"))
 
     def test_fetched_pairs_script_and_stylesheet_by_page_slot(self) -> None:
         self.prepare_fonts(False)
