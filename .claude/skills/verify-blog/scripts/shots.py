@@ -317,8 +317,8 @@ def diff(args: argparse.Namespace) -> int:
                 allowed = Image.new("L", a.size)
                 draw = ImageDraw.Draw(allowed)
                 boxes = []
-                state_a = manifests[0]["shots"].get(name, {})
-                state_b = manifests[1]["shots"].get(name, {})
+                state_a = manifests[0]["shots"].get(Path(name).stem, {})
+                state_b = manifests[1]["shots"].get(Path(name).stem, {})
                 scale_x = a.width / state_a["width"] if state_a.get("width") else 1
                 scale_y = a.height / state_a["height"] if state_a.get("height") else 1
                 for image_a, image_b in zip(
@@ -342,14 +342,17 @@ def diff(args: argparse.Namespace) -> int:
                     draw.rectangle(
                         (rect[0], rect[1], rect[2] - 1, rect[3] - 1), fill=255
                     )
-                    boxes.append(
-                        {
-                            "index": image_a["index"],
-                            "selected_a": image_a.get("currentSrc"),
-                            "selected_b": image_b.get("currentSrc"),
-                            "box": box,
-                        }
-                    )
+                    changed_in_box = sum(changed_mask.crop(tuple(rect)).histogram()[1:])
+                    if changed_in_box:
+                        boxes.append(
+                            {
+                                "index": image_a["index"],
+                                "selected_a": image_a.get("currentSrc"),
+                                "selected_b": image_b.get("currentSrc"),
+                                "box": box,
+                                "changed_pixels": changed_in_box,
+                            }
+                        )
                 outside = ImageChops.subtract(changed_mask, allowed)
                 outside_pixels = sum(outside.histogram()[1:])
                 result = {
