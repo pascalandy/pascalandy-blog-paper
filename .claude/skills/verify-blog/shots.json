@@ -1,0 +1,32 @@
+{
+  "viewports": [
+    { "width": 1280, "height": 900 },
+    { "width": 390, "height": 844 }
+  ],
+  "themes": ["light", "dark"],
+  "routes": [
+    { "label": "home", "path": "/", "positions": [{ "name": "top" }] },
+    {
+      "label": "long-post",
+      "path": "/blog/traefik-demo-docker-stack-and-play-with-docker/",
+      "positions": [
+        { "name": "top" },
+        { "name": "code", "selector": "#article pre" },
+        { "name": "image", "selector": "#article img" }
+      ]
+    },
+    {
+      "label": "mermaid",
+      "path": "/blog/dev-workflows/using-mermaid/",
+      "positions": [
+        { "name": "top" },
+        { "name": "diagram", "selector": ".mermaid-diagram svg" }
+      ]
+    },
+    { "label": "tag", "path": "/tags/biographie/", "positions": [{ "name": "top" }] },
+    { "label": "archive", "path": "/blog/2/", "positions": [{ "name": "top" }] },
+    { "label": "search", "path": "/search/", "positions": [{ "name": "top" }] },
+    { "label": "404", "path": "/parity-route-does-not-exist/", "positions": [{ "name": "top" }] },
+    { "label": "about", "path": "/a-propos/", "positions": [{ "name": "top" }] }
+  ]
+}

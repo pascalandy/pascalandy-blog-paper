@@ -63,6 +63,16 @@ check *args:
 
 alias ci := check
 
+# Compare two build folders; --accept reads exact accepted findings
+[group('checks')]
+parity *args:
+    @uv run --quiet scripts/parity.py "$@"
+
+# Capture or compare the 44-shot browser matrix
+[group('checks')]
+shots *args:
+    @uv run --quiet .claude/skills/verify-blog/scripts/shots.py "$@"
+
 # Lint files, or the whole repo, with ESLint and ruff
 [group('checks')]
 lint *files:

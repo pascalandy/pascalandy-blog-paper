@@ -11,9 +11,10 @@ import argparse
 import itertools
 import json
 import sys
+import time
 from pathlib import Path
 from typing import NoReturn
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit
 
 from playwright.sync_api import Error, Page, sync_playwright
 
@@ -25,13 +26,17 @@ Steps run in order, each as ACTION:ARGUMENT, with Playwright selectors such as
   press:KEY               press a key, such as Enter
   wait:SELECTOR           wait until the element is visible
   goto:PATH               open a path on the same site, such as /tags
+  reload                  reload the current page
+  back                    use browser history back
+  eval:JS                 evaluate JS and save its result in state.json
 
 A role= name must equal the whole accessible name; a regex, such as
 role=link[name=/^Next/], matches part of it.
 
 Then OUT receives screenshot.png (the viewport, at most 1920 CSS pixels a side),
-aria.txt (the accessibility snapshot), and state.json (url, title, theme, and
-console errors). The paths print on stdout.
+aria.txt (the accessibility snapshot), state.json, network.json (responses and
+status codes), and probes.json (DOMContentLoaded and Astro navigation events).
+The paths print on stdout.
 
 examples:
   uv run browse.py http://127.0.0.1:4330/ --out cache/verify-blog/run/home
@@ -48,9 +53,7 @@ exit codes:
   130  interrupted (SIGINT)"""
 
 VIEWPORTS = {"desktop": {"width": 1440, "height": 900}}
-ACTIONS = ("click", "fill", "press", "wait", "goto")
-# The browser matching the pinned Playwright, with the system libraries it needs
-# on Linux; a cloud sandbox may ship both already
+ACTIONS = ("click", "fill", "press", "wait", "goto", "reload", "back", "eval")
 INSTALL = (
     "uv run --with playwright==1.56.0 python -m playwright install --with-deps chromium"
 )
@@ -66,16 +69,42 @@ class Parser(argparse.ArgumentParser):
 
 def step(value: str) -> tuple[str, str]:
     action, _, argument = value.partition(":")
-    if action not in ACTIONS or not argument:
+    if action not in ACTIONS or (not argument and action not in ("reload", "back")):
         raise argparse.ArgumentTypeError(
             f"invalid step {value!r}; use ACTION:ARGUMENT with ACTION one of {', '.join(ACTIONS)}"
         )
     return action, argument
 
 
-def run(page: Page, base: str, action: str, argument: str) -> None:
+def await_navigation(page: Page, events: list[dict], start: int) -> None:
+    deadline = time.monotonic() + 20
+    while time.monotonic() < deadline:
+        if any(
+            event["event"] in ("astro:page-load", "load") for event in events[start:]
+        ):
+            page.wait_for_load_state("networkidle")
+            return
+        page.wait_for_timeout(50)
+    raise Error("navigation did not reach astro:page-load or load within 20 seconds")
+
+
+def run(
+    page: Page, base: str, action: str, argument: str, events: list[dict] | None = None
+) -> object:
+    events = events if events is not None else []
     if action == "click":
-        page.locator(argument).first.click()
+        target = page.locator(argument).first
+        href = target.evaluate("element => element.closest('a')?.href ?? null")
+        current = urlsplit(page.url)
+        destination = urlsplit(href) if href else current
+        navigates = bool(
+            href
+            and (destination.path, destination.query) != (current.path, current.query)
+        )
+        start = len(events)
+        target.click()
+        if navigates:
+            await_navigation(page, events, start)
     elif action == "fill":
         selector, _, text = argument.partition("=")
         page.locator(selector).first.fill(text)
@@ -83,10 +112,20 @@ def run(page: Page, base: str, action: str, argument: str) -> None:
         page.keyboard.press(argument)
     elif action == "wait":
         page.locator(argument).first.wait_for(state="visible")
-    else:
-        # /tags resolves against the site's origin, whatever page it starts from
-        page.goto(urljoin(base, argument))
+    elif action == "goto":
+        page.goto(urljoin(base, argument), wait_until="load")
+    elif action == "reload":
+        page.reload(wait_until="load")
+    elif action == "back":
+        start = len(events)
+        page.evaluate("history.back()")
+        await_navigation(page, events, start)
+    elif action == "eval":
+        result = page.evaluate(argument)
+        page.wait_for_load_state("networkidle")
+        return result
     page.wait_for_load_state("networkidle")
+    return None
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -137,6 +176,11 @@ def main(argv: list[str] | None = None) -> int:
 def drive(args: argparse.Namespace) -> int:
     args.out.mkdir(parents=True, exist_ok=True)
     errors: list[str] = []
+    network: list[dict] = []
+    probes: list[dict] = []
+    events: list[dict] = []
+    evaluations: list[dict] = []
+    current_step = {"value": "initial"}
     failure = ""
     with sync_playwright() as playwright:
         try:
@@ -151,17 +195,49 @@ def drive(args: argparse.Namespace) -> int:
             options = {"viewport": VIEWPORTS["desktop"]}
         if args.color_scheme:
             options["color_scheme"] = args.color_scheme
-        page = browser.new_context(**options).new_page()
+        context = browser.new_context(**options)
+
+        def record_probe(_source: object, payload: dict) -> None:
+            row = {**payload, "step": current_step["value"]}
+            probes.append(row)
+            events.append(row)
+
+        context.expose_binding("__verifyBlogEmit", record_probe)
+        context.add_init_script("""(() => {
+          const record = event => window.__verifyBlogEmit({event, theme: document.documentElement.getAttribute('data-theme'), url: location.href});
+          document.addEventListener('DOMContentLoaded', () => record('DOMContentLoaded'));
+          document.addEventListener('astro:after-swap', () => record('astro:after-swap'));
+          document.addEventListener('astro:page-load', () => record('astro:page-load'));
+        })();""")
+        page = context.new_page()
         page.on(
             "console",
             lambda message: message.type == "error" and errors.append(message.text),
         )
         page.on("pageerror", lambda error: errors.append(str(error)))
+        page.on(
+            "response",
+            lambda response: network.append(
+                {
+                    "url": response.url,
+                    "status": response.status,
+                    "resource_type": response.request.resource_type,
+                    "step": current_step["value"],
+                }
+            ),
+        )
+        page.on(
+            "load",
+            lambda: events.append({"event": "load", "step": current_step["value"]}),
+        )
         try:
-            page.goto(args.url)
+            page.goto(args.url, wait_until="load")
             page.wait_for_load_state("networkidle")
-            for action, argument in args.step:
-                run(page, args.url, action, argument)
+            for index, (action, argument) in enumerate(args.step, start=1):
+                current_step["value"] = f"{index}:{action}"
+                value = run(page, args.url, action, argument, events)
+                if action == "eval":
+                    evaluations.append({"step": current_step["value"], "result": value})
         except Error as error:
             failure = str(error).splitlines()[0]
         screenshot = args.out / "screenshot.png"
@@ -174,16 +250,29 @@ def drive(args: argparse.Namespace) -> int:
             "device": args.device,
             "steps": [f"{action}:{argument}" for action, argument in args.step],
             "console_errors": errors,
+            "evaluations": evaluations,
             "failure": failure or None,
         }
         (args.out / "state.json").write_text(
             json.dumps(state, ensure_ascii=False, indent=2) + "\n"
         )
+        (args.out / "network.json").write_text(
+            json.dumps({"responses": network}, ensure_ascii=False, indent=2) + "\n"
+        )
+        (args.out / "probes.json").write_text(
+            json.dumps({"events": probes}, ensure_ascii=False, indent=2) + "\n"
+        )
         browser.close()
     print(
         "\n".join(
             str(args.out / name)
-            for name in ("screenshot.png", "aria.txt", "state.json")
+            for name in (
+                "screenshot.png",
+                "aria.txt",
+                "state.json",
+                "network.json",
+                "probes.json",
+            )
         )
     )
     if failure:

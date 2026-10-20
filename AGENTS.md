@@ -44,6 +44,7 @@ When sources disagree, trust them in this order:
 | Astro APIs                | the `astro-docs` MCP server in `.mcp.json`; fallback https://docs.astro.build/llms-small.txt                                            |
 | Pick work                 | `dev_notes/backlog.md`                                                                                                                  |
 | Check the UI in a browser | the [verify-blog skill](.claude/skills/verify-blog/SKILL.md): launch, drive, and capture evidence without touching the dev server      |
+| Compare two builds        | the [verify-blog skill](.claude/skills/verify-blog/SKILL.md#compare-two-builds): `just parity` and the 44-shot matrix                |
 
 ## Git and pull requests
 
@@ -73,6 +74,7 @@ The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just
 - Folder names are slugified in URLs: `dev_workflows/` publishes at `/blog/dev-workflows/`
 - ruff formats Python code blocks inside Markdown by default; `ruff.toml` limits it to `*.py`
 - The build fetches Google Fonts for OG images; `cache/` keeps them, with the optimized images, between builds
+- An image named `.jpg` may decode as MPO with an unavailable second frame; parity compares the first frame that browsers render
 - The playbooks are public blog posts: write them for readers
 
 ## Leave a trace

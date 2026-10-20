@@ -62,6 +62,23 @@ uv run .claude/skills/verify-blog/scripts/browse.py "$URL/search" --out cache/ve
 
 It needs the Chromium build of Playwright 1.56; when `browse.py` says Chromium did not start, run `uv run --with playwright==1.56.0 python -m playwright install --with-deps chromium`; on Linux, `--with-deps` also installs the system libraries it needs, through apt. `--device iphone` emulates an iPhone viewport in Chromium; it is not Safari, so iOS proof needs the agent-browser path.
 
+`browse.py` also accepts `--step back`, `--step reload`, and `--step 'eval:<JavaScript>'`. It writes `network.json` with each response status and `probes.json` with the `<html>` theme at `DOMContentLoaded`, `astro:after-swap`, and `astro:page-load`. A link click and browser back wait for the navigation's `astro:page-load` or a full page load before the next step.
+
+## Compare two builds
+
+Build each commit in its own worktree. Use the same `cache/fonts/` contents for both builds because Google Fonts can return different files. Keep Pascal's dev server on port 4320 untouched.
+
+```bash
+just parity /absolute/trunk/dist /absolute/head/dist --json /absolute/parity.json
+just shots capture /absolute/trunk/dist --out /absolute/trunk-shots --port 4391
+just shots capture /absolute/head/dist --out /absolute/head-shots --port 4392
+just shots diff /absolute/trunk-shots /absolute/head-shots --json /absolute/shots.json
+```
+
+`just parity` exits 0 and prints `IDENTICAL` when the output matches. It reports route, text, heading and element IDs, image, feed, Pagefind, and asset differences. For an approved change, copy only that finding's exact `fingerprint` from the JSON report into a ledger that maps it to a reason, then rerun with `--accept /absolute/ledger.json`. A new value has a new fingerprint and fails again. Use `--fetched` when the second folder contains a subset fetched from a deployed site; it checks every fetched font against the CSS role that uses it.
+
+The 44 shots come from [shots.json](shots.json). Capture waits for visible images to decode at each scroll position. The diff report gives each shot's changed-pixel ratio and names the selected files for image boxes that contain changed pixels. Capture accepts private ports 4391 to 4399 and refuses 4320.
+
 Browser rules:
 
 - Keep the viewport at most 1920×1920: larger crashes the browser
