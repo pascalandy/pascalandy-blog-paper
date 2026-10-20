@@ -74,6 +74,7 @@ The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just
 - Folder names are slugified in URLs: `dev_workflows/` publishes at `/blog/dev-workflows/`
 - ruff formats Python code blocks inside Markdown by default; `ruff.toml` limits it to `*.py`
 - The build fetches Google Fonts for OG images; `cache/` keeps them, with the optimized images, between builds
+- Before a fresh comparison build, clear generated `dist/`, `.astro/`, and `public/pagefind/` while keeping `cache/fonts/`; stale Pagefind metadata copied from `public/` makes parity reject duplicate metadata
 - An image named `.jpg` may decode as MPO with an unavailable second frame; parity compares the first frame that browsers render
 - The playbooks are public blog posts: write them for readers
 
