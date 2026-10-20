@@ -204,10 +204,22 @@ def drive(args: argparse.Namespace) -> int:
 
         context.expose_binding("__verifyBlogEmit", record_probe)
         context.add_init_script("""(() => {
-          const record = event => window.__verifyBlogEmit({event, theme: document.documentElement.getAttribute('data-theme'), url: location.href});
+          const theme = () => document.documentElement.getAttribute('data-theme');
+          const record = (event, extra = {}) => window.__verifyBlogEmit({event, theme: theme(), url: location.href, ...extra});
+          const before = [];
+          let armed = false;
           document.addEventListener('DOMContentLoaded', () => record('DOMContentLoaded'));
-          document.addEventListener('astro:after-swap', () => record('astro:after-swap'));
-          document.addEventListener('astro:page-load', () => record('astro:page-load'));
+          document.addEventListener('astro:after-swap', () => before.push({theme: theme(), url: location.href}));
+          document.addEventListener('astro:page-load', () => {
+            if (!armed) {
+              document.addEventListener('astro:after-swap', () => {
+                const early = before.shift();
+                record('astro:after-swap', {theme_before_handlers: early?.theme ?? null, before_url: early?.url ?? null});
+              });
+              armed = true;
+            }
+            record('astro:page-load');
+          });
         })();""")
         page = context.new_page()
         page.on(
