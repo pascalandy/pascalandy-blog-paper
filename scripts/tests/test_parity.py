@@ -477,6 +477,33 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(result.returncode, 1, result.stderr)
         self.assertTrue(self.findings(report, "assets"))
 
+    def test_avif_ispe_after_transform_is_material(self) -> None:
+        for transform in ("irot", "imir"):
+            with self.subTest(transform=transform):
+                self.before = self.folder / transform / "before"
+                self.after = self.folder / transform / "after"
+                shutil.copytree(FIXTURES / "base", self.before)
+                shutil.copytree(FIXTURES / "base", self.after)
+                self.image_pair(
+                    "banner.AAAAAAAA.avif",
+                    f"ispe-{transform}-a.avif",
+                    f"ispe-{transform}-b.avif",
+                )
+                result, report = self.run_parity()
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertTrue(self.findings(report, "assets"))
+
+    def test_avif_ispe_moved_before_transform_is_cosmetic(self) -> None:
+        self.image_pair(
+            "banner.AAAAAAAA.avif",
+            "ispe-before-transform-a.avif",
+            "ispe-before-transform-b.avif",
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(report["verdict"], "COSMETIC")
+        self.assertFalse(self.findings(report, "assets"))
+
     def test_avif_identical_exif_and_grid_are_comparable(self) -> None:
         for fixture in ("identical-exif.avif", "grid.avif"):
             with self.subTest(fixture=fixture):

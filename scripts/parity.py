@@ -462,7 +462,13 @@ def avif_render_metadata(payload: bytes) -> dict[str, Any]:
     color = av1_color_config(sequence)
     container_colors: list[tuple[int, int, int, int]] = []
     render_properties: list[tuple[str, str]] = []
+    transform_seen = False
+    invalid_ispe_after_transform = False
     for kind, start, end in associated:
+        if kind in {b"clap", b"irot", b"imir"}:
+            transform_seen = True
+        elif kind == b"ispe" and transform_seen:
+            invalid_ispe_after_transform = True
         value = payload[start:end]
         if kind == b"colr" and value.startswith(b"nclx"):
             if len(value) < 11:
@@ -497,6 +503,8 @@ def avif_render_metadata(payload: bytes) -> dict[str, Any]:
         "container_color_overrides": [],
         "properties": transforms + metadata,
     }
+    if invalid_ispe_after_transform:
+        result["invalid_ispe_after_transform"] = True
     if len(unique_colors) > 1:
         result["conflicting_container_colors"] = unique_colors
     return result
