@@ -15,6 +15,7 @@ import hashlib
 import http.server
 import json
 import math
+import re
 import subprocess
 import sys
 import threading
@@ -96,7 +97,6 @@ def capture(args: argparse.Namespace) -> int:
         source_commit = observed
     if args.out.exists() and any(args.out.iterdir()):
         raise ValueError(f"output must be empty to prevent stale evidence: {args.out}")
-    args.out.mkdir(parents=True, exist_ok=True)
     specification = matrix()
     pages = {route["label"]: route["path"] for route in specification["routes"]}
     if args.pages:
@@ -106,6 +106,11 @@ def capture(args: argparse.Namespace) -> int:
             for label, path in overrides.items()
         ):
             raise ValueError("--pages must map route labels to URL paths")
+        for label, path in overrides.items():
+            if not re.fullmatch(r"[a-z0-9-]+", label):
+                raise ValueError(f"--pages has unsafe route label: {label!r}")
+            if not path.startswith("/") or path.startswith("//"):
+                raise ValueError(f"--pages route must start at the site root: {path!r}")
         pages.update(overrides)
     known = {route["label"] for route in specification["routes"]}
     routes = specification["routes"] + [
@@ -120,6 +125,7 @@ def capture(args: argparse.Namespace) -> int:
         for label, path in pages.items()
         if label not in known
     ]
+    args.out.mkdir(parents=True, exist_ok=True)
     (args.out / "pages.json").write_text(
         json.dumps(pages, indent=2) + "\n", encoding="utf-8"
     )
@@ -520,7 +526,7 @@ def main() -> int:
     shoot.add_argument(
         "--pages",
         type=Path,
-        help="JSON route map; labels outside shots.json add top and first article-image shots",
+        help="JSON map of safe labels to root-relative routes; extra labels add top and image shots",
     )
     shoot.add_argument(
         "--dpr",
