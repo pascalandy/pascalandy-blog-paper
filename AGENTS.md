@@ -76,7 +76,7 @@ The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just
 - Folder names are slugified in URLs: `dev_workflows/` publishes at `/blog/dev-workflows/`
 - ruff formats Python code blocks inside Markdown by default; `ruff.toml` limits it to `*.py`
 - The build fetches Google Fonts for OG images; `cache/` keeps them, with the optimized images, between builds
-- Before a fresh comparison build, clear generated `dist/`, `.astro/`, and `public/pagefind/` while keeping `cache/fonts/`; stale Pagefind metadata copied from `public/` makes parity reject duplicate metadata
+- Before a fresh comparison build, clear generated `dist/`, `.astro/`, `public/pagefind/`, and everything in `cache/` except `cache/fonts/`; Sharp can reuse old optimized image bytes after an encoder upgrade, and stale Pagefind metadata copied from `public/` makes parity reject duplicate metadata
 - An image named `.jpg` may decode as MPO with an unavailable second frame; parity compares the first frame that browsers render
 - Pillow can decode identical RGBA pixels from AVIF files with different CICP color signalling; parity follows the primary `av01` item's associated color and reduced still-image header, compares grid/other primary items by bytes, and errors on non-reduced AV1 headers
 - Firefox can reject an AVIF with a repeated primary `ispe`, or with primary `ispe` after `clap`, `irot`, or `imir`, even when Chromium decodes it; parity marks those invalid primary orders without changing valid AVIF signatures, while other items' order is tracked in issue #89
