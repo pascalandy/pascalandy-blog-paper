@@ -370,6 +370,26 @@ class ParityCommandTest(unittest.TestCase):
         self.assertTrue(self.findings(report, "image_pixels"))
         self.assertTrue(self.findings(report, "assets"))
 
+    def test_avif_alpha_item_color_does_not_override_primary(self) -> None:
+        self.image_pair(
+            "banner.AAAAAAAA.avif",
+            "alpha-property-primary-1.avif",
+            "alpha-property-primary-9.avif",
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "image_pixels"))
+        self.assertTrue(self.findings(report, "assets"))
+
+    def test_avif_iloc_looks_up_primary_id_when_alpha_is_first(self) -> None:
+        self.image_pair(
+            "banner.AAAAAAAA.avif", "iloc-alpha-first-1.avif", "iloc-alpha-first-9.avif"
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "image_pixels"))
+        self.assertTrue(self.findings(report, "assets"))
+
     def test_avif_primary_colr_association_changes_effective_color(self) -> None:
         self.image_pair(
             "banner.AAAAAAAA.avif",
@@ -404,6 +424,42 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(report["verdict"], "COSMETIC")
         self.assertFalse(self.findings(report, "image_pixels"))
+
+    def test_avif_associated_nclx_transfer_change_is_material(self) -> None:
+        self.image_pair(
+            "banner.AAAAAAAA.avif", "nclx-transfer-13.avif", "nclx-transfer-16.avif"
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "image_pixels"))
+        self.assertTrue(self.findings(report, "assets"))
+
+    def test_avif_matching_nclx_add_or_drop_is_cosmetic(self) -> None:
+        self.image_pair(
+            "banner.AAAAAAAA.avif", "matching-nclx-base.avif", "matching-nclx-drop.avif"
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(report["verdict"], "COSMETIC")
+        self.assertFalse(self.findings(report, "image_pixels"))
+        self.assertFalse(self.findings(report, "assets"))
+
+    def test_avif_non_transform_property_reorder_is_cosmetic(self) -> None:
+        for first, second in (
+            ("mdcv-clli-order-a.avif", "mdcv-clli-order-b.avif"),
+            ("icc-irot-order-a.avif", "icc-irot-order-b.avif"),
+        ):
+            with self.subTest(first=first):
+                self.before = self.folder / first / "before"
+                self.after = self.folder / first / "after"
+                shutil.copytree(FIXTURES / "base", self.before)
+                shutil.copytree(FIXTURES / "base", self.after)
+                self.image_pair("banner.AAAAAAAA.avif", first, second)
+                result, report = self.run_parity()
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(report["verdict"], "COSMETIC")
+                self.assertFalse(self.findings(report, "image_pixels"))
+                self.assertFalse(self.findings(report, "assets"))
 
     def test_avif_identical_exif_and_grid_are_comparable(self) -> None:
         for fixture in ("identical-exif.avif", "grid.avif"):

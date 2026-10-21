@@ -485,10 +485,16 @@ def avif_render_metadata(payload: bytes) -> dict[str, Any]:
             **color,
             **dict(zip(("primaries", "transfer", "matrix", "range"), unique_colors[0])),
         }
+    transforms = [
+        item for item in render_properties if item[0] in {"clap", "irot", "imir"}
+    ]
+    metadata = sorted(
+        item for item in render_properties if item[0] not in {"clap", "irot", "imir"}
+    )
     result = {
         "av1": color,
         "container_color_overrides": [],
-        "properties": render_properties,
+        "properties": transforms + metadata,
     }
     if len(unique_colors) > 1:
         result["conflicting_container_colors"] = unique_colors
