@@ -309,7 +309,15 @@ class DuplicateAttributeProbe(HTMLParser):
         self.handle_starttag(tag, attrs)
 
 
-def page_data(path: Path, root: Path) -> dict[str, Any]:
+@cache
+def resource_content_sha(path: Path, fetched: bool) -> str:
+    payload = path.read_bytes()
+    if fetched and path.suffix.lower() == ".css":
+        payload = normalize_font_refs(payload.decode("utf-8")).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def page_data(path: Path, root: Path, fetched: bool = False) -> dict[str, Any]:
     raw = path.read_text(encoding="utf-8")
     duplicate_probe = DuplicateAttributeProbe()
     duplicate_probe.feed(raw)
@@ -373,23 +381,36 @@ def page_data(path: Path, root: Path) -> dict[str, Any]:
         attr = "src" if tag.name == "script" else "href"
         href = str(tag[attr])
         relations = tag.get("rel", [])
-        relation_names = set(
-            relations.split() if isinstance(relations, str) else relations
-        )
+        relation_names = {
+            str(name).lower()
+            for name in (relations.split() if isinstance(relations, str) else relations)
+        }
         required_when_fetched = tag.name == "script" or bool(
             relation_names & {"stylesheet", "modulepreload"}
-            or ("preload" in relation_names and tag.get("as") in {"script", "style"})
+            or (
+                "preload" in relation_names
+                and str(tag.get("as", "")).lower() in {"script", "style"}
+            )
         )
         resource = local_file(root, href, page_route, site_hosts)
-        resources.append(
-            {
-                "tag": tag.name,
-                "href": norm(href),
-                "required_when_fetched": required_when_fetched,
-                "local": resource is not None,
-                "exists": resource.is_file() if resource is not None else None,
-            }
-        )
+        exists = resource.is_file() if resource is not None else None
+        entry: dict[str, Any] = {
+            "tag": tag.name,
+            "href": norm(href),
+            "required_when_fetched": required_when_fetched,
+            "local": resource is not None,
+            "exists": exists,
+        }
+        if (
+            resource is not None
+            and exists
+            and (
+                tag.name == "script"
+                or relation_names & {"stylesheet", "modulepreload", "preload"}
+            )
+        ):
+            entry["content_sha256"] = resource_content_sha(resource, fetched)
+        resources.append(entry)
     headings = [
         (tag.name, tag.get("id"), norm(tag.get_text()))
         for tag in soup.select("h1,h2,h3,h4,h5,h6")
@@ -877,7 +898,10 @@ def compare(
         check("routes", "/", sorted(a_pages), sorted(b_pages))
     inventory: dict[str, Any] = {}
     for url in sorted(b_pages.keys() & a_pages.keys()):
-        a, b = page_data(a_pages[url], first), page_data(b_pages[url], second)
+        a, b = (
+            page_data(a_pages[url], first, fetched),
+            page_data(b_pages[url], second, fetched),
+        )
         if fetched:
             aliases = page_asset_refs(a_pages[url], b_pages[url])
             resource_pairs = [

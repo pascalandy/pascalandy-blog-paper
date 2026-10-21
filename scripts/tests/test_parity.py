@@ -182,7 +182,7 @@ class ParityCommandTest(unittest.TestCase):
             ["_astro/app.ABCDEFGH.js"],
         )
 
-    def test_external_css_change_has_one_material_finding(self) -> None:
+    def test_external_css_change_is_material_in_page_and_inventory(self) -> None:
         path = self.after / "_astro/site.ABCDEFGH.css"
         path.write_text(path.read_text().replace("#000", "#111"))
         result, report = self.run_parity()
@@ -192,8 +192,77 @@ class ParityCommandTest(unittest.TestCase):
         ]
         self.assertEqual(
             [(item["kind"], item["target"]) for item in material],
-            [("assets", "_astro/site.ABCDEFGH.css")],
+            [("resources", "/"), ("assets", "_astro/site.ABCDEFGH.css")],
         )
+
+    def test_page_loaded_asset_swap_is_material_inside_multi_file_group(self) -> None:
+        for label, old, new, payload, added_tag in (
+            (
+                "stylesheet",
+                "site.ABCDEFGH.css",
+                "site.ZZZZZZZZ.css",
+                "body { color: red; }\n",
+                None,
+            ),
+            (
+                "script",
+                "app.ABCDEFGH.js",
+                "app.ZZZZZZZZ.js",
+                "window.parity = 2;\n",
+                None,
+            ),
+            (
+                "modulepreload",
+                "app.ABCDEFGH.js",
+                "app.ZZZZZZZZ.js",
+                "window.parity = 2;\n",
+                '<link rel="modulepreload" href="/_astro/app.ABCDEFGH.js">',
+            ),
+            (
+                "uppercase-preload",
+                "site.ABCDEFGH.css",
+                "site.ZZZZZZZZ.css",
+                "body { color: red; }\n",
+                '<link rel="PRELOAD" as="STYLE" href="/_astro/site.ABCDEFGH.css">',
+            ),
+        ):
+            with self.subTest(resource=label):
+                case = self.folder / label
+                self.before = case / "before"
+                self.after = case / "after"
+                shutil.copytree(FIXTURES / "base", self.before)
+                shutil.copytree(FIXTURES / "base", self.after)
+                for side in (self.before, self.after):
+                    (side / "_astro" / new).write_text(payload)
+                    if added_tag:
+                        self.html(side, "</head>", added_tag + "</head>")
+                if added_tag:
+                    self.html(self.after, added_tag, added_tag.replace(old, new))
+                else:
+                    self.html(self.after, old, new)
+                result, report = self.run_parity()
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertEqual(
+                    [
+                        (item["kind"], item["target"])
+                        for item in self.findings(report, "resources")
+                    ],
+                    [("resources", "/")],
+                )
+                self.assertFalse(self.findings(report, "assets"))
+
+    def test_page_loaded_hash_only_renames_remain_cosmetic(self) -> None:
+        for old, new in (
+            ("site.ABCDEFGH.css", "site.ZZZZZZZZ.css"),
+            ("app.ABCDEFGH.js", "app.ZZZZZZZZ.js"),
+        ):
+            (self.after / "_astro" / old).rename(self.after / "_astro" / new)
+            self.html(self.after, old, new)
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(report["verdict"], "COSMETIC")
+        self.assertFalse(self.findings(report, "resources"))
+        self.assertFalse(self.findings(report, "assets"))
 
     def test_multi_file_asset_group_hash_renames_are_cosmetic(self) -> None:
         folder = self.before / "_astro"
@@ -506,6 +575,7 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(report["verdict"], "COSMETIC")
         self.assertEqual(len(report["fonts"]["b"]), 2)
+        self.assertFalse(self.findings(report, "resources"))
 
     def test_fetched_inline_font_references_use_one_placeholder(self) -> None:
         self.prepare_fonts(False)
