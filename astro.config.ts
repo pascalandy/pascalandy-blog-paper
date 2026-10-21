@@ -10,6 +10,7 @@ import {
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { SITE } from "./src/config";
+import { rehypeAstro5HeadingIds } from "./src/utils/rehypeAstro5HeadingIds";
 
 // https://astro.build/config
 export default defineConfig({
@@ -25,6 +26,7 @@ export default defineConfig({
   ],
   markdown: {
     remarkPlugins: [],
+    rehypePlugins: [rehypeAstro5HeadingIds],
     syntaxHighlight: {
       type: "shiki",
       excludeLangs: ["mermaid"],
