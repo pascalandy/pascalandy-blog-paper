@@ -62,6 +62,29 @@ uv run .claude/skills/verify-blog/scripts/browse.py "$URL/search" --out cache/ve
 
 It needs the Chromium build of Playwright 1.56; when `browse.py` says Chromium did not start, run `uv run --with playwright==1.56.0 python -m playwright install --with-deps chromium`; on Linux, `--with-deps` also installs the system libraries it needs, through apt. `--device iphone` emulates an iPhone viewport in Chromium; it is not Safari, so iOS proof needs the agent-browser path.
 
+`browse.py` also accepts `--step back`, `--step reload`, and `--step 'eval:<JavaScript>'`. It writes `network.json` with each response status and a separate list of failed requests. `probes.json` records the `<html>` theme at `DOMContentLoaded`, `astro:after-swap`, and `astro:page-load`.
+
+On `astro:after-swap`, `theme` comes from a listener registered after initial page load, following the site's theme handler in the same event dispatch; `theme_before_handlers` preserves the early init-script reading. A full reload installs both listeners in the new document. A link click and cross-route back wait for the navigation's `astro:page-load` or a full page load before the next step. Fragment-only back completes when the URL fragment changes.
+
+## Compare two builds
+
+Build each commit in its own worktree. Use the same `cache/fonts/` contents for both builds because Google Fonts can return different files. Keep Pascal's dev server on port 4320 untouched.
+
+```bash
+just parity /absolute/trunk/dist /absolute/head/dist --json /absolute/parity.json
+just shots capture /absolute/trunk/dist --out /absolute/trunk-shots --port 4391
+just shots capture /absolute/head/dist --out /absolute/head-shots --port 4392
+just shots diff /absolute/trunk-shots /absolute/head-shots --json /absolute/shots.json
+```
+
+`just parity` exits 0 and prints `IDENTICAL` when the output matches. It reports route, text, heading and element IDs, linked resource availability and page-to-content binding for local CSS, JS, modulepreload, and script/style preloads, plus image, feed, Pagefind, and asset differences. For an approved change, copy only that finding's exact `fingerprint` from the JSON report into a ledger that maps it to a reason, then rerun with `--accept /absolute/ledger.json`. The ledger applies to that baseline-to-candidate direction; a new value fails again, and an unmatched entry is an error when no material finding remains. Runs of ASCII whitespace normalize, but removing an entire text node remains material. Use `--fetched` when the second folder contains a subset fetched from a deployed site. Preserve the URL paths of fetched files and include every font referenced by `@font-face`, script, stylesheet, modulepreload target, and `preload` target with `as="script"` or `as="style"` referenced by the fetched pages and CSS. Missing `@font-face` fonts are input errors; missing other required resources are material findings. The command checks each fetched font against the CSS role that uses it.
+
+Acceptance fingerprints also belong to the parity tool version that produced them. Regenerate a ledger from a new report after a tool change; a stale ledger fails closed.
+
+Image comparison includes animation loop count, but ignores the WebP/GIF background hint when decoded frames are unchanged. For an `av01` primary AVIF item, parity follows its item-property associations and item location, then compares the effective color settings from associated `colr` properties or its reduced still-image AV1 header. It also compares associated ICC, transform (`clap`, `irot`, `imir`), and HDR (`mdcv`, `clli`) properties. The signature preserves relative transform order and same-kind metadata order; swapping different metadata kinds is cosmetic. It marks a second primary-associated `ispe` or a primary `ispe` after `clap`, `irot`, or `imir`, so changing between valid order and either invalid primary order is material. Other items' association order is outside this comparator ([issue #89](https://github.com/pascalandy/pascalandy-blog-paper/issues/89)); repeated primary `pixi`, `av1C`, and `pasp` are outside this rule ([issue #90](https://github.com/pascalandy/pascalandy-blog-paper/issues/90)). Valid AVIF signatures and their existing acceptance fingerprints remain unchanged. A non-`av01` primary item, including a grid, is compared conservatively by file bytes: identical bytes pass, and any byte change is material. A non-reduced AV1 sequence header is outside the normalized AVIF path and produces an explicit input error; report that file for a parser extension before accepting the comparison.
+
+The 44 shots come from [shots.json](shots.json). Capture waits for visible images to decode at each scroll position and records the selected local image hashes in the manifest. The diff report gives each shot's changed-pixel ratio. It names image boxes with changed pixels only when their selected local image bytes differed at capture, even if a dist changes afterward. Older manifests without hashes fall back to their current dist files. Capture accepts private ports 4391 to 4399 and refuses 4320. For gallery checks, pass `--pages /absolute/pages.json` with extra labels mapped to root-relative routes; labels use lowercase letters, digits, and hyphens. Each extra route gets `top` and first article-image shots in addition to the 44. Use `--dpr 2 --scale device` and `--dpr 3 --scale device` to capture native gallery variants, with the same pages file for both builds.
+
 Browser rules:
 
 - Keep the viewport at most 1920×1920: larger crashes the browser

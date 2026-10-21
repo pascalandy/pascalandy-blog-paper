@@ -52,3 +52,25 @@ bunx npm-check-updates -i
 ```
 
 If no more packages to update, you're done.
+
+## Prove the build output
+
+For an upgrade that must leave the published site unchanged, build the old and new commits in separate worktrees. Use the same `cache/fonts/` files in both. Google Fonts can return different font files to two fresh builds, which would change the generated images even if the code is identical.
+
+Run the comparison from the new worktree:
+
+```bash
+just parity /absolute/old/dist /absolute/new/dist --json /absolute/parity.json
+```
+
+The command exits 0 with `IDENTICAL` when routes, page content, images, feeds, search postings, and assets match. Read the JSON report for any material finding. If the upgrade intentionally changes output, record each accepted finding's exact fingerprint and its reason in a ledger, then rerun with `--accept /absolute/ledger.json`. A later change gets a different fingerprint and must be reviewed again.
+
+Capture the browser matrix when the upgrade can change rendering or navigation:
+
+```bash
+just shots capture /absolute/old/dist --out /absolute/old-shots --port 4391
+just shots capture /absolute/new/dist --out /absolute/new-shots --port 4392
+just shots diff /absolute/old-shots /absolute/new-shots --json /absolute/shots.json
+```
+
+The diff report gives a changed-pixel ratio for each of the 44 shots and identifies the selected image files where pixels changed. Use ports 4391 to 4399; port 4320 belongs to the developer's server.

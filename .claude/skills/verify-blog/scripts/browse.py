@@ -11,11 +11,12 @@ import argparse
 import itertools
 import json
 import sys
+import time
 from pathlib import Path
 from typing import NoReturn
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit
 
-from playwright.sync_api import Error, Page, sync_playwright
+from playwright.sync_api import Browser, Error, Page, Playwright, sync_playwright
 
 EPILOG = """\
 Steps run in order, each as ACTION:ARGUMENT, with Playwright selectors such as
@@ -25,13 +26,17 @@ Steps run in order, each as ACTION:ARGUMENT, with Playwright selectors such as
   press:KEY               press a key, such as Enter
   wait:SELECTOR           wait until the element is visible
   goto:PATH               open a path on the same site, such as /tags
+  reload                  reload the current page
+  back                    use browser history back
+  eval:JS                 evaluate JS and save its result in state.json
 
 A role= name must equal the whole accessible name; a regex, such as
 role=link[name=/^Next/], matches part of it.
 
 Then OUT receives screenshot.png (the viewport, at most 1920 CSS pixels a side),
-aria.txt (the accessibility snapshot), and state.json (url, title, theme, and
-console errors). The paths print on stdout.
+aria.txt (the accessibility snapshot), state.json, network.json (response status
+codes and failed requests), and probes.json (DOMContentLoaded and Astro navigation events).
+The paths print on stdout.
 
 examples:
   uv run browse.py http://127.0.0.1:4330/ --out cache/verify-blog/run/home
@@ -48,7 +53,7 @@ exit codes:
   130  interrupted (SIGINT)"""
 
 VIEWPORTS = {"desktop": {"width": 1440, "height": 900}}
-ACTIONS = ("click", "fill", "press", "wait", "goto")
+ACTIONS = ("click", "fill", "press", "wait", "goto", "reload", "back", "eval")
 # The browser matching the pinned Playwright, with the system libraries it needs
 # on Linux; a cloud sandbox may ship both already
 INSTALL = (
@@ -66,16 +71,74 @@ class Parser(argparse.ArgumentParser):
 
 def step(value: str) -> tuple[str, str]:
     action, _, argument = value.partition(":")
-    if action not in ACTIONS or not argument:
+    if action not in ACTIONS or (not argument and action not in ("reload", "back")):
         raise argparse.ArgumentTypeError(
             f"invalid step {value!r}; use ACTION:ARGUMENT with ACTION one of {', '.join(ACTIONS)}"
         )
     return action, argument
 
 
-def run(page: Page, base: str, action: str, argument: str) -> None:
+def launch_chromium(playwright: Playwright) -> Browser:
+    try:
+        return playwright.chromium.launch()
+    except Error as error:
+        raise ValueError(
+            f"{str(error).splitlines()[0]}; Chromium did not start; run: {INSTALL}"
+        ) from error
+
+
+def collect_page_errors(page: Page, errors: list[str]) -> None:
+    page.on(
+        "console",
+        lambda message: message.type == "error" and errors.append(message.text),
+    )
+    page.on("pageerror", lambda error: errors.append(str(error)))
+
+
+def await_navigation(
+    page: Page, events: list[dict], start: int, previous_url: str | None = None
+) -> None:
+    deadline = time.monotonic() + 20
+    while time.monotonic() < deadline:
+        current = urlsplit(page.url)
+        previous = urlsplit(previous_url) if previous_url else None
+        anchor_change = bool(
+            previous
+            and (current.path, current.query) == (previous.path, previous.query)
+            and current.fragment != previous.fragment
+        )
+        if (
+            any(
+                event["event"] in ("astro:page-load", "load")
+                for event in events[start:]
+            )
+            or anchor_change
+        ):
+            page.wait_for_load_state("networkidle")
+            return
+        page.wait_for_timeout(50)
+    raise Error("navigation did not reach astro:page-load or load within 20 seconds")
+
+
+def run(
+    page: Page, base: str, action: str, argument: str, events: list[dict]
+) -> object:
     if action == "click":
-        page.locator(argument).first.click()
+        target = page.locator(argument).first
+        href = target.evaluate("element => element.closest('a')?.href ?? null")
+        current = urlsplit(page.url)
+        destination = urlsplit(href) if href else current
+        navigates = bool(
+            href
+            and (
+                (destination.path, destination.query) != (current.path, current.query)
+                or not destination.fragment
+            )
+        )
+        start = len(events)
+        target.click()
+        if navigates:
+            await_navigation(page, events, start)
     elif action == "fill":
         selector, _, text = argument.partition("=")
         page.locator(selector).first.fill(text)
@@ -83,10 +146,22 @@ def run(page: Page, base: str, action: str, argument: str) -> None:
         page.keyboard.press(argument)
     elif action == "wait":
         page.locator(argument).first.wait_for(state="visible")
-    else:
+    elif action == "goto":
         # /tags resolves against the site's origin, whatever page it starts from
-        page.goto(urljoin(base, argument))
+        page.goto(urljoin(base, argument), wait_until="load")
+    elif action == "reload":
+        page.reload(wait_until="load")
+    elif action == "back":
+        start = len(events)
+        previous_url = page.url
+        page.evaluate("history.back()")
+        await_navigation(page, events, start, previous_url)
+    elif action == "eval":
+        result = page.evaluate(argument)
+        page.wait_for_load_state("networkidle")
+        return result
     page.wait_for_load_state("networkidle")
+    return None
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -137,13 +212,18 @@ def main(argv: list[str] | None = None) -> int:
 def drive(args: argparse.Namespace) -> int:
     args.out.mkdir(parents=True, exist_ok=True)
     errors: list[str] = []
+    network: list[dict] = []
+    failed_requests: list[dict] = []
+    probes: list[dict] = []
+    events: list[dict] = []
+    evaluations: list[dict] = []
+    current_step = {"value": "initial"}
     failure = ""
     with sync_playwright() as playwright:
         try:
-            browser = playwright.chromium.launch()
-        except Error as error:
-            print(str(error).splitlines()[0], file=sys.stderr)
-            print(f"error: Chromium did not start; run: {INSTALL}", file=sys.stderr)
+            browser = launch_chromium(playwright)
+        except ValueError as error:
+            print(f"error: {error}", file=sys.stderr)
             return 1
         if args.device == "iphone":
             options = dict(playwright.devices["iPhone 15"])
@@ -151,17 +231,71 @@ def drive(args: argparse.Namespace) -> int:
             options = {"viewport": VIEWPORTS["desktop"]}
         if args.color_scheme:
             options["color_scheme"] = args.color_scheme
-        page = browser.new_context(**options).new_page()
+        context = browser.new_context(**options)
+
+        def record_probe(_source: object, payload: dict) -> None:
+            row = {**payload, "step": current_step["value"]}
+            probes.append(row)
+            events.append(row)
+
+        context.expose_binding("__verifyBlogEmit", record_probe)
+        context.add_init_script("""(() => {
+          const theme = () => document.documentElement.getAttribute('data-theme');
+          const record = (event, extra = {}) => window.__verifyBlogEmit({event, theme: theme(), url: location.href, ...extra});
+          const before = [];
+          let armed = false;
+          document.addEventListener('DOMContentLoaded', () => record('DOMContentLoaded'));
+          document.addEventListener('astro:after-swap', () => before.push({theme: theme(), url: location.href}));
+          document.addEventListener('astro:page-load', () => {
+            if (!armed) {
+              document.addEventListener('astro:after-swap', () => {
+                const early = before.shift();
+                record('astro:after-swap', {theme_before_handlers: early?.theme ?? null, before_url: early?.url ?? null});
+              });
+              armed = true;
+            }
+            record('astro:page-load');
+          });
+        })();""")
+        page = context.new_page()
+        collect_page_errors(page, errors)
         page.on(
-            "console",
-            lambda message: message.type == "error" and errors.append(message.text),
+            "response",
+            lambda response: network.append(
+                {
+                    "event": "response",
+                    "url": response.url,
+                    "status": response.status,
+                    "resource_type": response.request.resource_type,
+                    "step": current_step["value"],
+                }
+            ),
         )
-        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.on(
+            "requestfailed",
+            lambda request: failed_requests.append(
+                {
+                    "event": "requestfailed",
+                    "url": request.url,
+                    "status": None,
+                    "failure": request.failure,
+                    "resource_type": request.resource_type,
+                    "step": current_step["value"],
+                }
+            ),
+        )
+        page.on(
+            "load",
+            lambda: events.append({"event": "load", "step": current_step["value"]}),
+        )
         try:
-            page.goto(args.url)
+            page.goto(args.url, wait_until="load")
             page.wait_for_load_state("networkidle")
-            for action, argument in args.step:
-                run(page, args.url, action, argument)
+            for index, (action, argument) in enumerate(args.step, start=1):
+                current_step["value"] = f"{index}:{action}"
+                value = run(page, args.url, action, argument, events)
+                if action == "eval":
+                    evaluations.append({"step": current_step["value"], "result": value})
         except Error as error:
             failure = str(error).splitlines()[0]
         screenshot = args.out / "screenshot.png"
@@ -174,16 +308,34 @@ def drive(args: argparse.Namespace) -> int:
             "device": args.device,
             "steps": [f"{action}:{argument}" for action, argument in args.step],
             "console_errors": errors,
+            "evaluations": evaluations,
             "failure": failure or None,
         }
         (args.out / "state.json").write_text(
             json.dumps(state, ensure_ascii=False, indent=2) + "\n"
         )
+        (args.out / "network.json").write_text(
+            json.dumps(
+                {"responses": network, "failures": failed_requests},
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n"
+        )
+        (args.out / "probes.json").write_text(
+            json.dumps({"events": probes}, ensure_ascii=False, indent=2) + "\n"
+        )
         browser.close()
     print(
         "\n".join(
             str(args.out / name)
-            for name in ("screenshot.png", "aria.txt", "state.json")
+            for name in (
+                "screenshot.png",
+                "aria.txt",
+                "state.json",
+                "network.json",
+                "probes.json",
+            )
         )
     )
     if failure:
