@@ -71,7 +71,6 @@ export default defineConfig({
     },
   },
   experimental: {
-    preserveScriptOrder: true,
     fonts: [
       {
         name: "JetBrains Mono",
