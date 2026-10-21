@@ -14,6 +14,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+# Keep this token split: Tailwind scans scripts and would emit an unused CSS utility.
 BACKDROP_FILTER = "backdrop" + "-filter"
 WEBKIT_BACKDROP_FILTER = "-webkit-" + BACKDROP_FILTER
 SELECTORS = (
