@@ -47,6 +47,15 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      cssTarget: [
+        "chrome111",
+        "edge111",
+        "firefox114",
+        "safari16.3",
+        "ios16.3",
+      ],
+    },
     optimizeDeps: {
       include: ["@pagefind/default-ui"],
       exclude: ["@resvg/resvg-js"],
