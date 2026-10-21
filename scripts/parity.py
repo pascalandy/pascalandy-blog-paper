@@ -401,14 +401,7 @@ def page_data(path: Path, root: Path, fetched: bool = False) -> dict[str, Any]:
             "local": resource is not None,
             "exists": exists,
         }
-        if (
-            resource is not None
-            and exists
-            and (
-                tag.name == "script"
-                or relation_names & {"stylesheet", "modulepreload", "preload"}
-            )
-        ):
+        if resource is not None and exists and required_when_fetched:
             entry["content_sha256"] = resource_content_sha(resource, fetched)
         resources.append(entry)
     headings = [

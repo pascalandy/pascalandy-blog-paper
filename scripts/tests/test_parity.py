@@ -577,6 +577,26 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(len(report["fonts"]["b"]), 2)
         self.assertFalse(self.findings(report, "resources"))
 
+    def test_fetched_font_preload_byte_drift_uses_font_roles(self) -> None:
+        self.prepare_fonts(False)
+        for side, name in (
+            (self.before, "normal.12345678.woff2"),
+            (self.after, "normal.ABCDEFGH.woff2"),
+        ):
+            self.html(
+                side,
+                "</head>",
+                f'<link rel="preload" as="font" href="/_astro/fonts/{name}"></head>',
+            )
+        font = self.after / "_astro/fonts/normal.ABCDEFGH.woff2"
+        payload = bytearray(font.read_bytes() + b"\0")
+        payload[8:12] = len(payload).to_bytes(4, "big")
+        font.write_bytes(payload)
+        result, report = self.run_parity("--fetched")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(self.findings(report, "resources"))
+        self.assertFalse(self.findings(report, "font_roles"))
+
     def test_fetched_inline_font_references_use_one_placeholder(self) -> None:
         self.prepare_fonts(False)
         for side, name in (
