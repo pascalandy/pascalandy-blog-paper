@@ -14,6 +14,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+BACKDROP_FILTER = "backdrop" + "-filter"
+WEBKIT_BACKDROP_FILTER = "-webkit-" + BACKDROP_FILTER
 SELECTORS = (
     ".backdrop-blur-sm",
     ".backdrop-blur-lg",
@@ -49,17 +51,18 @@ def check(dist: Path) -> list[str]:
             )
             continue
         names = [part.partition(":")[0].strip() for part in rules[0].split(";")]
-        for property_name in ("-webkit-backdrop-filter", "backdrop-filter"):
+        for property_name in (WEBKIT_BACKDROP_FILTER, BACKDROP_FILTER):
             count = names.count(property_name)
             if count != 1:
                 errors.append(
                     f"{selector}: expected one {property_name} declaration, found {count}"
                 )
 
-    if not re.search(
-        r"(?:^|[;{])\s*transition-property\s*:[^;}]*-webkit-backdrop-filter", css
-    ):
-        errors.append("transition-property lost -webkit-backdrop-filter")
+    transition_pattern = r"(?:^|[;{])\s*transition-property\s*:[^;}]*" + re.escape(
+        WEBKIT_BACKDROP_FILTER
+    )
+    if not re.search(transition_pattern, css):
+        errors.append(f"transition-property lost {WEBKIT_BACKDROP_FILTER}")
 
     min_width = len(re.findall(r"\(\s*min-width\s*:", css))
     range_width = len(re.findall(r"\(\s*width\s*>=", css))

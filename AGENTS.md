@@ -70,7 +70,7 @@ The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just
 
 - Astro 7 needs Node 22.22.0 or later. Set Sevalla's Node version in its build strategy dashboard; repository settings do not select it
 - After an Astro bump moves Vite, check that `bun.lock` contains one Vite version: Bun 1.3.4 kept Vite 7 at the root and Vite 8 under Astro while `just check` passed
-- Astro 7 sets Vite's client build target to `esnext`; keep its separate CSS target at Safari/iOS 16.3 so production CSS retains prefixed `backdrop-filter` declarations and `min-width` media rules for older Safari. `just check` verifies the emitted Footer CSS
+- Astro 7 sets Vite's client build target to `esnext`; keep its separate CSS target at Safari/iOS 16.3 so production CSS retains WebKit-prefixed backdrop effect declarations and `min-width` media rules for older Safari. `just check` verifies the emitted Footer CSS
 - Drafts never build, dev included. A future `date_created` keeps a post out of listings and RSS until 15 minutes before, but its page still builds
 - A post may use only the frontmatter keys in `src/content.config.ts` and the tags in `src/tags.ts`; `just check --only content` names any other
 - A `_` prefix removes a file from the collection; a `_` folder stays in it but drops out of the URL
