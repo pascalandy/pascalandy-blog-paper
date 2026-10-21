@@ -74,7 +74,7 @@ class ParityCommandTest(unittest.TestCase):
             shutil.copytree(FIXTURES / name / "pagefind", side / "pagefind")
 
     def run_parity(
-        self, *options: str, reverse: bool = False
+        self, *options: str, reverse: bool = False, env: dict[str, str] | None = None
     ) -> tuple[subprocess.CompletedProcess[str], dict]:
         report_path = self.folder / "report.json"
         report_path.unlink(missing_ok=True)
@@ -96,6 +96,7 @@ class ParityCommandTest(unittest.TestCase):
             text=True,
             capture_output=True,
             check=False,
+            env=env,
         )
         report = (
             json.loads(report_path.read_text(encoding="utf-8"))
@@ -285,6 +286,89 @@ class ParityCommandTest(unittest.TestCase):
             ],
             [("assets", f"_astro/{name}") for name in names],
         )
+
+    def test_avif_color_signalling_is_material_but_equal_render_is_cosmetic(
+        self,
+    ) -> None:
+        source = FIXTURES / "rendering"
+        name = "banner.AAAAAAAA.avif"
+        for side in (self.before, self.after):
+            shutil.copyfile(source / "primaries-1.avif", side / "_astro" / name)
+            shutil.copyfile(
+                source / "primaries-1.avif", side / "_astro/banner.BBBBBBBB.avif"
+            )
+            self.html(side, "</body>", f'<img src="/_astro/{name}"></body>')
+        target = self.after / "_astro" / name
+        shutil.copyfile(source / "primaries-9.avif", target)
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertEqual(
+            [
+                (item["kind"], item["target"])
+                for item in self.findings(report, "assets")
+            ],
+            [("assets", f"_astro/{name}")],
+        )
+        self.assertTrue(self.findings(report, "image_pixels"))
+        shutil.copyfile(source / "reencoded-same-color.avif", target)
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(self.findings(report, "assets"))
+        self.assertFalse(self.findings(report, "image_pixels"))
+        target.write_bytes(
+            (source / "primaries-1.avif").read_bytes()
+            + struct.pack(">I", 16)
+            + b"free"
+            + b"\0" * 8
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(self.findings(report, "assets"))
+        self.assertFalse(self.findings(report, "image_pixels"))
+
+    def test_animated_webp_loop_change_is_material(self) -> None:
+        source = FIXTURES / "rendering"
+        name = "recording.AAAAAAAA.webp"
+        for side in (self.before, self.after):
+            shutil.copyfile(source / "loop-0.webp", side / "_astro" / name)
+            shutil.copyfile(
+                source / "loop-0.webp", side / "_astro/recording.BBBBBBBB.webp"
+            )
+            self.html(side, "</body>", f'<img src="/_astro/{name}"></body>')
+        shutil.copyfile(source / "loop-1.webp", self.after / "_astro" / name)
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertEqual(
+            [
+                (item["kind"], item["target"])
+                for item in self.findings(report, "assets")
+            ],
+            [("assets", f"_astro/{name}")],
+        )
+        self.assertTrue(self.findings(report, "image_pixels"))
+
+    def test_exact_group_equal_pixel_reencodes_remain_cosmetic(self) -> None:
+        for side, level in ((self.before, 6), (self.after, 0)):
+            for name, color in (
+                ("group.AAAAAAAA.png", (10, 20, 30)),
+                ("group.BBBBBBBB.png", (40, 50, 60)),
+            ):
+                png(side / "_astro" / name, color, level=level)
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(report["verdict"], "COSMETIC")
+        self.assertFalse(self.findings(report, "assets"))
+
+    def test_identical_truncated_image_in_group_skips_decode(self) -> None:
+        for side in (self.before, self.after):
+            png(side / "_astro/group.AAAAAAAA.png", (10, 20, 30))
+            shutil.copyfile(
+                FIXTURES / "rendering/truncated.png",
+                side / "_astro/group.BBBBBBBB.png",
+            )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(report["verdict"], "IDENTICAL")
 
     def test_multi_file_asset_group_hash_renames_are_cosmetic(self) -> None:
         folder = self.before / "_astro"
@@ -613,6 +697,70 @@ class ParityCommandTest(unittest.TestCase):
             ],
             [("resources", "/")],
         )
+
+    def test_fetched_relative_stylesheet_swap_ignores_alias_order(self) -> None:
+        css = (
+            '@font-face { font-family: P; font-style: normal; font-weight: 400; src: url("/_astro/fonts/normal.12345678.woff2"); }\n'
+            '@font-face { font-family: P; font-style: italic; font-weight: 400; src: url("/_astro/fonts/italic.87654321.woff2"); }\n'
+        )
+        for side in (self.before, self.after):
+            (side / "_astro/site.ABCDEFGH.css").write_text(css)
+            styles = side / "styles"
+            styles.mkdir()
+            (styles / "a.css").write_text("body { color: #000; }\n")
+            (styles / "b.css").write_text("body { color: red; }\n")
+            self.html(
+                side,
+                "</head>",
+                '<link rel="stylesheet" href="styles/a.css"></head>',
+            )
+            other = side / "other"
+            other.mkdir()
+            (other / "index.html").write_text(
+                '<!doctype html><html lang="en"><head><title>Other</title><link rel="stylesheet" href="/styles/b.css"></head><body><p>x</p></body></html>'
+            )
+        self.html(self.after, 'href="styles/a.css"', 'href="styles/b.css"')
+        fingerprints = set()
+        for seed in range(12):
+            result, report = self.run_parity(
+                "--fetched", env={**os.environ, "PYTHONHASHSEED": str(seed)}
+            )
+            self.assertEqual(result.returncode, 1, (seed, result.stderr))
+            resources = self.findings(report, "resources")
+            self.assertEqual(
+                [(item["kind"], item["target"]) for item in resources],
+                [("resources", "/")],
+            )
+            fingerprints.add(resources[0]["fingerprint"])
+        self.assertEqual(len(fingerprints), 1)
+
+    def test_fetched_subset_of_asset_group_skips_unfetched_file(self) -> None:
+        css = (
+            '@font-face { font-family: P; font-style: normal; font-weight: 400; src: url("/_astro/fonts/normal.12345678.woff2"); }\n'
+            '@font-face { font-family: P; font-style: italic; font-weight: 400; src: url("/_astro/fonts/italic.87654321.woff2"); }\n'
+        )
+        for side in (self.before, self.after):
+            (side / "_astro/site.ABCDEFGH.css").write_text(css)
+        (self.before / "_astro/app.ZZZZZZZZ.js").write_text("window.other = 1;\n")
+        result, report = self.run_parity("--fetched")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertFalse(self.findings(report, "assets"))
+
+    def test_added_resource_fingerprint_ignores_hash_only_rename(self) -> None:
+        old, new = "extra.AAAAAAAA.js", "extra.ZZZZZZZZ.js"
+        path = self.after / "_astro" / old
+        path.write_text("window.extra = 1;\n")
+        self.html(
+            self.after, "</head>", f'<script src="/_astro/{old}"></script></head>'
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        first = self.findings(report, "resources")[0]["fingerprint"]
+        path.rename(self.after / "_astro" / new)
+        self.html(self.after, old, new)
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertEqual(self.findings(report, "resources")[0]["fingerprint"], first)
 
     def test_static_page_loaded_font_reference_swap_is_material(self) -> None:
         old, new = "site.ABCDEFGH.css", "site.ZZZZZZZZ.css"

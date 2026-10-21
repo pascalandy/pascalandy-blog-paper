@@ -176,6 +176,182 @@ def png_render_chunks(payload: bytes) -> list[tuple[str, str]]:
     return result
 
 
+class BitReader:
+    def __init__(self, payload: bytes) -> None:
+        self.payload = payload
+        self.offset = 0
+
+    def read(self, count: int = 1) -> int:
+        if self.offset + count > len(self.payload) * 8:
+            raise ValueError("truncated AV1 sequence header")
+        value = 0
+        for _ in range(count):
+            value = (value << 1) | (
+                self.payload[self.offset // 8] >> (7 - self.offset % 8) & 1
+            )
+            self.offset += 1
+        return value
+
+
+def av1_color_config(payload: bytes) -> dict[str, Any]:
+    bits = BitReader(payload)
+    profile = bits.read(3)
+    still_picture = bits.read()
+    reduced = bits.read()
+    if not still_picture or not reduced:
+        raise ValueError(
+            "unsupported AVIF sequence header: expected reduced still image"
+        )
+    bits.read(5)  # level
+    width_bits, height_bits = bits.read(4) + 1, bits.read(4) + 1
+    bits.read(width_bits)
+    bits.read(height_bits)
+    for _ in range(6):
+        bits.read()  # coding tools before color_config
+    high_bitdepth = bits.read()
+    depth = (
+        (12 if bits.read() else 10)
+        if profile == 2 and high_bitdepth
+        else (10 if high_bitdepth else 8)
+    )
+    monochrome = 0 if profile == 1 else bits.read()
+    if bits.read():
+        primaries, transfer, matrix = bits.read(8), bits.read(8), bits.read(8)
+    else:
+        primaries, transfer, matrix = 2, 2, 2
+    if monochrome:
+        color_range = bits.read()
+        subsampling_x = subsampling_y = 1
+        chroma_position = 0
+    elif (primaries, transfer, matrix) == (1, 13, 0):
+        color_range = 1
+        subsampling_x = subsampling_y = chroma_position = 0
+        bits.read()  # separate_uv_delta_q
+    else:
+        color_range = bits.read()
+        if profile == 0:
+            subsampling_x = subsampling_y = 1
+        elif profile == 1:
+            subsampling_x = subsampling_y = 0
+        elif depth == 12:
+            subsampling_x = bits.read()
+            subsampling_y = bits.read() if subsampling_x else 0
+        else:
+            subsampling_x, subsampling_y = 1, 0
+        chroma_position = bits.read(2) if subsampling_x and subsampling_y else 0
+        bits.read()  # separate_uv_delta_q
+    return {
+        "profile": profile,
+        "bit_depth": depth,
+        "monochrome": monochrome,
+        "primaries": primaries,
+        "transfer": transfer,
+        "matrix": matrix,
+        "range": color_range,
+        "subsampling": [subsampling_x, subsampling_y],
+        "chroma_position": chroma_position,
+        "film_grain": bits.read(),
+    }
+
+
+def bmff_boxes(payload: bytes, start: int, end: int) -> list[tuple[bytes, int, int]]:
+    result = []
+    position = start
+    while position < end:
+        if position + 8 > end:
+            raise ValueError("truncated AVIF box")
+        size = int.from_bytes(payload[position : position + 4], "big")
+        kind = payload[position + 4 : position + 8]
+        header = 8
+        if size == 1:
+            if position + 16 > end:
+                raise ValueError("truncated extended AVIF box")
+            size = int.from_bytes(payload[position + 8 : position + 16], "big")
+            header = 16
+        elif size == 0:
+            size = end - position
+        if size < header or position + size > end:
+            raise ValueError("invalid AVIF box size")
+        result.append((kind, position + header, position + size))
+        position += size
+    return result
+
+
+def av1_sequence_header(payload: bytes) -> bytes:
+    position = 0
+    while position < len(payload):
+        header = payload[position]
+        position += 1
+        if header & 0x81 or not header & 0x02:
+            raise ValueError("unsupported AVIF OBU header")
+        kind = (header >> 3) & 15
+        if header & 0x04:
+            position += 1
+        size = 0
+        for shift in range(0, 56, 7):
+            if position >= len(payload):
+                raise ValueError("truncated AVIF OBU size")
+            part = payload[position]
+            position += 1
+            size |= (part & 127) << shift
+            if not part & 128:
+                break
+        else:
+            raise ValueError("invalid AVIF OBU size")
+        if position + size > len(payload):
+            raise ValueError("truncated AVIF OBU")
+        if kind == 1:
+            return payload[position : position + size]
+        position += size
+    raise ValueError("AVIF sequence header not found")
+
+
+def avif_render_metadata(payload: bytes) -> dict[str, Any]:
+    properties: list[tuple[str, str]] = []
+    container_color: list[tuple[int, int, int, int]] = []
+    sequence: bytes | None = None
+
+    def visit(start: int, end: int) -> None:
+        nonlocal sequence
+        for kind, content, stop in bmff_boxes(payload, start, end):
+            if kind in {b"meta", b"iprp", b"ipco"}:
+                visit(content + (4 if kind == b"meta" else 0), stop)
+            elif kind == b"colr":
+                data = payload[content:stop]
+                if data.startswith(b"nclx") and len(data) >= 11:
+                    container_color.append(
+                        (
+                            int.from_bytes(data[4:6], "big"),
+                            int.from_bytes(data[6:8], "big"),
+                            int.from_bytes(data[8:10], "big"),
+                            data[10] >> 7,
+                        )
+                    )
+                else:
+                    properties.append(("colr", hashlib.sha256(data).hexdigest()))
+            elif kind in {b"irot", b"imir", b"clap", b"mdcv", b"clli"}:
+                properties.append((kind.decode("ascii"), payload[content:stop].hex()))
+            elif kind in {b"mdat", b"idat"} and sequence is None:
+                sequence = av1_sequence_header(payload[content:stop])
+
+    visit(0, len(payload))
+    if sequence is None:
+        raise ValueError("AVIF sequence header not found in mdat or idat")
+    color = av1_color_config(sequence)
+    signaled = (
+        color["primaries"],
+        color["transfer"],
+        color["matrix"],
+        color["range"],
+    )
+    overrides = sorted(item for item in container_color if item != signaled)
+    return {
+        "av1": color,
+        "container_color_overrides": overrides,
+        "properties": sorted(properties),
+    }
+
+
 @cache
 def image_data_from_bytes(payload: bytes) -> dict[str, Any]:
     encoding_hash = hashlib.sha256(payload).hexdigest()
@@ -189,12 +365,14 @@ def image_data_from_bytes(payload: bytes) -> dict[str, Any]:
             pixels.update(bytes.fromhex(icc))
             color_metadata = {
                 key: source.info[key]
-                for key in ("gamma", "chromaticity", "srgb")
+                for key in ("gamma", "chromaticity", "srgb", "loop", "background")
                 if key in source.info
             }
             render_chunks = png_render_chunks(payload)
             if render_chunks:
                 color_metadata["png_render_chunks"] = render_chunks
+            if source.format == "AVIF":
+                color_metadata["avif"] = avif_render_metadata(payload)
             pixels.update(digest(color_metadata).encode())
             frames_to_decode = (
                 [source] if source.format == "MPO" else ImageSequence.Iterator(source)
@@ -690,7 +868,7 @@ def page_asset_pairs(
     first: Path, second: Path, pages: dict[str, Path], other: dict[str, Path]
 ) -> dict[str, str]:
     pairs = {}
-    for url in pages.keys() & other.keys():
+    for url in sorted(pages.keys() & other.keys()):
         left = BeautifulSoup(pages[url].read_text(encoding="utf-8"), "html.parser")
         right = BeautifulSoup(other[url].read_text(encoding="utf-8"), "html.parser")
         for selector, attribute in (
@@ -900,6 +1078,13 @@ def compare(
             page_data(a_pages[url], first, fetched),
             page_data(b_pages[url], second, fetched),
         )
+        for left, right in zip(a["resources"], b["resources"]):
+            if left["_resolved_path"] == right["_resolved_path"]:
+                left.pop("content_sha256", None)
+                right.pop("content_sha256", None)
+        for page in (a, b):
+            for resource in page["resources"]:
+                resource.pop("_resolved_path")
         if fetched:
             aliases = page_asset_refs(a_pages[url], b_pages[url])
             resource_pairs = [
@@ -934,10 +1119,6 @@ def compare(
             b["html"] = digest(
                 normalize_font_refs(replace_refs(b["html_content"], aliases))
             )
-        for left, right in zip(a["resources"], b["resources"]):
-            if left.pop("_resolved_path") == right.pop("_resolved_path"):
-                left.pop("content_sha256", None)
-                right.pop("content_sha256", None)
         page_pairs[url] = (a["html"], b["html"])
         for key in PAGE_FIELDS:
             check(key, url, a[key], b[key])
@@ -1089,7 +1270,9 @@ def compare(
                 name,
                 [{"name": name, **a_info}],
                 [{"name": name, **b_info}],
-                asset_normalization(name, a_info, name, b_info),
+                asset_normalization(name, a_info, name, b_info)
+                if a_info != b_info
+                else None,
             )
         a_rows, b_rows = sorted(a_by_name.items()), sorted(b_by_name.items())
         if not a_rows and not b_rows:
