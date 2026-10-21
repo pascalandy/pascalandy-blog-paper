@@ -400,6 +400,11 @@ def page_data(path: Path, root: Path, fetched: bool = False) -> dict[str, Any]:
             "required_when_fetched": required_when_fetched,
             "local": resource is not None,
             "exists": exists,
+            "_resolved_path": (
+                resource.relative_to(root.resolve()).as_posix()
+                if resource is not None
+                else None
+            ),
         }
         if resource is not None and exists and required_when_fetched:
             entry["content_sha256"] = resource_content_sha(resource, fetched)
@@ -929,6 +934,10 @@ def compare(
             b["html"] = digest(
                 normalize_font_refs(replace_refs(b["html_content"], aliases))
             )
+        for left, right in zip(a["resources"], b["resources"]):
+            if left.pop("_resolved_path") == right.pop("_resolved_path"):
+                left.pop("content_sha256", None)
+                right.pop("content_sha256", None)
         page_pairs[url] = (a["html"], b["html"])
         for key in PAGE_FIELDS:
             check(key, url, a[key], b[key])
@@ -1029,63 +1038,76 @@ def compare(
             b_key, a_key = asset_key(b_name), asset_key(a_name)
             if b_key != a_key and b_key in b_groups:
                 b_groups.setdefault(a_key, []).extend(b_groups.pop(b_key))
+
+    def asset_normalization(
+        a_name: str, a_info: dict[str, Any], b_name: str, b_info: dict[str, Any]
+    ) -> str | None:
+        if a_info["sha256"] == b_info["sha256"] and a_name != b_name:
+            return "asset hash filename"
+        if (
+            Path(a_name).suffix.lower()
+            in (".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif")
+            and Path(b_name).suffix.lower() == Path(a_name).suffix.lower()
+        ):
+            a_pixels, b_pixels = image_data(first / a_name), image_data(second / b_name)
+            if all(
+                a_pixels.get(field) == b_pixels.get(field)
+                for field in ("dimensions", "frames", "pixels")
+            ):
+                return "lossless image encoding"
+        if fetched and a_name.endswith(".css") and b_name.endswith(".css"):
+            a_css = re.sub(
+                r"/_astro/fonts/[^)\"']+\.woff2",
+                "/_astro/fonts/FONT.woff2",
+                (first / a_name).read_text(encoding="utf-8"),
+            )
+            b_css = re.sub(
+                r"/_astro/fonts/[^)\"']+\.woff2",
+                "/_astro/fonts/FONT.woff2",
+                (second / b_name).read_text(encoding="utf-8"),
+            )
+            if a_css == b_css:
+                return "fetched font filename"
+        if (
+            a_name.endswith(".xml")
+            and b_name.endswith(".xml")
+            and xml_value(ET.parse(first / a_name).getroot())
+            == xml_value(ET.parse(second / b_name).getroot())
+        ):
+            return "XML serialization"
+        if a_name == b_name == "robots.txt" and a_feed["robots"] == b_feed["robots"]:
+            return "robots comment or whitespace"
+        return None
+
     for key in sorted(b_groups if fetched else a_groups.keys() | b_groups.keys()):
-        a_rows, b_rows = a_groups.get(key, []), b_groups.get(key, [])
+        a_by_name = dict(a_groups.get(key, []))
+        b_by_name = dict(b_groups.get(key, []))
+        for name in sorted(a_by_name.keys() & b_by_name.keys()):
+            a_info, b_info = a_by_name.pop(name), b_by_name.pop(name)
+            check(
+                "assets",
+                name,
+                [{"name": name, **a_info}],
+                [{"name": name, **b_info}],
+                asset_normalization(name, a_info, name, b_info),
+            )
+        a_rows, b_rows = sorted(a_by_name.items()), sorted(b_by_name.items())
+        if not a_rows and not b_rows:
+            continue
+        if fetched and not b_rows:
+            continue
         a_values = [{"name": name, **value} for name, value in a_rows]
         b_values = [{"name": name, **value} for name, value in b_rows]
         normalization = None
         if len(a_rows) == len(b_rows) == 1:
             a_name, a_info = a_rows[0]
             b_name, b_info = b_rows[0]
-            if a_info["sha256"] == b_info["sha256"] and a_name != b_name:
-                normalization = "asset hash filename"
-            elif (
-                Path(a_name).suffix.lower()
-                in (".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif")
-                and Path(b_name).suffix.lower() == Path(a_name).suffix.lower()
-            ):
-                a_pixels, b_pixels = (
-                    image_data(first / a_name),
-                    image_data(second / b_name),
-                )
-                if all(
-                    a_pixels.get(field) == b_pixels.get(field)
-                    for field in ("dimensions", "frames", "pixels")
-                ):
-                    normalization = "lossless image encoding"
-            elif fetched and a_name.endswith(".css") and b_name.endswith(".css"):
-                a_css = re.sub(
-                    r"/_astro/fonts/[^)\"']+\.woff2",
-                    "/_astro/fonts/FONT.woff2",
-                    (first / a_name).read_text(encoding="utf-8"),
-                )
-                b_css = re.sub(
-                    r"/_astro/fonts/[^)\"']+\.woff2",
-                    "/_astro/fonts/FONT.woff2",
-                    (second / b_name).read_text(encoding="utf-8"),
-                )
-                if a_css == b_css:
-                    normalization = "fetched font filename"
-            elif a_name.endswith(".xml") and b_name.endswith(".xml"):
-                if xml_value(ET.parse(first / a_name).getroot()) == xml_value(
-                    ET.parse(second / b_name).getroot()
-                ):
-                    normalization = "XML serialization"
-            elif (
-                a_name == b_name == "robots.txt"
-                and a_feed["robots"] == b_feed["robots"]
-            ):
-                normalization = "robots comment or whitespace"
+            normalization = asset_normalization(a_name, a_info, b_name, b_info)
         elif len(a_rows) == len(b_rows) and collections.Counter(
             (info["bytes"], info["sha256"]) for _, info in a_rows
         ) == collections.Counter((info["bytes"], info["sha256"]) for _, info in b_rows):
             normalization = "asset hash filename"
-        target = (
-            a_rows[0][0]
-            if len(a_rows) == len(b_rows) == 1 and a_rows[0][0] == b_rows[0][0]
-            else key
-        )
-        check("assets", target, a_values, b_values, normalization)
+        check("assets", key, a_values, b_values, normalization)
     a_fonts, b_fonts = font_names(first), font_names(second)
     font_checks: dict[str, Any] = {"a": a_fonts, "b": b_fonts}
     if fetched:

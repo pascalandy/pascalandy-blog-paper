@@ -182,7 +182,7 @@ class ParityCommandTest(unittest.TestCase):
             ["_astro/app.ABCDEFGH.js"],
         )
 
-    def test_external_css_change_is_material_in_page_and_inventory(self) -> None:
+    def test_external_css_change_has_one_material_finding(self) -> None:
         path = self.after / "_astro/site.ABCDEFGH.css"
         path.write_text(path.read_text().replace("#000", "#111"))
         result, report = self.run_parity()
@@ -192,7 +192,7 @@ class ParityCommandTest(unittest.TestCase):
         ]
         self.assertEqual(
             [(item["kind"], item["target"]) for item in material],
-            [("resources", "/"), ("assets", "_astro/site.ABCDEFGH.css")],
+            [("assets", "_astro/site.ABCDEFGH.css")],
         )
 
     def test_page_loaded_asset_swap_is_material_inside_multi_file_group(self) -> None:
@@ -263,6 +263,28 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(report["verdict"], "COSMETIC")
         self.assertFalse(self.findings(report, "resources"))
         self.assertFalse(self.findings(report, "assets"))
+
+    def test_exact_path_image_swap_with_equal_group_multiset_is_material(self) -> None:
+        names = ("bg.AAAAAAAA.png", "bg.ZZZZZZZZ.png")
+        for side in (self.before, self.after):
+            for name, color in zip(names, ((10, 20, 30), (40, 50, 60))):
+                png(side / "_astro" / name, color)
+            (side / "_astro/site.ABCDEFGH.css").write_text(
+                "body { background: url('/_astro/bg.AAAAAAAA.png') }\n"
+            )
+        paths = [self.after / "_astro" / name for name in names]
+        first, second = (path.read_bytes() for path in paths)
+        paths[0].write_bytes(second)
+        paths[1].write_bytes(first)
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertEqual(
+            [
+                (item["kind"], item["target"])
+                for item in self.findings(report, "assets")
+            ],
+            [("assets", f"_astro/{name}") for name in names],
+        )
 
     def test_multi_file_asset_group_hash_renames_are_cosmetic(self) -> None:
         folder = self.before / "_astro"
@@ -576,6 +598,40 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(report["verdict"], "COSMETIC")
         self.assertEqual(len(report["fonts"]["b"]), 2)
         self.assertFalse(self.findings(report, "resources"))
+
+    def test_fetched_page_loaded_css_swap_is_material(self) -> None:
+        other = "site.ZZZZZZZZ.css"
+        for side in (self.before, self.after):
+            (side / "_astro" / other).write_text("body { color: red; }\n")
+        self.html(self.after, "site.ABCDEFGH.css", other)
+        result, report = self.run_parity("--fetched")
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertEqual(
+            [
+                (item["kind"], item["target"])
+                for item in self.findings(report, "resources")
+            ],
+            [("resources", "/")],
+        )
+
+    def test_static_page_loaded_font_reference_swap_is_material(self) -> None:
+        old, new = "site.ABCDEFGH.css", "site.ZZZZZZZZ.css"
+        css = '@font-face { src: url("/_astro/fonts/normal.12345678.woff2"); }\n'
+        for side in (self.before, self.after):
+            (side / "_astro" / old).write_text(css)
+            (side / "_astro" / new).write_text(
+                css.replace("normal.12345678", "italic.87654321")
+            )
+        self.html(self.after, old, new)
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertEqual(
+            [
+                (item["kind"], item["target"])
+                for item in self.findings(report, "resources")
+            ],
+            [("resources", "/")],
+        )
 
     def test_fetched_font_preload_byte_drift_uses_font_roles(self) -> None:
         self.prepare_fonts(False)
