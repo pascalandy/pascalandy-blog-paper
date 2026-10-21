@@ -504,6 +504,26 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(report["verdict"], "COSMETIC")
         self.assertFalse(self.findings(report, "assets"))
 
+    def test_avif_repeated_primary_ispe_is_material(self) -> None:
+        self.image_pair(
+            "banner.AAAAAAAA.avif",
+            "ispe-duplicate-primary-a.avif",
+            "ispe-duplicate-primary-b.avif",
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "assets"))
+
+    def test_avif_ispe_after_nonadjacent_transform_is_material(self) -> None:
+        self.image_pair(
+            "banner.AAAAAAAA.avif",
+            "ispe-irot-gap-a.avif",
+            "ispe-irot-gap-b.avif",
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "assets"))
+
     def test_avif_identical_exif_and_grid_are_comparable(self) -> None:
         for fixture in ("identical-exif.avif", "grid.avif"):
             with self.subTest(fixture=fixture):

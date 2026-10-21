@@ -463,12 +463,16 @@ def avif_render_metadata(payload: bytes) -> dict[str, Any]:
     container_colors: list[tuple[int, int, int, int]] = []
     render_properties: list[tuple[str, str]] = []
     transform_seen = False
+    ispe_seen = False
     invalid_ispe_after_transform = False
     for kind, start, end in associated:
         if kind in {b"clap", b"irot", b"imir"}:
             transform_seen = True
-        elif kind == b"ispe" and transform_seen:
-            invalid_ispe_after_transform = True
+        elif kind == b"ispe":
+            invalid_ispe_after_transform = (
+                invalid_ispe_after_transform or transform_seen or ispe_seen
+            )
+            ispe_seen = True
         value = payload[start:end]
         if kind == b"colr" and value.startswith(b"nclx"):
             if len(value) < 11:
