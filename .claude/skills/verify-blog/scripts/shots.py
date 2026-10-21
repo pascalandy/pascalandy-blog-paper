@@ -256,6 +256,12 @@ def capture(args: argparse.Namespace) -> int:
                                         "(images) => images.filter(i => i.complete && !i.naturalWidth).map(i => i.src)"
                                     ),
                                 }
+                                for image in state["images"]:
+                                    image["sha256"] = selected_sha(
+                                        str(dist),
+                                        image.get("src") or "",
+                                        image.get("currentSrc") or "",
+                                    )
                                 manifest["shots"][name] = state
                                 (args.out / (name + ".state.json")).write_text(
                                     json.dumps(state, indent=2, ensure_ascii=False)
@@ -366,15 +372,23 @@ def diff(args: argparse.Namespace) -> int:
                         != image_b.get("objectPosition")
                     ):
                         continue
-                    sha_a = selected_sha(
-                        manifests[0].get("dist", ""),
-                        image_a.get("src") or "",
-                        image_a.get("currentSrc") or "",
+                    sha_a = (
+                        image_a["sha256"]
+                        if "sha256" in image_a
+                        else selected_sha(
+                            manifests[0].get("dist", ""),
+                            image_a.get("src") or "",
+                            image_a.get("currentSrc") or "",
+                        )
                     )
-                    sha_b = selected_sha(
-                        manifests[1].get("dist", ""),
-                        image_b.get("src") or "",
-                        image_b.get("currentSrc") or "",
+                    sha_b = (
+                        image_b["sha256"]
+                        if "sha256" in image_b
+                        else selected_sha(
+                            manifests[1].get("dist", ""),
+                            image_b.get("src") or "",
+                            image_b.get("currentSrc") or "",
+                        )
                     )
                     if sha_a is None or sha_b is None or sha_a == sha_b:
                         continue

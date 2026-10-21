@@ -1,5 +1,6 @@
 """Exercise screenshot attribution through the shots CLI."""
 
+import hashlib
 import json
 import struct
 import subprocess
@@ -37,6 +38,93 @@ def write_png(
 
 
 class ShotsCommandTest(unittest.TestCase):
+    def test_diff_uses_capture_time_image_hashes(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            folder = Path(temporary)
+            first = folder / "first"
+            second = folder / "second"
+            for shot in (first, second):
+                shot.mkdir()
+            write_png(first / "probe.png")
+            write_png(second / "probe.png", (3, 3))
+            first_dist = folder / "first-dist"
+            second_dist = folder / "second-dist"
+            for dist in (first_dist, second_dist):
+                (dist / "_astro").mkdir(parents=True)
+            first_image = first_dist / "_astro/test.png"
+            second_image = second_dist / "_astro/test.png"
+            write_png(first_image)
+            write_png(second_image, (3, 3))
+            first_hash = hashlib.sha256(first_image.read_bytes()).hexdigest()
+            second_hash = hashlib.sha256(second_image.read_bytes()).hexdigest()
+
+            def manifest(dist: Path, image_hash: str) -> dict:
+                return {
+                    "dist": str(dist),
+                    "failures": [],
+                    "shots": {
+                        "probe": {
+                            "width": 10,
+                            "height": 10,
+                            "images": [
+                                {
+                                    "index": 0,
+                                    "src": "/_astro/test.png",
+                                    "currentSrc": "/_astro/test.png",
+                                    "sha256": image_hash,
+                                    "objectFit": "cover",
+                                    "objectPosition": "center",
+                                    "box": {
+                                        "x": 2,
+                                        "y": 2,
+                                        "width": 4,
+                                        "height": 4,
+                                    },
+                                }
+                            ],
+                        }
+                    },
+                }
+
+            (first / "manifest.json").write_text(
+                json.dumps(manifest(first_dist, first_hash))
+            )
+            second_manifest = second / "manifest.json"
+
+            def diff() -> dict:
+                report = folder / "report.json"
+                result = subprocess.run(
+                    [
+                        "uv",
+                        "run",
+                        "--quiet",
+                        str(SHOTS),
+                        "diff",
+                        str(first),
+                        str(second),
+                        "--json",
+                        str(report),
+                    ],
+                    cwd=ROOT,
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                self.assertEqual(result.returncode, 1, result.stderr)
+                return json.loads(report.read_text())["shots"]["probe.png"]
+
+            second_manifest.write_text(json.dumps(manifest(second_dist, second_hash)))
+            write_png(second_image)
+            changed_at_capture = diff()
+            self.assertTrue(changed_at_capture["all_changed_inside_image_boxes"])
+            self.assertEqual(changed_at_capture["outside_image_pixels"], 0)
+
+            second_manifest.write_text(json.dumps(manifest(second_dist, first_hash)))
+            write_png(second_image, (3, 3))
+            changed_after_capture = diff()
+            self.assertFalse(changed_after_capture["all_changed_inside_image_boxes"])
+            self.assertEqual(changed_after_capture["outside_image_pixels"], 1)
+
     def test_diff_attributes_inside_and_outside_pixels(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             folder = Path(temporary)
