@@ -489,7 +489,8 @@ def avif_render_metadata(payload: bytes) -> dict[str, Any]:
         item for item in render_properties if item[0] in {"clap", "irot", "imir"}
     ]
     metadata = sorted(
-        item for item in render_properties if item[0] not in {"clap", "irot", "imir"}
+        (item for item in render_properties if item[0] not in {"clap", "irot", "imir"}),
+        key=lambda item: item[0],
     )
     result = {
         "av1": color,

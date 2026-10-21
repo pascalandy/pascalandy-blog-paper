@@ -461,6 +461,22 @@ class ParityCommandTest(unittest.TestCase):
                 self.assertFalse(self.findings(report, "image_pixels"))
                 self.assertFalse(self.findings(report, "assets"))
 
+    def test_avif_transform_property_reorder_is_material(self) -> None:
+        self.image_pair(
+            "banner.AAAAAAAA.avif", "irot-imir-order-a.avif", "irot-imir-order-b.avif"
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "assets"))
+
+    def test_avif_duplicate_metadata_property_reorder_is_material(self) -> None:
+        self.image_pair(
+            "banner.AAAAAAAA.avif", "clli-duplicate-a.avif", "clli-duplicate-b.avif"
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "assets"))
+
     def test_avif_identical_exif_and_grid_are_comparable(self) -> None:
         for fixture in ("identical-exif.avif", "grid.avif"):
             with self.subTest(fixture=fixture):
