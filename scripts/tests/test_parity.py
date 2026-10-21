@@ -505,14 +505,27 @@ class ParityCommandTest(unittest.TestCase):
         self.assertFalse(self.findings(report, "assets"))
 
     def test_avif_repeated_primary_ispe_is_material(self) -> None:
-        self.image_pair(
-            "banner.AAAAAAAA.avif",
-            "ispe-duplicate-primary-a.avif",
-            "ispe-duplicate-primary-b.avif",
-        )
-        result, report = self.run_parity()
-        self.assertEqual(result.returncode, 1, result.stderr)
-        self.assertTrue(self.findings(report, "assets"))
+        repeated = (
+            FIXTURES / "rendering" / "ispe-duplicate-primary-b.avif"
+        ).read_bytes()
+        self.assertEqual(repeated.count(b"\x01\x02\x04\x83"), 1)
+        for associations in (b"\x01\x02\x04\x83", b"\x01\x01\x02\x83"):
+            with self.subTest(associations=associations.hex()):
+                self.before = self.folder / associations.hex() / "before"
+                self.after = self.folder / associations.hex() / "after"
+                shutil.copytree(FIXTURES / "base", self.before)
+                shutil.copytree(FIXTURES / "base", self.after)
+                self.image_pair(
+                    "banner.AAAAAAAA.avif",
+                    "ispe-duplicate-primary-a.avif",
+                    "ispe-duplicate-primary-b.avif",
+                )
+                (self.after / "_astro" / "banner.AAAAAAAA.avif").write_bytes(
+                    repeated.replace(b"\x01\x02\x04\x83", associations, 1)
+                )
+                result, report = self.run_parity()
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertTrue(self.findings(report, "assets"))
 
     def test_avif_ispe_after_nonadjacent_transform_is_material(self) -> None:
         self.image_pair(
