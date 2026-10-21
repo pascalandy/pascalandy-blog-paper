@@ -44,12 +44,10 @@ const blog = defineCollection({
           mermaid: z.boolean().optional().default(false),
         },
         {
-          errorMap: (issue, ctx) => ({
-            message:
-              issue.code === "unrecognized_keys"
-                ? `unknown key ${issue.keys.join(", ")}: remove it, or add it to the schema in src/content.config.ts`
-                : ctx.defaultError,
-          }),
+          error: issue =>
+            issue.code === "unrecognized_keys"
+              ? `unknown key ${issue.keys.join(", ")}: remove it, or add it to the schema in src/content.config.ts`
+              : undefined,
         }
       )
       .strict(),
