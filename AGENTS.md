@@ -1,6 +1,6 @@
 # pascalandy-blog-paper
 
-Pascal Andy's blog, [pascalandy.com/blog](https://pascalandy.com/blog/): Astro 5, TypeScript strict, Tailwind v4, Pagefind, Bun. It began as a fork of AstroPaper. `CLAUDE.md` and `GEMINI.md` are symlinks to this file, so every agent reads the same contract.
+Pascal Andy's blog, [pascalandy.com/blog](https://pascalandy.com/blog/): Astro 7, TypeScript strict, Tailwind v4, Pagefind, Bun. It began as a fork of AstroPaper. `CLAUDE.md` and `GEMINI.md` are symlinks to this file, so every agent reads the same contract.
 
 ## First moves
 
@@ -68,6 +68,8 @@ The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just
 
 ## Gotchas
 
+- Astro 7 needs Node 22.22.0 or later. Set Sevalla's Node version in its build strategy dashboard; repository settings do not select it
+- After an Astro bump moves Vite, check that `bun.lock` contains one Vite version: Bun 1.3.4 kept Vite 7 at the root and Vite 8 under Astro while `just check` passed
 - Drafts never build, dev included. A future `date_created` keeps a post out of listings and RSS until 15 minutes before, but its page still builds
 - A post may use only the frontmatter keys in `src/content.config.ts` and the tags in `src/tags.ts`; `just check --only content` names any other
 - A `_` prefix removes a file from the collection; a `_` folder stays in it but drops out of the URL
