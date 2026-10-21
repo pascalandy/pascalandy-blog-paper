@@ -5,9 +5,7 @@ title: "Crypto fiscality, because your coins get taxed too! | #CryptoInMontreal 
 tags:
   - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2018/08/020-Crypto-In-Montre-al_CryptoInMontreal-par-Pascal-Andy.jpg
-description: "Voici le plan de match pour le **20e événement** de #CryptoInMontreal. La présentation principale sera en anglais.
-
-If you are already into crypto this question can’t be avoided. How much Canada Revenue Agency (CRA) and Revenu Québec (RQ) will tax you and your crypto investments?"
+description: "Voici le plan de match pour le **20e événement** de #CryptoInMontreal. La présentation principale sera en anglais.\nIf you are already into crypto this question can’t be avoided. How much Canada Revenue Agency (CRA) and Revenu Québec (RQ) will tax you and your crypto investments?"
 ---
 
 Pour le **20e événement** de #CryptoInMontreal, la présentation principale sera en anglais.

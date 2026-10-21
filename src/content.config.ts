@@ -1,5 +1,6 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 import { TAGS } from "./tags";
 import { slugifyStr } from "./utils/slugify";
 
@@ -9,20 +10,20 @@ const TAG_SLUGS = new Set(TAGS.map(({ slug }) => slug));
 
 // A tag page's URL is slugifyStr(slug), and pages look the tag up in TAGS by
 // that URL form, so a slug must equal it
-const tag = z
-  .string()
-  .refine(
-    slug => TAG_SLUGS.has(slug),
-    slug => ({
+const tag = z.string().superRefine((slug, ctx) => {
+  if (!TAG_SLUGS.has(slug)) {
+    ctx.addIssue({
+      code: "custom",
       message: `tag "${slug}" is not registered: add it to TAGS in src/tags.ts`,
-    })
-  )
-  .refine(
-    slug => slugifyStr(slug) === slug,
-    slug => ({
+    });
+  }
+  if (slugifyStr(slug) !== slug) {
+    ctx.addIssue({
+      code: "custom",
       message: `tag "${slug}" is not in URL form: rename it to "${slugifyStr(slug)}" in src/tags.ts and in the posts that use it`,
-    })
-  );
+    });
+  }
+});
 
 const blog = defineCollection({
   loader: glob({ pattern: "**/[^_]*.md", base: `./${BLOG_PATH}` }),

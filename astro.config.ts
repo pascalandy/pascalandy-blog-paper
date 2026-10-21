@@ -10,6 +10,7 @@ import {
 } from "@shikijs/transformers";
 import { transformerFileName } from "./src/utils/transformers/fileName";
 import { SITE } from "./src/config";
+import { rehypeAstro5HeadingIds } from "./src/utils/rehypeAstro5HeadingIds";
 
 // https://astro.build/config
 export default defineConfig({
@@ -25,6 +26,7 @@ export default defineConfig({
   ],
   markdown: {
     remarkPlugins: [],
+    rehypePlugins: [rehypeAstro5HeadingIds],
     syntaxHighlight: {
       type: "shiki",
       excludeLangs: ["mermaid"],
@@ -43,10 +45,6 @@ export default defineConfig({
     },
   },
   vite: {
-    // eslint-disable-next-line
-    // @ts-ignore
-    // This will be fixed in Astro 6 with Vite 7 support
-    // See: https://github.com/withastro/astro/issues/14030
     plugins: [tailwindcss()],
     optimizeDeps: {
       include: ["@pagefind/default-ui"],
@@ -71,7 +69,6 @@ export default defineConfig({
     },
   },
   experimental: {
-    preserveScriptOrder: true,
     fonts: [
       {
         name: "JetBrains Mono",

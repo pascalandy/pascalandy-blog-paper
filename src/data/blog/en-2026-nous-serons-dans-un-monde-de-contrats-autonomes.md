@@ -6,8 +6,7 @@ tags:
   - crypto
   - technologie
 ogImage: ../../assets/images/og-legacy/2020/07/pascalandy-com_header_2020-07-16_10h11-2.jpg
-description: "Nous sommes le 16 novembre 2026. Je m'appelle Honky, je suis distributrice de hot-dogs végétariens.
-Je me sens seul là où je suis."
+description: "Nous sommes le 16 novembre 2026. Je m'appelle Honky, je suis distributrice de hot-dogs végétariens. Je me sens seul là où je suis."
 ---
 
 Nous sommes le 16 novembre 2026. Je m'appelle Honky, je suis distributrice de hot-dogs végétariens.

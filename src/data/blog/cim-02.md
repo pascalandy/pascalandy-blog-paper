@@ -5,8 +5,7 @@ title: "#CryptoInMontreal 02 — S'initier aux cryptomonnaies (Bitcoin, Ethereum
 tags:
   - crypto-in-montreal
 ogImage: ../../assets/images/og-legacy/2017/12/banner-large-cyptoinmontreal.JPG
-description: "Les événements organisés par #CryptoInMontreal ont deux buts principaux: 
-Le premier objectif est de démocratiser les cryto-monnaies (cryptocurrency). Nous voulons aider les gens qui désirent commencer à investir "
+description: "Les événements organisés par #CryptoInMontreal ont deux buts principaux:  Le premier objectif est de démocratiser les cryto-monnaies (cryptocurrency). Nous voulons aider les gens qui désirent commencer à investir "
 ---
 
 ## Lieu et date
