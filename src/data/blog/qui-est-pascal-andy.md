@@ -41,7 +41,7 @@ Mon nom est Pascal Nguyen Deschênes. Pascal Andy c'est simplement l'acronyme qu
 
 Ainsi:
 
-- \***\*N\*\***guyen \***\*D\*\***eschênes, qui devient
+- \*<strong>\*N\*\*</strong>guyen \*<strong>\*D\*\*</strong>eschênes, qui devient
 - \***\*N D\*\***, qui devient
 - \***\*Andy\*\***
 
