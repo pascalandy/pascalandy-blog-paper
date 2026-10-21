@@ -41,9 +41,10 @@ Agents pick the first `open` ticket; each fix ships with its own check. Triage a
 | B29 | open | Upgrade TypeScript 5 to TypeScript 6 | Astro check and `just check` pass with TypeScript 6 |
 | B30 | open | Upgrade Pagefind 1.4 to 1.5 | Search results and the Pagefind page count match the prior build; `just check` passes |
 | B31 | open | Upgrade satori 0.18 to 0.63 | OG image pixels are reviewed and `just check` passes |
-| B32 | open | Evaluate moving Markdown from unified to Astro 7's default Sätteri processor | French punctuation and heading anchors match the current build, or each accepted difference has a parity entry |
-| B33 | open | `just check` does not guard `compressHTML: true` or `markdown.processor: unified()` after Astro 7 ([#96](https://github.com/pascalandy/pascalandy-blog-paper/pull/96)) | A check fails if sign-off spacing or heading IDs change when either setting is removed |
-| B34 | open | `just check` accepts a lockfile with both Vite 7 and Vite 8 after an Astro bump ([#96](https://github.com/pascalandy/pascalandy-blog-paper/pull/96)) | A check rejects nested Vite copies in `bun.lock` when Astro and Tailwind should share one version |
+| B32 | open | Evaluate moving Markdown from unified to Astro 7's default Sätteri processor | French punctuation and heading IDs match the current build, or each accepted difference has a parity entry |
+| B33 | open | `just check` does not guard `compressHTML: true` or `markdown.processor: unified()` after Astro 7 ([#96](https://github.com/pascalandy/pascalandy-blog-paper/pull/96)) | Removing `compressHTML: true` fails on home closing text or tag emoji spacing; removing `unified()` fails on French punctuation in the eight posts or heading IDs |
+| B34 | open | `just check` accepts a lockfile with both Vite 7 and Vite 8 after an Astro bump ([#96](https://github.com/pascalandy/pascalandy-blog-paper/pull/96)) | A check rejects nested Vite copies in `bun.lock` when Astro and Tailwind should share one version; remove the manual `AGENTS.md` gotcha when it lands |
+| B35 | open | CI and dependency guidance can reuse `cache/assets/` across a Sharp encoder upgrade ([#96](https://github.com/pascalandy/pascalandy-blog-paper/pull/96)) | CI invalidates optimized images when the dependency lock changes, and the dependency and verify-blog playbooks match the fresh-build cleanup in `AGENTS.md` |
 | B19 | done | Astro docs MCP server | `.mcp.json` configures `astro-docs` (#70, M3) |
 | B20 | done | Sitemap integration | `@astrojs/sitemap` runs in `astro.config.ts` |
 | B21 | done | Remove the "Share this post on" block from posts | 0 posts contain it |
