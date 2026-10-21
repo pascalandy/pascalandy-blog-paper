@@ -1,4 +1,5 @@
 import { defineConfig, envField, fontProviders } from "astro/config";
+import { unified } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import astroBrokenLinksChecker from "astro-broken-links-checker";
@@ -16,6 +17,7 @@ import { rehypeAstro5HeadingIds } from "./src/utils/rehypeAstro5HeadingIds";
 export default defineConfig({
   site: SITE.website,
   cacheDir: "./cache",
+  compressHTML: true,
   integrations: [
     sitemap(),
     astroBrokenLinksChecker({
@@ -25,8 +27,7 @@ export default defineConfig({
     }),
   ],
   markdown: {
-    remarkPlugins: [],
-    rehypePlugins: [rehypeAstro5HeadingIds],
+    processor: unified({ rehypePlugins: [rehypeAstro5HeadingIds] }),
     syntaxHighlight: {
       type: "shiki",
       excludeLangs: ["mermaid"],
