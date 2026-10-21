@@ -112,6 +112,11 @@ class ParityCommandTest(unittest.TestCase):
             if item["kind"] == kind and item["classification"] == "material"
         ]
 
+    def image_pair(self, name: str, first: str, second: str) -> None:
+        for side, fixture in ((self.before, first), (self.after, second)):
+            shutil.copyfile(FIXTURES / "rendering" / fixture, side / "_astro" / name)
+            self.html(side, "</body>", f'<img src="/_astro/{name}"></body>')
+
     def test_entity_equivalence_and_character_change(self) -> None:
         self.html(self.before, "before <em>after", "l'événement <em>after")
         self.html(self.after, "before <em>after", "l&#x27;événement <em>after")
@@ -326,6 +331,107 @@ class ParityCommandTest(unittest.TestCase):
         self.assertFalse(self.findings(report, "assets"))
         self.assertFalse(self.findings(report, "image_pixels"))
 
+    def test_avif_header_only_color_change_matches_real_banner_shape(self) -> None:
+        source = FIXTURES / "rendering"
+        first = (source / "header-only-1.avif").read_bytes()
+        second = (source / "header-only-9.avif").read_bytes()
+        self.assertNotIn(b"colr", first)
+        self.assertNotIn(b"colr", second)
+        self.assertEqual(sum(a != b for a, b in zip(first, second)), 1)
+        self.image_pair(
+            "banner.AAAAAAAA.avif", "header-only-1.avif", "header-only-9.avif"
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "image_pixels"))
+        self.assertEqual(
+            [item["target"] for item in self.findings(report, "assets")],
+            ["_astro/banner.AAAAAAAA.avif"],
+        )
+
+    def test_avif_associated_colr_only_change_is_material(self) -> None:
+        source = FIXTURES / "rendering"
+        first = (source / "colr-only-1.avif").read_bytes()
+        second = (source / "colr-only-9.avif").read_bytes()
+        self.assertIn(b"colr", first)
+        self.assertIn(b"colr", second)
+        self.assertEqual(sum(a != b for a, b in zip(first, second)), 1)
+        self.image_pair("banner.AAAAAAAA.avif", "colr-only-1.avif", "colr-only-9.avif")
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "image_pixels"))
+
+    def test_avif_primary_item_data_ignores_alpha_first_order(self) -> None:
+        self.image_pair(
+            "banner.AAAAAAAA.avif", "alpha-first-1.avif", "alpha-first-9.avif"
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "image_pixels"))
+        self.assertTrue(self.findings(report, "assets"))
+
+    def test_avif_primary_colr_association_changes_effective_color(self) -> None:
+        self.image_pair(
+            "banner.AAAAAAAA.avif",
+            "associated-colr-1.avif",
+            "associated-colr-dropped.avif",
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertTrue(self.findings(report, "image_pixels"))
+
+    def test_avif_unassociated_properties_are_cosmetic(self) -> None:
+        for fixture in ("unassociated-color.avif", "unassociated-rotation.avif"):
+            with self.subTest(fixture=fixture):
+                self.before = self.folder / fixture / "before"
+                self.after = self.folder / fixture / "after"
+                shutil.copytree(FIXTURES / "base", self.before)
+                shutil.copytree(FIXTURES / "base", self.after)
+                self.image_pair(
+                    "banner.AAAAAAAA.avif", "unassociated-base.avif", fixture
+                )
+                result, report = self.run_parity()
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(report["verdict"], "COSMETIC")
+                self.assertFalse(self.findings(report, "image_pixels"))
+                self.assertFalse(self.findings(report, "assets"))
+
+    def test_avif_associated_colr_overrides_header_color(self) -> None:
+        self.image_pair(
+            "banner.AAAAAAAA.avif", "override-header-1.avif", "override-header-9.avif"
+        )
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(report["verdict"], "COSMETIC")
+        self.assertFalse(self.findings(report, "image_pixels"))
+
+    def test_avif_identical_exif_and_grid_are_comparable(self) -> None:
+        for fixture in ("identical-exif.avif", "grid.avif"):
+            with self.subTest(fixture=fixture):
+                self.before = self.folder / fixture / "before"
+                self.after = self.folder / fixture / "after"
+                shutil.copytree(FIXTURES / "base", self.before)
+                shutil.copytree(FIXTURES / "base", self.after)
+                self.image_pair("pic.AAAAAAAA.avif", fixture, fixture)
+                result, report = self.run_parity()
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(report["verdict"], "IDENTICAL")
+                if fixture == "grid.avif":
+                    path = self.after / "_astro/pic.AAAAAAAA.avif"
+                    path.write_bytes(
+                        path.read_bytes() + struct.pack(">I4sI", 12, b"free", 0)
+                    )
+                    result, report = self.run_parity()
+                    self.assertEqual(result.returncode, 1, result.stderr)
+                    self.assertTrue(self.findings(report, "assets"))
+
+    def test_avif_non_reduced_header_is_an_explicit_error(self) -> None:
+        self.image_pair("pic.AAAAAAAA.avif", "non-reduced.avif", "non-reduced.avif")
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 2)
+        self.assertFalse(report)
+        self.assertIn("unsupported non-reduced AVIF sequence header", result.stderr)
+
     def test_animated_webp_loop_change_is_material(self) -> None:
         source = FIXTURES / "rendering"
         name = "recording.AAAAAAAA.webp"
@@ -346,6 +452,18 @@ class ParityCommandTest(unittest.TestCase):
             [("assets", f"_astro/{name}")],
         )
         self.assertTrue(self.findings(report, "image_pixels"))
+
+    def test_animated_webp_background_hint_does_not_change_render(self) -> None:
+        self.image_pair("pic.AAAAAAAA.webp", "loop-0.webp", "loop-0.webp")
+        path = self.after / "_astro/pic.AAAAAAAA.webp"
+        data = bytearray(path.read_bytes())
+        background = data.index(b"ANIM") + 8
+        data[background : background + 4] = bytes((255, 0, 0, 255))
+        path.write_bytes(data)
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(report["verdict"], "COSMETIC")
+        self.assertFalse(self.findings(report, "image_pixels"))
 
     def test_exact_group_equal_pixel_reencodes_remain_cosmetic(self) -> None:
         for side, level in ((self.before, 6), (self.after, 0)):
@@ -721,11 +839,19 @@ class ParityCommandTest(unittest.TestCase):
             )
         self.html(self.after, 'href="styles/a.css"', 'href="styles/b.css"')
         fingerprints = set()
+        material_sets = set()
         for seed in range(12):
             result, report = self.run_parity(
                 "--fetched", env={**os.environ, "PYTHONHASHSEED": str(seed)}
             )
             self.assertEqual(result.returncode, 1, (seed, result.stderr))
+            material = tuple(
+                (item["kind"], item["target"])
+                for item in report["checks"]
+                if item["classification"] == "material"
+            )
+            material_sets.add(material)
+            self.assertEqual(material, (("resources", "/"),))
             resources = self.findings(report, "resources")
             self.assertEqual(
                 [(item["kind"], item["target"]) for item in resources],
@@ -733,6 +859,7 @@ class ParityCommandTest(unittest.TestCase):
             )
             fingerprints.add(resources[0]["fingerprint"])
         self.assertEqual(len(fingerprints), 1)
+        self.assertEqual(len(material_sets), 1)
 
     def test_fetched_subset_of_asset_group_skips_unfetched_file(self) -> None:
         css = (

@@ -200,7 +200,7 @@ def av1_color_config(payload: bytes) -> dict[str, Any]:
     reduced = bits.read()
     if not still_picture or not reduced:
         raise ValueError(
-            "unsupported AVIF sequence header: expected reduced still image"
+            "unsupported non-reduced AVIF sequence header: only reduced still images are normalized"
         )
     bits.read(5)  # level
     width_bits, height_bits = bits.read(4) + 1, bits.read(4) + 1
@@ -307,49 +307,192 @@ def av1_sequence_header(payload: bytes) -> bytes:
 
 
 def avif_render_metadata(payload: bytes) -> dict[str, Any]:
-    properties: list[tuple[str, str]] = []
-    container_color: list[tuple[int, int, int, int]] = []
-    sequence: bytes | None = None
+    def box(boxes: list[tuple[bytes, int, int]], kind: bytes) -> tuple[int, int]:
+        matches = [(start, end) for name, start, end in boxes if name == kind]
+        if len(matches) != 1:
+            raise ValueError(f"AVIF requires one {kind.decode('ascii')} box")
+        return matches[0]
 
-    def visit(start: int, end: int) -> None:
-        nonlocal sequence
-        for kind, content, stop in bmff_boxes(payload, start, end):
-            if kind in {b"meta", b"iprp", b"ipco"}:
-                visit(content + (4 if kind == b"meta" else 0), stop)
-            elif kind == b"colr":
-                data = payload[content:stop]
-                if data.startswith(b"nclx") and len(data) >= 11:
-                    container_color.append(
-                        (
-                            int.from_bytes(data[4:6], "big"),
-                            int.from_bytes(data[6:8], "big"),
-                            int.from_bytes(data[8:10], "big"),
-                            data[10] >> 7,
-                        )
-                    )
-                else:
-                    properties.append(("colr", hashlib.sha256(data).hexdigest()))
-            elif kind in {b"irot", b"imir", b"clap", b"mdcv", b"clli"}:
-                properties.append((kind.decode("ascii"), payload[content:stop].hex()))
-            elif kind in {b"mdat", b"idat"} and sequence is None:
-                sequence = av1_sequence_header(payload[content:stop])
+    def number(position: int, width: int, end: int) -> int:
+        if width < 0 or position + width > end:
+            raise ValueError("truncated AVIF item table")
+        return int.from_bytes(payload[position : position + width], "big")
 
-    visit(0, len(payload))
-    if sequence is None:
-        raise ValueError("AVIF sequence header not found in mdat or idat")
-    color = av1_color_config(sequence)
-    signaled = (
-        color["primaries"],
-        color["transfer"],
-        color["matrix"],
-        color["range"],
+    top = bmff_boxes(payload, 0, len(payload))
+    meta_start, meta_end = box(top, b"meta")
+    if meta_start + 4 > meta_end:
+        raise ValueError("truncated AVIF meta box")
+    meta = bmff_boxes(payload, meta_start + 4, meta_end)
+
+    pitm_start, pitm_end = box(meta, b"pitm")
+    pitm_version = number(pitm_start, 1, pitm_end)
+    if pitm_version not in (0, 1):
+        raise ValueError("unsupported AVIF primary-item table")
+    primary_id = number(pitm_start + 4, 2 if pitm_version == 0 else 4, pitm_end)
+
+    iinf_start, iinf_end = box(meta, b"iinf")
+    iinf_version = number(iinf_start, 1, iinf_end)
+    if iinf_version not in (0, 1):
+        raise ValueError("unsupported AVIF item-information table")
+    count_width = 2 if iinf_version == 0 else 4
+    item_count = number(iinf_start + 4, count_width, iinf_end)
+    item_boxes = bmff_boxes(payload, iinf_start + 4 + count_width, iinf_end)
+    if len(item_boxes) < item_count:
+        raise ValueError("truncated AVIF item information")
+    primary_type: bytes | None = None
+    for kind, start, end in item_boxes[:item_count]:
+        if kind != b"infe":
+            continue
+        version = number(start, 1, end)
+        if version not in (2, 3):
+            raise ValueError("unsupported AVIF item information")
+        width = 2 if version == 2 else 4
+        if number(start + 4, width, end) == primary_id:
+            position = start + 4 + width + 2
+            number(position, 4, end)
+            primary_type = payload[position : position + 4]
+    if primary_type is None:
+        raise ValueError("AVIF primary item information not found")
+    if primary_type != b"av01":
+        return {
+            "primary_item_type": primary_type.decode("latin1"),
+            "conservative_bytes": hashlib.sha256(payload).hexdigest(),
+        }
+
+    iprp_start, iprp_end = box(meta, b"iprp")
+    iprp = bmff_boxes(payload, iprp_start, iprp_end)
+    ipco_start, ipco_end = box(iprp, b"ipco")
+    properties = bmff_boxes(payload, ipco_start, ipco_end)
+    associated: list[tuple[bytes, int, int]] = []
+    for kind, start, end in iprp:
+        if kind != b"ipma":
+            continue
+        version = number(start, 1, end)
+        if version not in (0, 1):
+            raise ValueError("unsupported AVIF property-association table")
+        wide = number(start + 3, 1, end) & 1
+        position = start + 4
+        entry_count = number(position, 4, end)
+        position += 4
+        for _ in range(entry_count):
+            id_width = 2 if version == 0 else 4
+            item_id = number(position, id_width, end)
+            position += id_width
+            association_count = number(position, 1, end)
+            position += 1
+            for _ in range(association_count):
+                index_width = 2 if wide else 1
+                value = number(position, index_width, end)
+                position += index_width
+                index = value & (0x7FFF if wide else 0x7F)
+                if index > len(properties):
+                    raise ValueError("invalid AVIF property association")
+                if item_id == primary_id and index:
+                    associated.append(properties[index - 1])
+
+    iloc_start, iloc_end = box(meta, b"iloc")
+    iloc_version = number(iloc_start, 1, iloc_end)
+    if iloc_version not in (0, 1, 2):
+        raise ValueError("unsupported AVIF item-location table")
+    sizes = number(iloc_start + 4, 2, iloc_end)
+    offset_width, length_width = sizes >> 12, sizes >> 8 & 15
+    base_width = sizes >> 4 & 15
+    index_width = sizes & 15 if iloc_version else 0
+    if max(offset_width, length_width, base_width, index_width) > 8:
+        raise ValueError("unsupported AVIF item-location width")
+    id_width = 4 if iloc_version == 2 else 2
+    position = iloc_start + 6
+    entry_count = number(position, id_width, iloc_end)
+    position += id_width
+    primary_location: tuple[int, int, list[tuple[int, int]]] | None = None
+    for _ in range(entry_count):
+        item_id = number(position, id_width, iloc_end)
+        position += id_width
+        method = number(position, 2, iloc_end) & 15 if iloc_version else 0
+        position += 2 if iloc_version else 0
+        reference = number(position, 2, iloc_end)
+        position += 2
+        base = number(position, base_width, iloc_end)
+        position += base_width
+        extent_count = number(position, 2, iloc_end)
+        position += 2
+        extents = []
+        for _ in range(extent_count):
+            number(position, index_width, iloc_end)
+            position += index_width
+            offset = number(position, offset_width, iloc_end)
+            position += offset_width
+            length = number(position, length_width, iloc_end)
+            position += length_width
+            extents.append((base + offset, length))
+        if item_id == primary_id:
+            primary_location = method, reference, extents
+    if primary_location is None:
+        raise ValueError("AVIF primary item location not found")
+    method, reference, extents = primary_location
+    if reference:
+        raise ValueError("unsupported external AVIF item reference")
+    if method == 0:
+        origin, limit = 0, len(payload)
+    elif method == 1:
+        origin, limit = box(meta, b"idat")
+    else:
+        raise ValueError("unsupported AVIF item construction method")
+    if not extents or any(length == 0 for _, length in extents):
+        raise ValueError("unsupported empty AVIF primary extent")
+    if any(origin + offset + length > limit for offset, length in extents):
+        raise ValueError("AVIF primary extent exceeds item data")
+    item_data = b"".join(
+        payload[origin + offset : origin + offset + length]
+        for offset, length in extents
     )
-    overrides = sorted(item for item in container_color if item != signaled)
-    return {
+    try:
+        sequence = av1_sequence_header(item_data)
+    except ValueError as error:
+        if str(error) != "AVIF sequence header not found":
+            raise
+        configurations = [
+            payload[start:end]
+            for kind, start, end in associated
+            if kind == b"av1C" and end - start >= 4
+        ]
+        if len(configurations) != 1:
+            raise
+        sequence = av1_sequence_header(configurations[0][4:])
+    color = av1_color_config(sequence)
+    container_colors: list[tuple[int, int, int, int]] = []
+    render_properties: list[tuple[str, str]] = []
+    for kind, start, end in associated:
+        value = payload[start:end]
+        if kind == b"colr" and value.startswith(b"nclx"):
+            if len(value) < 11:
+                raise ValueError("truncated AVIF nclx property")
+            container_colors.append(
+                (
+                    number(start + 4, 2, end),
+                    number(start + 6, 2, end),
+                    number(start + 8, 2, end),
+                    value[10] >> 7,
+                )
+            )
+        elif kind == b"colr":
+            render_properties.append(("colr", hashlib.sha256(value).hexdigest()))
+        elif kind in {b"irot", b"imir", b"clap", b"mdcv", b"clli"}:
+            render_properties.append((kind.decode("ascii"), value.hex()))
+    unique_colors = list(dict.fromkeys(container_colors))
+    if len(unique_colors) == 1:
+        color = {
+            **color,
+            **dict(zip(("primaries", "transfer", "matrix", "range"), unique_colors[0])),
+        }
+    result = {
         "av1": color,
-        "container_color_overrides": overrides,
-        "properties": sorted(properties),
+        "container_color_overrides": [],
+        "properties": render_properties,
     }
+    if len(unique_colors) > 1:
+        result["conflicting_container_colors"] = unique_colors
+    return result
 
 
 @cache
@@ -365,7 +508,7 @@ def image_data_from_bytes(payload: bytes) -> dict[str, Any]:
             pixels.update(bytes.fromhex(icc))
             color_metadata = {
                 key: source.info[key]
-                for key in ("gamma", "chromaticity", "srgb", "loop", "background")
+                for key in ("gamma", "chromaticity", "srgb", "loop")
                 if key in source.info
             }
             render_chunks = png_render_chunks(payload)
