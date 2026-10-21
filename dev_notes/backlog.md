@@ -35,6 +35,7 @@ Agents pick the first `open` ticket; each fix ships with its own check. Triage a
 | B23 | open | The `@claude` workflow's checkout keeps the job token in `.git/config` (`claude.yml`) | A live `@claude` run passes with `persist-credentials: false`, or a comment says why the action needs the token |
 | B24 | open | Pagefind assigns different document numbers between fresh builds of identical HTML | Three fresh builds of identical HTML produce byte-identical Pagefind files; logical postings remain unchanged |
 | B25 | open | Stale B9 warnings in `.claude/skills/verify-blog/features/post.md` and `scripts/overview.py` still say tied posts can swap order | Both descriptions state that equal `date_created` values sort by ascending ID, without excusing a Previous/Next regression |
+| B26 | open | Review the 191 Markdown images with empty `alt` across 42 pages ([#93](https://github.com/pascalandy/pascalandy-blog-paper/pull/93)) | Informative images have useful French alt text; decorative images keep intentional `alt=""`; a content check flags new unreviewed empty alt |
 | B19 | done | Astro docs MCP server | `.mcp.json` configures `astro-docs` (#70, M3) |
 | B20 | done | Sitemap integration | `@astrojs/sitemap` runs in `astro.config.ts` |
 | B21 | done | Remove the "Share this post on" block from posts | 0 posts contain it |
