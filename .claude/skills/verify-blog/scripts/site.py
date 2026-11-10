@@ -214,6 +214,7 @@ def up() -> str:
                 str(PREVIEW_PORT),
                 "--host",
                 "127.0.0.1",
+                "--ignore-lock",
             ],
             cwd=ROOT,
             stdout=output,
