@@ -22,5 +22,5 @@ export default [
       "@typescript-eslint/consistent-type-definitions": ["error", "type"],
     },
   },
-  { ignores: ["dist/**", ".astro", "public/pagefind/**"] },
+  { ignores: ["dist/**", ".astro", "cache/**", "public/pagefind/**"] },
 ];
