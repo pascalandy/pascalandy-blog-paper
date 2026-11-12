@@ -42,9 +42,7 @@ const displayName = tagName || config.name;
       ]}
     />
     {displayName}{
-      count !== undefined && (
-        <span class="ml-1 text-xs text-muted-foreground/60">({count})</span>
-      )
+      count !== undefined && <span class="ml-1 text-xs">({count})</span>
     }
   </a>
   {
