@@ -56,6 +56,7 @@ This file remains the queue under issue #103's default for R10. Agents pick an `
 | #97 | open | Tailwind scans the repository beyond src | Constrain scanning to src and run `just parity`; each change is either absent or individually explained |
 | #98 | appended | Duplicate of B34, implemented in [#109](https://github.com/pascalandy/pascalandy-blog-paper/pull/109) | The lockfile check rejects two resolved Vite versions |
 | #54, #56, #59, #62, #65 | needs Pascal | Release post-mortem records and retired autorelease labels remain | R11 decides which unchecked items deserve tickets before closing records and deleting labels |
+| B36 | open | A Prettier content-cache experiment admitted a malformed file when size and mtime stayed unchanged; the uncached command rejected the same file | Keep the formatter uncached until a real CLI test rejects same-size, same-mtime edits with the cache enabled; any future cache also invalidates on plugin lockfile and Tailwind CSS inputs. Reproduction: `/tmp/poteto-blog-phase1/perf/cache-repro.json` |
 
 ## Calls awaiting Pascal
 
