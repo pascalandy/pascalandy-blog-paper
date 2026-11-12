@@ -1,0 +1,502 @@
+{
+  "ok": true,
+  "first": "/tmp/poteto-blog-design/before-matrix-v2",
+  "second": "/tmp/poteto-blog-design/after-matrix",
+  "shots": {
+    "404-1280-dark-top.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "404-1280-light-top.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "404-390-dark-top.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "404-390-light-top.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "about-1280-dark-top.png": {
+      "ratio": 0.0011111111111111111,
+      "changed_pixels": 1280,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 1280,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "about-1280-light-top.png": {
+      "ratio": 0.0011111111111111111,
+      "changed_pixels": 1280,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 1280,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "about-390-dark-top.png": {
+      "ratio": 0.004335277676509904,
+      "changed_pixels": 1427,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 1427,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "about-390-light-top.png": {
+      "ratio": 0.004335277676509904,
+      "changed_pixels": 1427,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 1427,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "archive-1280-dark-top.png": {
+      "ratio": 0.006328993055555556,
+      "changed_pixels": 7291,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 7291,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "archive-1280-light-top.png": {
+      "ratio": 0.006328993055555556,
+      "changed_pixels": 7291,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 7291,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "archive-390-dark-top.png": {
+      "ratio": 0.027038522299185807,
+      "changed_pixels": 8900,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 8900,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "archive-390-light-top.png": {
+      "ratio": 0.027038522299185807,
+      "changed_pixels": 8900,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 8900,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "home-1280-dark-top.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "home-1280-light-top.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "home-390-dark-top.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "home-390-light-top.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "long-post-1280-dark-code.png": {
+      "ratio": 0.00028645833333333333,
+      "changed_pixels": 330,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 330,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "long-post-1280-dark-image.png": {
+      "ratio": 0.0004253472222222222,
+      "changed_pixels": 490,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 490,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "long-post-1280-dark-top.png": {
+      "ratio": 0.004550347222222222,
+      "changed_pixels": 5242,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 5242,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "long-post-1280-light-code.png": {
+      "ratio": 0.00028645833333333333,
+      "changed_pixels": 330,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 330,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "long-post-1280-light-image.png": {
+      "ratio": 0.0004253472222222222,
+      "changed_pixels": 490,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 490,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "long-post-1280-light-top.png": {
+      "ratio": 0.004550347222222222,
+      "changed_pixels": 5242,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 5242,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "long-post-390-dark-code.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "long-post-390-dark-image.png": {
+      "ratio": 0.0014886377445619153,
+      "changed_pixels": 490,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 490,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "long-post-390-dark-top.png": {
+      "ratio": 0.01386255924170616,
+      "changed_pixels": 4563,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 4563,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "long-post-390-light-code.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "long-post-390-light-image.png": {
+      "ratio": 0.0014886377445619153,
+      "changed_pixels": 490,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 490,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "long-post-390-light-top.png": {
+      "ratio": 0.01386255924170616,
+      "changed_pixels": 4563,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 4563,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "mermaid-1280-dark-diagram.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "mermaid-1280-dark-top.png": {
+      "ratio": 0.0025642361111111113,
+      "changed_pixels": 2954,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 2954,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "mermaid-1280-light-diagram.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "mermaid-1280-light-top.png": {
+      "ratio": 0.0025642361111111113,
+      "changed_pixels": 2954,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 2954,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "mermaid-390-dark-diagram.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "mermaid-390-dark-top.png": {
+      "ratio": 0.006707983959168794,
+      "changed_pixels": 2208,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 2208,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "mermaid-390-light-diagram.png": {
+      "ratio": 0.0,
+      "changed_pixels": 0,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 0,
+      "all_changed_inside_image_boxes": true,
+      "image_boxes": []
+    },
+    "mermaid-390-light-top.png": {
+      "ratio": 0.006707983959168794,
+      "changed_pixels": 2208,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 2208,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "search-1280-dark-top.png": {
+      "ratio": 0.0007977430555555556,
+      "changed_pixels": 919,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 919,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "search-1280-light-top.png": {
+      "ratio": 0.0007977430555555556,
+      "changed_pixels": 919,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 919,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "search-390-dark-top.png": {
+      "ratio": 0.0017650990399805566,
+      "changed_pixels": 581,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 581,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "search-390-light-top.png": {
+      "ratio": 0.0017650990399805566,
+      "changed_pixels": 581,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 581,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "tag-1280-dark-top.png": {
+      "ratio": 0.005331597222222222,
+      "changed_pixels": 6142,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 6142,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "tag-1280-light-top.png": {
+      "ratio": 0.005331597222222222,
+      "changed_pixels": 6142,
+      "dimensions": [
+        1280,
+        900
+      ],
+      "outside_image_pixels": 6142,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "tag-390-dark-top.png": {
+      "ratio": 0.0175294689512699,
+      "changed_pixels": 5770,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 5770,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    },
+    "tag-390-light-top.png": {
+      "ratio": 0.0175294689512699,
+      "changed_pixels": 5770,
+      "dimensions": [
+        390,
+        844
+      ],
+      "outside_image_pixels": 5770,
+      "all_changed_inside_image_boxes": false,
+      "image_boxes": []
+    }
+  },
+  "channel_threshold": 0,
+  "max_ratio": 0.027038522299185807,
+  "mean_ratio": 0.004278335556623472,
+  "changed_shots": 30,
+  "compared": 44,
+  "added": [],
+  "removed": [],
+  "capture_failures_a": [],
+  "capture_failures_b": [],
+  "runtime_differences": {},
+  "passed": false
+}

@@ -1,0 +1,21 @@
+{
+  "url": "http://127.0.0.1:4330/",
+  "title": "Le blog de Pascal Andy",
+  "theme": "light",
+  "device": "iphone",
+  "steps": [
+    "press:Tab",
+    "press:Tab",
+    "press:Tab",
+    "press:Tab",
+    "eval:JSON.stringify({focus:document.activeElement.outerHTML,menuOpacity:getComputedStyle(document.querySelector(\"#menu-items\")).opacity})"
+  ],
+  "console_errors": [],
+  "evaluations": [
+    {
+      "step": "5:eval",
+      "result": "{\"focus\":\"<a href=\\\"/blog/\\\" class=\\\"leading-none tracking-wider sm:-translate-y-0.5\\\"> <span class=\\\"sm:hidden\\\">Blog</span> <span class=\\\"hidden sm:inline\\\">/blog</span> </a>\",\"menuOpacity\":\"0\"}"
+    }
+  ],
+  "failure": null
+}

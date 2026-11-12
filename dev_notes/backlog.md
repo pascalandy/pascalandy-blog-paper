@@ -24,7 +24,7 @@ This file remains the queue under issue #103's default for R10. Agents pick an `
 | B9 | done | Posts that share a `date_created` have no stable order, so builds can reorder them ([#86](https://github.com/pascalandy/pascalandy-blog-paper/pull/86)) | `getSortedPosts` breaks ties by ascending ID; three fresh builds preserve the same order |
 | B10 | needs Pascal | Moving public playbooks to /docs conflicts with the 2026-09-29 decision | R14 asks whether Pascal wants to reverse that decision or close this ticket; default keeps the public routes |
 | B11 | appended | SEO findings covered by [#105](https://github.com/pascalandy/pascalandy-blog-paper/pull/105) and [#106](https://github.com/pascalandy/pascalandy-blog-paper/pull/106) | HTML build row verifies metadata and discovery; deployed confirmation waits on R1 |
-| B12 | open | Prose links have thin muted underlines; primary color remains | Prose links underline in --primary at rest and on hover; verify-blog captures both themes |
+| B12 | review pending | The design pass uses primary underlines at rest and on hover while retaining readable foreground text | Pascal reviews the [desktop and mobile screenshots in both themes](design-pass/README.md); no merge, signoff, or deployment before that review |
 | B13 | needs Pascal | Feature the 5 best posts: 0 are featured; Pascal rereads the shortlist in the Inbox first | 5 posts have `featured: true`; waits on R19 |
 | B14 | needs Pascal | Default header image: a brand image with no text | Pascal picks the image, and it replaces the current header; waits on R19 |
 | B15 | needs Pascal | "Rester en contact": an email sign-up form | Pascal decides on the form and its copy; waits on R19 |

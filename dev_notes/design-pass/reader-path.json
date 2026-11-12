@@ -1,0 +1,24 @@
+[
+  {
+    "initialTheme": "light",
+    "toggledTheme": "dark",
+    "keyboardOpen": true,
+    "focusVisible": true,
+    "pointerClose": true,
+    "overlayClose": true,
+    "resize639to640to639": true,
+    "reloadAndNavigationPersistence": true,
+    "errors": []
+  },
+  {
+    "initialTheme": "dark",
+    "toggledTheme": "light",
+    "keyboardOpen": true,
+    "focusVisible": true,
+    "pointerClose": true,
+    "overlayClose": true,
+    "resize639to640to639": true,
+    "reloadAndNavigationPersistence": true,
+    "errors": []
+  }
+]
