@@ -25,6 +25,7 @@ The schema lives in `src/content.config.ts`, and it is strict: an unknown key or
 
 | Field          | Type              | Default | Description                                                                  |
 | -------------- | ----------------- | ------- | ---------------------------------------------------------------------------- |
+| `lang`         | `"fr-CA" \| "en"` | `fr-CA` | Page language and Open Graph locale                                          |
 | `featured`     | `boolean`         | —       | Show on the homepage featured section                                        |
 | `draft`        | `boolean`         | —       | Exclude the post from every build, dev included: no page, no listing, no RSS |
 | `ogImage`      | `image \| string` | —       | Custom OG image (local or URL)                                               |
@@ -63,6 +64,7 @@ tags:
   - dev-notes
 date_created: 2025-01-15
 author: Pascal Andy
+lang: en
 featured: true
 draft: false
 ogImage: "./custom-og.png"

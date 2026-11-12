@@ -1,12 +1,5 @@
 ---
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 import IconCalendar from "@/assets/icons/IconCalendar.svg";
-import { SITE } from "@/config";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
 
 type Props = {
   class?: string;
@@ -16,10 +9,13 @@ type Props = {
 
 const { date_created, size = "sm", class: className = "" } = Astro.props;
 
-/* ========== Formatted Datetime ========== */
-const datetime = dayjs(date_created).tz(SITE.timezone);
-
-const date = datetime.format("D MMM YYYY"); // e.g., '22 Mar 2025'
+const datetime = new Date(date_created);
+const date = new Intl.DateTimeFormat("fr-CA", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+}).format(datetime);
 ---
 
 <div class:list={["flex items-center gap-x-2 opacity-80", className]}>

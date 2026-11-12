@@ -14,7 +14,7 @@ class HtmlTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             dist = Path(temporary)
             (dist / "index.html").write_text(
-                '<title>Home</title><link rel="canonical" href="https://elsewhere.test/original"><h1>Home</h1><a href="/">Home</a>'
+                '<html lang="fr-CA"><meta property="og:type" content="website"><meta property="og:locale" content="fr_CA"><title>Home</title><link rel="canonical" href="https://elsewhere.test/original"><h1>Home</h1><a href="/">Home</a>'
             )
             (dist / "robots.txt").write_text(
                 "Sitemap: https://example.test/sitemap.xml"
@@ -52,3 +52,29 @@ class HtmlTests(unittest.TestCase):
                 "noindex",
             ):
                 self.assertIn(expected, errors)
+
+    def test_post_language_and_calendar_date(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            dist = Path(temporary)
+            text = """<html lang="en"><title>Post</title>
+<link rel="canonical" href="https://example.test/">
+<meta property="article:published_time" content="2020-01-15T00:00:00Z">
+<meta property="og:type" content="article"><meta property="og:locale" content="en_US">
+<script type="application/ld+json">{"@type":"BlogPosting","datePublished":"2020-01-15T00:00:00Z"}</script>
+<time datetime="2020-01-15T00:00:00.000Z">15 janvier 2020</time>"""
+            page = dist / "index.html"
+            page.write_text(text)
+            (dist / "robots.txt").write_text(
+                "Sitemap: https://example.test/sitemap.xml"
+            )
+            (dist / "sitemap.xml").touch()
+            source = {"/": {"lang": "en", "date_created": "2020-01-15T00:00:00Z"}}
+            self.assertEqual(problems(dist, "https://example.test", source), [])
+            page.write_text(
+                text.replace('lang="en"', 'lang="fr-CA"').replace(
+                    "15 janvier", "14 janvier"
+                )
+            )
+            errors = "\n".join(problems(dist, "https://example.test", source))
+            self.assertIn("html lang must be en", errors)
+            self.assertIn("displayed date must be 15 janvier 2020", errors)

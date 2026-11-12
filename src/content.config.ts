@@ -34,6 +34,7 @@ const blog = defineCollection({
           author: z.string(),
           date_created: z.date(),
           title: z.string(),
+          lang: z.enum(["fr-CA", "en"]).optional(),
           featured: z.boolean().optional(),
           draft: z.boolean().optional(),
           tags: z.array(tag).min(1),
