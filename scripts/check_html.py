@@ -93,8 +93,12 @@ def problems(
             reasons.add(f"{counts['h1']} H1 headings; keep at most one")
         canonicals = []
         noindex = False
-        is_post = any(
-            a.get("property") == "article:published_time" for _, a in page.elements
+        is_post = (
+            route in posts
+            if posts is not None
+            else any(
+                a.get("property") == "article:published_time" for _, a in page.elements
+            )
         )
         language = (posts or {}).get(route, {}).get("lang", "fr-CA")
         html_languages = [a.get("lang") for tag, a in page.elements if tag == "html"]
