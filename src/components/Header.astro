@@ -63,7 +63,7 @@ const isActive = (path: string) => {
     >
       <button
         id="menu-btn"
-        class="focus-outline self-end p-2 sm:hidden"
+        class="focus-outline peer relative z-40 self-end p-2 sm:hidden"
         aria-label="Open Menu"
         aria-expanded="false"
         aria-controls="menu-items"
@@ -74,13 +74,13 @@ const isActive = (path: string) => {
       <ul
         id="menu-items"
         class:list={[
-          "pointer-events-none opacity-0",
+          "pointer-events-none invisible opacity-0 peer-aria-expanded:visible",
           "absolute top-full right-0 z-40 mt-2",
           "flex flex-col gap-1 p-4",
           "w-48 rounded-lg border border-border bg-background shadow-lg",
           "transition-opacity duration-150",
           "[&>li>a]:block [&>li>a]:p-3 [&>li>a]:font-medium [&>li>a]:hover:text-accent sm:[&>li>a]:px-2 sm:[&>li>a]:py-1",
-          "sm:pointer-events-auto sm:relative sm:top-auto sm:right-auto sm:z-auto sm:mt-0 sm:opacity-100",
+          "sm:pointer-events-auto sm:visible sm:relative sm:top-auto sm:right-auto sm:z-auto sm:mt-0 sm:opacity-100",
           "sm:flex sm:w-auto sm:flex-row sm:items-center sm:gap-x-5 sm:gap-y-0",
           "sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none",
         ]}
