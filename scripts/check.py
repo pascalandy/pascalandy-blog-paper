@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import shlex
@@ -192,7 +193,39 @@ def interrupt(number: int, _frame: object) -> None:
     raise Interrupted(128 + number)
 
 
+def check_node(requirement: str, version: str, executable: str) -> None:
+    minimum = re.fullmatch(r">=(\d+)\.(\d+)\.(\d+)", requirement)
+    if minimum is None:
+        raise Failure(
+            f"unsupported engines.node range {requirement!r}; use >=X.Y.Z in package.json"
+        )
+    found = re.fullmatch(r"v?(\d+)\.(\d+)\.(\d+)", version)
+    if found is None or tuple(map(int, found.groups())) < tuple(
+        map(int, minimum.groups())
+    ):
+        raise Failure(
+            f"Node {version} at {executable} does not satisfy {requirement}; "
+            "put a supported Node first on PATH, then rerun: just check"
+        )
+
+
 def preflight(selected: list[Check]) -> None:
+    requirement = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))[
+        "engines"
+    ]["node"]
+    executable = shutil.which("node")
+    if executable is None:
+        raise Failure(
+            f"node not found on PATH; install Node {requirement}, then rerun: just check"
+        )
+    result = subprocess.run(
+        [executable, "--version"], capture_output=True, text=True, check=False
+    )
+    if result.returncode:
+        raise Failure(
+            f"cannot read Node version at {executable}; put a supported Node first on PATH"
+        )
+    check_node(requirement, result.stdout.strip(), executable)
     programs = {command[0] for check in selected for command in check.commands}
     for program in sorted(programs):
         if shutil.which(program) is None:

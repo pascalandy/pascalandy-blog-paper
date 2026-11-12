@@ -6,11 +6,15 @@ Source: https://github.com/pascalandy/pascalandy-blog-paper
 
 ## Prerequisites
 
+Use a Node version satisfying `engines.node` in `package.json`, currently Node 22.23.4 or newer. `just check` reports an unsupported version and the executable on `PATH`.
+
 - [Bun](https://bun.sh/) - Package manager & runtime
 - [Just](https://just.systems/) - Command runner (required for hooks and CI)
 - [uv](https://docs.astral.sh/uv/) - Runs the Python scripts behind the recipes
 - [GitHub CLI](https://cli.github.com/) with [gh-signoff](https://github.com/basecamp/gh-signoff) - Posts the `signoff` status that gates merges
 - [gitleaks](https://github.com/gitleaks/gitleaks) - Scans staged changes for secrets before each commit, and a branch before signoff
+
+The tools work on any operating system. For example, on macOS:
 
 ```bash
 # macOS
