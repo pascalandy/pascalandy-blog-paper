@@ -7,8 +7,6 @@ author: Pascal Andy
 description: "Commands and workflow for developing, testing, and building the blog"
 ---
 
-# Development Workflow
-
 > Run `just` to list the recipes: the commands first, then the checks, shipping, and the GitHub workflows. This page explains how they fit together.
 
 ## Verify

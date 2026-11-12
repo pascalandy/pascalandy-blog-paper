@@ -87,7 +87,7 @@ const isActive = (path: string) => {
       >
         <li class="col-span-2 flex items-center">
           <a
-            href="/blog"
+            href="/blog/"
             class:list={[
               "leading-none tracking-wider sm:-translate-y-0.5",
               { "active-nav": isActive("/blog") },
@@ -101,7 +101,7 @@ const isActive = (path: string) => {
           <ul class="contents sm:flex sm:items-center sm:gap-x-4">
             <li class="col-span-2">
               <LinkButton
-                href="/tags"
+                href="/tags/"
                 class:list={[
                   "focus-outline flex p-3 sm:justify-center sm:p-1",
                   {
@@ -117,7 +117,7 @@ const isActive = (path: string) => {
             </li>
             <li class="col-span-2">
               <LinkButton
-                href="/a-propos"
+                href="/a-propos/"
                 class:list={[
                   "focus-outline flex p-3 sm:justify-center sm:p-1",
                   {
@@ -134,7 +134,7 @@ const isActive = (path: string) => {
 
             <li class="col-span-1 flex items-center sm:justify-center">
               <LinkButton
-                href="/search"
+                href="/search/"
                 class:list={[
                   "focus-outline flex p-3 sm:justify-center sm:p-1",
                   { "[&>svg]:stroke-accent": isActive("/search") },

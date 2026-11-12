@@ -9,7 +9,7 @@ description: "---"
 
 ![banner-large-cyptoinmontreal](../../assets/images/og-legacy/2018/03/banner-large-cyptoinmontreal.JPG)
 
-# Préparation
+## Préparation
 
 ### 1) Liste projets blockchain
 
@@ -29,7 +29,7 @@ Veux-tu t’en chargé à l’avenir ?
 
 Idée de faire un 5 à 7 mensuel : Nous devons brainstormé quelle valeur on désire emmener sans que ce soit un atelier. On peut aussi se questionner sur le fait que ceci peut attirer d’autre type de gens qui sont plus intéressé par le hype des cryptos et moins par les meetup.
 
-# Durant un atelier
+## Durant un atelier
 
 ### A) Photos
 
@@ -43,6 +43,6 @@ Donc, trouver Adobe Premiere Pro CC sur ton PC. Je suis entièrement équipé. C
 
 S'occuper de débuter et terminer le stream live sur Facebook / YouTube)
 
-# Done!
+## Done!
 
 Besoin de ton résumé au niveau de ta présentation du modèle économique Ethereum. Inspire-toi de: [https://pascalandy.com/blog/cim-17/](/blog/cim-17/)et de [https://pascalandy.com/blog/cim-15/](/blog/cim-15/)

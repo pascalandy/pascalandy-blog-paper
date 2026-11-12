@@ -32,7 +32,9 @@ const { tag } = params;
 const { page, tagName } = Astro.props;
 ---
 
-<Layout title={`🏷️ ${tagName} | ${SITE.title}`}>
+<Layout
+  title={`🏷️ ${tagName}${page.currentPage > 1 ? ` · Page ${page.currentPage}` : ""} | ${SITE.title}`}
+>
   <Header />
   <Banner />
   <Main

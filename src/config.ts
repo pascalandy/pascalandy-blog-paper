@@ -1,7 +1,7 @@
 import type { ThemeConfig } from "./types";
 
 export const SITE = {
-  website: "https://pascalandy.com/blog/",
+  website: "https://pascalandy.com/",
   author: "Pascal Andy",
   profile: "https://pascalandy.com/",
   desc: "L'homme et les relations technologiques.",

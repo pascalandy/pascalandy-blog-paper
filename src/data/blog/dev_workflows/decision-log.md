@@ -7,8 +7,6 @@ author: Pascal Andy
 description: "Settled decisions about how this blog is built, one dated line each"
 ---
 
-# Decision Log
-
 > One dated line per settled decision, newest first, linked to where it was decided. Read the link before proposing to change a decision.
 
 - 2026-11-10 · The home banner drops AVIF and requests WebP as its only source format, keeping the JPEG `<img>` fallback: its AVIF variants were larger than WebP at every width. All images keep Sharp's default WebP quality of 80, with no per-image automatic quality, after a visual check found no artifacts at 80 ([#100](https://github.com/pascalandy/pascalandy-blog-paper/issues/100))

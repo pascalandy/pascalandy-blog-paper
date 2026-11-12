@@ -32,7 +32,7 @@ Le **prix inclut** — les cafés gourmands de torréfaction locale, les thés e
 Tous les détails de l'événement:
 [Lien permanent](/blog/cim-08/)
 
-Cheers!<br>[Pascal Andy](/maintenant)
+Cheers!<br>[Pascal Andy](/maintenant/)
 
 ## Est-ce pour moi ?
 

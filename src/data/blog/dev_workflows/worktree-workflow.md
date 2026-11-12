@@ -7,8 +7,6 @@ author: Pascal Andy
 description: "Understanding this git worktree workflow"
 ---
 
-# Complete Worktree Workflow for Blog Posts
-
 ## One-Time Setup
 
 ```bash

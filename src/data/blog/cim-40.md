@@ -12,7 +12,7 @@ Nous sommes déjà à la **40e édition** de [Crypto In Montreal](/tags/crypto-i
 
 Assurez-vous de lire tous les détails sur la page officielle de l'événement:
 
-[Lire cet article](https://pascalandy.com/blog/cim-40)
+[Lire cet article](https://pascalandy.com/blog/cim-40/)
 
 ### 📚 Les sujets
 

@@ -12,7 +12,7 @@ Join us for the 28th edition of Crypto In Montreal. Our hosts will be **Tamara K
 
 All details about [#CryptoInMontreal](/tags/crypto-in-montreal/) and tickets:
 
-[https://pascalandy.com/blog/cim-28](/blog/cim-28)
+[https://pascalandy.com/blog/cim-28](/blog/cim-28/)
 
 ## Agenda
 

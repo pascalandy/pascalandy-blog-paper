@@ -21,7 +21,7 @@ Learn more:
 
 ### Tous les détails :
 
-[https://pascalandy.com/blog/cim-35](/blog/cim-35)
+[https://pascalandy.com/blog/cim-35](/blog/cim-35/)
 
 ### Le quand, le où, le prix
 

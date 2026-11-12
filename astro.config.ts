@@ -16,6 +16,7 @@ import { rehypeAstro5HeadingIds } from "./src/utils/rehypeAstro5HeadingIds";
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
+  trailingSlash: "always",
   cacheDir: "./cache",
   compressHTML: true,
   integrations: [

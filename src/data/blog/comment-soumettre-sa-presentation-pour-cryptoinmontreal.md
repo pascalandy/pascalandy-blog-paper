@@ -17,7 +17,7 @@ Voici comment procéder pour soumettre une présentation:
 Cheers!
 Pascal
 
-# EXAMPLE #1)
+## EXAMPLE #1)
 
 ## Agenda de la soirée
 
@@ -29,7 +29,7 @@ Ensuite je laisserai le plancher à **Jérémy Kohl** de chez [Jekit](http://b.j
 
 Puis je ferai une **démo unique en son genre** qui démontre comment fonctionne le POW et la fonction de hashing SHA-25\* qui est au coeur du protocole Bitcoin.
 
-# EXAMPLE #2)
+## EXAMPLE #2)
 
 Cette soirée a pour but d'initier les invités qui désirent apprendre à mettre en place un robot (bot) qui fera du trading (ordre d'achats et de ventes) et prendra des décisions basées sur des algorithmes (trading algorithmique). Ces robots feront du trading pour leur propriétaire sur les marchés des cryptomonnaies. Crunchie stuff.
 
@@ -49,7 +49,7 @@ Cette soirée sera menée par **David Gordon**.
 - Différentes stratégies de trading
 - **Démo de backtesting** et de paper trading
 
-# EXAMPLE #3)
+## EXAMPLE #3)
 
 ## Agenda de la soirée
 

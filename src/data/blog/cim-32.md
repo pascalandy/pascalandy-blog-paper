@@ -17,7 +17,7 @@ La **32e édition** de [Crypto In Montreal](/tags/crypto-in-montreal/) aura lieu
 
 **À boire** : Pour l'occasion, notre hôte nous offrira gracieusement la bière.
 **À manger** : fruits, chips. Arrivez tôt!
-**Tous les détails** : [https://pascalandy.com/blog/cim-32](/blog/cim-32)
+**Tous les détails** : [https://pascalandy.com/blog/cim-32](/blog/cim-32/)
 
 **Un gros merci à FirePress** : Cet événement est possible grâce à l'appuie de [FirePress.org](https://firepress.org/). Chez FirePress, ils se donnent à 100% afin de permettre aux entrepreneurs et aux petites organisations de créer leurs sites Web. Ils font l'**hébergement de sites web** en plus d'aider leurs clients à se familiariser avec la plate-forme [Ghost](https://play-with-ghost.com/).
 

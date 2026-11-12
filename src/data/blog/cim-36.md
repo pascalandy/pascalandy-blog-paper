@@ -16,7 +16,7 @@ Tech companies are announcing their crypto to compete with banks. During this ti
 
 ### Tous les détails :
 
-[https://pascalandy.com/blog/cim-36](/blog/cim-36)
+[https://pascalandy.com/blog/cim-36](/blog/cim-36/)
 
 ### Le quand, le où, le prix
 

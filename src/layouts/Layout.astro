@@ -14,6 +14,7 @@ type Props = {
   canonicalURL?: string;
   date_created?: Date;
   scrollSmooth?: boolean;
+  noindex?: boolean;
 };
 
 const {
@@ -25,6 +26,7 @@ const {
   canonicalURL = new URL(Astro.url.pathname, Astro.url),
   date_created,
   scrollSmooth = false,
+  noindex = false,
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
@@ -71,13 +73,14 @@ const themeStyleContent = `
 <html
   dir={SITE.dir}
   lang=`${SITE.lang ?? "en"}`
-  class={`${scrollSmooth && "scroll-smooth"}`}
+  class:list={[{ "scroll-smooth": scrollSmooth }]}
 >
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="canonical" href={canonicalURL} />
+    {!noindex && <link rel="canonical" href={canonicalURL} />}
+    {noindex && <meta name="robots" content="noindex" />}
     <meta name="generator" content={Astro.generator} />
 
     <!-- Theme Variables (generated from src/config.ts) -->
@@ -120,11 +123,15 @@ const themeStyleContent = `
     <meta property="twitter:image" content={socialImageURL} />
 
     <!-- Google JSON-LD Structured data -->
-    <script
-      type="application/ld+json"
-      is:inline
-      set:html={JSON.stringify(structuredData)}
-    />
+    {
+      date_created && (
+        <script
+          type="application/ld+json"
+          is:inline
+          set:html={JSON.stringify(structuredData)}
+        />
+      )
+    }
 
     <!-- Enable RSS feed auto-discovery  -->
     <!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery -->
@@ -134,8 +141,6 @@ const themeStyleContent = `
       title={SITE.title}
       href={new URL("rss.xml", Astro.site)}
     />
-
-    <meta name="theme-color" content="" />
 
     {
       // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,
