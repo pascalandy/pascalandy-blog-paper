@@ -68,7 +68,7 @@ On `astro:after-swap`, `theme` comes from a listener registered after initial pa
 
 ## Compare two builds
 
-Build each commit in its own worktree. Use the same `cache/fonts/` contents for both builds because Google Fonts can return different files. Keep Pascal's dev server on port 4320 untouched.
+Build each commit in its own worktree. Run `just fresh` before each comparison build to discard generated output and image caches. Use the same `cache/fonts/` contents for both builds because Google Fonts can return different files. Keep Pascal's dev server on port 4320 untouched.
 
 ```bash
 just parity /absolute/trunk/dist /absolute/head/dist --json /absolute/parity.json
