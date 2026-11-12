@@ -33,7 +33,7 @@ Preconditions:
 
 ## Gotchas
 
-- Posts that share a `date_created` have no stable order, so `Previous` and `Next` can swap between builds (backlog B9)
+- Posts that share a `date_created` sort by ascending ID, using code-unit order, so `Previous` and `Next` stay stable between builds
 - A post with a future `date_created` still has a page, though listings hide it
 - Folder names are slugified in URLs: `dev_workflows/` becomes `/blog/dev-workflows/`
 - Mermaid loads from cdn.jsdelivr.net in the browser; when the CDN is unreachable, the code block gets the `mermaid-error` class instead of a diagram

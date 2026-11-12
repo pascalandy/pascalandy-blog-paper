@@ -65,7 +65,7 @@ Buckets are disjoint and tested in this order, as the site filters posts:
   blog_roll        every other post
 
 Tag counts cover built, listed posts, as on /tags/. Posts that share a date sort
-by file name here; the site gives them no stable order (backlog B9).
+by ascending ID, using code-unit order on the site.
 
 examples:
   just overview
