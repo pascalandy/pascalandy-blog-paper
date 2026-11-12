@@ -6,15 +6,13 @@ import Header from "@/components/Header.astro";
 import Banner from "@/components/Banner.astro";
 import Footer from "@/components/Footer.astro";
 import { SITE } from "@/config";
-
-const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
 ---
 
 <Layout title={`Recherche | ${SITE.title}`}>
   <Header />
   <Banner />
   <Main pageTitle="Recherche">
-    <div id="pagefind-search" transition:persist data-backurl={backUrl}></div>
+    <div id="pagefind-search" transition:persist></div>
   </Main>
   <Footer />
 </Layout>
@@ -50,9 +48,6 @@ const backUrl = SITE.showBackButton ? `${Astro.url.pathname}` : "/";
         processTerm: function (term: string) {
           params.set("q", term); // Update the `q` parameter in the URL
           history.replaceState(history.state, "", "?" + params.toString()); // Push the new URL without reloading
-
-          const backUrl = pageFindSearch?.dataset?.backurl;
-          sessionStorage.setItem("backUrl", backUrl + "?" + params.toString());
 
           return term;
         },

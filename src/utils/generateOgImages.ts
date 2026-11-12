@@ -1,8 +1,8 @@
 import { Resvg } from "@resvg/resvg-js";
 import { type CollectionEntry } from "astro:content";
+import { SITE, ACTIVE_THEME } from "@/config";
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
-import { SITE, ACTIVE_THEME } from "@/config";
 import {
   generateCacheKey,
   getCachedOgImage,
