@@ -6,7 +6,6 @@ force-exclude = true
 extend-exclude = [
   # Ghost migration and content-maintenance helpers that predate the CLI contract
   "scripts/analyze_images.py",
-  "scripts/check_image_links.py",
   "scripts/convert_frontmatter.py",
   "scripts/import_ghost_posts.py",
   "scripts/normalize-tags.py",
