@@ -208,10 +208,10 @@ class Paths:
             rooted = False
         else:
             return None
-        if self.ignored(path):
-            return None
         found = self.exists(path) if rooted else self.ends(path)
-        return None if found else f'path "{span}" does not exist'
+        if found or self.ignored(path):
+            return None
+        return f'path "{span}" does not exist'
 
 
 def problems(doc: Path, names: set[str], paths: Paths) -> Iterator[str]:
