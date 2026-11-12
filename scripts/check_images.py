@@ -92,11 +92,9 @@ def inspect(root: Path) -> tuple[list[str], list[str]]:
     return sorted(missing), orphans
 
 
-def problems(root: Path, allowlist: set[str]) -> list[str]:
+def problems(root: Path) -> list[str]:
     missing, orphans = inspect(root)
-    return missing + [
-        f"unreferenced image: {name}" for name in orphans if name not in allowlist
-    ]
+    return missing + [f"unreferenced image: {name}" for name in orphans]
 
 
 def main() -> int:
@@ -104,7 +102,7 @@ def main() -> int:
     cli.add_argument(
         "--list-orphans",
         action="store_true",
-        help="print the source image manifest without applying the allowlist",
+        help="print the unreferenced source image paths",
     )
     args = cli.parse_args()
     if args.list_orphans:
@@ -112,13 +110,7 @@ def main() -> int:
         print("\n".join(orphans))
         errors = missing
     else:
-        manifest = ROOT / "scripts/check_images_allowlist.txt"
-        allowlist = (
-            set(manifest.read_text(encoding="utf-8").splitlines())
-            if manifest.exists()
-            else set()
-        )
-        errors = problems(ROOT, allowlist)
+        errors = problems(ROOT)
     if errors:
         print("\n".join(errors), file=sys.stderr)
         print(
