@@ -54,15 +54,16 @@ import picture from "@/assets/images/import.png";
             )
             (root / "public").mkdir()
             (root / "public/public-image.jpg").write_bytes(b"public fixture")
-            self.assertEqual(problems(root, set()), [])
+            self.assertEqual(problems(root), [])
             (images / "unreferenced.jpg").write_bytes(b"orphan")
             self.assertIn(
                 "unreferenced image: src/assets/images/unreferenced.jpg",
-                problems(root, set()),
+                problems(root),
             )
-            self.assertEqual(problems(root, {"src/assets/images/unreferenced.jpg"}), [])
+            (images / "unreferenced.jpg").unlink()
+            self.assertEqual(problems(root), [])
             (images / "front.jpg").unlink()
-            errors = problems(root, {"src/assets/images/unreferenced.jpg"})
+            errors = problems(root)
             self.assertEqual(len(errors), 1)
             self.assertIn("missing image ../../assets/images/front.jpg", errors[0])
 

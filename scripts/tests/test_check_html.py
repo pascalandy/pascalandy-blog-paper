@@ -78,3 +78,19 @@ class HtmlTests(unittest.TestCase):
             errors = "\n".join(problems(dist, "https://example.test", source))
             self.assertIn("html lang must be en", errors)
             self.assertIn("displayed date must be 15 janvier 2020", errors)
+
+    def test_missing_post_metadata_is_detected_from_source_role(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            dist = Path(temporary)
+            (dist / "index.html").write_text("""<html lang=\"fr-CA\"><title>Post</title>
+<link rel=\"canonical\" href=\"https://example.test/\">
+<meta property=\"og:type\" content=\"website\"><meta property=\"og:locale\" content=\"fr_CA\">
+<time datetime=\"2020-01-15T00:00:00Z\">15 janvier 2020</time>""")
+            (dist / "robots.txt").write_text(
+                "Sitemap: https://example.test/sitemap.xml"
+            )
+            (dist / "sitemap.xml").touch()
+            source = {"/": {"date_created": "2020-01-15T00:00:00Z"}}
+            errors = "\n".join(problems(dist, "https://example.test", source))
+            self.assertIn("og:type must occur once with article", errors)
+            self.assertIn("BlogPosting belongs only on posts, once per post", errors)
