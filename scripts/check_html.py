@@ -155,6 +155,12 @@ def problems(
                     attrs.get("content") or ""
                 ):
                     noindex = True
+                if attrs.get("property") in ("og:image", "twitter:image"):
+                    image = local_target(attrs.get("content") or "", route, origin)
+                    if image is not None and not exists(dist, image):
+                        reasons.add(
+                            f"{attrs['property']} target missing: {attrs.get('content')}"
+                        )
             href = attrs.get("href")
             if tag == "link" and attrs.get("rel") == "canonical":
                 canonicals.append(href)

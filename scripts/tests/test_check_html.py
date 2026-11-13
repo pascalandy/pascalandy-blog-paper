@@ -30,6 +30,7 @@ class HtmlTests(unittest.TestCase):
             ).write_text("""<title>Repeated</title><h1>A</h1><h1>B</h1>
 <meta name="theme-color" content=""><div class="false"></div>
 <link rel="alternate" href="/missing.xml"><a href="/blog">Blog</a>
+<meta property="og:image" content="https://example.test/_astro/deleted.jpg">
 <script type="application/ld+json">{"@type":"BlogPosting","datePublished":"undefined"}</script>
 <script type="application/ld+json">bad</script>""")
             (dist / "404.html").write_text(
@@ -44,7 +45,8 @@ class HtmlTests(unittest.TestCase):
                 "H1",
                 "empty meta",
                 '"false"',
-                "target missing",
+                "link target missing",
+                "og:image target missing",
                 "trailing slash",
                 "ISO datePublished",
                 "invalid JSON-LD",
