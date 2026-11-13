@@ -18,7 +18,6 @@ export const SITE = {
   dynamicOgImage: true,
   dir: "ltr", // "rtl" | "auto"
   lang: "fr-CA",
-  timezone: "America/Montreal", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 } as const;
 
 // ============================================
