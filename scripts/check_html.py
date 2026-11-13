@@ -78,6 +78,7 @@ def problems(
     pages = sorted(dist.rglob("*.html"))
     if not pages:
         return [f"{dist}: no HTML pages; run: just build"]
+    post_pages = 0
     for path in pages:
         relative = path.relative_to(dist).as_posix()
         route = "/" + relative.removesuffix("index.html")
@@ -100,6 +101,10 @@ def problems(
                 a.get("property") == "article:published_time" for _, a in page.elements
             )
         )
+        if is_post:
+            post_pages += 1
+            if not any("data-pagefind-body" in a for _, a in page.elements):
+                reasons.add("post needs data-pagefind-body so search indexes it")
         language = (posts or {}).get(route, {}).get("lang", "fr-CA")
         html_languages = [a.get("lang") for tag, a in page.elements if tag == "html"]
         if html_languages != [language]:
@@ -200,6 +205,21 @@ def problems(
         if postings != int(is_post):
             reasons.add("BlogPosting belongs only on posts, once per post")
         errors.extend(f"{relative}: {reason}" for reason in sorted(reasons))
+    entry = dist / "pagefind/pagefind-entry.json"
+    indexed = (
+        sum(
+            language["page_count"]
+            for language in json.loads(entry.read_text(encoding="utf-8"))[
+                "languages"
+            ].values()
+        )
+        if entry.is_file()
+        else 0
+    )
+    if indexed != post_pages:
+        errors.append(
+            f"pagefind indexes {indexed} pages for {post_pages} posts; search must cover every post and nothing else"
+        )
     robots = dist / "robots.txt"
     if not robots.is_file():
         errors.append("robots.txt missing")
