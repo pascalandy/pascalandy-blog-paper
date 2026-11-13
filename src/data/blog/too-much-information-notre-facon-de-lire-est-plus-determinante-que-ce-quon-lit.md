@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2015-04-11
+date_created: 2015-04-10
 title: "Too much information ? Notre façon de lire est plus déterminante que ce qu’on lit."
 tags:
   - technologie

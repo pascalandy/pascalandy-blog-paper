@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2018-08-14
+date_created: 2018-08-13
 title: "Comprendre ce qu'est la CryptoÉconomie + les cas d'utilisations du blockchains | #CryptoInMontreal 19"
 tags:
   - crypto-in-montreal

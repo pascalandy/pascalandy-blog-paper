@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2014-02-25
+date_created: 2014-02-24
 title: "Pourquoi se donner la peine d'écrire"
 tags:
   - du-fond-des-tripes

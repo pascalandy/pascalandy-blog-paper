@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2015-06-16
+date_created: 2015-06-15
 title: "Setup a Continuous Integration, Continuous Deployment environment (CI/CD)"
 tags:
   - emplois

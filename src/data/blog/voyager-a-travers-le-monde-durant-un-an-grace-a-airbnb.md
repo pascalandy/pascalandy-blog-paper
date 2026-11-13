@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2014-10-30
+date_created: 2014-10-29
 title: "Voyager à travers le monde durant un an grâce à Airbnb"
 tags:
   - technologie

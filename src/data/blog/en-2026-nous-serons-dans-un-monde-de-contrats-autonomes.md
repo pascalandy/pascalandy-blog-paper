@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2020-05-28
+date_created: 2020-05-27
 title: "En 2026, nous serons dans un monde de contrats autonomes"
 tags:
   - crypto

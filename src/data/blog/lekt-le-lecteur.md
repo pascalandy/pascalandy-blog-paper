@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2014-02-26
+date_created: 2014-02-25
 title: "Lekt, le lecteur"
 tags:
   - du-fond-des-tripes

@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2017-12-10
+date_created: 2017-12-09
 title: "#CryptoInMontreal 02 — S'initier aux cryptomonnaies (Bitcoin, Ethereum, Litecoin)"
 tags:
   - crypto-in-montreal

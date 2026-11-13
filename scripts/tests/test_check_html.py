@@ -30,6 +30,7 @@ class HtmlTests(unittest.TestCase):
             ).write_text("""<title>Repeated</title><h1>A</h1><h1>B</h1>
 <meta name="theme-color" content=""><div class="false"></div>
 <link rel="alternate" href="/missing.xml"><a href="/blog">Blog</a>
+<meta property="og:image" content="https://example.test/_astro/deleted.jpg">
 <script type="application/ld+json">{"@type":"BlogPosting","datePublished":"undefined"}</script>
 <script type="application/ld+json">bad</script>""")
             (dist / "404.html").write_text(
@@ -44,7 +45,8 @@ class HtmlTests(unittest.TestCase):
                 "H1",
                 "empty meta",
                 '"false"',
-                "target missing",
+                "link target missing",
+                "og:image target missing",
                 "trailing slash",
                 "ISO datePublished",
                 "invalid JSON-LD",
@@ -61,9 +63,12 @@ class HtmlTests(unittest.TestCase):
 <meta property="article:published_time" content="2020-01-15T00:00:00Z">
 <meta property="og:type" content="article"><meta property="og:locale" content="en_US">
 <script type="application/ld+json">{"@type":"BlogPosting","datePublished":"2020-01-15T00:00:00Z"}</script>
-<time datetime="2020-01-15T00:00:00.000Z">15 janvier 2020</time>"""
+<main data-pagefind-body><time datetime="2020-01-15T00:00:00.000Z">15 janvier 2020</time>"""
             page = dist / "index.html"
             page.write_text(text)
+            (dist / "pagefind").mkdir()
+            index = dist / "pagefind/pagefind-entry.json"
+            index.write_text('{"languages":{"en":{"page_count":1}}}')
             (dist / "robots.txt").write_text(
                 "Sitemap: https://example.test/sitemap.xml"
             )
@@ -78,6 +83,14 @@ class HtmlTests(unittest.TestCase):
             errors = "\n".join(problems(dist, "https://example.test", source))
             self.assertIn("html lang must be en", errors)
             self.assertIn("displayed date must be 15 janvier 2020", errors)
+            first = {"/": {"lang": "en", "date_created": "2020-01-01T00:00:00Z"}}
+            errors = "\n".join(problems(dist, "https://example.test", first))
+            self.assertIn("displayed date must be 1er janvier 2020", errors)
+            page.write_text(text.replace(" data-pagefind-body", ""))
+            index.write_text('{"languages":{"en":{"page_count":3}}}')
+            errors = "\n".join(problems(dist, "https://example.test", source))
+            self.assertIn("post needs data-pagefind-body", errors)
+            self.assertIn("pagefind indexes 3 pages for 1 posts", errors)
 
     def test_missing_post_metadata_is_detected_from_source_role(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

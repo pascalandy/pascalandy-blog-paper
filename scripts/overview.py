@@ -220,7 +220,6 @@ def overview(state: dict[str, Any], now: datetime) -> dict[str, Any]:
             "title": site["title"],
             "url": site["website"],
             "lang": site["lang"],
-            "timezone": site["timezone"],
             "theme": state["theme"],
         },
         "posts": {
