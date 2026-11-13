@@ -19,6 +19,7 @@ import json
 import re
 import sys
 import xml.etree.ElementTree as ET
+from concurrent.futures import ProcessPoolExecutor
 from functools import cache
 from html.parser import HTMLParser
 from pathlib import Path
@@ -92,6 +93,10 @@ PAGE_FIELDS = (
     "text",
     "inline_text",
 )
+
+
+# Fewer pages than this are read in this process; starting workers costs more
+PARALLEL_PAGES = 32
 
 
 def norm(value: object, *, preserve_edges: bool = False) -> str:
@@ -1235,11 +1240,29 @@ def compare(
     else:
         check("routes", "/", sorted(a_pages), sorted(b_pages))
     inventory: dict[str, Any] = {}
-    for url in sorted(b_pages.keys() & a_pages.keys()):
-        a, b = (
-            page_data(a_pages[url], first, fetched),
-            page_data(b_pages[url], second, fetched),
-        )
+    shared = sorted(b_pages.keys() & a_pages.keys())
+    # Pages are independent, and reading one decodes every image it shows.
+    # Results come back in page order, so the first input error is the same one
+    jobs = [
+        (pages[url], root)
+        for url in shared
+        for pages, root in ((a_pages, first), (b_pages, second))
+    ]
+    if len(jobs) > PARALLEL_PAGES:
+        with ProcessPoolExecutor() as pool:
+            loaded = iter(
+                pool.map(page_data, *zip(*jobs), [fetched] * len(jobs), chunksize=4)
+            )
+            pairs = [(next(loaded), next(loaded)) for _ in shared]
+    else:
+        pairs = [
+            (
+                page_data(a_pages[url], first, fetched),
+                page_data(b_pages[url], second, fetched),
+            )
+            for url in shared
+        ]
+    for url, (a, b) in zip(shared, pairs):
         for left, right in zip(a["resources"], b["resources"]):
             if left["_resolved_path"] == right["_resolved_path"]:
                 left.pop("content_sha256", None)

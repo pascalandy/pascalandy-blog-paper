@@ -128,6 +128,23 @@ class ParityCommandTest(unittest.TestCase):
         self.assertEqual(result.returncode, 1)
         self.assertTrue(self.findings(report, "text"))
 
+    def test_many_pages_report_the_one_that_changed(self) -> None:
+        # Enough pages to read them in worker processes
+        for side in (self.before, self.after):
+            for number in range(17):
+                page = side / f"page-{number}"
+                page.mkdir()
+                shutil.copyfile(side / "index.html", page / "index.html")
+        changed = self.after / "page-9/index.html"
+        text = changed.read_text(encoding="utf-8")
+        changed.write_text(text.replace("before <em>after", "later <em>after"))
+        result, report = self.run_parity()
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertEqual(
+            [item["target"] for item in self.findings(report, "text")], ["/page-9/"]
+        )
+        self.assertEqual(report["routes"]["a"], 18)
+
     def test_inline_glue(self) -> None:
         self.html(self.after, "before <em>after", "before<em>after")
         result, report = self.run_parity()
