@@ -17,6 +17,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urljoin, urlsplit
 
+from overview import read, url
+
 ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -25,6 +27,7 @@ class Page(HTMLParser):
         super().__init__(convert_charrefs=True)
         self.elements: list[tuple[str, dict[str, str | None]]] = []
         self.title = ""
+        self.times: list[tuple[str, str]] = []
         self.json_ld: list[str] = []
         self.capture: str | None = None
         self.feed(text)
@@ -34,17 +37,23 @@ class Page(HTMLParser):
         self.elements.append((tag, attributes))
         if tag == "title":
             self.capture = "title"
+        elif tag == "time":
+            self.capture = "time"
+            self.times.append((attributes.get("datetime") or "", ""))
         elif tag == "script" and attributes.get("type") == "application/ld+json":
             self.capture = "json"
             self.json_ld.append("")
 
     def handle_endtag(self, tag: str) -> None:
-        if tag in ("title", "script"):
+        if tag in ("title", "script", "time"):
             self.capture = None
 
     def handle_data(self, data: str) -> None:
         if self.capture == "title":
             self.title += data
+        elif self.capture == "time":
+            value, text = self.times[-1]
+            self.times[-1] = (value, text + data)
         elif self.capture == "json":
             self.json_ld[-1] += data
 
@@ -61,7 +70,9 @@ def exists(dist: Path, target: str) -> bool:
     return path.is_file() or (path / "index.html").is_file()
 
 
-def problems(dist: Path, origin: str) -> list[str]:
+def problems(
+    dist: Path, origin: str, posts: dict[str, dict[str, str]] | None = None
+) -> list[str]:
     errors: list[str] = []
     titles: dict[str, str] = {}
     pages = sorted(dist.rglob("*.html"))
@@ -85,6 +96,48 @@ def problems(dist: Path, origin: str) -> list[str]:
         is_post = any(
             a.get("property") == "article:published_time" for _, a in page.elements
         )
+        language = (posts or {}).get(route, {}).get("lang", "fr-CA")
+        html_languages = [a.get("lang") for tag, a in page.elements if tag == "html"]
+        if html_languages != [language]:
+            reasons.add(f"html lang must be {language}")
+        for name, expected in (
+            ("og:type", "article" if is_post else "website"),
+            ("og:locale", "en_US" if language == "en" else "fr_CA"),
+        ):
+            values = [
+                a.get("content")
+                for tag, a in page.elements
+                if tag == "meta" and a.get("property") == name
+            ]
+            if values != [expected]:
+                reasons.add(f"{name} must occur once with {expected}")
+        source_date = (posts or {}).get(route, {}).get("date_created")
+        if is_post and source_date:
+            calendar = datetime.fromisoformat(source_date.replace("Z", "+00:00"))
+            months = (
+                "janvier",
+                "février",
+                "mars",
+                "avril",
+                "mai",
+                "juin",
+                "juillet",
+                "août",
+                "septembre",
+                "octobre",
+                "novembre",
+                "décembre",
+            )
+            expected_date = (
+                f"{calendar.day} {months[calendar.month - 1]} {calendar.year}"
+            )
+            if not any(
+                value[:10] == source_date[:10] and text.strip() == expected_date
+                for value, text in page.times
+            ):
+                reasons.add(
+                    f"displayed date must be {expected_date}, with calendar day unchanged"
+                )
         postings = 0
         for tag, attrs in page.elements:
             if "false" in (attrs.get("class") or "").split():
@@ -161,8 +214,10 @@ def main() -> int:
     origin = re.search(r'website: "([^"]+)"', config)
     if origin is None:
         cli.error("SITE.website not found")
-    url = urlsplit(origin.group(1))
-    errors = problems(args.dist, f"{url.scheme}://{url.netloc}")
+    site_url = urlsplit(origin.group(1))
+    state = read()
+    posts = {url(post["file"]) + "/": post["data"] for post in state["posts"]}
+    errors = problems(args.dist, f"{site_url.scheme}://{site_url.netloc}", posts)
     if errors:
         print("\n".join(errors), file=sys.stderr)
         print(

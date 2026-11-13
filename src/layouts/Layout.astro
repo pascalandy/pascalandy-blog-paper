@@ -15,6 +15,7 @@ type Props = {
   date_created?: Date;
   scrollSmooth?: boolean;
   noindex?: boolean;
+  lang?: "fr-CA" | "en";
 };
 
 const {
@@ -27,6 +28,7 @@ const {
   date_created,
   scrollSmooth = false,
   noindex = false,
+  lang = SITE.lang,
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
@@ -72,7 +74,7 @@ const themeStyleContent = `
 <!doctype html>
 <html
   dir={SITE.dir}
-  lang=`${SITE.lang ?? "en"}`
+  lang={lang}
   class:list={[{ "scroll-smooth": scrollSmooth }]}
 >
   <head>
@@ -100,6 +102,8 @@ const themeStyleContent = `
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={date_created ? "article" : "website"} />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : "fr_CA"} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
