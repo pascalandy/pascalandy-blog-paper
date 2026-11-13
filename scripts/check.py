@@ -16,7 +16,9 @@ import shutil
 import signal
 import subprocess
 import sys
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 from typing import NoReturn, TextIO
@@ -93,10 +95,16 @@ CHECKS = [
     ),
 ]
 
+# These rows write .astro/ and dist/, so they run one after another, in order.
+# Every other row reads the tree and runs beside them
+SERIAL = ("content", "typecheck", "build")
+
 EPILOG = """\
 Each check is one row of CHECKS in scripts/check.py; add a row to add a check.
 A failing check does not stop the others. It replays an excerpt of its output
 on stderr, keeps the full log in cache/check/NAME.log, and names its rerun.
+Checks run side by side and report in the order of --list; --verbose runs
+them one at a time.
 
 examples:
   just check
@@ -252,6 +260,12 @@ def stop(process: subprocess.Popen[str]) -> None:
         process.wait()
 
 
+# The commands running now, so an interrupt can stop each of them
+RUNNING: set[subprocess.Popen[str]] = set()
+RUNNING_LOCK = threading.Lock()
+STOPPING = threading.Event()
+
+
 def execute(command: Command, log: TextIO, verbose: bool) -> tuple[int, list[str]]:
     """Run one command; its output goes to the log and, when verbose, to stderr.
 
@@ -266,6 +280,8 @@ def execute(command: Command, log: TextIO, verbose: bool) -> tuple[int, list[str
         text=True,
         errors="replace",
     ) as process:
+        with RUNNING_LOCK:
+            RUNNING.add(process)
         try:
             assert process.stdout is not None
             for line in process.stdout:
@@ -277,6 +293,9 @@ def execute(command: Command, log: TextIO, verbose: bool) -> tuple[int, list[str
         except BaseException:
             stop(process)
             raise
+        finally:
+            with RUNNING_LOCK:
+                RUNNING.discard(process)
 
 
 def excerpt(output: list[str], log_path: Path) -> list[str]:
@@ -291,13 +310,18 @@ def excerpt(output: list[str], log_path: Path) -> list[str]:
     return [*errors, f"[... {skipped} more lines in {where} ...]", *lines[tail:]]
 
 
-def passes(check: Check, verbose: bool) -> bool:
-    """Run one check; a failure replays a bounded excerpt of its output on stderr."""
+def report(check: Check, verbose: bool) -> list[str]:
+    """Run one check; a failure returns the lines to replay on stderr, bounded.
+
+    When verbose, the lines stream on stderr instead, and the result says only
+    whether the check failed."""
     LOGS.mkdir(parents=True, exist_ok=True)
     log_path = LOGS / f"{check.name}.log"
     started = time.monotonic()
     with log_path.open("w", encoding="utf-8") as log:
         for command in check.commands:
+            if STOPPING.is_set():
+                return [f"error: {check.name} stopped"]
             header = f"==> {check.name}: {shlex.join(command)}"
             log.write(f"{header}\n")
             if verbose:
@@ -305,19 +329,49 @@ def passes(check: Check, verbose: bool) -> bool:
             code, output = execute(command, log, verbose)
             if code == 0:
                 continue
-            if not verbose:
-                print(header, file=sys.stderr)
-                for line in excerpt(output, log_path):
-                    print(line, file=sys.stderr)
-            print(
-                f"error: {check.name} failed; rerun: just check --only {check.name}",
-                file=sys.stderr,
+            failure = (
+                f"error: {check.name} failed; rerun: just check --only {check.name}"
             )
-            return False
+            if verbose:
+                print(failure, file=sys.stderr)
+                return [failure]
+            return [header, *excerpt(output, log_path), failure]
     if verbose:
         elapsed = time.monotonic() - started
         print(f"==> {check.name}: passed in {elapsed:.1f}s", file=sys.stderr)
-    return True
+    return []
+
+
+def failures(selected: list[Check]) -> list[str]:
+    """Run the checks side by side; replay each failure in the order of CHECKS."""
+    lane = [check for check in selected if check.name in SERIAL]
+    with ThreadPoolExecutor(max_workers=len(selected) or 1) as pool:
+        pending = {
+            check.name: pool.submit(report, check, False)
+            for check in selected
+            if check.name not in SERIAL
+        }
+        ordered = pool.submit(lambda: [report(check, False) for check in lane])
+        try:
+            failed = []
+            for check in selected:
+                lines = (
+                    ordered.result()[lane.index(check)]
+                    if check in lane
+                    else pending[check.name].result()
+                )
+                for line in lines:
+                    print(line, file=sys.stderr)
+                if lines:
+                    failed.append(check.name)
+            return failed
+        except BaseException:
+            STOPPING.set()
+            with RUNNING_LOCK:
+                running = list(RUNNING)
+            for process in running:
+                stop(process)
+            raise
 
 
 def verdict(args: argparse.Namespace) -> int:
@@ -330,7 +384,10 @@ def verdict(args: argparse.Namespace) -> int:
                     print(f"{check.name}: {shlex.join(command)}", file=sys.stderr)
         return 0
     preflight(selected)
-    failed = [check.name for check in selected if not passes(check, args.verbose)]
+    if args.verbose:
+        failed = [check.name for check in selected if report(check, True)]
+    else:
+        failed = failures(selected)
     return 1 if failed else 0
 
 
