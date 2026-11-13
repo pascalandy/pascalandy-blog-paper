@@ -1,4 +1,5 @@
-@import "tailwindcss";
+/* Tailwind reads class names from src/ only, not from scripts, notes, or docs */
+@import "tailwindcss" source("..");
 @import "./typography.css";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
