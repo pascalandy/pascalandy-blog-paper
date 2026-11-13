@@ -14,4 +14,4 @@ Firepress est au Mac, ce que Wordpress est au PC. C'est une solution clé en mai
 
 Conçu pour offrir tout ce dont tu auras besoin dès le jour #1, publier rapidement et bâtir sa réputation en ligne devient aussi facile qu'envoyer un courriel. Firepress place l'auteur à l'avant-plan sans tous les tracas techniques qui peuvent survenir.
 
-Ce n'est pas seulement la même plateforme utilisée par [Pascal Andy](https://pascalandy.com/blog), mais surtout des années d'expérience comme blogueur, une façon de penser et de travailler efficacement dans le but de devenir une référence dans son domaine, qui distingue la plateforme Firepress.
+Ce n'est pas seulement la même plateforme utilisée par [Pascal Andy](https://pascalandy.com/blog/), mais surtout des années d'expérience comme blogueur, une façon de penser et de travailler efficacement dans le but de devenir une référence dans son domaine, qui distingue la plateforme Firepress.

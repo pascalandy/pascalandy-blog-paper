@@ -7,8 +7,6 @@ author: Pascal Andy
 description: "How tags are shown or hidden on the blog"
 ---
 
-# Tag Visibility System
-
 > Configuration reference for controlling tag visibility across the blog.
 
 Based on `src/tags.ts`.

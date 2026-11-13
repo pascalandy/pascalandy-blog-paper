@@ -15,7 +15,7 @@ La **29e édition** de [Crypto In Montreal](/tags/crypto-in-montreal/) prendra l
 
 Les détails sur #CryptoInMontreal et la billetterie:
 
-[Lire cet article](/blog/cim-29)
+[Lire cet article](/blog/cim-29/)
 
 Vous avez aussi l'option de commander en ligne (à vos frais) chez buddha-station.com/desjardinslab24. La livraison aura lieu à 16 h 30.
 

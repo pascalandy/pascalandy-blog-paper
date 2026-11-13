@@ -12,7 +12,7 @@ La **38e édition** de [Crypto In Montreal](/tags/crypto-in-montreal/) prendra l
 
 Les détails sur #CryptoInMontreal et la billetterie:
 
-[Lire cet article](https://pascalandy.com/blog/cim-38)
+[Lire cet article](https://pascalandy.com/blog/cim-38/)
 
 ### Le quand, le où, le prix
 

@@ -7,8 +7,6 @@ author: Pascal Andy
 description: "Reference for blog post frontmatter fields"
 ---
 
-# Frontmatter Schema
-
 > Reference for blog post frontmatter fields.
 
 The schema lives in `src/content.config.ts`, and it is strict: an unknown key or an unregistered tag fails the build. After editing frontmatter, run `just check --only content`; a failure names the post, the field, and the fix.

@@ -18,7 +18,7 @@ Vivre au jour le jour versus vivre une catastrophe naturelle, crise économique,
 
 **Tous les détails :**
 
-- [pascalandy.com/blog/cim-31](/blog/cim-31)
+- [pascalandy.com/blog/cim-31](/blog/cim-31/)
 - [pascalandy.com/blog/crypto-in-montreal](/blog/crypto-in-montreal/) (notre site web)
 
 ### Qui est le présentateur ?

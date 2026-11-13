@@ -14,7 +14,7 @@ Pour la **30e édition** de Crypto In Montreal, nous aurons deux présentations 
 **À manger** : fruits, chips et goodies. Arrivez tôt!
 
 **Billetterie** et autres détails:
-[https://pascalandy.com/blog/cim-30](/blog/cim-30)
+[https://pascalandy.com/blog/cim-30](/blog/cim-30/)
 
 ## L'ordre du jour
 

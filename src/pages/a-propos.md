@@ -3,7 +3,7 @@ layout: ../layouts/AboutLayout.astro
 title: "À propos"
 ---
 
-- Ce que je fais ces temps-ci —> [/maintenant](/maintenant)
+- Ce que je fais ces temps-ci —> [/maintenant](/maintenant/)
 
 ## Pour commencer
 

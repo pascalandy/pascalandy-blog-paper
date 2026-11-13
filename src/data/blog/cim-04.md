@@ -101,4 +101,4 @@ Les billets de cet événement [ se trouvent ici](https://www.eventbrite.com/e/c
 
 Au plaisir de se croiser au prochain événement de #CryptoInMontreal!
 
-Cheers!<br>[Pascal Andy](/maintenant)
+Cheers!<br>[Pascal Andy](/maintenant/)

@@ -12,7 +12,7 @@ C'est notre dernier Meetup de 2019! La 39e édition de Crypto In Montreal prendr
 
 Les détails sur #CryptoInMontreal et la billetterie:
 
-[https://pascalandy.com/blog/cim-39](/blog/cim-39)
+[https://pascalandy.com/blog/cim-39](/blog/cim-39/)
 
 ### Agenda
 
