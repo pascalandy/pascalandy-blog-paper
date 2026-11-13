@@ -81,6 +81,7 @@ CHECKS = [
     # src/tags.ts leaves unchanged posts unvalidated
     row("content", ("bun", "run", "sync", "--force")),
     row("docs", uv_run("scripts/check_docs.py")),
+    row("images", uv_run("scripts/check_images.py")),
     # The ship scripts against a bare origin and fake tools
     row("scripts", (*UNITTEST, "scripts/tests")),
     row("typecheck", ("bun", "run", "astro", "check")),
