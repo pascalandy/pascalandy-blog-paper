@@ -84,5 +84,3 @@ export function oklchToHex(oklch: string): string {
   const b = linearToSrgb(linear.b);
   return rgbToHex(r, g, b);
 }
-
-export default oklchToHex;

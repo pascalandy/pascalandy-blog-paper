@@ -8,10 +8,8 @@ export const SITE = {
   title: "Le blog de Pascal Andy",
   ogImage: "pascalandy_banner.jpg",
   lightAndDarkMode: true,
-  postPerIndex: 4,
   postPerPage: 20,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
-  showBackButton: true, // show back button in post detail
   editPost: {
     enabled: false,
     text: "Edit page",

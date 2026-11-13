@@ -20,7 +20,6 @@ WEBKIT_BACKDROP_FILTER = "-webkit-" + BACKDROP_FILTER
 SELECTORS = (
     ".backdrop-blur-sm",
     ".backdrop-blur-lg",
-    r".md\:backdrop-blur-lg",
 )
 
 
