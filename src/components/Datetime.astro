@@ -10,12 +10,15 @@ type Props = {
 const { date_created, size = "sm", class: className = "" } = Astro.props;
 
 const datetime = new Date(date_created);
+// French writes the first of the month as an ordinal: 1er janvier 2019
 const date = new Intl.DateTimeFormat("fr-CA", {
   day: "numeric",
   month: "long",
   year: "numeric",
   timeZone: "UTC",
-}).format(datetime);
+})
+  .format(datetime)
+  .replace(/^1 /, "1er ");
 ---
 
 <div class:list={["flex items-center gap-x-2 opacity-80", className]}>

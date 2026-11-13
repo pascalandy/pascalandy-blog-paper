@@ -137,9 +137,8 @@ def problems(
                 "novembre",
                 "décembre",
             )
-            expected_date = (
-                f"{calendar.day} {months[calendar.month - 1]} {calendar.year}"
-            )
+            day = "1er" if calendar.day == 1 else calendar.day
+            expected_date = f"{day} {months[calendar.month - 1]} {calendar.year}"
             if not any(
                 value[:10] == source_date[:10] and text.strip() == expected_date
                 for value, text in page.times

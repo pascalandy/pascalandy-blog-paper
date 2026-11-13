@@ -83,6 +83,9 @@ class HtmlTests(unittest.TestCase):
             errors = "\n".join(problems(dist, "https://example.test", source))
             self.assertIn("html lang must be en", errors)
             self.assertIn("displayed date must be 15 janvier 2020", errors)
+            first = {"/": {"lang": "en", "date_created": "2020-01-01T00:00:00Z"}}
+            errors = "\n".join(problems(dist, "https://example.test", first))
+            self.assertIn("displayed date must be 1er janvier 2020", errors)
             page.write_text(text.replace(" data-pagefind-body", ""))
             index.write_text('{"languages":{"en":{"page_count":3}}}')
             errors = "\n".join(problems(dist, "https://example.test", source))
