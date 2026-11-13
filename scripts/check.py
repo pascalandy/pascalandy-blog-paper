@@ -75,6 +75,7 @@ CHECKS = [
     row("format", uv_run("scripts/tidy.py", "check")),
     row("lint", uv_run("scripts/tidy.py", "lint")),
     row("workflows", ACTIONLINT),
+    row("lockfile", uv_run("scripts/check_lockfile.py")),
     # astro sync validates every post against the schema in src/content.config.ts.
     # --force clears the content store: without it, a registry edit in
     # src/tags.ts leaves unchanged posts unvalidated

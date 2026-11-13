@@ -46,10 +46,15 @@ build *args:
 preview *args:
     @uv run --quiet scripts/pretty.py bun run preview "$@"
 
+# Clear build output while keeping downloaded fonts and browser evidence
+[group('commands')]
+fresh *args:
+    @uv run --quiet scripts/fresh.py "$@"
+
 # Delete build output and caches
 [group('commands')]
 clean:
-    @rm -rf dist cache .astro
+    @rm -rf dist cache .astro public/pagefind
 
 # Delete build output, caches, and dependencies before archiving a workspace
 [group('commands')]

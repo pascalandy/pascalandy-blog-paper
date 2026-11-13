@@ -57,6 +57,8 @@ If no more packages to update, you're done.
 
 For an upgrade that must leave the published site unchanged, build the old and new commits in separate worktrees. Use the same `cache/fonts/` files in both. Google Fonts can return different font files to two fresh builds, which would change the generated images even if the code is identical.
 
+Run `just fresh` before each comparison build. It clears generated output and optimized images while preserving fonts and browser evidence. A baseline commit older than the recipe has no `just fresh`: there, delete `dist/`, `.astro/`, `public/pagefind/`, and everything in `cache/` except `cache/fonts/` and `cache/verify-blog/`. The `lockfile` check rejects multiple resolved Vite versions.
+
 Run the comparison from the new worktree:
 
 ```bash
