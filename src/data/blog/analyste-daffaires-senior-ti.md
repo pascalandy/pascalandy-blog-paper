@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2018-10-27
+date_created: 2018-10-26
 title: "Analyste d'Affaires Sénior T.I."
 tags:
   - consultation

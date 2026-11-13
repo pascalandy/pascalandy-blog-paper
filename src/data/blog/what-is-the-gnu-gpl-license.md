@@ -2,7 +2,7 @@
 title: "What is the GNU GPL license?"
 tags:
   - random
-date_created: 2019-01-08
+date_created: 2019-01-07
 author: "Pascal Andy"
 description: "A Markdown version of the GNU GPL license created on GitHub, plus Seth Godin's take on open licensing."
 ogImage: ../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg

@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2018-06-13
+date_created: 2018-06-12
 title: "Copywriter recherché pour communiquer l’essence d'une nouvelle startup"
 tags:
   - consultation

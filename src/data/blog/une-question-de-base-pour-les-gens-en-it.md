@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2018-04-12
+date_created: 2018-04-11
 title: "Une question de base pour les gens en IT"
 tags:
   - technologie

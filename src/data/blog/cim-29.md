@@ -2,7 +2,7 @@
 title: "Le Big Bang De L'ère Financière : Une Introduction Au Blockchain et Aux Cryptos | CryptoInMontreal #29"
 tags:
   - crypto-in-montreal
-date_created: 2019-04-09
+date_created: 2019-04-08
 author: "Pascal Andy"
 description: "Meetup CryptoInMontreal #29 au Desjardins Lab : introduction au blockchain, démo proof-of-work et réseautage gratuit avec bière et bouffe."
 ogImage: ../../assets/images/og-legacy/2019/04/029b-cryptoinmontreal.jpg

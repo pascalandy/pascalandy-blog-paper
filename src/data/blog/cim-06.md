@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2018-02-14
+date_created: 2018-02-13
 title: "#CryptoInMontreal 06 — Miner ou acheter ses coins ?"
 tags:
   - crypto-in-montreal

@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2018-06-28
+date_created: 2018-06-27
 title: "Code de conduite de Crypto in Montréal"
 tags:
   - void

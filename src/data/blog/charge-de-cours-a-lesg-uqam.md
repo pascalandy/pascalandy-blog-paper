@@ -4,7 +4,7 @@ tags:
   - consultation
   - crypto-in-montreal
   - technologie
-date_created: 2020-07-18
+date_created: 2020-07-17
 author: "Pascal Andy"
 description: "En juin 2020, j'ai enseigné le module Smart Contract en tant que chargé de cours à l'ESG UQAM, une expérience en ligne via Zoom."
 ogImage: "../../assets/images/og-legacy/2021/01/bull-2021-01-06_23h01-1.jpg"

@@ -2,7 +2,7 @@
 title: "Chauffeurs de taxi"
 tags:
   - technologie
-date_created: 2015-02-24
+date_created: 2015-02-23
 author: "Pascal Andy"
 description: "On ne peut pas être contre la fait que certaines personnes partagent leurs véhiculent via Uber ou Amigo Express."
 ogImage: "../../assets/images/og-legacy/2017/04/pascalandy-com_header_2017-04-10_14h46.jpg"

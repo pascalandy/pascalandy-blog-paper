@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2018-06-27
+date_created: 2018-06-26
 title: "Le Bitcoin et les Altcoins, une introduction au monde des cryptos | #CryptoInMontreal 16"
 tags:
   - crypto-in-montreal

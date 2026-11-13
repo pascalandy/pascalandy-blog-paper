@@ -2,7 +2,7 @@
 title: "« Le futur est maintenant » une Introduction Au Blockchain et Aux Cryptos | CryptoInMontreal 32"
 tags:
   - crypto-in-montreal
-date_created: 2019-06-14
+date_created: 2019-06-13
 author: "Pascal Andy"
 description: "Introduction pratique aux cryptomonnaies et démo proof-of-work au Desjardins Lab - CryptoInMontreal 32e édition."
 ogImage: ../../assets/images/og-legacy/2019/06/032b-cryptoinmontreal.jpg

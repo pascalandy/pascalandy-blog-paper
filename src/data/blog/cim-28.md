@@ -2,7 +2,7 @@
 title: "Privacy on the Blockchain and a Q&A on Crypto Taxes | CryptoInMontreal #28"
 tags:
   - crypto-in-montreal
-date_created: 2019-03-25
+date_created: 2019-03-24
 author: "Pascal Andy"
 description: "Explore blockchain privacy and crypto taxation in Canada at CryptoInMontreal #28 with expert Q&A on tax rules for miners and investors."
 ogImage: ../../assets/images/og-legacy/2019/03/028a-CryptoInMontreal_Crypto-In-Montreal_par-Pascal-Andy-2.jpg

@@ -1,6 +1,6 @@
 ---
 author: Pascal Andy
-date_created: 2014-10-01
+date_created: 2014-09-30
 title: "Souscrire au blog de Pascal Andy"
 tags:
   - random
