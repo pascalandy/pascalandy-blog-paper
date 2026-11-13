@@ -39,16 +39,10 @@ let tags = getUniqueTags(posts).filter(
 
 ### Blog Roll (`/blog/`) and RSS
 
-Uses `excludeFromBlogRoll` via `getExcludedTags()`:
+Uses `blogRollFilter` in `src/utils/blogRollFilter.ts`, shared by the blog roll and RSS. It excludes drafts and posts whose registered tags set `excludeFromBlogRoll`:
 
 ```typescript
-// src/pages/blog/[...page].astro
-const excludedTags = getExcludedTags();
-const posts = await getCollection(
-  "blog",
-  ({ data }) =>
-    !data.draft && !data.tags.some(tag => excludedTags.includes(tag))
-);
+const posts = await getCollection("blog", blogRollFilter);
 ```
 
 ## Adding a New Tag

@@ -24,7 +24,7 @@ graph TD
 
 ## Rendered Diagram (WILL render)
 
-Use `mermaid` as the language identifier to render the diagram:
+Set `mermaid: true` in the post frontmatter, then use `mermaid` as the code block language. The flag loads Mermaid from cdn.jsdelivr.net in the browser. Without the flag, the block stays as code:
 
 ```mermaid
 graph TD
