@@ -33,7 +33,7 @@ Steps run in order, each as ACTION:ARGUMENT, with Playwright selectors such as
   eval:JS                 evaluate JS and save its result in state.json
 
 A role= name must equal the whole accessible name; a regex, such as
-role=link[name=/^Next/], matches part of it.
+role=link[name=/^Suivant/], matches part of it.
 
 Then OUT receives screenshot.png (the viewport, at most 1920 CSS pixels a side),
 aria.txt (the accessibility snapshot), state.json, network.json (response status
