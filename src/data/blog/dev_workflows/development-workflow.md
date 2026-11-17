@@ -76,7 +76,7 @@ It refuses in about a second when a tool is missing, `gh` is signed out, `main` 
 | Merge blocked on `signoff`              | `just merge` signs off the PR head, then merges it; never merge with `gh pr merge --admin` to skip it                                                                                  |
 | Want a run on a clean machine           | `just gh-ci <branch>`, then `gh run watch`                                                                                                                                             |
 
-Agents run `just ci` and `just signoff-check` and report the result; Pascal signs off. When Pascal authorizes a merge, agents run `just merge`, which signs off and merges. Claude Code on the web has no `gh`, and agents never deploy unless Pascal asks.
+Agents run `just ci` and `just signoff-check` and report the result before they report a PR ready. Whoever merges runs `just merge`, which signs off and merges. Claude Code on the web has no `gh`, and agents never deploy unless Pascal asks.
 
 ### One-time setup
 
@@ -117,7 +117,7 @@ Since the branch must contain the tip of `main`, the tree that lands on `main` i
 | Refused: part of a GitHub stack           | GitHub merges a PR in a stack only through its stack: run `gh stack unstack <stack>` to merge layer by layer with `just merge`, or `gh stack merge` |
 | Refused after the checks                  | Fix what the message names, then run `just merge` again; a rerun also reports a PR that merged in the meantime                                      |
 
-When Pascal authorizes a merge, agents run `just merge`; the authorization covers its checks and signoff. A request to write code does not authorize a merge.
+`just merge` runs the signoff itself, so whoever merges needs no separate `just signoff`. A stack of PRs lands with `gh stack merge` once each layer is signed off, not with `just merge` on each layer.
 
 ## Deploy
 
