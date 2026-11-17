@@ -35,6 +35,9 @@ SOURCE_FILE = re.compile(r'data-astro-source-file="([^"]+)"')
 # What a build reads. Deleting or renaming a file changes its folder's time, so
 # folders count as well as files
 INPUTS = ("src", "public", "astro.config.ts", "package.json", "bun.lock")
+# package.json's prepare script runs `lefthook install`, which rewrites the hooks
+# every worktree of the clone shares, so a verifier installs without scripts (#92)
+INSTALL = ("bun", "install", "--frozen-lockfile", "--ignore-scripts")
 
 EPILOG = """\
 actions:
@@ -42,7 +45,10 @@ actions:
           name source files in another checkout (Astro marks them while its
           dev toolbar is on); otherwise serve a build on :4330, rebuilt once a
           build input (src/, public/, astro.config.ts, package.json, bun.lock)
-          changes; print the base URL
+          changes; print the base URL. Before it builds, and whenever
+          node_modules/ is missing, it installs the locked dependencies with
+          bun install --frozen-lockfile --ignore-scripts, which leaves the git
+          hooks shared by every worktree as they are
   doctor  read-only: which instance, whether it answers as the blog, and whether
           it is current; exit 1 when it is not worth driving
   down    stop the preview this run started, once its command confirms it,
@@ -76,12 +82,25 @@ class Failure(Exception):
     """An expected failure; the message says what to fix."""
 
 
+def require_bun() -> None:
+    if shutil.which("bun") is None:
+        raise Failure("bun not found on PATH; install Bun (https://bun.sh)")
+
+
+def install() -> None:
+    """Install the locked dependencies without lifecycle scripts."""
+    require_bun()
+    result = subprocess.run(
+        INSTALL, cwd=ROOT, capture_output=True, text=True, check=False
+    )
+    if result.returncode != 0:
+        print(result.stdout + result.stderr, file=sys.stderr, end="")
+        raise Failure(f"{' '.join(INSTALL)} failed; fix the lockfile, then rerun up")
+
+
 def site_title() -> str:
     """SITE.title, read from src/config.ts through Bun, never copied."""
-    if shutil.which("bun") is None:
-        raise Failure(
-            "bun not found on PATH; install Bun (https://bun.sh), then run: just install"
-        )
+    require_bun()
     result = subprocess.run(
         ["bun", "-e", 'console.log((await import("./src/config.ts")).SITE.title)'],
         cwd=ROOT,
@@ -90,7 +109,9 @@ def site_title() -> str:
         check=False,
     )
     if result.returncode != 0 or not result.stdout.strip():
-        raise Failure("could not read SITE.title from src/config.ts; run: just install")
+        raise Failure(
+            f"could not read SITE.title from src/config.ts; run: {' '.join(INSTALL)}"
+        )
     return result.stdout.strip()
 
 
@@ -171,6 +192,8 @@ def ours(state: dict[str, Any]) -> bool:
 
 
 def up() -> str:
+    if not (ROOT / "node_modules").is_dir():
+        install()
     title = site_title()
     state = load()
     started = bool(state and state["started"])
@@ -189,6 +212,8 @@ def up() -> str:
         raise Failure(
             f"another process serves {PREVIEW}; stop it or free port {PREVIEW_PORT}, then rerun up"
         )
+    # bun.lock may have changed since node_modules/ was installed
+    install()
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     log = STATE_DIR / "build.log"
     with log.open("w", encoding="utf-8") as output:

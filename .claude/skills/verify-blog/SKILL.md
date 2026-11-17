@@ -18,6 +18,7 @@ It prints the base URL once the site answers, and records it in `cache/verify-bl
 - When Pascal's dev server answers on http://localhost:4320, it is reused and never restarted, unless its pages show it serves another checkout, such as the main one seen from a worktree
 - Otherwise it builds the site (`bun run build:ci`, about a minute when cold) and serves the build with `astro preview` on http://127.0.0.1:4330; a later `up` reuses that preview until a build input changes (`src/`, `public/`, `astro.config.ts`, `package.json`, `bun.lock`), then rebuilds
 - It never starts the dev server: Pascal runs `just dev` himself
+- Before it builds, and whenever `node_modules/` is missing, it installs the locked dependencies with `bun install --frozen-lockfile --ignore-scripts`; without scripts, `lefthook install` does not rewrite the git hooks that every worktree of the clone shares
 - The state records this checkout's path, so a state copied from another checkout is ignored
 
 Set `URL` to the printed base URL for the commands below.
@@ -62,7 +63,7 @@ uv run .claude/skills/verify-blog/scripts/browse.py "$URL/search" --out cache/ve
 
 It needs the Chromium build of Playwright 1.56; when `browse.py` says Chromium did not start, run `uv run --with playwright==1.56.0 python -m playwright install --with-deps chromium`; on Linux, `--with-deps` also installs the system libraries it needs, through apt. `--device iphone` emulates an iPhone viewport in Chromium; it is not Safari, so iOS proof needs the agent-browser path.
 
-`browse.py` also accepts `--step back`, `--step reload`, and `--step 'eval:<JavaScript>'`. It writes `network.json` with each response status and a separate list of failed requests. `probes.json` records the `<html>` theme at `DOMContentLoaded`, `astro:after-swap`, and `astro:page-load`.
+`browse.py` also accepts `--step back`, `--step reload`, and `--step 'eval:<JavaScript>'`. To capture content below the fold, `--step 'scroll:SELECTOR'` centers the first match in the viewport without clicking it, so a link does not navigate; it fails at once when nothing matches. It writes `network.json` with each response status and a separate list of failed requests. `probes.json` records the `<html>` theme at `DOMContentLoaded`, `astro:after-swap`, and `astro:page-load`.
 
 On `astro:after-swap`, `theme` comes from a listener registered after initial page load, following the site's theme handler in the same event dispatch; `theme_before_handlers` preserves the early init-script reading. A full reload installs both listeners in the new document. A link click and cross-route back wait for the navigation's `astro:page-load` or a full page load before the next step. Fragment-only back completes when the URL fragment changes.
 
@@ -112,4 +113,4 @@ agent-browser close
 ## Helpers
 
 - `uv run .claude/skills/verify-blog/scripts/site.py up|doctor|down`: launch, check, and stop the instance, as above
-- `uv run .claude/skills/verify-blog/scripts/browse.py URL --out DIR [--device desktop|iphone] [--color-scheme light|dark] [--step ACTION:ARGUMENT]...`: steps are `click:SELECTOR`, `fill:SELECTOR=TEXT`, `press:KEY`, `wait:SELECTOR`, and `goto:PATH`; `--help` shows examples
+- `uv run .claude/skills/verify-blog/scripts/browse.py URL --out DIR [--device desktop|iphone] [--color-scheme light|dark] [--step ACTION:ARGUMENT]...`: steps are `click:SELECTOR`, `fill:SELECTOR=TEXT`, `press:KEY`, `wait:SELECTOR`, `scroll:SELECTOR`, and `goto:PATH`; `--help` shows examples

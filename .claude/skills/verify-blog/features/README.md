@@ -13,7 +13,7 @@ This directory is the maintained source for verifying what a reader sees on Pasc
 
 - Start each recipe from the page it names, in a fresh tab, with no stored theme
 - Prefer ids, ARIA roles and names, and route paths over CSS classes or position
-- The page chrome is in French and English: nav labels are `tags`, `à propos`, and `search`; post navigation says `Previous` and `Next`
+- The page chrome is in French: nav labels are `tags`, `à propos`, and `rechercher`; post navigation says `Précédent` and `Suivant`; pagination says `Précédente` and `Suivante`
 - Run agent-browser commands as written; the fallback bullet gives the same proof with `browse.py`
 
 ## Proof and skip reporting
