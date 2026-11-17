@@ -5,7 +5,7 @@
 # ///
 """Merge the current branch's PR into main: sign off its pushed head, then merge that commit.
 
-Agents run it only after Pascal authorizes the merge. It refuses before the
+Agents run it when the PR is ready to merge. It refuses before the
 checks when the checkout or the PR is not ready, and it never bypasses a rule.
 A rerun after an interruption finds a merged PR and reports it.
 
