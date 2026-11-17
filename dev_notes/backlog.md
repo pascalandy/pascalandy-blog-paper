@@ -49,7 +49,7 @@ This file remains the queue under issue #103's default for R10. Agents pick an `
 | B20 | done | Sitemap integration | `@astrojs/sitemap` runs in `astro.config.ts` |
 | B21 | done | Remove the "Share this post on" block from posts | 0 posts contain it |
 | #84 | needs Pascal | Full checks run at push, signoff, and merge | R5 decides whether merge may reuse green signoff on an unchanged SHA; test_merge.py must prove that condition |
-| #87 | open | verify-blog has no scroll action | browse.py scrolls a selector into view before capture and a behavior test covers the action |
+| #87 | appended | browse.py `scroll:SELECTOR` step, in [#119](https://github.com/pascalandy/pascalandy-blog-paper/pull/119) | browse.py scrolls a selector into view before capture and a behavior test covers the action |
 | #89, #90 | needs Pascal | AVIF parser follow-ups target output the build no longer emits | R8 decides whether to close them as not planned while no AVIF ships; keep the existing parser |
 | #92 | open | verify-blog installation can replace hooks in the shared git directory | Install with --ignore-scripts in worktrees; hashes of shared .git/hooks before and after match |
 | #94 | appended | Invalid-post fixtures in a throwaway copy, in [#118](https://github.com/pascalandy/pascalandy-blog-paper/pull/118) | A fixture post with an unknown key makes `just check --only content` fail and name the key |
