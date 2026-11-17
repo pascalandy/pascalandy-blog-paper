@@ -3,6 +3,9 @@ const THEME = "theme";
 const LIGHT = "light";
 const DARK = "dark";
 
+// What the theme button's aria-label announces for each theme
+const LABELS: Record<string, string> = { [LIGHT]: "clair", [DARK]: "sombre" };
+
 // Initial color scheme
 // Can be "light", "dark", or empty string for system's prefers-color-scheme
 const initialColorScheme = "";
@@ -32,7 +35,9 @@ function setPreference(): void {
 function reflectPreference(): void {
   document.firstElementChild?.setAttribute("data-theme", themeValue);
 
-  document.querySelector("#theme-btn")?.setAttribute("aria-label", themeValue);
+  document
+    .querySelector("#theme-btn")
+    ?.setAttribute("aria-label", LABELS[themeValue] ?? themeValue);
 
   // Get a reference to the body element
   const body = document.body;

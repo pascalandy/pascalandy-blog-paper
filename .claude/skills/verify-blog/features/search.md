@@ -11,7 +11,7 @@ Search finds posts by their text through Pagefind, keeps the query in the URL, a
 
 ## How to get to it (user POV)
 
-- Choose `search` in the header
+- Choose `rechercher` in the header
 - Open `$URL/search?q=QUERY` directly
 
 ## Driving it with agent-browser

@@ -5,13 +5,13 @@ The theme button switches the site between light and dark, and the choice persis
 ## Sub-features
 
 - `theme-initial` starts from the stored choice, else the operating system's color scheme
-- `theme-toggle` flips `data-theme` on the page root between `light` and `dark`, and mirrors it in the button's `aria-label`
+- `theme-toggle` flips `data-theme` on the page root between `light` and `dark`, and the button's `aria-label` announces it in French: `clair` or `sombre`
 - `theme-persist` keeps the choice after a reload and on other pages
 
 ## How to get to it (user POV)
 
-- Choose the button titled `Toggles light & dark` in the header, on any page
-- On a phone, open the menu first; the button sits in it
+- Choose the button titled `Basculer entre clair et sombre` in the header, on any page
+- On a phone, open the menu first; the button sits in it and reads `Mode sombre` or `Mode clair`
 
 ## Driving it with agent-browser
 
@@ -20,8 +20,8 @@ Preconditions:
 - `site.py doctor` exits 0
 - A fresh browser with no stored theme, and a known color scheme: launch with `--color-scheme light`
 
-- **Read the start.** Run `agent-browser open "$URL/"` and `agent-browser get attr html data-theme`. It gives `light`, and `agent-browser get attr "#theme-btn" aria-label` gives `light` too.
-- **Toggle.** Run `agent-browser click "#theme-btn"`. `data-theme` and the button's `aria-label` both become `dark`, and the page turns dark.
+- **Read the start.** Run `agent-browser open "$URL/"` and `agent-browser get attr html data-theme`. It gives `light`, and `agent-browser get attr "#theme-btn" aria-label` gives `clair`.
+- **Toggle.** Run `agent-browser click "#theme-btn"`. `data-theme` becomes `dark`, the button's `aria-label` becomes `sombre`, and the page turns dark.
 - **Reload.** Run `agent-browser reload` and read `data-theme` again. It stays `dark`.
 - **Change page.** Run `agent-browser open "$URL/tags"`. `data-theme` is still `dark`.
 - **Proof.** Screenshot before and after the toggle: `agent-browser screenshot cache/verify-blog/$RUN/theme/before.png` and `.../after.png`.

@@ -34,7 +34,7 @@ const isActive = (path: string) => {
   href="#main-content"
   class="absolute start-16 -top-full z-50 bg-background px-3 py-2 text-accent backdrop-blur-lg transition-all focus:top-4"
 >
-  Skip to content
+  Aller au contenu
 </a>
 
 <header
@@ -64,7 +64,7 @@ const isActive = (path: string) => {
       <button
         id="menu-btn"
         class="focus-outline peer relative z-40 self-end p-2 sm:hidden"
-        aria-label="Open Menu"
+        aria-label="Ouvrir le menu"
         aria-expanded="false"
         aria-controls="menu-items"
       >
@@ -139,11 +139,11 @@ const isActive = (path: string) => {
                   "focus-outline flex p-3 sm:justify-center sm:p-1",
                   { "[&>svg]:stroke-accent": isActive("/search") },
                 ]}
-                title="Search"
-                aria-label="search"
+                title="Rechercher"
+                aria-label="rechercher"
               >
                 <IconSearch class="hidden size-[22px] sm:inline-block" />
-                <span class="sm:sr-only">Search</span>
+                <span class="sm:sr-only">Rechercher</span>
               </LinkButton>
             </li>
             {
@@ -152,15 +152,15 @@ const isActive = (path: string) => {
                   <button
                     id="theme-btn"
                     class="focus-outline relative flex p-3 sm:p-1 hover:[&>svg]:stroke-accent"
-                    title="Toggles light & dark"
+                    title="Basculer entre clair et sombre"
                     aria-label="auto"
                     aria-live="polite"
                   >
                     <IconMoon class="hidden size-5 scale-100 rotate-0 transition-all sm:inline-block dark:scale-0 dark:-rotate-90" />
                     <IconSunHigh class="absolute top-1/2 left-1/2 hidden size-5 -translate-1/2 scale-0 rotate-90 transition-all sm:inline-block dark:scale-100 dark:rotate-0" />
-                    <span class="sm:hidden dark:hidden">Dark mode</span>
+                    <span class="sm:hidden dark:hidden">Mode sombre</span>
                     <span class="hidden dark:inline sm:dark:hidden">
-                      Light mode
+                      Mode clair
                     </span>
                   </button>
                 </li>
@@ -194,7 +194,7 @@ const isActive = (path: string) => {
 
     const openMenu = () => {
       menuBtn.setAttribute("aria-expanded", "true");
-      menuBtn.setAttribute("aria-label", "Close Menu");
+      menuBtn.setAttribute("aria-label", "Fermer le menu");
       menuItems.classList.remove("opacity-0", "pointer-events-none");
       menuItems.classList.add("opacity-100", "pointer-events-auto");
       menuOverlay.classList.remove("opacity-0", "pointer-events-none");
@@ -205,7 +205,7 @@ const isActive = (path: string) => {
 
     const closeMenu = () => {
       menuBtn.setAttribute("aria-expanded", "false");
-      menuBtn.setAttribute("aria-label", "Open Menu");
+      menuBtn.setAttribute("aria-label", "Ouvrir le menu");
       menuItems.classList.add("opacity-0", "pointer-events-none");
       menuItems.classList.remove("opacity-100", "pointer-events-auto");
       menuOverlay.classList.add("opacity-0", "pointer-events-none");
