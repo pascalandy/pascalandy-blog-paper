@@ -25,6 +25,8 @@ Steps run in order, each as ACTION:ARGUMENT, with Playwright selectors such as
   fill:SELECTOR=TEXT      type TEXT into a field
   press:KEY               press a key, such as Enter
   wait:SELECTOR           wait until the element is visible
+  scroll:SELECTOR         scroll the element to the middle of the viewport,
+                          without clicking it; fails at once when none matches
   goto:PATH               open a path on the same site, such as /tags
   reload                  reload the current page
   back                    use browser history back
@@ -44,6 +46,8 @@ examples:
     --step 'fill:.pagefind-ui__search-input=bitcoin' --step 'wait:.pagefind-ui__result'
   uv run browse.py http://127.0.0.1:4330/ --out cache/verify-blog/run/theme \\
     --color-scheme light --step 'click:#theme-btn'
+  uv run browse.py http://127.0.0.1:4330/tags/dev-notes/ --out cache/verify-blog/run/rows \\
+    --step 'scroll:main ul li:nth-child(5)'
 
 exit codes:
   0    every step ran and the evidence is saved
@@ -53,7 +57,17 @@ exit codes:
   130  interrupted (SIGINT)"""
 
 VIEWPORTS = {"desktop": {"width": 1440, "height": 900}}
-ACTIONS = ("click", "fill", "press", "wait", "goto", "reload", "back", "eval")
+ACTIONS = (
+    "click",
+    "fill",
+    "press",
+    "wait",
+    "scroll",
+    "goto",
+    "reload",
+    "back",
+    "eval",
+)
 # The browser matching the pinned Playwright, with the system libraries it needs
 # on Linux; a cloud sandbox may ship both already
 INSTALL = (
@@ -146,6 +160,14 @@ def run(
         page.keyboard.press(argument)
     elif action == "wait":
         page.locator(argument).first.wait_for(state="visible")
+    elif action == "scroll":
+        target = page.locator(argument).first
+        if not target.count():
+            raise Error(f"scroll: no element matches {argument}")
+        # instant, because the site's scroll-smooth would leave the capture mid-scroll
+        target.evaluate(
+            "element => element.scrollIntoView({block: 'center', behavior: 'instant'})"
+        )
     elif action == "goto":
         # /tags resolves against the site's origin, whatever page it starts from
         page.goto(urljoin(base, argument), wait_until="load")
