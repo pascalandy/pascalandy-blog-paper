@@ -51,7 +51,7 @@ This file remains the queue under issue #103's default for R10. Agents pick an `
 | #84 | needs Pascal | Full checks run at push, signoff, and merge | R5 decides whether merge may reuse green signoff on an unchanged SHA; test_merge.py must prove that condition |
 | #87 | appended | browse.py `scroll:SELECTOR` step, in [#119](https://github.com/pascalandy/pascalandy-blog-paper/pull/119) | browse.py scrolls a selector into view before capture and a behavior test covers the action |
 | #89, #90 | needs Pascal | AVIF parser follow-ups target output the build no longer emits | R8 decides whether to close them as not planned while no AVIF ships; keep the existing parser |
-| #92 | open | verify-blog installation can replace hooks in the shared git directory | Install with --ignore-scripts in worktrees; hashes of shared .git/hooks before and after match |
+| #92 | appended | `site.py up` installs with `--ignore-scripts`, in [#120](https://github.com/pascalandy/pascalandy-blog-paper/pull/120) | Install with --ignore-scripts in worktrees; hashes of shared .git/hooks before and after match |
 | #94 | appended | Invalid-post fixtures in a throwaway copy, in [#118](https://github.com/pascalandy/pascalandy-blog-paper/pull/118) | A fixture post with an unknown key makes `just check --only content` fail and name the key |
 | #97 | appended | Tailwind reads class names from `src/` only in [#117](https://github.com/pascalandy/pascalandy-blog-paper/pull/117) | Parity between two fresh builds reports the stylesheet as the only change, and the 44-shot matrix has no changed pixel |
 | #98 | appended | Duplicate of B34, implemented in [#109](https://github.com/pascalandy/pascalandy-blog-paper/pull/109) | The lockfile check rejects two resolved Vite versions |

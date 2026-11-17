@@ -18,6 +18,7 @@ It prints the base URL once the site answers, and records it in `cache/verify-bl
 - When Pascal's dev server answers on http://localhost:4320, it is reused and never restarted, unless its pages show it serves another checkout, such as the main one seen from a worktree
 - Otherwise it builds the site (`bun run build:ci`, about a minute when cold) and serves the build with `astro preview` on http://127.0.0.1:4330; a later `up` reuses that preview until a build input changes (`src/`, `public/`, `astro.config.ts`, `package.json`, `bun.lock`), then rebuilds
 - It never starts the dev server: Pascal runs `just dev` himself
+- Before it builds, and whenever `node_modules/` is missing, it installs the locked dependencies with `bun install --frozen-lockfile --ignore-scripts`; without scripts, `lefthook install` does not rewrite the git hooks that every worktree of the clone shares
 - The state records this checkout's path, so a state copied from another checkout is ignored
 
 Set `URL` to the printed base URL for the commands below.
