@@ -46,7 +46,7 @@ git -C "$worktree" push -u origin feature/blue-sky
 gh -R pascalandy/pascalandy-blog-paper pr create --base main
 ```
 
-Open the PR ready. Report its URL and head SHA. Agents run `just check` and `just signoff-check`. Pascal reviews and signs off. An agent runs `just merge` only when Pascal explicitly authorizes that merge. Deployment needs separate authorization.
+Open the PR ready. Report its URL and head SHA. Agents run `just check` and `just signoff-check` before they report it ready. Whoever merges runs `just merge`, which signs off the head, then merges it. Agents deploy only when Pascal asks.
 
 ## Remove a merged worktree
 
