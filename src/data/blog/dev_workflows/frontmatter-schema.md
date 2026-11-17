@@ -9,7 +9,7 @@ description: "Reference for blog post frontmatter fields"
 
 > Reference for blog post frontmatter fields.
 
-The schema lives in `src/content.config.ts`, and it is strict: an unknown key or an unregistered tag fails the build. After editing frontmatter, run `just check --only content`; a failure names the post, the field, and the fix.
+The schema lives in `src/content.config.ts`, and it is strict: an unknown key or an unregistered tag fails the build. After editing frontmatter, run `just check --only content`; a failure names the post, the field, and the fix. `just check --only scripts` guards those messages: it plants one invalid post per message in a throwaway copy of the site, so an Astro or Zod upgrade that changes them fails the check.
 
 ## Required Fields
 

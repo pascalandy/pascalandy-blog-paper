@@ -52,7 +52,7 @@ This file remains the queue under issue #103's default for R10. Agents pick an `
 | #87 | open | verify-blog has no scroll action | browse.py scrolls a selector into view before capture and a behavior test covers the action |
 | #89, #90 | needs Pascal | AVIF parser follow-ups target output the build no longer emits | R8 decides whether to close them as not planned while no AVIF ships; keep the existing parser |
 | #92 | open | verify-blog installation can replace hooks in the shared git directory | Install with --ignore-scripts in worktrees; hashes of shared .git/hooks before and after match |
-| #94 | open | No invalid-post fixture proves strict schema rejection | A fixture post with an unknown key makes `just check --only content` fail and name the key |
+| #94 | appended | Invalid-post fixtures in a throwaway copy, in [#118](https://github.com/pascalandy/pascalandy-blog-paper/pull/118) | A fixture post with an unknown key makes `just check --only content` fail and name the key |
 | #97 | appended | Tailwind reads class names from `src/` only in [#117](https://github.com/pascalandy/pascalandy-blog-paper/pull/117) | Parity between two fresh builds reports the stylesheet as the only change, and the 44-shot matrix has no changed pixel |
 | #98 | appended | Duplicate of B34, implemented in [#109](https://github.com/pascalandy/pascalandy-blog-paper/pull/109) | The lockfile check rejects two resolved Vite versions |
 | #54, #56, #59, #62, #65 | needs Pascal | Release post-mortem records and retired autorelease labels remain | R11 decides which unchecked items deserve tickets before closing records and deleting labels |
