@@ -5,6 +5,7 @@ post into its collection, and runs that copy's `check.py --only content`, so
 Astro's real loader and Zod run while the repository's collection stays as is.
 """
 
+import re
 import shutil
 import subprocess
 import sys
@@ -73,8 +74,11 @@ class ContentSchemaTests(unittest.TestCase):
     def assert_rejected(self, name: str, text: str, message: str) -> None:
         code, errors, log = self.content_check(name, text)
         self.assertEqual(code, 1, f"{name}: {errors}")
-        self.assertIn(message, errors, f"{name}: the failure replay lacks it")
-        self.assertIn(message, log, f"{name}: the content log lacks it")
+        # Astro prints each issue as `  PATH: MESSAGE` on its own line, so the
+        # message must fill the rest of that line: an appended word fails too
+        line = re.compile(rf"^  \S+: {re.escape(message)}$", re.MULTILINE)
+        self.assertRegex(errors, line, f"{name}: the failure replay lacks it")
+        self.assertRegex(log, line, f"{name}: the content log lacks it")
         self.assertIn("error: content failed; rerun: just check --only content", errors)
 
     def test_valid_post_passes_silently(self) -> None:
