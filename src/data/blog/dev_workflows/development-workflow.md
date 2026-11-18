@@ -141,13 +141,7 @@ Each PR was signed off on its own, so two PRs can pass separately and still clas
 
 ### Setup
 
-The Sevalla API key is available through chezmoi's keyring on all three machines. Pass it to one deploy command:
-
-```bash
-SEVALLA_TOKEN="$(chezmoi secret keyring get --service=SEVALLA_API_KEY --user=api_key)" just deploy
-```
-
-Use the same prefix with `just deploy-preview` or `just deploy --dry-run`. The deploy script also reads the macOS Keychain when `SEVALLA_TOKEN` is unset. Keep the token out of shell startup files: every command, including a checked-out PR's scripts, would inherit it.
+The Sevalla API key is the `SEVALLA_TOKEN` key of the fnox store. The deploy script reads the `SEVALLA_TOKEN` environment variable first, then runs `fnox exec --only SEVALLA_TOKEN --if-missing error -- printenv SEVALLA_TOKEN`, so `just deploy`, `just deploy-preview` and `just deploy --dry-run` need no prefix. Keep the token out of shell startup files: every command, including a checked-out PR's scripts, would inherit it.
 
 The site IDs come from the `SEVALLA_STATIC_SITE_ID` and `SEVALLA_STATIC_SITE_ID_PREVIEW` repository variables through `gh variable get`; export either variable to override it. If you create a new API key, also run `gh secret set SEVALLA_TOKEN` so the manual CI workflow deploys with it.
 

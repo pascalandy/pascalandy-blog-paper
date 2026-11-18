@@ -12,9 +12,9 @@ Usage:
     just deploy [--dry-run] [--no-wait]
     just deploy-preview [branch] [--dry-run] [--no-wait]
 
-Setup: set SEVALLA_TOKEN for one command from
-`chezmoi secret keyring get --service=SEVALLA_API_KEY --user=api_key`.
-The macOS Keychain service sevalla-api-token is a fallback. Site IDs come from
+Setup: the API key is SEVALLA_TOKEN in the environment, else the fnox store
+(`fnox exec --only SEVALLA_TOKEN --if-missing error -- printenv SEVALLA_TOKEN`).
+Site IDs come from
 SEVALLA_STATIC_SITE_ID and SEVALLA_STATIC_SITE_ID_PREVIEW in the environment,
 or else from the GitHub repository variables of the same names through gh.
 
@@ -39,7 +39,8 @@ API = "https://api.sevalla.com/v3"
 POLL_SECONDS = 5.0
 DEADLINE_SECONDS = 30 * 60
 FINISHED = {"success": True, "failed": False, "cancelled": False}
-KEYCHAIN_SERVICE = "sevalla-api-token"
+FNOX_KEY = "SEVALLA_TOKEN"
+FNOX_EXECUTABLES = ("fnox", "~/.local/bin/fnox", "~/.local/share/fnox/fnox")
 
 
 @dataclass(frozen=True)
@@ -162,18 +163,34 @@ def wait_for(site: str, deployment: str, token: str) -> int:
     return 1
 
 
+def fnox_token() -> str:
+    """Read FNOX_KEY from the fnox store; stdout stays in memory, never in argv."""
+    for executable in FNOX_EXECUTABLES:
+        try:
+            result = run(
+                os.path.expanduser(executable),
+                "exec",
+                "--only",
+                FNOX_KEY,
+                "--if-missing",
+                "error",
+                "--",
+                "printenv",
+                FNOX_KEY,
+            )
+        except FileNotFoundError:
+            continue
+        return result.stdout.rstrip("\r\n") if result.returncode == 0 else ""
+    return ""
+
+
 def sevalla_token() -> str:
-    """Read the API key from SEVALLA_TOKEN, else from the macOS Keychain."""
-    token = os.environ.get("SEVALLA_TOKEN", "")
-    if not token and shutil.which("security"):
-        token = run(
-            "security", "find-generic-password", "-s", KEYCHAIN_SERVICE, "-w"
-        ).stdout
+    """Read the API key from SEVALLA_TOKEN, else from the fnox store."""
+    token = os.environ.get(FNOX_KEY, "") or fnox_token()
     token = token.strip()
     if not token:
         raise Refused(
-            "no Sevalla API key; store one with: security add-generic-password "
-            f'-s {KEYCHAIN_SERVICE} -a "$USER" -w  (or set SEVALLA_TOKEN)'
+            f"no Sevalla API key; set {FNOX_KEY} or store it in fnox under {FNOX_KEY}"
         )
     if not token.isprintable():
         raise Refused("the Sevalla API key has a line break or control character")
