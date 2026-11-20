@@ -49,7 +49,7 @@ Plan-structure and technical decisions, newest last. Pascal's product decisions 
 - Date: 2026-11-19
 - Trigger: technical choice
 - Decision: `just verify-live` checks the public site with plain HTTP requests and needs no secret. The comparison of the deployed commit stays in `just deploy`, which already reads the Sevalla token from fnox
-- Why: the QA agent, Pascal and any agent can run the live check without the token. The Sevalla deployment record says which commit Sevalla built; only the public site proves what readers get
+- Why: the QA agent, Pascal and any agent can run the live check without the token. The Sevalla deployment record says which commit Sevalla built, and the public site shows that readers get a working build. Neither check proves that the CDN serves the new revision instead of a cached one. A build stamp in the pages would prove it, but it needs a fact that the plan lacks: whether Sevalla's build exposes its commit. It waits for a stale-cache incident
 - Affects: E03-T02, E03-T03, E03-T04, E06, E09
 
 ## D006: Issue #84 becomes the issue of E03-T01
