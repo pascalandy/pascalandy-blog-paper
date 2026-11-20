@@ -1,8 +1,32 @@
+![Isometric drawing of a person writing at a lamp-lit desk in a small study, with a bookshelf and a sunset over the hills through the window](docs/assets/hero.png)
+
 # Le blog de Pascal Andy
 
-This is my personal blog built on the AstroPaper theme - a minimal, responsive, accessible and SEO-friendly Astro blog theme.
+The source of Pascal Andy's blog, written in French and published at [blog.pascalandy.com](https://blog.pascalandy.com). Built with Astro on the [AstroPaper](https://github.com/satnaing/astro-paper) theme.
 
-Source: https://github.com/pascalandy/pascalandy-blog-paper
+Run it locally, once the [prerequisites](#prerequisites) are installed:
+
+```bash
+just install # dependencies and git hooks
+just dev     # then open http://localhost:4320/
+```
+
+Each post is one Markdown file in `src/data/blog/`. To add one, save a file such as this as `src/data/blog/<slug>.md`:
+
+```markdown
+---
+author: Pascal Andy
+date_created: 2026-11-20
+title: "Mon billet"
+description: "Une phrase qui résume le billet."
+tags:
+  - random
+---
+
+Le texte du billet, en français.
+```
+
+The file name becomes the URL, `/blog/<slug>/`. Every tag must exist in `src/tags.ts`, and `just check --only content` reports any unknown key or tag.
 
 ## Prerequisites
 
