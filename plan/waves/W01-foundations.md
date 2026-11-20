@@ -528,7 +528,7 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - Each failed check prints one line with the URL, the expected value and the received value. The script tries the failed checks again every 10 s, for at most 120 s, because the CDN can serve old pages for a short time. Then it exits 1
   - On success, it prints `live site OK: <N> checks on <BASE>` and exits 0
 - Traces: [BC §8](../00-business-case.md#s8), SC8, D005
-- Contract: `just verify-live [BASE]` exits 0 with one summary line, or exits 1 with one line for each failed check. `scripts/verify_live.py` also gives `failures(base, retry_seconds=120) -> list[str]`, which returns those lines and an empty list on success. E03-T04 calls this function, and E06 (W02) adds the 41 old URLs to its checks
+- Contract: `just verify-live [BASE]` exits 0 with one summary line, or exits 1 with one line for each failed check. `scripts/verify_live.py` also gives `failures(base, astro_version=None, retry_seconds=120) -> list[str]`, which returns those lines and an empty list on success. Without `astro_version`, it reads the version from the `package.json` of the checkout. E03-T04 calls this function, and E06 (W02) adds the 41 old URLs to its checks
 - Acceptance:
   - [ ] `just verify-live` exits 0 against `https://pascalandy.com/` and prints `live site OK: <N> checks on https://pascalandy.com/`
   - [ ] `scripts/tests/test_verify_live.py` serves fixture sites with a local `http.server`: a good site exits 0; a wrong generator version, a 404 `rss.xml` and a 404 newest post each exit 1, with a line that names the URL, the expected value and the received value. The tests set the retry window to 0
@@ -556,16 +556,17 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 - Kind: feature · Executor: agent · State: todo
 - Today:
   - After E03-T02, `just deploy` compares the deployed commit with the printed commit, prints `deployed <sha> to <target>` and exits 0 on a match
-  - After E03-T03, `scripts/verify_live.py` gives `failures(base, retry_seconds=120)`, and `just verify-live` exists
+  - After E03-T03, `scripts/verify_live.py` gives `failures(base, astro_version=None, retry_seconds=120)`, and `just verify-live` exists
+  - `deploy.py` deploys GitHub's `main`, which can differ from the local checkout, so the local `package.json` can name another Astro version
   - Nothing runs the live checks after a deploy. `just deploy --no-wait` returns as soon as Sevalla accepts the deployment, and the manual CI workflow (`just gh-ci main production`) deploys through its own Sevalla action
 - After:
-  - After a production `success` with a matching commit, `deploy.py` calls `failures()` on `SITE.website`. It prints each returned line and exits 1 when the list is not empty
+  - After a production `success` with a matching commit, `deploy.py` calls `failures()` on `SITE.website`, with the Astro version of `package.json` at the deployed commit. It prints each returned line and exits 1 when the list is not empty
   - `just deploy --no-wait` prints that it skipped the commit check and the live checks
   - The "Deploy" section of `development-workflow.md` documents `just verify-live`, says that `just deploy` runs it, and says to run `just verify-live` after a deploy by the manual CI workflow
 - Traces: [BC §8](../00-business-case.md#s8), SC8, D005, D012
 - Contract: none. It uses the contract of E03-T03
 - Acceptance:
-  - [ ] A test in `scripts/tests/test_deploy.py` shows that `deploy.py production` calls the live checks after a matching `success`, and exits 1 when they return a failure
+  - [ ] A test in `scripts/tests/test_deploy.py` shows that `deploy.py production` calls the live checks after a matching `success`, with the Astro version of the deployed commit even when the local `package.json` differs, and exits 1 when they return a failure
   - [ ] A test shows that a commit mismatch exits 1 before the live checks run
   - [ ] A test shows that `--no-wait` prints the skip line and runs no check
   - [ ] The PR quotes the new lines of the "Deploy" section of `development-workflow.md`
@@ -772,7 +773,7 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 - Traces: [BC §7](../00-business-case.md#s7), SC6
 - Setup: in a fresh clone in a scratch folder on the Mini, run `bun install --frozen-lockfile --ignore-scripts` before any `just` command (D003)
 - QA scenarios (≤ 8):
-  - [ ] In a fresh clone on the Mini, `just build` → `rg -l 'satnaing/astro-paper|Edit page' dist` prints nothing, and `fd 'gault|025b-|028a-|CIM-logo-general|038b-' dist/og-legacy` prints nothing
+  - [ ] In a fresh clone on the Mini, `just build` → `rg -l 'satnaing/astro-paper/edit/' dist` prints nothing (the decision log may still name the removed link), and `fd 'gault|025b-|028a-|CIM-logo-general|038b-' dist/og-legacy` prints nothing
   - [ ] Add `hideEditPost: true` to one post of the scratch clone → `just check --only content` fails and names the key; then restore the post with `git checkout -- <post>`
   - [ ] Copy a JPEG to `public/og-legacy/qa-orphan.jpg` → `just check --only images` fails with `unreferenced image: public/og-legacy/qa-orphan.jpg`; delete the file → the check passes
   - [ ] `fd -e jpg . public/og-legacy | wc -l` → prints 12, and `just check --only images` passes
