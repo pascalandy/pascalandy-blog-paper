@@ -50,7 +50,7 @@ Plan-structure and technical decisions, newest last. Pascal's product decisions 
 - Trigger: technical choice
 - Decision: `just verify-live` checks the public site with plain HTTP requests and needs no secret. The comparison of the deployed commit stays in `just deploy`, which already reads the Sevalla token from fnox
 - Why: the QA agent, Pascal and any agent can run the live check without the token. The Sevalla deployment record says which commit Sevalla built; only the public site proves what readers get
-- Affects: E03-T02, E03-T03, E06, E09
+- Affects: E03-T02, E03-T03, E03-T04, E06, E09
 
 ## D006: Issue #84 becomes the issue of E03-T01
 
@@ -80,12 +80,12 @@ Plan-structure and technical decisions, newest last. Pascal's product decisions 
 - Why: B23 and B26 are not in [BC §11](00-business-case.md#s11), but they are open work, so they become issues (B26 in W03, B23 in W04). B32 closes because the decision of 2026-10-21 keeps the unified processor. B37 closes because R9 says no Ghost export exists. #95 is done: #108 deleted the playbook that held the stale font example
 - Affects: E01-T02, E01-T03, W03, W04
 
-## D009: A deleted folder counts as one file
+## D009: Deletions and moves count once
 
 - Date: 2026-11-19
 - Trigger: technical choice
-- Decision: for the task limit of 8 files, a deleted folder counts as one file, and a moved file counts once
-- Why: a deletion or a `git mv` needs no review line by line. Without this rule, E02-T03 and E04-T02 would split into PRs that each do almost nothing
+- Decision: for the task limit of 8 files, a deleted folder counts as one file, and a moved file counts once. The lines of a deleted file do not count toward the limit of about 400 changed lines
+- Why: a deletion or a `git mv` needs no review line by line. Without this rule, E02-T03 (it deletes about 2,900 lines of old plans) and E04-T02 would split into PRs that each do almost nothing
 - Affects: Limits in `01-project.md`
 
 ## D010: Keep `dev_notes/MultiLanguage/`
@@ -100,6 +100,14 @@ Plan-structure and technical decisions, newest last. Pascal's product decisions 
 
 - Date: 2026-11-19
 - Trigger: initial decomposition
-- Decision: E01-T03 files each later item as an issue without a `wave:` label, so it has no deadline. W03 and W04 stay `proposed` and name these items. When a wave review makes W03 or W04 active, each of its tasks takes over the existing issue: the planner rewrites the issue as the brief and adds the wave label, instead of opening a second issue
+- Decision: E01-T03 files each later item as an issue without a `wave:` label, so it has no deadline. W03 and W04 stay `proposed` and name these items. When a wave review makes W03 or W04 active, each of its tasks that comes from an item filed by E01-T03 takes over that issue: the planner rewrites the issue as the brief and adds the wave label, instead of opening a second issue
 - Why: Pascal asked that each later item become an issue without a deadline ([BC §11](00-business-case.md#s11)). The proposed waves keep the order and the reasons
 - Affects: E01-T03, W03, W04
+
+## D012: The automatic checks cover `just deploy` when it waits
+
+- Date: 2026-11-19
+- Trigger: technical choice (review of the plan)
+- Decision: the commit comparison and the live checks run automatically after each production deploy that `just deploy` waits for. Two paths are exceptions: `just deploy --no-wait` prints that it skipped both checks, and after a deploy by the manual CI workflow (`just gh-ci main production`), the playbook says to run `just verify-live`
+- Why: the decision log (2026-09-29) makes `just deploy` the way to ship `main`. `--no-wait` returns before the build ends, so it cannot check the result. The CI workflow is a manual fallback with its own Sevalla action; wiring checks into it would add a workflow change for a path that nobody uses today
+- Affects: SC8, E03, E03-T04

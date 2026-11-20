@@ -26,4 +26,4 @@ Dependencies stay current with little effort from Pascal, and guards catch silen
 - B33: a guard for `compressHTML` and the unified processor; B24: Pagefind byte differences; B36: the Prettier cache
 - B23: `persist-credentials: false` in `claude.yml`, with one live `@claude` run by Pascal
 - B18: phone-format QA on the Mac Mini with `agent-browser -p ios`, Xcode and Appium
-- Each task of this wave takes over the issue that E01-T03 filed, instead of a new issue (D011)
+- Each task of this wave that comes from the backlog takes over the issue that E01-T03 filed, instead of a new issue (D011)

@@ -8,6 +8,10 @@
         {
           "what": "gh signed in with write access to the repository",
           "check": "gh auth status"
+        },
+        {
+          "what": "The plan is on the default branch (PR #152 merged), so the docs check resolves `plan/01-project.md`",
+          "check": "gh api repos/pascalandy/pascalandy-blog-paper/contents/plan/01-project.md --silent"
         }
       ],
       "touches": [
@@ -56,6 +60,10 @@
       ],
       "needs": [
         {
+          "what": "The plan is on the default branch (PR #152 merged)",
+          "check": "gh api repos/pascalandy/pascalandy-blog-paper/contents/plan/decisions.md --silent"
+        },
+        {
           "what": "The session runs on the Mac Mini",
           "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"
         },
@@ -90,8 +98,8 @@
       "blocked_by": [],
       "needs": [
         {
-          "what": "The browse.py tests pass before the change, with Playwright Chromium installed",
-          "check": "just install --frozen-lockfile && just check --only scripts"
+          "what": "The Chromium build of Playwright 1.56 launches; the browse.py tests skip without it",
+          "check": "uv run --quiet --with playwright==1.56.0 python -c \"from playwright.sync_api import sync_playwright; p = sync_playwright().start(); p.chromium.launch().close(); p.stop()\""
         }
       ],
       "touches": [
@@ -197,10 +205,6 @@
         {
           "what": "Sevalla's OpenAPI file documents commit_sha",
           "check": "curl -sf https://api.sevalla.com/v3/openapi.json | grep -q commit_sha"
-        },
-        {
-          "what": "The Sevalla token is in the fnox store, for the dry run",
-          "check": "fnox exec --only SEVALLA_TOKEN --if-missing error -- true"
         }
       ],
       "touches": [
@@ -213,12 +217,7 @@
     },
     {
       "id": "E03-T03",
-      "blocked_by": [
-        {
-          "id": "E03-T02",
-          "why": "both tasks change `deploy.py`, `test_deploy.py` and `development-workflow.md`"
-        }
-      ],
+      "blocked_by": [],
       "needs": [
         {
           "what": "The public site answers",
@@ -228,9 +227,27 @@
       "touches": [
         "scripts/verify_live.py",
         "scripts/tests/test_verify_live.py",
+        "justfile"
+      ],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E03-T04",
+      "blocked_by": [
+        {
+          "id": "E03-T02",
+          "why": "both tasks change `deploy.py`, `test_deploy.py` and `development-workflow.md`"
+        },
+        {
+          "id": "E03-T03",
+          "why": "contract: it defines `failures()` in `scripts/verify_live.py`"
+        }
+      ],
+      "needs": [],
+      "touches": [
         "scripts/deploy.py",
         "scripts/tests/test_deploy.py",
-        "justfile",
         "src/data/blog/dev_workflows/development-workflow.md"
       ],
       "kind": "task",
@@ -263,7 +280,8 @@
       "verifies": [
         "E03-T01",
         "E03-T02",
-        "E03-T03"
+        "E03-T03",
+        "E03-T04"
       ],
       "needs": [
         {
@@ -412,8 +430,13 @@
     },
     {
       "from": "E03-T02",
-      "to": "E03-T03",
+      "to": "E03-T04",
       "why": "both tasks change `deploy.py`, `test_deploy.py` and `development-workflow.md`"
+    },
+    {
+      "from": "E03-T03",
+      "to": "E03-T04",
+      "why": "contract: it defines `failures()` in `scripts/verify_live.py`"
     },
     {
       "from": "E03-T01",
@@ -432,6 +455,11 @@
     },
     {
       "from": "E03-T03",
+      "to": "E03-QA2",
+      "why": "verifies"
+    },
+    {
+      "from": "E03-T04",
       "to": "E03-QA2",
       "why": "verifies"
     },
@@ -459,6 +487,7 @@
       "E02-T01",
       "E02-T02",
       "E02-T04",
+      "E03-T03",
       "E04-T01",
       "E04-T02",
       "E04-T03"
@@ -475,7 +504,7 @@
       "E03-QA1"
     ],
     [
-      "E03-T03"
+      "E03-T04"
     ],
     [
       "E03-QA2"
