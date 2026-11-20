@@ -1,0 +1,485 @@
+{
+  "wave_file": "W01-foundations.md",
+  "nodes": [
+    {
+      "id": "E01-T01",
+      "blocked_by": [],
+      "needs": [
+        {
+          "what": "gh signed in with write access to the repository",
+          "check": "gh auth status"
+        }
+      ],
+      "touches": [
+        "AGENTS.md",
+        ".github/PULL_REQUEST_TEMPLATE.md",
+        "src/data/blog/dev_workflows/decision-log.md"
+      ],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E01-T02",
+      "blocked_by": [],
+      "needs": [
+        {
+          "what": "gh signed in with write access to the repository",
+          "check": "gh auth status"
+        }
+      ],
+      "touches": [],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E01-T03",
+      "blocked_by": [],
+      "needs": [
+        {
+          "what": "gh signed in with write access to the repository",
+          "check": "gh auth status"
+        }
+      ],
+      "touches": [
+        "dev_notes/backlog.md",
+        "dev_notes/README.md"
+      ],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E01-QA1",
+      "verifies": [
+        "E01-T01",
+        "E01-T02",
+        "E01-T03"
+      ],
+      "needs": [
+        {
+          "what": "The session runs on the Mac Mini",
+          "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"
+        },
+        {
+          "what": "gh signed in on the QA machine",
+          "check": "gh auth status"
+        },
+        {
+          "what": "bun on the QA machine (E02-T04)",
+          "check": "command -v bun"
+        }
+      ],
+      "kind": "qa",
+      "state": "todo"
+    },
+    {
+      "id": "E02-T01",
+      "blocked_by": [],
+      "needs": [],
+      "touches": [
+        ".claude/skills/verify-blog/features/post.md",
+        ".claude/skills/verify-blog/features/search.md",
+        ".claude/skills/verify-blog/features/tags.md",
+        ".claude/skills/verify-blog/features/theme.md",
+        "scripts/tests/test_verify_blog_features.py"
+      ],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E02-T02",
+      "blocked_by": [],
+      "needs": [
+        {
+          "what": "The browse.py tests pass before the change, with Playwright Chromium installed",
+          "check": "just install --frozen-lockfile && just check --only scripts"
+        }
+      ],
+      "touches": [
+        ".claude/skills/verify-blog/scripts/browse.py",
+        "scripts/tests/test_browse.py",
+        ".claude/skills/verify-blog/SKILL.md"
+      ],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E02-T03",
+      "blocked_by": [
+        {
+          "id": "E02-T02",
+          "why": "contract: it defines `browse.py --viewport`, which the fallback steps use"
+        },
+        {
+          "id": "E01-T03",
+          "why": "both tasks change `dev_notes/README.md`"
+        }
+      ],
+      "needs": [],
+      "touches": [
+        ".claude/skills/verify-blog/features/navigation.md",
+        "dev_notes/e2e_browser_tests/**",
+        "dev_notes/dev-workflow.md",
+        "dev_notes/ci-flow.mermaid",
+        "dev_notes/README.md"
+      ],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E02-T04",
+      "blocked_by": [],
+      "needs": [
+        {
+          "what": "The session runs on the Mac Mini",
+          "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"
+        },
+        {
+          "what": "gh signed in on the Mini",
+          "check": "gh auth status"
+        }
+      ],
+      "touches": [],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E02-QA1",
+      "verifies": [
+        "E02-T01",
+        "E02-T02",
+        "E02-T03",
+        "E02-T04"
+      ],
+      "needs": [
+        {
+          "what": "The session runs on the Mac Mini",
+          "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"
+        },
+        {
+          "what": "gh signed in on the QA machine",
+          "check": "gh auth status"
+        },
+        {
+          "what": "bun on the QA machine (E02-T04)",
+          "check": "command -v bun"
+        }
+      ],
+      "kind": "qa",
+      "state": "todo"
+    },
+    {
+      "id": "E03-T01",
+      "blocked_by": [
+        {
+          "id": "E01-T01",
+          "why": "both tasks change `AGENTS.md`"
+        }
+      ],
+      "needs": [],
+      "touches": [
+        "scripts/merge.py",
+        "scripts/tests/test_merge.py",
+        "src/data/blog/dev_workflows/development-workflow.md",
+        "AGENTS.md"
+      ],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E03-T02",
+      "blocked_by": [
+        {
+          "id": "E03-T01",
+          "why": "both tasks change `development-workflow.md`"
+        }
+      ],
+      "needs": [
+        {
+          "what": "Sevalla's OpenAPI file documents commit_sha",
+          "check": "curl -sf https://api.sevalla.com/v3/openapi.json | grep -q commit_sha"
+        },
+        {
+          "what": "The Sevalla token is in the fnox store, for the dry run",
+          "check": "fnox exec --only SEVALLA_TOKEN --if-missing error -- true"
+        }
+      ],
+      "touches": [
+        "scripts/deploy.py",
+        "scripts/tests/test_deploy.py",
+        "src/data/blog/dev_workflows/development-workflow.md"
+      ],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E03-T03",
+      "blocked_by": [
+        {
+          "id": "E03-T02",
+          "why": "both tasks change `deploy.py`, `test_deploy.py` and `development-workflow.md`"
+        }
+      ],
+      "needs": [
+        {
+          "what": "The public site answers",
+          "check": "curl -sfI https://pascalandy.com/ -o /dev/null"
+        }
+      ],
+      "touches": [
+        "scripts/verify_live.py",
+        "scripts/tests/test_verify_live.py",
+        "scripts/deploy.py",
+        "scripts/tests/test_deploy.py",
+        "justfile",
+        "src/data/blog/dev_workflows/development-workflow.md"
+      ],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E03-QA1",
+      "verifies": [
+        "E03-T01"
+      ],
+      "needs": [
+        {
+          "what": "The session runs on the Mac Mini",
+          "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"
+        },
+        {
+          "what": "gh signed in on the QA machine",
+          "check": "gh auth status"
+        },
+        {
+          "what": "bun on the QA machine (E02-T04)",
+          "check": "command -v bun"
+        }
+      ],
+      "kind": "qa",
+      "state": "todo"
+    },
+    {
+      "id": "E03-QA2",
+      "verifies": [
+        "E03-T01",
+        "E03-T02",
+        "E03-T03"
+      ],
+      "needs": [
+        {
+          "what": "The session runs on the Mac Mini",
+          "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"
+        },
+        {
+          "what": "gh signed in on the QA machine",
+          "check": "gh auth status"
+        },
+        {
+          "what": "bun on the QA machine (E02-T04)",
+          "check": "command -v bun"
+        }
+      ],
+      "kind": "qa",
+      "state": "todo"
+    },
+    {
+      "id": "E04-T01",
+      "blocked_by": [],
+      "needs": [],
+      "touches": [
+        "src/components/EditPost.astro",
+        "src/assets/icons/IconEdit.svg",
+        "src/config.ts",
+        "src/layouts/PostDetails.astro",
+        "src/content.config.ts",
+        "src/data/blog/dev_workflows/frontmatter-schema.md"
+      ],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E04-T02",
+      "blocked_by": [],
+      "needs": [],
+      "touches": [
+        "scripts/analyze_images.py",
+        "scripts/convert_frontmatter.py",
+        "scripts/import_ghost_posts.py",
+        "scripts/normalize-tags.py",
+        "scripts/rename_to_kebab.py",
+        "scripts/archive/**",
+        "ruff.toml"
+      ],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E04-T03",
+      "blocked_by": [],
+      "needs": [],
+      "touches": [
+        "public/og-legacy/2017/11/gault.jpg",
+        "public/og-legacy/2019/01/025b-cryptoinmontreal.jpg",
+        "public/og-legacy/2019/03/028a-cryptoinmontreal.jpg",
+        "public/og-legacy/2019/05/CIM-logo-general.jpg",
+        "public/og-legacy/2019/11/038b-cryptoinmontreal.jpg",
+        "scripts/check_images.py",
+        "scripts/tests/test_images.py"
+      ],
+      "kind": "task",
+      "state": "todo"
+    },
+    {
+      "id": "E04-QA1",
+      "verifies": [
+        "E04-T01",
+        "E04-T02",
+        "E04-T03"
+      ],
+      "needs": [
+        {
+          "what": "The session runs on the Mac Mini",
+          "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"
+        },
+        {
+          "what": "gh signed in on the QA machine",
+          "check": "gh auth status"
+        },
+        {
+          "what": "bun on the QA machine (E02-T04)",
+          "check": "command -v bun"
+        }
+      ],
+      "kind": "qa",
+      "state": "todo"
+    }
+  ],
+  "edges": [
+    {
+      "from": "E01-T01",
+      "to": "E01-QA1",
+      "why": "verifies"
+    },
+    {
+      "from": "E01-T02",
+      "to": "E01-QA1",
+      "why": "verifies"
+    },
+    {
+      "from": "E01-T03",
+      "to": "E01-QA1",
+      "why": "verifies"
+    },
+    {
+      "from": "E02-T02",
+      "to": "E02-T03",
+      "why": "contract: it defines `browse.py --viewport`, which the fallback steps use"
+    },
+    {
+      "from": "E01-T03",
+      "to": "E02-T03",
+      "why": "both tasks change `dev_notes/README.md`"
+    },
+    {
+      "from": "E02-T01",
+      "to": "E02-QA1",
+      "why": "verifies"
+    },
+    {
+      "from": "E02-T02",
+      "to": "E02-QA1",
+      "why": "verifies"
+    },
+    {
+      "from": "E02-T03",
+      "to": "E02-QA1",
+      "why": "verifies"
+    },
+    {
+      "from": "E02-T04",
+      "to": "E02-QA1",
+      "why": "verifies"
+    },
+    {
+      "from": "E01-T01",
+      "to": "E03-T01",
+      "why": "both tasks change `AGENTS.md`"
+    },
+    {
+      "from": "E03-T01",
+      "to": "E03-T02",
+      "why": "both tasks change `development-workflow.md`"
+    },
+    {
+      "from": "E03-T02",
+      "to": "E03-T03",
+      "why": "both tasks change `deploy.py`, `test_deploy.py` and `development-workflow.md`"
+    },
+    {
+      "from": "E03-T01",
+      "to": "E03-QA1",
+      "why": "verifies"
+    },
+    {
+      "from": "E03-T01",
+      "to": "E03-QA2",
+      "why": "verifies"
+    },
+    {
+      "from": "E03-T02",
+      "to": "E03-QA2",
+      "why": "verifies"
+    },
+    {
+      "from": "E03-T03",
+      "to": "E03-QA2",
+      "why": "verifies"
+    },
+    {
+      "from": "E04-T01",
+      "to": "E04-QA1",
+      "why": "verifies"
+    },
+    {
+      "from": "E04-T02",
+      "to": "E04-QA1",
+      "why": "verifies"
+    },
+    {
+      "from": "E04-T03",
+      "to": "E04-QA1",
+      "why": "verifies"
+    }
+  ],
+  "batches": [
+    [
+      "E01-T01",
+      "E01-T02",
+      "E01-T03",
+      "E02-T01",
+      "E02-T02",
+      "E02-T04",
+      "E04-T01",
+      "E04-T02",
+      "E04-T03"
+    ],
+    [
+      "E01-QA1",
+      "E02-T03",
+      "E03-T01",
+      "E04-QA1"
+    ],
+    [
+      "E02-QA1",
+      "E03-T02",
+      "E03-QA1"
+    ],
+    [
+      "E03-T03"
+    ],
+    [
+      "E03-QA2"
+    ]
+  ],
+  "gates": {}
+}
