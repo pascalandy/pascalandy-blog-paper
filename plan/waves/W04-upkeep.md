@@ -3,7 +3,8 @@ id: W04
 project: BLOG
 status: proposed
 label: wave:W04
-skill_version: "2.0.0"
+skill_version: "3.1.0"
+executor: human
 ---
 
 # W04: upkeep
@@ -21,9 +22,13 @@ Dependencies stay current with little effort from Pascal, and guards catch silen
 
 ## Scope
 
-- R6: a spike compares Renovate, Dependabot and other agents, and says how their PRs pass `signoff`; the result replaces or confirms the decision "Renovate is the only dependency bot" (2026-09-29)
-- B28, then B29: ESLint, eslint-plugin-astro and typescript-eslint together, then TypeScript; B30: Pagefind; B31: satori, with Pascal's review of the OG images
-- B33: a guard for `compressHTML` and the unified processor; B24: Pagefind byte differences; B36: the Prettier cache
-- B23: `persist-credentials: false` in `claude.yml`, with one live `@claude` run by Pascal
-- B18: phone-format QA on the Mac Mini with `agent-browser -p ios`, Xcode and Appium
-- Each task of this wave that comes from the backlog takes over the issue that E01-T03 filed, instead of a new issue (D011)
+- [R6 · #156](https://github.com/pascalandy/pascalandy-blog-paper/issues/156): a spike compares Renovate, Dependabot and other agents, and says how their PRs pass `signoff`; the result replaces or confirms the decision "Renovate is the only dependency bot" (2026-09-29)
+- [B28 · #163](https://github.com/pascalandy/pascalandy-blog-paper/issues/163), then [B29 · #164](https://github.com/pascalandy/pascalandy-blog-paper/issues/164): ESLint, eslint-plugin-astro and typescript-eslint together, then TypeScript; [B30 · #165](https://github.com/pascalandy/pascalandy-blog-paper/issues/165): Pagefind; [B31 · #166](https://github.com/pascalandy/pascalandy-blog-paper/issues/166): satori, with Pascal's review of the OG images
+- [B33 · #167](https://github.com/pascalandy/pascalandy-blog-paper/issues/167): a guard for `compressHTML` and the unified processor; [B24 · #161](https://github.com/pascalandy/pascalandy-blog-paper/issues/161): Pagefind byte differences; [B36 · #168](https://github.com/pascalandy/pascalandy-blog-paper/issues/168): the Prettier cache
+- [B23 · #160](https://github.com/pascalandy/pascalandy-blog-paper/issues/160): `persist-credentials: false` in `claude.yml`, with one live `@claude` run by Pascal
+- [B18 · #159](https://github.com/pascalandy/pascalandy-blog-paper/issues/159): phone-format QA on the Mac Mini with `agent-browser -p ios`, Xcode and Appium
+- Each later brief uses its existing issue (D017)
+
+## Changes since original plan
+
+D017 links the existing issues. D016 records the human inputs. Pascal reviews the social images and triggers the live Claude workflow. The dependency study and local fixtures can run independently of those actions.

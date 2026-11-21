@@ -3,7 +3,8 @@ id: W01
 project: BLOG
 status: active
 label: wave:W01
-skill_version: "2.0.0"
+skill_version: "3.1.0"
+executor: agent
 ---
 
 # W01: foundations
@@ -24,25 +25,26 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 
 ### E01: All open work is in one labeled GitHub queue → #126
 
-- Traces: [BC §3](../00-business-case.md#s3), [BC §4](../00-business-case.md#s4), SC1, SC2
-- Problem (CMO): Work lives in two places. `dev_notes/backlog.md` has a ticket table (B1 to B43 and issue rows) and a table of calls (R1 to R19). GitHub has 10 open issues, but 9 of them are settled. `AGENTS.md` sends agents to `dev_notes/backlog.md` and names Greptile as the review bot. No public record has Pascal's answers of 2026-11-19, and the decision log has no line for them. Thus an agent that starts today reads old rules and can propose a settled decision again.
+- Traces: [BC §3](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s3), [BC §4](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s4), SC1, SC2, FR-01, FR-02, FR-14
+- Executor: agent
+- Problem (CMO): Work lives in two places. `dev_notes/backlog.md` has a ticket table (B1 to B43 and issue rows) and a table of calls (R1 to R19). Before the planning issues existed, nine of the ten open issues had a recorded resolution. `AGENTS.md` sends agents to `dev_notes/backlog.md` and names Greptile as the review bot. The audit issue has no summary of Pascal's answers of 2026-11-19, and the decision log has no line for them. Thus an agent that starts today reads old rules and can propose a settled decision again.
 - Outcome (FMO): Each open piece of work is an open, labeled issue of this repository, and `dev_notes/backlog.md` holds only Pascal's Inbox. `AGENTS.md` sends agents to the GitHub issues and to `plan/01-project.md`. A comment on #103 records each answer of 2026-11-19. The decision log has one line for each lasting decision, and each line links that comment.
 
 #### E01-T01: Record the decisions of 2026-11-19 in AGENTS.md and the decision log → #130
 
 - Kind: chore · Executor: agent · State: todo
 - Today:
-  - Pascal answered the calls R1 to R20 of issue #103 on 2026-11-19. No public record has the answers: #103 is closed, and its last comment only points to a private card
+  - Pascal answered the calls R1 to R20 of issue #103 on 2026-11-19. The audit issue has no summary of the answers: #103 is closed, and its last comment only points to a private card
   - `AGENTS.md` sends work to `dev_notes/backlog.md` at line 29 ("a defect outside the task becomes a ticket in `dev_notes/backlog.md`"), line 45 (the route "Pick work") and line 92 ("Work you defer"). `.github/PULL_REQUEST_TEMPLATE.md:10` also names `dev_notes/backlog.md`
   - `AGENTS.md:54` says "Keep a PR under 96 files, since Greptile skips larger ones". PRs #99 and #102 show CodeRabbit reviews and no Greptile review
   - The last AVIF gotcha of `AGENTS.md` says "other items' order is tracked in issue #89". E01-T02 closes #89 as not planned (R8)
   - `src/data/blog/dev_workflows/decision-log.md` has no line dated 2026-11-19. Its rule is one dated line per decision, newest first, with a link to the place of the decision
 - After:
-  - A new comment on #103 gives each answer of the table below, and links `plan/01-project.md`
+  - A comment on #103 gives the dated answers below and links the current plan. A separate dated sentence records the delegated lists in #149
   - `AGENTS.md` sends work and deferred defects to the open GitHub issues of this repository, and its route "Pick work" names the GitHub issues and `plan/01-project.md`. The PR template names a GitHub issue instead of `dev_notes/backlog.md`
   - `AGENTS.md` names CodeRabbit as the review bot and keeps the rule "a PR has 90 files or fewer" (D007)
-  - The AVIF gotcha says that no check covers the order of the other items, because #89 closed while no AVIF ships
-  - The decision log has 14 new lines dated 2026-11-19, one for each decision of the second table. Each line links the #103 comment
+  - The AVIF gotcha records the scope of the existing check. R8 retires #89 because the blog ships no AVIF images
+  - The decision log has 14 new lines dated 2026-11-19, one for each decision of the second table. Each line links the #103 comment. A newer entry dated 2026-11-21 records the final R13 and R15 lists from #149.
 - Answers for the #103 comment:
 
   | ID | Answer of 2026-11-19 |
@@ -88,27 +90,39 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   12. CodeRabbit reviews PRs, and a PR keeps 90 files or fewer (R7)
   13. #89 and #90 close while no AVIF ships; the five release post-mortems close, and the `autorelease` labels are deleted (R8, R11)
   14. Duplicate images stay; the repository does not deduplicate them (R17)
-- Traces: [BC §3](../00-business-case.md#s3), [BC §4](../00-business-case.md#s4), SC2, D007
+- Traces: [BC §3](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s3), [BC §4](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s4), SC2, D007
 - Contract: none
 - Acceptance:
   - [ ] `gh issue view 103 --comments` shows one new comment with each row of the answers table
   - [ ] `rg -n 'backlog\.md|Greptile' AGENTS.md .github/PULL_REQUEST_TEMPLATE.md` prints nothing, and the route "Pick work" of `AGENTS.md` names the GitHub issues and `plan/01-project.md`
-  - [ ] `rg -c '^- 2026-11-19' src/data/blog/dev_workflows/decision-log.md` prints 14, and each of these lines links the #103 comment
+  - [ ] `rg -c '^- 2026-11-19' src/data/blog/dev_workflows/decision-log.md` prints 14. Each entry links the #103 comment. The entry dated 2026-11-21 links #149 and records both delegated decisions
   - [ ] `wc -l < AGENTS.md` prints 150 or less (decision log, 2026-09-29: `AGENTS.md` is a router of at most 150 lines)
   - [ ] `just check` exits 0
 - Verify: `just check`
 - Out of scope: `dev_notes/backlog.md` (E01-T03), the issue closures (E01-T02), the merge text of `AGENTS.md` (E03-T01), the verify-blog files (E02)
-- Ready review: planner, 2026-11-19, plan checks pass
+- Blocked by: none
+- Unblocks: E01-QA1 (#139), E03-T01 (#84)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
   "id": "E01-T01",
   "blocked_by": [],
   "needs": [
-    {"what": "gh signed in with write access to the repository", "check": "gh auth status"},
-    {"what": "The plan is on the default branch (PR #152 merged), so the docs check resolves `plan/01-project.md`", "check": "gh api repos/pascalandy/pascalandy-blog-paper/contents/plan/01-project.md --silent"}
+    {
+      "what": "gh signed in with write access to the repository",
+      "check": "gh api repos/pascalandy/pascalandy-blog-paper --jq '.permissions.push' | rg -x true"
+    },
+    {
+      "what": "The plan is on the default branch (PR #152 merged), so the docs check resolves `plan/01-project.md`",
+      "check": "gh api repos/pascalandy/pascalandy-blog-paper/contents/plan/01-project.md --silent"
+    }
   ],
-  "touches": ["AGENTS.md", ".github/PULL_REQUEST_TEMPLATE.md", "src/data/blog/dev_workflows/decision-log.md"]
+  "touches": [
+    "AGENTS.md",
+    ".github/PULL_REQUEST_TEMPLATE.md",
+    "src/data/blog/dev_workflows/decision-log.md"
+  ]
 }
 ```
 
@@ -116,7 +130,7 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 
 - Kind: chore · Executor: agent · State: todo
 - Today:
-  - On 2026-11-19, 10 issues are open. #84 stays open, because the plan sync made it the issue of E03-T01 (D006). The other 9 are settled:
+  - Before the initial plan, ten issues were open. #84 stays open, because the plan sync made it the issue of E03-T01 (D006). The other 9 are settled:
 
     | Issue | Close reason | Evidence for the closing comment |
     |---|---|---|
@@ -126,84 +140,90 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
     | #54, #56, #59, #62, #65 | completed | R11 of 2026-11-19: release records of February, kept as history |
 
   - The labels `autorelease: pending` and `autorelease: tagged` remain from release-please, which the repository no longer uses
+- Risk: verify the two exact label names before deletion. Deletion removes the label from historical issues.
 - After: the 9 issues are closed with the reason of the table and a comment that gives its evidence. The 2 labels are deleted
-- Traces: [BC §4](../00-business-case.md#s4), SC1, D008
+- Traces: [BC §4](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s4), SC1, D008
 - Contract: none
 - Acceptance:
   - [ ] `gh issue list --state open --limit 200 --json number --jq '.[].number'` lists none of 54, 56, 59, 62, 65, 89, 90, 95 and 98
   - [ ] `gh issue view 89 --json stateReason --jq .stateReason` prints `NOT_PLANNED`, and so does the same command for 90; for 98 it prints `COMPLETED`
   - [ ] Each of the 9 issues has a closing comment with its evidence from the table
   - [ ] `gh label list --limit 200 --json name --jq '.[].name' | rg autorelease` prints nothing
-- Verify: `gh issue list --state open --limit 200`
-- Out of scope: #84 (E03-T01), each label other than the two `autorelease` labels, new issues (E01-T03)
-- Ready review: planner, 2026-11-19, plan checks pass
+- Verify: `gh issue list --state open --limit 200` and `just check`
+- Out of scope: #84 (E03-T01), each label other than the two `autorelease` labels, the deferred queue (#132)
+- Blocked by: none
+- Unblocks: E01-QA1 (#139)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
   "id": "E01-T02",
   "blocked_by": [],
-  "needs": [{"what": "gh signed in with write access to the repository", "check": "gh auth status"}],
+  "needs": [
+    {
+      "what": "gh signed in with write access to the repository",
+      "check": "gh api repos/pascalandy/pascalandy-blog-paper --jq '.permissions.push' | rg -x true"
+    }
+  ],
   "touches": []
 }
 ```
 
-#### E01-T03: File the open backlog tickets as issues, and keep only the Inbox in backlog.md → #132
+#### E01-T03: Reconcile the GitHub backlog and preserve the Inbox → #132
 
 - Kind: chore · Executor: agent · State: todo
-- Today:
-  - `dev_notes/backlog.md` (196 lines at `cb723c8`) has a ticket table, a table of calls R1 to R19, and Pascal's Inbox. D008 gives the fate of each row: 14 rows become new issues, and the plan or a closure covers the others
-  - `dev_notes/README.md` calls `backlog.md` "the ticket table agents work from"
-  - Before W01, the repository had 7 of the 15 canonical labels of label-for-issues. The plan sync creates `0-impediment`, `1-ready-for-human`, `2-type:feature` and `4-epic`. These 4 stay missing:
-
-    | Label | Color | Description |
-    |---|---|---|
-    | `1-needs-info` | `d4a72c` | Specific information is missing from the issue |
-    | `3-pty:p0` | `d95757` | Emergency requiring immediate attention, such as active exploitation or a major outage |
-    | `3-pty:p1` | `db8b40` | High priority; takes precedence over ordinary planned work |
-    | `3-pty:p3` | `8b949e` | Low-priority work that can wait |
-
-- After:
-  - The 4 labels exist with the color and description of the table
-  - Each row of the table below is one open issue, with the title and labels of the row and no `wave:` label. Its body gives the context of its row first. Below it, under "Background", the body copies the ticket text and the "Done when" text of its row in `git show cb723c8:dev_notes/backlog.md`. When the context gives a "Done when", that text replaces the old one. The body ends with a link to this brief. When a later wave plans the item, the planner rewrites that issue as a brief (D011)
-  - The issue of B29 is natively blocked by the issue of B28
-  - `dev_notes/backlog.md` keeps its frontmatter, a header of at most 2 lines that sends work to the GitHub issues and to `plan/01-project.md`, and the `## Inbox` section, byte for byte
-  - `dev_notes/README.md` describes `backlog.md` as Pascal's raw Inbox
-
-  | ID | Title | Labels | Context to add |
-  |---|---|---|---|
-  | R2 | `www.pascalandy.com drops the path when it redirects (R2)` | `2-type:bug`, `3-pty:p2`, `1-needs-triage` | `https://www.pascalandy.com/blog/cim-19/` answers 301 to `https://pascalandy.com/`. The rule lives at the DNS or host, not in this repository. First install the latest official Cloudflare CLI. Done when a www post URL with a query answers 301 to the same path and query on the apex |
-  | R6 | `Choose the agent that keeps dependencies current (R6)` | `2-type:task`, `3-pty:p2`, `1-needs-triage` | `renovate.json` exists since 2026-01-15, but GitHub shows 0 Renovate PRs and no Dependency Dashboard. Compare Renovate, Dependabot and other agents, and say how their PRs get a green `signoff`. The decision log line "Renovate is the only dependency bot" (2026-09-29) stays until a new decision replaces it. Done when a recommendation on the issue names the agent and its path to a green `signoff`. This replaces the old choice between installing the Renovate app and removing its config |
-  | B14 | `Redraw the egg-chair logo as an SVG for the header (B14)` | `2-type:feature`, `3-pty:p2`, `1-needs-triage` | The header already renders `src/assets/icons/IconPascalAndy.svg` (`Header.astro:58`, viewBox 600 × 135, `currentColor`, 7 paths), a trace of the pixelated PNG. Commit `ac51769` deleted the PNG; it remains at `f7b76ab:public/og-legacy/2020/06/logo-chaise-dark-long.png`. Done when Pascal approves a redrawn egg chair that replaces `IconPascalAndy.svg`, or says that the current SVG is enough. This replaces the old ticket, which asked Pascal to pick a header image |
-  | B16 | `Add the Star Academy content (B16)` | `2-type:feature`, `3-pty:p2`, `1-needs-triage` | Pascal gives the content. The format (post, page or tag) is set when a wave plans the item |
-  | B18 | `Run phone-format QA on a Mac (B18)` | `2-type:task`, `3-pty:p2`, `1-needs-triage` | verify-blog documents `agent-browser -p ios` (iOS Simulator, Xcode and Appium), but nobody ran it. Done when the iOS steps of verify-blog run once on the Mac Mini, and the skill states the result |
-  | B23 | `Stop persisting the checkout token in claude.yml (B23)` | `2-type:task`, `3-pty:p3`, `1-needs-triage` | `.github/workflows/claude.yml:35` uses checkout v7, which keeps the token under `RUNNER_TEMP`. Pascal must start one live `@claude` run |
-  | B24 | `Prove or explain Pagefind byte differences between builds (B24)` | `2-type:task`, `3-pty:p3`, `1-ready-for-agent` | `scripts/parity.py` maps Pagefind document numbers to URLs (near line 938) to work around the differences |
-  | B26 | `Give informative images French alt text (B26)` | `2-type:feature`, `3-pty:p2`, `1-needs-triage` | 194 images have an empty alt in 43 files (191 in 42 files without drafts). Pascal decides for unclear images |
-  | B28 | `Upgrade ESLint, eslint-plugin-astro and typescript-eslint together (B28)` | `2-type:task`, `3-pty:p3`, `1-ready-for-agent` | Today: `eslint` ^9.39.2, `eslint-plugin-astro` ^1.5.0, `typescript-eslint` ^8.51.0, and a redundant `@typescript-eslint/parser` ^8.51.0 |
-  | B29 | `Upgrade TypeScript after the ESLint upgrade (B29)` | `2-type:task`, `3-pty:p3`, `1-ready-for-agent` | Today: `typescript` ^5.9.3. Blocked by the issue of B28 |
-  | B30 | `Upgrade pagefind and @pagefind/default-ui together (B30)` | `2-type:task`, `3-pty:p3`, `1-ready-for-agent` | Today: both ^1.4.0. Pagefind 1.5 changed the ranking |
-  | B31 | `Upgrade satori from 0.18 (B31)` | `2-type:task`, `3-pty:p3`, `1-needs-triage` | Today: `satori` ^0.18.3. Newer versions change layout defaults, so Pascal approves the OG images |
-  | B33 | `Guard compressHTML and the unified Markdown processor (B33)` | `2-type:task`, `3-pty:p3`, `1-ready-for-agent` | `astro.config.ts` sets `compressHTML: true` and the unified processor (decision log, 2026-10-21) |
-  | B36 | `Keep Prettier uncached until a cache test exists (B36)` | `2-type:task`, `3-pty:p3`, `1-needs-triage` | Reproduction of the failed cache experiment: `/tmp/poteto-blog-phase1/perf/cache-repro.json` (may be gone) |
-
-- Traces: [BC §4](../00-business-case.md#s4), [BC §11](../00-business-case.md#s11), SC1, SC11, D008, D011
+- Today: GitHub now has the fourteen deferred issues below. The source at `cb723c8:dev_notes/backlog.md` still has the ticket tables and Pascal’s Inbox.
+- After: the issues own the work. The current backlog retains its frontmatter, a short route to GitHub and the original Inbox.
+- Rationale: preserving the Inbox protects unpublished ideas. Removing the copied ticket tables prevents contradictory status updates.
+- Expected queue:
+  - [R2 · #155](https://github.com/pascalandy/pascalandy-blog-paper/issues/155): www.pascalandy.com drops the path when it redirects. Labels: `2-type:bug`, `3-pty:p2`, `1-needs-triage`
+  - [R6 · #156](https://github.com/pascalandy/pascalandy-blog-paper/issues/156): Choose the agent that keeps dependencies current. Labels: `2-type:task`, `3-pty:p2`, `1-needs-triage`
+  - [B14 · #157](https://github.com/pascalandy/pascalandy-blog-paper/issues/157): Redraw the egg-chair logo as an SVG for the header. Labels: `2-type:feature`, `3-pty:p2`, `1-needs-triage`
+  - [B16 · #158](https://github.com/pascalandy/pascalandy-blog-paper/issues/158): Add the Star Academy content. Labels: `2-type:feature`, `3-pty:p2`, `1-needs-triage`
+  - [B18 · #159](https://github.com/pascalandy/pascalandy-blog-paper/issues/159): Run phone-format QA on a Mac. Labels: `2-type:task`, `3-pty:p2`, `1-needs-triage`
+  - [B23 · #160](https://github.com/pascalandy/pascalandy-blog-paper/issues/160): Stop persisting the checkout token in claude.yml. Labels: `2-type:task`, `3-pty:p3`, `1-needs-triage`
+  - [B24 · #161](https://github.com/pascalandy/pascalandy-blog-paper/issues/161): Prove or explain Pagefind byte differences between builds. Labels: `2-type:task`, `3-pty:p3`, `1-ready-for-agent`
+  - [B26 · #162](https://github.com/pascalandy/pascalandy-blog-paper/issues/162): Give informative images French alt text. Labels: `2-type:feature`, `3-pty:p2`, `1-needs-triage`
+  - [B28 · #163](https://github.com/pascalandy/pascalandy-blog-paper/issues/163): Upgrade ESLint, eslint-plugin-astro and typescript-eslint together. Labels: `2-type:task`, `3-pty:p3`, `1-ready-for-agent`
+  - [B29 · #164](https://github.com/pascalandy/pascalandy-blog-paper/issues/164): Upgrade TypeScript after the ESLint upgrade. Labels: `2-type:task`, `3-pty:p3`, `1-ready-for-agent`
+  - [B30 · #165](https://github.com/pascalandy/pascalandy-blog-paper/issues/165): Upgrade pagefind and @pagefind/default-ui together. Labels: `2-type:task`, `3-pty:p3`, `1-ready-for-agent`
+  - [B31 · #166](https://github.com/pascalandy/pascalandy-blog-paper/issues/166): Upgrade satori from 0.18. Labels: `2-type:task`, `3-pty:p3`, `1-needs-triage`
+  - [B33 · #167](https://github.com/pascalandy/pascalandy-blog-paper/issues/167): Guard compressHTML and the unified Markdown processor. Labels: `2-type:task`, `3-pty:p3`, `1-ready-for-agent`
+  - [B36 · #168](https://github.com/pascalandy/pascalandy-blog-paper/issues/168): Keep Prettier uncached until a cache test exists. Labels: `2-type:task`, `3-pty:p3`, `1-needs-triage`
+- The four labels added during planning use the canonical metadata:
+  - `1-needs-info` (`d4a72c`): Specific information is missing from the issue
+  - `3-pty:p0` (`d95757`): Emergency requiring immediate attention, such as active exploitation or a major outage
+  - `3-pty:p1` (`db8b40`): High priority; takes precedence over ordinary planned work
+  - `3-pty:p3` (`8b949e`): Low-priority work that can wait
+- The backlog header points to GitHub and `plan/01-project.md`. The index in `dev_notes/README.md` describes the Inbox.
+- Traces: [BC §4](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s4), [BC §11](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s11), SC1, SC11, D008, D011
 - Contract: none
 - Acceptance:
-  - [ ] For each ID of the table, `gh issue list --state open --limit 200 --search "<ID> in:title" --json title,labels` returns exactly one issue, with the labels of its row and no `wave:` label
-  - [ ] `gh issue view <B29 issue> --json blockedBy` names the issue of B28
+  - [ ] For each linked issue, verify its title, labels and acceptance criteria. Each backlog ID has one open issue and no wave label
+  - [ ] The native prerequisites are #135 for #159, #163 for #164, #161 and #164 for #165, and #165 for #166
   - [ ] `rg -n '^\| (B|R)[0-9]+|^\| #' dev_notes/backlog.md` prints nothing, and `diff <(git show cb723c8:dev_notes/backlog.md | sed -n '/^## Inbox/,$p') <(sed -n '/^## Inbox/,$p' dev_notes/backlog.md)` prints nothing
-  - [ ] `gh label list --limit 200 --json name,color,description` contains the 4 labels of the label table, with their exact colors and descriptions
+  - [ ] `gh label list --limit 200 --json name,color,description` contains the four labels above, with their exact colors and descriptions
   - [ ] `just check` exits 0
 - Verify: `just check`
-- Out of scope: issue closures (E01-T02), `AGENTS.md` (E01-T01), the legacy labels such as `bug` or `enhancement`, and the rows that D008 gives to plan tasks
-- Ready review: planner, 2026-11-19, plan checks pass
+- Out of scope: issue closures (E01-T02), `AGENTS.md` (E01-T01), the legacy labels such as `bug` or `enhancement`, and the work inside the fourteen linked issues
+- Blocked by: none
+- Unblocks: E01-QA1 (#139), E02-T03 (#140)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
   "id": "E01-T03",
   "blocked_by": [],
-  "needs": [{"what": "gh signed in with write access to the repository", "check": "gh auth status"}],
-  "touches": ["dev_notes/backlog.md", "dev_notes/README.md"]
+  "needs": [
+    {
+      "what": "gh signed in with write access to the repository",
+      "check": "gh api repos/pascalandy/pascalandy-blog-paper --jq '.permissions.push' | rg -x true"
+    }
+  ],
+  "touches": [
+    "dev_notes/backlog.md",
+    "dev_notes/README.md"
+  ]
 }
 ```
 
@@ -211,35 +231,61 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 
 - Kind: qa · Executor: QA agent on the QA machine · State: todo · Verdict: —
 - Context: E01 moves all open work into labeled GitHub issues of this repository, and records the decisions of 2026-11-19 in `AGENTS.md`, in the decision log and on #103. The user is the next agent: it must find its work and the reason for each settled decision without `dev_notes/backlog.md`.
-- Traces: [BC §3](../00-business-case.md#s3), [BC §4](../00-business-case.md#s4), SC1, SC2
+- Traces: [BC §3](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s3), [BC §4](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s4), SC1, SC2, FR-01, FR-02, FR-14, NFR-01
+- Expected disposition of the old queue:
+  - Existing work: B2 and B13 belong to #149. B7 belongs to #148. B12, B39 and B42 belong to #147. B38 belongs to #138, B41 to #133 and B43 to #143. R18 belongs to #140. R5 remains #84
+  - Later issues: R2, R6, B14, B16, B18, B23, B24, B26, B28, B29, B30, B31, B33 and B36
+  - Closed tickets: #95 and #98 have fixes. Five post-mortems (#54, #56, #59, #62, #65) are complete. #89 and #90 close as not planned
+  - For the other rows, the issue history, the decision comment on #103, or the cited change must show the outcome. The 28 unsupported Ghost dates stay as published
 - Setup: in a fresh clone in a scratch folder on the Mini, run `bun install --frozen-lockfile --ignore-scripts` before any `just` command (D003)
 - QA scenarios (≤ 8):
-  - [ ] No ticket is lost: for each ID in the tables of `git show cb723c8:dev_notes/backlog.md`, read its fate in D008 of `plan/decisions.md`, then find the evidence: an open issue (`gh issue list --state all --search "<ID> in:title"`), a brief in `plan/waves/` (`rg -n '<ID>' plan/waves`), a closed issue, a merged PR that its old row cites, a direct check of the behavior on the default branch (for B20: `sitemap()` in `astro.config.ts`), or a line dated 2026-11-19 in the decision log → each ID has evidence
-  - [ ] `gh issue list --state open --limit 200 --json number,title,labels` → each open issue has one `wave:` label or one `3-pty:*` label, and one `1-*` label or the `4-epic` label
-  - [ ] Follow the route "Pick work" of `AGENTS.md` as a new agent → it leads to `gh issue list --label 1-ready-for-agent` or to `plan/01-project.md`, and each one lists W01 tasks
-  - [ ] Open the link of each line dated 2026-11-19 in the decision log → it opens the #103 comment, and the comment gives the same answer
-  - [ ] `gh issue view <n> --json state,stateReason` for 54, 56, 59, 62, 65, 89, 90, 95 and 98 → each is closed with the reason of E01-T02, and `gh label list --limit 200 | rg autorelease` prints nothing
-  - [ ] `sed -n '/^## Inbox/,$p' dev_notes/backlog.md` → the Inbox text equals the text at `cb723c8`, and the file has no ticket table
+  - [ ] FR-01, FR-14: No ticket is lost: for each ID in the tables of `git show cb723c8:dev_notes/backlog.md`, match it to the disposition below and find the evidence: an open issue (`gh issue list --state all --search "<ID> in:title"`), a brief in `plan/waves/` (`rg -n '<ID>' plan/waves`), a closed issue, a merged PR that its old row cites, a direct check of the behavior on the default branch (for B20: `sitemap()` in `astro.config.ts`), or a line dated 2026-11-19 in the decision log → each ID has evidence
+  - [ ] FR-01: `gh issue list --state open --limit 200 --json number,title,labels` → each open issue has one `wave:` label or one `3-pty:*` label, and one `1-*` label or the `4-epic` label
+  - [ ] FR-01: Follow the route "Pick work" of `AGENTS.md` → the GitHub queue includes #130 and the project summary lists W01
+  - [ ] FR-02: Read the dated decision entries. The fourteen November 19 links open the matching answers on #103. The November 21 entry points to the final language and vacancy lists on #149
+  - [ ] FR-01: `gh issue view <n> --json state,stateReason` for 54, 56, 59, 62, 65, 89, 90, 95 and 98 → #89 and #90 are not planned. The other seven are complete, and `gh label list --limit 200 | rg autorelease` prints nothing
+  - [ ] FR-01: `sed -n '/^## Inbox/,$p' dev_notes/backlog.md` → the Inbox text equals the text at `cb723c8`, and the file has no ticket table
+  - [ ] NFR-01: In the fresh Mini checkout, run `just check`. The installed Bun builds the tested revision.
 - Also check: each acceptance item of E01-T01, E01-T02 and E01-T03 still passes on the default branch; `just check` passes in a fresh clone.
-- Output: QA report comment, verdict label, one finding issue per finding. No commits, no PRs.
-- Ready review: planner, 2026-11-19, plan checks pass
+- Output: Record the tested commit, independent Mini session, commands, actual results and verdict on this issue. Link each finding.
+- Blocked by: E01-T01 (#130), E01-T02 (#131), E01-T03 (#132), E02-T04 (#135)
+- Unblocks: no task in W01. The verdict informs the wave review
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
   "id": "E01-QA1",
-  "verifies": ["E01-T01", "E01-T02", "E01-T03"],
+  "verifies": [
+    "E01-T01",
+    "E01-T02",
+    "E01-T03",
+    "E02-T04"
+  ],
   "needs": [
-    {"what": "The plan is on the default branch (PR #152 merged)", "check": "gh api repos/pascalandy/pascalandy-blog-paper/contents/plan/decisions.md --silent"},
-    {"what": "The session runs on the Mac Mini", "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"},
-    {"what": "gh signed in on the QA machine", "check": "gh auth status"},
-    {"what": "bun on the QA machine (E02-T04)", "check": "command -v bun"}
+    {
+      "what": "The plan is on the default branch (PR #152 merged)",
+      "check": "gh api repos/pascalandy/pascalandy-blog-paper/contents/plan/decisions.md --silent"
+    },
+    {
+      "what": "The session runs on the Mac Mini",
+      "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"
+    },
+    {
+      "what": "gh signed in on the QA machine",
+      "check": "gh auth status"
+    },
+    {
+      "what": "bun on the QA machine (E02-T04)",
+      "check": "command -v bun"
+    }
   ]
 }
 ```
 
 ### E02: verify-blog runs every recipe on a fresh preview, also on the QA machine → #127
 
-- Traces: [BC §7](../00-business-case.md#s7), [BC §8](../00-business-case.md#s8), SC7
+- Traces: [BC §7](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s7), [BC §8](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s8), SC7, FR-03, NFR-01
+- Executor: agent
 - Problem (CMO): The QA agent and Pascal prove the reader-facing changes with the verify-blog skill. Twelve recipe URLs in `features/post.md`, `search.md`, `tags.md` and `theme.md` have no trailing slash before their query string or end. The site uses `trailingSlash: "always"`, so the preview answers 404, and the post and search fallbacks fail before their first step (B41). No recipe checks the mobile menu at 639 px and 640 px, where the menu button hides. Only old plans in `dev_notes/e2e_browser_tests/` check it (R18). The navigation recipe also clicks `a[href="/blog"]`, a link that the header does not emit. `browse.py` has only two viewports. The QA machine has no `bun` and no Playwright Chromium, so it cannot build or drive the blog.
 - Outcome (FMO): The path part of each recipe URL, before any query string, ends with `/`, and a test fails on a URL without it. `browse.py` captures at a chosen viewport, from 200 to 1920 pixels a side. The navigation recipe checks the menu at 639 px and 640 px, and the old plans are gone. On the Mac Mini, a fresh clone passes `just check` and runs each recipe fallback.
 
@@ -255,17 +301,19 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - The path part of each `$URL/` URL in `features/*.md`, before any query string, ends with `/` or a file extension
   - `search.md` states the language that `dist/pagefind/pagefind-entry.json` reports after a build, instead of the old B2 sentence
   - A new test, `scripts/tests/test_verify_blog_features.py`, fails and names the file and the line of each `$URL/` URL whose path part, before any query string, has no final `/` and no file extension. The `scripts` row runs it
-- Traces: [BC §8](../00-business-case.md#s8), SC7
+- Traces: [BC §8](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s8), SC7
 - Contract: none
 - Acceptance:
-  - [ ] `just check --only scripts` passes, and the new test fails when one recipe URL of a scratch copy loses its final `/` (paste the failure in the PR)
+  - [ ] `just check --only scripts` passes, and the new test fails when one recipe URL of a scratch copy loses its final `/`
   - [ ] After `uv run .claude/skills/verify-blog/scripts/site.py up`, `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/blog/lhorizon-cest-toi/" --out /tmp/b41-post` exits 0, and its `network.json` shows status 200 for the page
   - [ ] The same `browse.py` command on `"$URL/search/"` exits 0 with status 200 for the page
   - [ ] `rg -n 'backlog' .claude/skills/verify-blog/` prints nothing
   - [ ] `just check` exits 0
 - Verify: `just check`
 - Out of scope: new recipes, the menu breakpoint checks (E02-T03), `browse.py` (E02-T02)
-- Ready review: planner, 2026-11-19, plan checks pass
+- Blocked by: none
+- Unblocks: E02-QA1 (#142)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
@@ -292,7 +340,7 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - `--viewport WIDTHxHEIGHT`, such as `--viewport 639x900`, sets the Chromium viewport and replaces the desktop default
   - `--viewport` together with `--device iphone` is a usage error
   - The paragraph about the Playwright fallback in `.claude/skills/verify-blog/SKILL.md` documents the flag
-- Traces: [BC §7](../00-business-case.md#s7), SC7
+- Traces: [BC §7](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s7), SC7
 - Contract: `browse.py URL --out DIR [--viewport WIDTHxHEIGHT]`. WIDTH and HEIGHT are integers from 200 to 1920, the largest capture that `browse.py` saves. A bad value, or `--viewport` with `--device iphone`, exits 2 with one error line on stderr
 - Acceptance:
   - [ ] A new test in `scripts/tests/test_browse.py` drives a local page with `--viewport 639x900 --step 'eval:window.innerWidth'`, and the saved evaluation is 639
@@ -301,7 +349,9 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - [ ] `just check` exits 0
 - Verify: `just check`
 - Out of scope: new `browse.py` actions, the navigation recipe (E02-T03), agent-browser
-- Ready review: planner, 2026-11-19, plan checks pass
+- Blocked by: none
+- Unblocks: E02-T03 (#140), E02-QA1 (#142)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
@@ -327,10 +377,11 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - `dev_notes/dev-workflow.md` and `dev_notes/ci-flow.mermaid` predate `just check`. `dev_notes/README.md` lists them and the old plans. No tracked file outside `dev_notes/` cites these paths
 - After:
   - `navigation.md` has a sub-feature `nav-breakpoint`. At 639 × 900, `#menu-btn` shows, and a click on it shows the links. At 640 × 900, `#menu-btn` is hidden, and the header links show. Each step has an agent-browser form (`agent-browser set viewport 639 900`) and a `browse.py --viewport` fallback
+  - Use the existing `maintain-verification-skill` checklist to update the navigation journey. Both browser drivers must prove the same menu behavior
   - The blog-roll step clicks `a[href="/blog/"]`
   - These paths are deleted: `dev_notes/e2e_browser_tests/` (6 files), `dev_notes/dev-workflow.md` and `dev_notes/ci-flow.mermaid`. `dev_notes/README.md` no longer lists them
   - `dev_notes/MultiLanguage/` stays (D010)
-- Traces: [BC §7](../00-business-case.md#s7), SC7, D010
+- Traces: [BC §7](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s7), SC7, D010
 - Contract: none
 - Acceptance:
   - [ ] The `nav-breakpoint` fallback at `--viewport 639x900` with `--step 'eval:getComputedStyle(document.querySelector("#menu-btn")).display'` saves a value other than `none`, and at `--viewport 640x900` it saves `none`
@@ -340,7 +391,9 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - [ ] `just check` exits 0
 - Verify: `just check`
 - Out of scope: `dev_notes/MultiLanguage/`, other recipes, a change to `Header.astro`
-- Ready review: planner, 2026-11-19, plan checks pass
+- Blocked by: E02-T02 (#134), E01-T03 (#132)
+- Unblocks: E02-QA1 (#142)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
@@ -364,24 +417,27 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 
 - Kind: chore · Executor: agent · State: todo
 - Today:
-  - The QA machine is the Mac Mini (`m4mini`, SSH `assistant@m4mini.donkey-arcturus.ts.net`). Each QA session works in a fresh clone in a scratch folder (D003)
+  - The QA machine is the Mac Mini. The fleet registry gives its SSH address. Each QA session works in a fresh clone in a scratch folder (D003)
   - On 2026-11-19 the Mini had `git`, `gh`, `node` v26.12.1 (it satisfies `engines.node` `>=22.23.4`), `uv`, `just` and `fnox`
-  - The Mini had no `bun` (`package.json` sets `packageManager` to `bun@1.3.4`), no Playwright Chromium for `browse.py`, no agent-browser and no clone of this repository
+  - On 2026-11-19 the Mini had no `bun` (`package.json` sets `packageManager` to `bun@1.3.4`), no Playwright Chromium for `browse.py`, no agent-browser and no clone of this repository
 - After:
   - `bun` 1.3.x is installed
   - The Chromium build of Playwright 1.56 is installed: `uv run --with playwright==1.56.0 python -m playwright install chromium`
   - In a fresh clone in a scratch folder, `just check` passes, and verify-blog builds a preview and captures the home page
+  - Reuse an installed tool that passes its probe. A cached Chromium folder alone cannot prove the browser launches
   - A comment on this issue gives each install command, each version and the `just check` result, so that a QA session can repeat the setup
-- Traces: [BC §7](../00-business-case.md#s7), SC7, D003
+- Traces: [BC §7](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s7), SC7, D003
 - Contract: none
 - Acceptance:
   - [ ] On the Mini, `bun --version` prints a 1.3.x version, and in the scratch clone `bun install --frozen-lockfile --ignore-scripts` exits 0 with `git status --porcelain` empty after it
   - [ ] In the scratch clone, `just check` exits 0
   - [ ] `uv run .claude/skills/verify-blog/scripts/site.py up` prints a base URL, `browse.py "$URL/" --out <dir>` exits 0 and writes `screenshot.png`, and `site.py down` stops the preview
-  - [ ] This issue has a comment with each install command, each version and the `just check` result
+  - [ ] This issue has a comment with each required install command, each version and the `just check` result
 - Verify: `just check` in the scratch clone on the Mini
 - Out of scope: agent-browser and the iOS Simulator (B18, W04), a permanent clone, a change to the fleet's `repos.toml` (D003)
-- Ready review: planner, 2026-11-19, plan checks pass
+- Blocked by: none
+- Unblocks: E01-QA1 (#139), E02-QA1 (#142), E03-QA1 (#144), E03-QA2 (#146), E04-QA1 (#141). The later iOS check (#159) uses this setup
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
@@ -399,18 +455,20 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 
 - Kind: qa · Executor: QA agent on the QA machine · State: todo · Verdict: —
 - Context: E02 makes the verify-blog recipes work on a fresh preview, adds the menu checks at 639 px and 640 px, and prepares the Mac Mini. The user is the next QA agent or agent: it proves a reader-facing change in a browser without a fix to the tool first.
-- Traces: [BC §7](../00-business-case.md#s7), [BC §8](../00-business-case.md#s8), SC7
+- Traces: [BC §7](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s7), [BC §8](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s8), SC7, NFR-01, FR-03
 - Setup: in a fresh clone in a scratch folder on the Mini, run `bun install --frozen-lockfile --ignore-scripts` before any `just` command (D003)
 - QA scenarios (≤ 8):
-  - [ ] In a fresh clone in a scratch folder on the Mini, `just check` exits 0
-  - [ ] On a fresh preview (`site.py up`), run the `browse.py` fallback of each feature file: `home`, `navigation`, `post`, `search`, `tags` and `theme` → each call exits 0, and no `network.json` has status 404 for its page
-  - [ ] Run `nav-breakpoint` at 639 × 900 and at 640 × 900 → `#menu-btn` shows at 639 and is hidden at 640; at 639, a click on it shows the links
-  - [ ] In the scratch clone, remove the final `/` from one `$URL/tags/` in `tags.md` → `just check --only scripts` fails and names `tags.md` and the line; then restore the file with `git checkout -- .claude/skills/verify-blog/features/tags.md`
-  - [ ] `browse.py "$URL/" --out <dir> --viewport 639x900 --device iphone` → exits 2 with one error line
-  - [ ] `ls dev_notes` → no `e2e_browser_tests`, `dev-workflow.md` or `ci-flow.mermaid`, and `dev_notes/README.md` does not list them
+  - [ ] NFR-01: In a fresh clone in a scratch folder on the Mini, `just check` exits 0
+  - [ ] FR-03: On a fresh preview (`uv run .claude/skills/verify-blog/scripts/site.py up`), run the `browse.py` fallback of each feature file: `home`, `navigation`, `post`, `search`, `tags` and `theme` → each call exits 0, and no `network.json` has status 404 for its page
+  - [ ] FR-03: Run `nav-breakpoint` at 639 × 900 and at 640 × 900 → `#menu-btn` shows at 639 and is hidden at 640; at 639, a click on it shows the links
+  - [ ] FR-03: In the scratch clone, remove the final `/` from one `$URL/tags/` in `tags.md` → `just check --only scripts` fails and names `tags.md` and the line; then restore the file with `git checkout -- .claude/skills/verify-blog/features/tags.md`
+  - [ ] FR-03: `browse.py "$URL/" --out <dir> --viewport 639x900 --device iphone` → exits 2 with one error line
+  - [ ] FR-03: `ls dev_notes` → no `e2e_browser_tests`, `dev-workflow.md` or `ci-flow.mermaid`, and `dev_notes/README.md` does not list them
 - Also check: each acceptance item of E02-T01, E02-T02, E02-T03 and E02-T04 still passes on the default branch; `just check` passes.
-- Output: QA report comment, verdict label, one finding issue per finding. No commits, no PRs.
-- Ready review: planner, 2026-11-19, plan checks pass
+- Output: Record the tested commit, independent Mini session, commands, actual results and verdict on this issue. Link each finding.
+- Blocked by: E02-T01 (#133), E02-T02 (#134), E02-T03 (#140), E02-T04 (#135)
+- Unblocks: no task in W01. The verdict informs the wave review
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
@@ -426,7 +484,8 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 
 ### E03: Each merge and each deploy proves itself → #128
 
-- Traces: [BC §8](../00-business-case.md#s8), SC8
+- Traces: [BC §8](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s8), SC8, FR-04, FR-05, FR-06
+- Executor: agent
 - Problem (CMO): One commit runs the full `just check` up to three times: at the push, at `just signoff` and at `just merge`, about 98 s each on a cold cache (#84). `just deploy` reports success when the Sevalla build finishes, but it never reads which commit Sevalla built. Nothing checks the public site after a deploy. Production served a build of 2026-10-22 for weeks, until a manual curl on 2026-11-19 found it.
 - Outcome (FMO): `just merge` skips the checks when the PR head already carries a green signoff, and runs them otherwise. `just deploy` exits 1 when the deployed commit differs from the commit it printed. `just verify-live` checks the public site with no secret, and `just deploy` runs the same checks after each production deploy that it waits for. `just deploy --no-wait` says that it skipped both checks, and the playbook says to run `just verify-live` after a deploy by the manual CI workflow.
 
@@ -444,17 +503,19 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - After the refusals and `pushed_head()`, `merge()` reads the PR. When the PR head equals the pushed head and it already carries a green `signoff`, `merge()` prints `PR #N: <sha> already carries a green signoff; skipping the checks`, then goes to `wait_until_mergeable`. Otherwise it calls `sign(repo, sha)` as before
   - The other steps do not change
   - The "Merge" section of `src/data/blog/dev_workflows/development-workflow.md` (step 2 at line 104, and line 120) and the section "Merge and deploy" of `AGENTS.md` say that `just merge` skips the checks when the head already carries a green signoff
-- Traces: [BC §8](../00-business-case.md#s8), SC8, D006
+- Traces: [BC §8](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s8), SC8, D006
 - Contract: none. The command line of `just merge` does not change
 - Acceptance:
   - [ ] A new test in `scripts/tests/test_merge.py` sets `statuses[<head>] = "success"` before `just merge`; then `checks_run()` is empty, and the PR merges at that head
   - [ ] A new test sets a green status on the parent commit of the head only; then the three checks run, and the PR merges
   - [ ] `just check --only scripts` passes, and the 18 tests of `test_merge.py` that exist today are not changed
-  - [ ] The PR quotes the new lines of `development-workflow.md` and `AGENTS.md`
+  - [ ] The development workflow and agent guide describe reuse on the exact head and the checks required on a different head
   - [ ] `just check` exits 0
 - Verify: `just check`
 - Out of scope: the pre-push check and the checks scoped by path of #84 option (a), because they change the decision "pushes run the verdict" (decision log, 2026-09-29); a change to `just signoff`
-- Ready review: planner, 2026-11-19, plan checks pass
+- Blocked by: E01-T01 (#130)
+- Unblocks: E03-T02 (#143), E03-QA1 (#144), E03-QA2 (#146)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
@@ -486,23 +547,33 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - Missing or empty: it prints `error: Sevalla did not report the deployed commit` and exits 1
   - This applies to the production and preview targets. `--dry-run` does not change. `--no-wait` prints that it did not check the commit
   - The "Deploy" section of `development-workflow.md` (lines 122-160) says that `just deploy` fails when the deployed commit differs
-- Traces: [BC §8](../00-business-case.md#s8), SC8, D005
-- Contract: Sevalla `GET https://api.sevalla.com/v3/static-sites/{site_id}/deployments/{deployment_id}` returns `status` and `commit_sha` (operation `getStaticSiteDeploymentV3`; B43 read the OpenAPI file on 2026-11-16). Take the exact place of `commit_sha` in the response from https://api.sevalla.com/v3/openapi.json
+- Traces: [BC §8](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s8), SC8, D005
+- Contract: Sevalla `GET https://api.sevalla.com/v3/static-sites/{site_id}/deployments/{deployment_id}` returns `status` and `commit_sha` (operation `getStaticSiteDeploymentV3`; B43 read the OpenAPI file on 2026-11-16). The 200 JSON response has top-level `status` and `commit_sha` fields. The public schema was checked on 2026-11-21
 - Acceptance:
   - [ ] A new `scripts/tests/test_deploy.py` uses a fake Sevalla: a deployment that ends at `success` with the printed commit exits 0 and prints `deployed`; a different `commit_sha` exits 1, and the error names both SHAs; a missing `commit_sha` exits 1
   - [ ] `SEVALLA_TOKEN=fixture SEVALLA_STATIC_SITE_ID=fixture just deploy --dry-run` prints the same `Deploying main at …` and `dry run: POST …` lines as before, and exits 0. The dry run sends no request to Sevalla
-  - [ ] The PR quotes the new line of the "Deploy" section of `development-workflow.md`
+  - [ ] The Deploy section of `development-workflow.md` names both the matching and mismatched commit results
   - [ ] `just check` exits 0
 - Verify: `just check`
 - Out of scope: the live site checks (E03-T03, E03-T04), the deploy jobs of `.github/workflows/ci.yml`
-- Ready review: planner, 2026-11-19, plan checks pass
+- Blocked by: E03-T01 (#84)
+- Unblocks: E03-T04 (#153), E03-QA2 (#146)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
   "id": "E03-T02",
-  "blocked_by": [{"id": "E03-T01", "why": "both tasks change `development-workflow.md`"}],
+  "blocked_by": [
+    {
+      "id": "E03-T01",
+      "why": "both tasks change `development-workflow.md`"
+    }
+  ],
   "needs": [
-    {"what": "Sevalla's OpenAPI file documents commit_sha", "check": "curl -sf https://api.sevalla.com/v3/openapi.json | grep -q commit_sha"}
+    {
+      "what": "The deployment response includes the commit",
+      "check": "curl -fsS https://api.sevalla.com/v3/openapi.json | jq -e '.paths[\"/static-sites/{id}/deployments/{deployment_id}\"].get.responses[\"200\"].content[\"application/json\"].schema.properties | has(\"commit_sha\") and has(\"status\")' >/dev/null"
+    }
   ],
   "touches": [
     "scripts/deploy.py",
@@ -527,7 +598,7 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
     3. The `<link>` of the first `<item>` of `rss.xml` answers 200
   - Each failed check prints one line with the URL, the expected value and the received value. The script tries the failed checks again every 10 s, for at most 120 s, because the CDN can serve old pages for a short time. Then it exits 1
   - On success, it prints `live site OK: <N> checks on <BASE>` and exits 0
-- Traces: [BC §8](../00-business-case.md#s8), SC8, D005
+- Traces: [BC §8](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s8), SC8, D005
 - Contract: `just verify-live [BASE]` exits 0 with one summary line, or exits 1 with one line for each failed check. `scripts/verify_live.py` also gives `failures(base, astro_version=None, retry_seconds=120) -> list[str]`, which returns those lines and an empty list on success. Without `astro_version`, it reads the version from the `package.json` of the checkout. E03-T04 calls this function, and E06 (W02) adds the 41 old URLs to its checks
 - Acceptance:
   - [ ] `just verify-live` exits 0 against `https://pascalandy.com/` and prints `live site OK: <N> checks on https://pascalandy.com/`
@@ -536,7 +607,9 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - [ ] `just check` exits 0
 - Verify: `just check`
 - Out of scope: the call from `just deploy` and the playbook text (E03-T04), the 41 old URLs (E06), checks of the preview site, any check that needs a secret (D005)
-- Ready review: planner, 2026-11-19, plan checks pass
+- Blocked by: none
+- Unblocks: E03-T04 (#153), E03-QA2 (#146)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
@@ -560,20 +633,22 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - `deploy.py` deploys GitHub's `main`, which can differ from the local checkout, so the local `package.json` can name another Astro version
   - Nothing runs the live checks after a deploy. `just deploy --no-wait` returns as soon as Sevalla accepts the deployment, and the manual CI workflow (`just gh-ci main production`) deploys through its own Sevalla action
 - After:
-  - After a production `success` with a matching commit, `deploy.py` calls `failures()` on `SITE.website`, with the Astro version of `package.json` at the deployed commit. It prints each returned line and exits 1 when the list is not empty
+  - After a waited production deployment reports `success` with a matching commit, `deploy.py` calls `failures()` on `SITE.website`, with the Astro version of `package.json` at the deployed commit. It prints each returned line and exits 1 when the list is not empty
   - `just deploy --no-wait` prints that it skipped the commit check and the live checks
   - The "Deploy" section of `development-workflow.md` documents `just verify-live`, says that `just deploy` runs it, and says to run `just verify-live` after a deploy by the manual CI workflow
-- Traces: [BC §8](../00-business-case.md#s8), SC8, D005, D012
+- Traces: [BC §8](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s8), SC8, D005, D012
 - Contract: none. It uses the contract of E03-T03
 - Acceptance:
   - [ ] A test in `scripts/tests/test_deploy.py` shows that `deploy.py production` calls the live checks after a matching `success`, with the Astro version of the deployed commit even when the local `package.json` differs, and exits 1 when they return a failure
   - [ ] A test shows that a commit mismatch exits 1 before the live checks run
   - [ ] A test shows that `--no-wait` prints the skip line and runs no check
-  - [ ] The PR quotes the new lines of the "Deploy" section of `development-workflow.md`
+  - [ ] The Deploy section of `development-workflow.md` documents automatic live checks, the no-wait exception and the manual CI fallback
   - [ ] `just check` exits 0
 - Verify: `just check`
 - Out of scope: the CI deploy jobs of `.github/workflows/ci.yml`, live checks of the preview site
-- Ready review: planner, 2026-11-19, plan checks pass
+- Blocked by: E03-T02 (#143), E03-T03 (#145)
+- Unblocks: E03-QA2 (#146)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
@@ -594,25 +669,40 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 #### E03-QA1: QA: just merge reuses a green signoff → #144
 
 - Kind: qa · Executor: QA agent on the QA machine · State: todo · Verdict: —
-- Context: E03 spans more than 2 batches, so this intermediate QA task tests its first slice: `just merge` no longer runs the full checks again on a head that already carries a green signoff. The user is the agent or Pascal that merges a PR.
-- Traces: [BC §8](../00-business-case.md#s8), SC8
+- Context: This intermediate check covers the first result a maintainer can use: `just merge` no longer runs the full checks again on a head that already carries a green signoff. The user is the agent or Pascal that merges a PR.
+- Traces: [BC §8](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s8), SC8, FR-04, NFR-01
 - Setup: in a fresh clone in a scratch folder on the Mini, run `bun install --frozen-lockfile --ignore-scripts` before any `just` command (D003)
 - QA scenarios (≤ 8):
-  - [ ] In a fresh clone on the Mini, `just check --only scripts` → the tests of `test_merge.py` pass, including the two new tests of E03-T01
-  - [ ] Read `merge()` in `scripts/merge.py` → the checks are skipped only when the green `signoff` is on exactly the pushed head; every refusal still runs before the skip
-  - [ ] Read the "Merge" section of `development-workflow.md` and the section "Merge and deploy" of `AGENTS.md` → both describe the skip, and neither says that `just merge` always runs the checks
+  - [ ] FR-04: In a fresh clone on the Mini, `just check --only scripts` → the tests of `test_merge.py` pass, including the two new tests of E03-T01
+  - [ ] FR-04: Read `merge()` in `scripts/merge.py` → the checks are skipped only when the green `signoff` is on exactly the pushed head; every refusal still runs before the skip
+  - [ ] FR-04: Read the "Merge" section of `development-workflow.md` and the section "Merge and deploy" of `AGENTS.md` → both describe the skip, and neither says that `just merge` always runs the checks
+  - [ ] NFR-01: In the fresh Mini checkout, run `just check`. The installed Bun builds the tested revision.
 - Also check: each acceptance item of E03-T01 still passes on the default branch; `just check` passes.
-- Output: QA report comment, verdict label, one finding issue per finding. No commits, no PRs.
-- Ready review: planner, 2026-11-19, plan checks pass
+- Output: Record the tested commit, independent Mini session, commands, actual results and verdict on this issue. Link each finding.
+- Blocked by: E03-T01 (#84), E02-T04 (#135)
+- Unblocks: no task in W01. The verdict informs the wave review
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
   "id": "E03-QA1",
-  "verifies": ["E03-T01"],
+  "verifies": [
+    "E03-T01",
+    "E02-T04"
+  ],
   "needs": [
-    {"what": "The session runs on the Mac Mini", "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"},
-    {"what": "gh signed in on the QA machine", "check": "gh auth status"},
-    {"what": "bun on the QA machine (E02-T04)", "check": "command -v bun"}
+    {
+      "what": "The session runs on the Mac Mini",
+      "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"
+    },
+    {
+      "what": "gh signed in on the QA machine",
+      "check": "gh auth status"
+    },
+    {
+      "what": "bun on the QA machine (E02-T04)",
+      "check": "command -v bun"
+    }
   ]
 }
 ```
@@ -620,35 +710,54 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 #### E03-QA2: QA: Each merge and each deploy proves itself → #146
 
 - Kind: qa · Executor: QA agent on the QA machine · State: todo · Verdict: —
-- Context: E03 removes the third full check from `just merge`, makes `just deploy` compare the deployed commit, and adds `just verify-live`, which `just deploy` also runs. The user is Pascal or the agent that merges and deploys: a wrong deploy must fail loudly, and a merge must not wait for checks that already passed.
-- Traces: [BC §8](../00-business-case.md#s8), SC8
+- Context: E03 removes the repeated full check from `just merge`, makes `just deploy` compare the deployed commit, and adds `just verify-live`, which `just deploy` also runs. The user is Pascal or the agent that merges and deploys: a wrong deploy must fail loudly, and a merge must not wait for checks that already passed.
+- Traces: [BC §8](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s8), SC8, FR-04, FR-05, FR-06, NFR-01
 - Setup: in a fresh clone in a scratch folder on the Mini, run `bun install --frozen-lockfile --ignore-scripts` before any `just` command (D003)
 - QA scenarios (≤ 8):
-  - [ ] In a fresh clone on the Mini, `just check --only scripts` → the new tests of `test_merge.py`, `test_deploy.py` and `test_verify_live.py` pass
-  - [ ] Read `merge()` in `scripts/merge.py` → the skip needs a green `signoff` on exactly the pushed head, and the test with a green parent commit runs the three checks
-  - [ ] `just verify-live` → exits 0 and prints `live site OK: <N> checks on https://pascalandy.com/`
-  - [ ] `just verify-live https://pascalandy.com/nope/` → exits 1 in at most 3 minutes, and names each failed URL with the expected and received values
-  - [ ] Read the "Merge" and "Deploy" sections of `development-workflow.md` → they describe the signoff reuse, the commit comparison and `just verify-live`, and each `just` recipe that they name is in `just --list`
-  - [ ] Read `deploy.py` → after a production `success`, it compares the commit first, then runs the live checks, and each failure exits 1
+  - [ ] FR-04, FR-05: In a fresh clone on the Mini, `just check --only scripts` → the new tests of `test_merge.py`, `test_deploy.py` and `test_verify_live.py` pass
+  - [ ] FR-04: Read `merge()` in `scripts/merge.py` → the skip needs a green `signoff` on exactly the pushed head, and the test with a green parent commit runs the three checks
+  - [ ] FR-06: `just verify-live` → exits 0 and prints `live site OK: <N> checks on https://pascalandy.com/`
+  - [ ] FR-06: `just verify-live https://pascalandy.com/nope/` → exits 1 in at most 3 minutes, and names each failed URL with the expected and received values
+  - [ ] FR-04, FR-06: Read the "Merge" and "Deploy" sections of `development-workflow.md` → they describe the signoff reuse, the commit comparison and `just verify-live`, and each `just` recipe that they name is in `just --list`
+  - [ ] FR-05, FR-06: Read `deploy.py` → after a production `success`, it compares the commit first, then runs the live checks, and each failure exits 1
+  - [ ] NFR-01: In the fresh Mini checkout, run `just check`. The installed Bun builds the tested revision.
 - Also check: each acceptance item of E03-T01, E03-T02, E03-T03 and E03-T04 still passes on the default branch; `just check` passes.
-- Output: QA report comment, verdict label, one finding issue per finding. No commits, no PRs.
-- Ready review: planner, 2026-11-19, plan checks pass
+- Output: Record the tested commit, independent Mini session, commands, actual results and verdict on this issue. Link each finding.
+- Blocked by: E03-T01 (#84), E03-T02 (#143), E03-T03 (#145), E03-T04 (#153), E02-T04 (#135)
+- Unblocks: no task in W01. The verdict informs the wave review
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
   "id": "E03-QA2",
-  "verifies": ["E03-T01", "E03-T02", "E03-T03", "E03-T04"],
+  "verifies": [
+    "E03-T01",
+    "E03-T02",
+    "E03-T03",
+    "E03-T04",
+    "E02-T04"
+  ],
   "needs": [
-    {"what": "The session runs on the Mac Mini", "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"},
-    {"what": "gh signed in on the QA machine", "check": "gh auth status"},
-    {"what": "bun on the QA machine (E02-T04)", "check": "command -v bun"}
+    {
+      "what": "The session runs on the Mac Mini",
+      "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"
+    },
+    {
+      "what": "gh signed in on the QA machine",
+      "check": "gh auth status"
+    },
+    {
+      "what": "bun on the QA machine (E02-T04)",
+      "check": "command -v bun"
+    }
   ]
 }
 ```
 
 ### E04: The repository holds no dead feature, no stray script and no orphan public file → #129
 
-- Traces: [BC §7](../00-business-case.md#s7), SC6
+- Traces: [BC §7](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s7), SC6, FR-07, FR-08
+- Executor: agent
 - Problem (CMO): The disabled "Edit page" link from AstroPaper is still mounted on each post, and it points to the upstream AstroPaper repository. Five Ghost migration scripts sit in `scripts/` with no caller, and `ruff.toml` excludes them one by one. Five files in `public/og-legacy/` (780 KB) ship to production with no reference, because the image check looks for orphans only under `src/assets/images`.
 - Outcome (FMO): No code, config, schema key or doc of the "Edit page" link remains. The Ghost scripts live in `scripts/archive/ghost-migration/` with a README that says why they stay. `public/` holds only referenced images, and `just check --only images` fails on a new unreferenced image under `public/`.
 
@@ -662,7 +771,7 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - `src/content.config.ts:44` accepts `hideEditPost`, and `src/data/blog/dev_workflows/frontmatter-schema.md:33` and `:72` document it. No post sets it
   - `src/assets/icons/IconEdit.svg` has no other user
 - After: `EditPost.astro`, `IconEdit.svg`, `SITE.editPost`, the import, the mount and its separator, the schema key `hideEditPost` and its two lines of doc are gone. No built page changes, except the playbook `/blog/dev-workflows/frontmatter-schema/`, which loses its two `hideEditPost` lines. The shared stylesheet loses the Tailwind rules that only `EditPost.astro` used, such as `.justify-baseline`, so its file name changes in each page
-- Traces: [BC §7](../00-business-case.md#s7), SC6
+- Traces: [BC §7](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s7), SC6
 - Contract: none. The frontmatter schema loses the key `hideEditPost`, which no post uses
 - Acceptance:
   - [ ] `rg -n 'EditPost|editPost|hideEditPost|IconEdit' src scripts .claude` prints nothing
@@ -670,7 +779,9 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - [ ] `just check` exits 0
 - Verify: `just check`
 - Out of scope: other AstroPaper leftovers, a visible change to the post layout
-- Ready review: planner, 2026-11-19, plan checks pass
+- Blocked by: none
+- Unblocks: E04-QA1 (#141)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
@@ -699,7 +810,7 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - The five scripts are in `scripts/archive/ghost-migration/`, moved with `git mv` so that `git log --follow` keeps their history
   - `scripts/archive/ghost-migration/README.md` says what each script did, that no recipe runs them, that nobody maintains them, and why they stay (R9)
   - `ruff.toml` excludes `scripts/archive/` with one entry instead of five
-- Traces: [BC §7](../00-business-case.md#s7), SC6, D009
+- Traces: [BC §7](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s7), SC6, D009
 - Contract: none
 - Acceptance:
   - [ ] `ls scripts/archive/ghost-migration/` lists the five scripts and `README.md`, and `ls scripts/` lists none of the five
@@ -708,7 +819,9 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - [ ] `just check` exits 0
 - Verify: `just check`
 - Out of scope: a fix or a test of the archived scripts, a Ghost import
-- Ready review: planner, 2026-11-19, plan checks pass
+- Blocked by: none
+- Unblocks: E04-QA1 (#141)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
@@ -738,7 +851,7 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 - After:
   - The 5 files are deleted
   - `check_images.py` also reports `unreferenced image: public/<path>` for an image under `public/` that no source references. It skips `public/pagefind/`
-- Traces: [BC §7](../00-business-case.md#s7), SC6
+- Traces: [BC §7](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s7), SC6
 - Contract: none
 - Acceptance:
   - [ ] None of the 5 paths exists: `for f in 2017/11/gault.jpg 2019/01/025b-cryptoinmontreal.jpg 2019/03/028a-cryptoinmontreal.jpg 2019/05/CIM-logo-general.jpg 2019/11/038b-cryptoinmontreal.jpg; do test ! -e "public/og-legacy/$f" || echo "$f"; done` prints nothing
@@ -747,7 +860,9 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - [ ] `just check` exits 0
 - Verify: `just check`
 - Out of scope: non-image files in `public/`, duplicate images (R17)
-- Ready review: planner, 2026-11-19, plan checks pass
+- Blocked by: none
+- Unblocks: E04-QA1 (#141)
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
@@ -770,27 +885,44 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 
 - Kind: qa · Executor: QA agent on the QA machine · State: todo · Verdict: —
 - Context: E04 removes the disabled "Edit page" link, archives the Ghost scripts, deletes the orphan files of `public/` and extends the image check to `public/`. The user is the next agent: it must not maintain or reuse code that the site does not run, and a new orphan file must fail the checks.
-- Traces: [BC §7](../00-business-case.md#s7), SC6
+- Traces: [BC §7](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s7), SC6, FR-07, FR-08, NFR-01
 - Setup: in a fresh clone in a scratch folder on the Mini, run `bun install --frozen-lockfile --ignore-scripts` before any `just` command (D003)
 - QA scenarios (≤ 8):
-  - [ ] In a fresh clone on the Mini, `just build` → `rg -l 'satnaing/astro-paper/edit/' dist` prints nothing (the decision log may still name the removed link), and `fd 'gault|025b-|028a-|CIM-logo-general|038b-' dist/og-legacy` prints nothing
-  - [ ] Add `hideEditPost: true` to one post of the scratch clone → `just check --only content` fails and names the key; then restore the post with `git checkout -- <post>`
-  - [ ] Copy a JPEG to `public/og-legacy/qa-orphan.jpg` → `just check --only images` fails with `unreferenced image: public/og-legacy/qa-orphan.jpg`; delete the file → the check passes
-  - [ ] `fd -e jpg . public/og-legacy | wc -l` → prints 12, and `just check --only images` passes
-  - [ ] Read `scripts/archive/ghost-migration/README.md` → it says what each script did, why the scripts stay (R9), and that no recipe runs them; `just lint` passes
-  - [ ] `git log --follow --oneline -- scripts/archive/ghost-migration/import_ghost_posts.py` → shows commits from before the move, and `just check` exits 0 in the same clone
+  - [ ] FR-07, FR-08: In a fresh clone on the Mini, `just build` → `rg -l 'satnaing/astro-paper/edit/' dist` prints nothing (the decision log may still name the removed link), and `fd 'gault|025b-|028a-|CIM-logo-general|038b-' dist/og-legacy` prints nothing
+  - [ ] FR-07: Add `hideEditPost: true` to one post of the scratch clone → `just check --only content` fails and names the key; then restore the post with `git checkout -- <post>`
+  - [ ] FR-08: Copy a JPEG to `public/og-legacy/qa-orphan.jpg` → `just check --only images` fails with `unreferenced image: public/og-legacy/qa-orphan.jpg`; delete the file → the check passes
+  - [ ] FR-08: `fd -e jpg . public/og-legacy | wc -l` → prints 12, and `just check --only images` passes
+  - [ ] FR-07: Read `scripts/archive/ghost-migration/README.md` → it says what each script did, why the scripts stay (R9), and that no recipe runs them; `just lint` passes
+  - [ ] FR-07: `git log --follow --oneline -- scripts/archive/ghost-migration/import_ghost_posts.py` → shows commits from before the move, and `just check` exits 0 in the same clone
+  - [ ] NFR-01: In the fresh Mini checkout, run `just check`. The installed Bun builds the tested revision.
 - Also check: each acceptance item of E04-T01, E04-T02 and E04-T03 still passes on the default branch; `just check` passes.
-- Output: QA report comment, verdict label, one finding issue per finding. No commits, no PRs.
-- Ready review: planner, 2026-11-19, plan checks pass
+- Output: Record the tested commit, independent Mini session, commands, actual results and verdict on this issue. Link each finding.
+- Blocked by: E04-T01 (#136), E04-T02 (#137), E04-T03 (#138), E02-T04 (#135)
+- Unblocks: no task in W01. The verdict informs the wave review
+- Ready review: planner, 2026-11-21, brief and dependencies checked
 
 ```json
 {
   "id": "E04-QA1",
-  "verifies": ["E04-T01", "E04-T02", "E04-T03"],
+  "verifies": [
+    "E04-T01",
+    "E04-T02",
+    "E04-T03",
+    "E02-T04"
+  ],
   "needs": [
-    {"what": "The session runs on the Mac Mini", "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"},
-    {"what": "gh signed in on the QA machine", "check": "gh auth status"},
-    {"what": "bun on the QA machine (E02-T04)", "check": "command -v bun"}
+    {
+      "what": "The session runs on the Mac Mini",
+      "check": "hostname | tr '[:upper:]' '[:lower:]' | grep -q m4mini"
+    },
+    {
+      "what": "gh signed in on the QA machine",
+      "check": "gh auth status"
+    },
+    {
+      "what": "bun on the QA machine (E02-T04)",
+      "check": "command -v bun"
+    }
   ]
 }
 ```
@@ -798,5 +930,7 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 ## Discoveries
 
 ## Changes since original plan
+
+D017 moves deferred issue creation into this planning update. D013 records the existing CI and browser checks. D014 makes the Mini setup a prerequisite of independent QA. Each brief lists its immediate successors.
 
 ## Learnings

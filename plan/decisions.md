@@ -29,7 +29,7 @@ Plan-structure and technical decisions, newest last. Pascal's product decisions 
 
 - Date: 2026-11-19
 - Trigger: technical choice
-- Decision: the QA machine is the Mac Mini (`m4mini`). Each QA session clones `pascalandy/pascalandy-blog-paper` into a new scratch folder and tests its default branch. The Mini keeps no permanent clone, so the fleet's `repos.toml` does not change
+- Decision: the QA machine is the Mac Mini (the fleet QA host). Each QA session clones `pascalandy/pascalandy-blog-paper` into a new scratch folder and tests its default branch. The Mini keeps no permanent clone, so the fleet's `repos.toml` does not change
 - Why: a fresh clone tests exactly the default branch and carries no state from an implementer. On 2026-11-19 the Mini had `git`, `gh`, `node` v26.12.1, `uv`, `just` and `fnox`, but no `bun`, no Playwright Chromium and no `agent-browser`. E02-T04 installs what the QA agent needs
 - Affects: every QA task, E02-T04
 
@@ -111,3 +111,43 @@ Plan-structure and technical decisions, newest last. Pascal's product decisions 
 - Decision: the commit comparison and the live checks run automatically after each production deploy that `just deploy` waits for. Two paths are exceptions: `just deploy --no-wait` prints that it skipped both checks, and after a deploy by the manual CI workflow (`just gh-ci main production`), the playbook says to run `just verify-live`
 - Why: the decision log (2026-09-29) makes `just deploy` the way to ship `main`. `--no-wait` returns before the build ends, so it cannot check the result. The CI workflow is a manual fallback with its own Sevalla action; wiring checks into it would add a workflow change for a path that nobody uses today
 - Affects: SC8, E03, E03-T04
+
+## D013: Reuse the existing CI baseline and browser verification
+
+- Date: 2026-11-21
+- Trigger: review of the active wave against planning version 3.1.0
+- Decision: under delegated planning authority, waive a duplicate baseline task. The existing agent guide, justfile, hooks and signoff cover the baseline. Keep the existing check selection.
+- Why: `just check --list` reports ten checks. The repository already has a verifier with a launcher, doctor, Playwright driver and feature recipes. A second verifier would test the same site.
+- Affects: W01. E02-T03 maintains the existing navigation journey. When W02 changes a reader journey, its briefs must update the affected verify-blog recipe.
+
+## D014: Verify the Mini setup before independent QA
+
+- Date: 2026-11-21
+- Trigger: four QA issues required Bun on the Mini but had no issue dependency on its setup
+- Decision: each independent QA issue verifies E02-T04. The setup evidence is a successful build on the Mini. E02-QA1 also verifies a real browser launch.
+- Why: the ten independent delivery tasks can start now. A reviewer who starts QA before the Mini can build the blog cannot distinguish a setup failure from a product defect.
+- Affects: E01 to E04, the native issue dependencies and the QA playbook
+
+## D015: Set the editorial lists from the published articles
+
+- Date: 2026-11-21
+- Trigger: Pascal delegated the pending editorial choices
+- Decision: E07 and #149 give the English files, the six vacancies and the five featured files. The English choices follow the main article, role description or event announcement. For image-only posts, the title and description supply the language.
+- Why: event footers, pasted specifications and external links can outweigh the author’s text in a word count. A fixed list keeps the language metadata and listings verifiable. Pagefind 1.4 selects one index on the French search page. A shared French index preserves search across languages.
+- Affects: E07. This decision replaces the list confirmation in D004. The original November 19 answers remain historical.
+
+## D016: Publish after the reader wave
+
+- Date: 2026-11-21
+- Trigger: a human release in W02 would wait for agent work in the same wave
+- Decision: W02 covers the preview. W02B covers the authorized production revision and public checks. Keep release issue #151 and its ID, E09, for W02B. This existing issue remains visible while its wave is proposed.
+- Why: Pascal needs the finished screenshots and QA reports before he can authorize publication. Keeping that decision after W02 lets agents finish the preview independently.
+- Affects: W02, W02B, W03 and W04. The later outlines identify the remaining human inputs. This decision updates the wave order in D001.
+
+## D017: Put deferred work on GitHub during planning
+
+- Date: 2026-11-21
+- Trigger: the requested handoff must work from the issues alone
+- Decision: the fourteen deferred items now have individual issues (#155–#168), acceptance criteria and prerequisites. The four missing labels exist. E01-T03 reconciles these issues and preserves the Inbox.
+- Why: an agent can inspect the scope before a later wave starts. Each later brief reuses the existing issue, which preserves its history.
+- Affects: E01-T03, W03 and W04. The readiness label describes the issue brief. Only work in the active wave can start. This decision updates the timing in D008 and D011. B24 supplies the comparison baseline for B30. B28, B29, B30 and B31 use the same dependency files in that order.
