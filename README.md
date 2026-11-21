@@ -26,7 +26,7 @@ tags:
 Le texte du billet, en français.
 ```
 
-The file name becomes the URL, `/blog/<slug>/`. Every tag must exist in `src/tags.ts`, and `just check --only content` reports any unknown key or tag.
+The file name becomes the URL, `/blog/<slug>/`, so write it in lowercase words joined by hyphens. Astro skips any file whose name starts with `_`. Every tag must exist in `src/tags.ts`, and `just check --only content` reports any unknown key or tag.
 
 ## Prerequisites
 
