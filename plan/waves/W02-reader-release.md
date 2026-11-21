@@ -3,51 +3,125 @@ id: W02
 project: BLOG
 status: planned
 label: wave:W02
-skill_version: "2.0.0"
+skill_version: "3.1.0"
+executor: agent
 ---
 
 # W02: reader-release
 
 ## Goal
 
-Readers get a readable, fully French blog with working old links and the right posts, and production serves it.
+A local preview shows the finished reader experience. W02B publishes the accepted revision.
 
 ## Exit criteria
 
 - [ ] In both themes, the text and link colors reach their contrast thresholds, a `just check` row proves it, and no listed English interface string remains (SC3)
-- [ ] Each of the 41 old `/blog/cryptoinmontreal-NN/` URLs leads to its `/blog/cim-NN/` page, in `dist/` and on production (SC4)
-- [ ] Each post on Pascal's confirmed lists carries `lang: en` or the `void` tag, and the home page shows the 5 featured posts (SC5)
+- [ ] Each of the 41 old `/blog/cryptoinmontreal-NN/` URLs leads to its `/blog/cim-NN/` page, in the static build and through the preview (SC4)
+- [ ] Each post on the lists below carries `lang: en` or the `void` tag, and the home page shows the 5 featured posts (SC5)
 - [ ] `src/data/blog/dev_workflows/editorial-rules.md` states each editorial rule and names its check (SC9)
-- [ ] Production serves the final `main`: `just deploy` reports the matching commit, and `just verify-live` passes (SC10)
 
 ## Epics
 
 ### E05: Every page reads clearly, in French, in both themes → #147
 
-- Traces: [BC §5](../00-business-case.md#s5), SC3
-- Problem (CMO): In the light theme, the orange `primary` (`oklch(0.6171 0.1375 39.0427)`, `src/config.ts:129`) reads at 3.70:1 on the cream background (`src/config.ts:123`). Titles and list links of 18 px and 20 px need 4.5:1. The tag counts read at 1.96:1, and the prose link underline at 1.39:1 (`src/styles/typography.css:31`); Pascal's Inbox also asks for a thinner underline in the primary color (B12). The dark theme passes at 4.86:1. Some interface strings are still in English: the footer's `All Right Reserved`, the home page's `Featured` heading, the code block buttons `Copy` and `Copied` (set by the inline script of `src/layouts/PostDetails.astro:242` and `:281`), the social link titles of `src/constants.ts:20-50` (`<site title> on X`, `on LinkedIn`, `on Facebook`, `on GitHub`, `FirePress on GitHub` and `RSS Feed`) and the 404 page title `404 Not Found` (B42). The post `cryptoinmontreal-photo.md` closes two image links with `))`, so a stray `)` shows after each gallery image (B39).
-- Outcome (FMO): The light theme's `primary` is at lightness 0.56 (4.69:1, R20 option B), and the tag counts and the prose link underline reach their thresholds, with a thinner underline in `--primary`. A `just check` row computes the contrast of the theme colors in both themes and fails under the threshold. Each listed string, including every social link title, is in Québec French. A check rejects them in the interface markup of `dist/` (footer, home heading, the emitted copy-button script, social link titles, 404 title), not in post text. The gallery shows no stray `)`. The QA report carries screenshots of both themes at desktop and phone widths, for Pascal's review.
+- Traces: [BC §5](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s5), SC3
+- Executor: agent
+- Problem (CMO): The light orange reads at 3.70:1 on cream. Tag counts read at 1.96:1. Some interface controls still use English. Two gallery links print a stray closing parenthesis.
+- Outcome (FMO): The light primary color uses lightness 0.56 in `src/config.ts`. Normal text, including counts, meets 4.5:1 in both themes. Prose links retain a visible, thinner underline in the primary color.
+- Verification: compute the foreground and background contrast in both themes. The build check fails below the required text contrast.
+- Québec French applies to the footer, featured heading, copy button and confirmation, social link titles, RSS title and 404 title. The check reads the emitted controls and scripts without scanning quoted post text.
+- Gallery: `cryptoinmontreal-photo.md` renders both image links without the extra parenthesis. The QA evidence includes desktop and phone screenshots in both themes.
+
+- Dependencies: #127 provides the viewport checks. W02B uses the screenshots.
 
 ### E06: Old URLs reach their new pages → #148
 
-- Traces: [BC §5](../00-business-case.md#s5), SC4
-- Problem (CMO): Commit `d6b2d99` renamed 41 posts from `/blog/cryptoinmontreal-NN/` to `/blog/cim-NN/` with no redirect, so each old URL answers 404, including links from other sites and from search engines (B7). `astro.config.ts` has no `redirects` key.
-- Outcome (FMO): `astro.config.ts` gives Astro `redirects` for the 41 pairs (R3). A static build emits each one as a small HTML page with a meta refresh, not as a 301. `check_html.py` treats these 41 pages as redirect pages: it skips the ordinary page rules for them, and fails when an old URL has no redirect page or when its target is not the exact, existing `/blog/cim-NN/` page. `just verify-live` requests each old URL, reads its redirect target, requires it to be the expected `/blog/cim-NN/` URL, then requires that target to answer 200. E09 runs it on production.
+- Traces: [BC §5](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s5), SC4
+- Executor: agent
+- Problem (CMO): Commit `d6b2d99` renamed 41 event posts. External links still use their former addresses.
+- Outcome (FMO): Astro emits a static redirect page for each old address. The browser reads its HTML refresh and reaches the existing article.
+- Pairing: use the 41 renames in `d6b2d99`. Each `/blog/cryptoinmontreal-NN/` targets its own `/blog/cim-NN/`.
+- Build proof: the HTML checker recognizes exactly these redirect pages. A missing page, wrong number or missing target fails. All ordinary pages still use the full metadata rules.
+- Reader proof: request each old URL on the preview. Read the actual redirect target and require the expected article to return 200. Issue #151 repeats this check on production.
+
+- Dependencies: #145 defines `just verify-live`. E08 documents the redirect rule. W02B uses the 41 verified pairs.
 
 ### E07: The blog roll shows the chosen posts, each in its language → #149
 
-- Traces: [BC §6](../00-business-case.md#s6), SC5
-- Problem (CMO): The site default is `fr-CA` since #106, and the schema accepts an optional `lang` key, but no post sets `lang: en`. About 30 English posts and the 9 English playbooks of `src/data/blog/dev_workflows/` thus render `<html lang="fr-CA">`, so browsers and Pagefind treat them as French (B2, R13). Job ads from 2015 sit in the blog roll (R15). No post is featured, so the home page has no featured section (B13).
-- Outcome (FMO): Pascal confirms two candidate lists on a human task: the English posts and the job ads. Each English post on the list sets `lang: en`, and `check_html.py` already verifies its `<html lang>`. Each job ad on the list gets the `void` tag, which keeps its page and its URL but removes it from the blog roll and RSS. The 5 posts of Pascal's shortlist set `featured: true` and show on the home page: `lekt-le-lecteur`, `pourquoi-se-donner-la-peine-decrire`, `pourquoi-jaime-vous-tutoyer`, `le-multitache-une-legende-urbaine-qui-a-trop-dure` and `comment-reprendre-le-dessus-quand-le-rythme-accelere`.
+- Traces: [BC §6](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s6), SC5
+- Executor: agent
+- Problem (CMO): Published articles inherit the Québec French default. Old vacancies can still appear in the blog listing. The home page has no featured posts.
+- Outcome (FMO): The English files below publish with `<html lang="en">` and `og:locale=en_US`. French pages retain `fr-CA` and `fr_CA`. The six vacancies get the `void` tag. This tag preserves their URLs and removes them from the blog listing and RSS.
+- Featured posts: set `featured: true` on the following five articles. Their links must appear together in the featured section of the home page.
+  - `lekt-le-lecteur`
+  - `pourquoi-se-donner-la-peine-decrire`
+  - `pourquoi-jaime-vous-tutoyer`
+  - `le-multitache-une-legende-urbaine-qui-a-trop-dure`
+  - `comment-reprendre-le-dessus-quand-le-rythme-accelere`
+
+- English articles at `69f7877` (38 files directly under `src/data/blog/`):
+  - `10-stages-of-the-lifecycle-of-a-business.md`
+  - `assetv-my-new-blockchain-project-idea.md`
+  - `bitcoin-and-canadian-taxation-of-cryptocurrencies-full-video.md`
+  - `ci-cd-scenario.md`
+  - `cim-17.md`
+  - `cim-20.md`
+  - `cim-28.md`
+  - `cim-33.md`
+  - `cim-35.md`
+  - `cim-36.md`
+  - `cim-37.md`
+  - `contributing-to-our-github-project.md`
+  - `contributor-code-of-conduct-on-github.md`
+  - `dper.md`
+  - `each-day-traditional-social-networks-are-disconnecting-from-you.md`
+  - `golf-r-parts.md`
+  - `googler-comme-si-ta-vie-depend.md`
+  - `how-do-i-help-organisations-to-thrive-as-a-full-stack-architect.md`
+  - `i-am-the-bridge-maker.md`
+  - `iphone-home-page.md`
+  - `looking-for-a-geeky-node-developer-ghost.md`
+  - `minimal-tech-bckpck.md`
+  - `my-dca-definite-chief-aim.md`
+  - `my-personality-type-entp-a-debater.md`
+  - `my-productivity-hacks-to-fight-procrastination.md`
+  - `need-a-geeky-ghost-theme-developer-zurb-html5-css.md`
+  - `poste-danalyste-daffaires-systeme-2015-10-19.md`
+  - `satoshi-nakamoto-announce-the-creation-of-bitcoin-this-is-how-it-started.md`
+  - `setup-a-continuous-integration-continuous-deployment-environment.md`
+  - `shady-twitter.md`
+  - `the-blockchain-impact-by-naval-ravikant.md`
+  - `the-lean-way-to-start-something.md`
+  - `thermodynamic-neutrality.md`
+  - `traefik-demo-docker-stack-and-play-with-docker.md`
+  - `what-is-a-now-page.md`
+  - `what-is-the-gnu-gpl-license.md`
+  - `when-bitcoin-miners-decide-to-mine-something-else.md`
+  - `when-crypto-currencies-smart-contracts-iot-ai-sleep-together.md`
+- The nine published guides under `src/data/blog/dev_workflows/` also use English. The new editorial guide in E08 uses English.
+- Old vacancies (6 files under `src/data/blog/`):
+  - `copywriter-recherche-pour-communiquer-lessence-dune-nouvelle-startup.md`
+  - `looking-for-a-geeky-node-developer-ghost.md`
+  - `need-a-geeky-ghost-theme-developer-zurb-html5-css.md`
+  - `poste-danalyste-daffaires-systeme-2015-10-19.md`
+  - `setup-a-continuous-integration-continuous-deployment-environment.md`
+  - `traducteur-ou-traductrice-passionne-e-des-mots-et-geek-de-preference-anglais-vers-le-francais.md`
+- Language examples: the Bell vacancy has a French introduction and an English job description. The iPhone photo has an English title and description.
+- The sale notice `photos-pneus-a-vendre.md` has French terms and a quoted English specification. The page keeps French.
+- The language lists cover published pages. Drafts stay excluded from the build. An ad already tagged `void` needs no second tag.
+- Proof: each vacancy still opens by its existing URL. No vacancy appears on any numbered blog page or in the RSS feed.
+- Search proof: the Pagefind index accounts for every published post. The French search page must still find a known English article and a French article.
+- Dependencies: #127 supplies the preview checks. E08 documents the resulting language, listing and featured rules. W02B publishes the result.
 
 ### E08: The editorial rules are on one page, and each rule names its check → #150
 
-- Traces: [BC §9](../00-business-case.md#s9), SC9
-- Problem (CMO): The editorial rules are spread over `src/content.config.ts`, `src/data/blog/dev_workflows/tag-visibility-system.md`, `frontmatter-schema.md` and the gotchas of `AGENTS.md`: `void`, drafts (they never build), future dates (out of listings and RSS until 15 minutes before), featured posts, the language and the redirects. No page says which check enforces each rule, so Pascal and the agents learn a rule only when a check fails.
-- Outcome (FMO): `src/data/blog/dev_workflows/editorial-rules.md`, a public playbook in English, states each rule, what the reader sees, and the `just check` row or schema rule that enforces it. A rule that has no check gets one. `AGENTS.md` routes to the page.
+- Traces: [BC §9](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s9), SC9
+- Executor: agent
+- Problem (CMO): Authors must consult the schema, tag guide, frontmatter guide and agent instructions to understand the publishing rules.
+- Outcome (FMO): The English guide at `src/data/blog/dev_workflows/editorial-rules.md` describes the reader-visible effect of each rule. It names the schema rule or check that proves the effect. A missing check gets a focused fixture.
+- Cover hidden tags, drafts, the 15-minute publication window, featured articles, language metadata and legacy redirects. The agent guide links to the published guide.
+- Dependencies: E06 (#148) supplies the redirect rule. E07 (#149) supplies the tested post lists. W02B uses the results for release.
 
-### E09: Production serves the finished blog → #151
+## Changes since original plan
 
-- Traces: [BC §10](../00-business-case.md#s10), SC10
-- Problem (CMO): Production serves `main` at `cb723c8` (2026-11-19). The work of W01 and W02 is not public until Pascal says "déploie".
-- Outcome (FMO): After Pascal's go, `just deploy` ships `main`, reports the matching commit, and passes `just verify-live`, including the 41 old URLs. The deploy task waits for passing verdicts of the QA tasks of E05, E06, E07 and E08, because a deploy follows them (blocking QA). A final QA task checks the public site.
+D015 fixes the post lists. D016 moves production work to W02B. Readers can verify the changes on a preview before Pascal authorizes release.

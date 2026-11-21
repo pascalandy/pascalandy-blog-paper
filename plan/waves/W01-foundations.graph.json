@@ -7,7 +7,7 @@
       "needs": [
         {
           "what": "gh signed in with write access to the repository",
-          "check": "gh auth status"
+          "check": "gh api repos/pascalandy/pascalandy-blog-paper --jq '.permissions.push' | rg -x true"
         },
         {
           "what": "The plan is on the default branch (PR #152 merged), so the docs check resolves `plan/01-project.md`",
@@ -28,7 +28,7 @@
       "needs": [
         {
           "what": "gh signed in with write access to the repository",
-          "check": "gh auth status"
+          "check": "gh api repos/pascalandy/pascalandy-blog-paper --jq '.permissions.push' | rg -x true"
         }
       ],
       "touches": [],
@@ -41,7 +41,7 @@
       "needs": [
         {
           "what": "gh signed in with write access to the repository",
-          "check": "gh auth status"
+          "check": "gh api repos/pascalandy/pascalandy-blog-paper --jq '.permissions.push' | rg -x true"
         }
       ],
       "touches": [
@@ -56,7 +56,8 @@
       "verifies": [
         "E01-T01",
         "E01-T02",
-        "E01-T03"
+        "E01-T03",
+        "E02-T04"
       ],
       "needs": [
         {
@@ -203,8 +204,8 @@
       ],
       "needs": [
         {
-          "what": "Sevalla's OpenAPI file documents commit_sha",
-          "check": "curl -sf https://api.sevalla.com/v3/openapi.json | grep -q commit_sha"
+          "what": "The deployment response includes the commit",
+          "check": "curl -fsS https://api.sevalla.com/v3/openapi.json | jq -e '.paths[\"/static-sites/{id}/deployments/{deployment_id}\"].get.responses[\"200\"].content[\"application/json\"].schema.properties | has(\"commit_sha\") and has(\"status\")' >/dev/null"
         }
       ],
       "touches": [
@@ -256,7 +257,8 @@
     {
       "id": "E03-QA1",
       "verifies": [
-        "E03-T01"
+        "E03-T01",
+        "E02-T04"
       ],
       "needs": [
         {
@@ -281,7 +283,8 @@
         "E03-T01",
         "E03-T02",
         "E03-T03",
-        "E03-T04"
+        "E03-T04",
+        "E02-T04"
       ],
       "needs": [
         {
@@ -352,7 +355,8 @@
       "verifies": [
         "E04-T01",
         "E04-T02",
-        "E04-T03"
+        "E04-T03",
+        "E02-T04"
       ],
       "needs": [
         {
@@ -385,6 +389,11 @@
     },
     {
       "from": "E01-T03",
+      "to": "E01-QA1",
+      "why": "verifies"
+    },
+    {
+      "from": "E02-T04",
       "to": "E01-QA1",
       "why": "verifies"
     },
@@ -444,6 +453,11 @@
       "why": "verifies"
     },
     {
+      "from": "E02-T04",
+      "to": "E03-QA1",
+      "why": "verifies"
+    },
+    {
       "from": "E03-T01",
       "to": "E03-QA2",
       "why": "verifies"
@@ -464,6 +478,11 @@
       "why": "verifies"
     },
     {
+      "from": "E02-T04",
+      "to": "E03-QA2",
+      "why": "verifies"
+    },
+    {
       "from": "E04-T01",
       "to": "E04-QA1",
       "why": "verifies"
@@ -475,6 +494,11 @@
     },
     {
       "from": "E04-T03",
+      "to": "E04-QA1",
+      "why": "verifies"
+    },
+    {
+      "from": "E02-T04",
       "to": "E04-QA1",
       "why": "verifies"
     }
