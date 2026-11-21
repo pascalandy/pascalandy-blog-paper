@@ -17,7 +17,7 @@ A local preview shows the finished reader experience. W02B publishes the accepte
 
 - [ ] In both themes, the text and link colors reach their contrast thresholds, a `just check` row proves it, and no listed English interface string remains (SC3)
 - [ ] Each of the 41 old `/blog/cryptoinmontreal-NN/` URLs leads to its `/blog/cim-NN/` page, in the static build and through the preview (SC4)
-- [ ] Each post on the lists below carries `lang: en` or the `void` tag, and the home page shows the 5 featured posts (SC5)
+- [ ] The English articles and guides set `lang: en`. The six vacancies carry `void`. The home page shows the five featured posts (SC5)
 - [ ] `src/data/blog/dev_workflows/editorial-rules.md` states each editorial rule and names its check (SC9)
 
 ## Epics
@@ -38,11 +38,11 @@ A local preview shows the finished reader experience. W02B publishes the accepte
 
 - Traces: [BC §5](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s5), SC4
 - Executor: agent
-- Problem (CMO): Commit `d6b2d99` renamed 41 event posts. External links still use their former addresses.
+- Problem (CMO): Commit `d6b2d99` deleted 41 old event files. The numbered `cim-NN` articles already existed. External links still use their former addresses.
 - Outcome (FMO): Astro emits a static redirect page for each old address. The browser reads its HTML refresh and reaches the existing article.
-- Pairing: use the 41 renames in `d6b2d99`. Each `/blog/cryptoinmontreal-NN/` targets its own `/blog/cim-NN/`.
+- Pairing: use the 41 deleted `cryptoinmontreal-NN.md` files in `d6b2d99`. Each `/blog/cryptoinmontreal-NN/` targets its own `/blog/cim-NN/`.
 - Build proof: the HTML checker recognizes exactly these redirect pages. A missing page, wrong number or missing target fails. All ordinary pages still use the full metadata rules.
-- Reader proof: request each old URL on the preview. Read the actual redirect target and require the expected article to return 200. Issue #151 repeats this check on production.
+- Reader proof: request each old URL on the preview. Read the actual redirect target and require the expected article to return 200. E06 adds all 41 pairs to `failures()` in `scripts/verify_live.py`. A wrong refresh target or a non-200 article fails the check. Issue #151 runs the same verifier on production.
 
 - Dependencies: #145 defines `just verify-live`. E08 documents the redirect rule. W02B uses the 41 verified pairs.
 
@@ -98,7 +98,7 @@ A local preview shows the finished reader experience. W02B publishes the accepte
   - `what-is-the-gnu-gpl-license.md`
   - `when-bitcoin-miners-decide-to-mine-something-else.md`
   - `when-crypto-currencies-smart-contracts-iot-ai-sleep-together.md`
-- The nine published guides under `src/data/blog/dev_workflows/` also use English. The new editorial guide in E08 uses English.
+- E07 sets `lang: en` in all nine existing guides under `src/data/blog/dev_workflows/`. E08 sets the same key in the new editorial guide.
 - Old vacancies (6 files under `src/data/blog/`):
   - `copywriter-recherche-pour-communiquer-lessence-dune-nouvelle-startup.md`
   - `looking-for-a-geeky-node-developer-ghost.md`
@@ -110,7 +110,8 @@ A local preview shows the finished reader experience. W02B publishes the accepte
 - The sale notice `photos-pneus-a-vendre.md` has French terms and a quoted English specification. The page keeps French.
 - The language lists cover published pages. Drafts stay excluded from the build. An ad already tagged `void` needs no second tag.
 - Proof: each vacancy still opens by its existing URL. No vacancy appears on any numbered blog page or in the RSS feed.
-- Search proof: the Pagefind index accounts for every published post. The French search page must still find a known English article and a French article.
+- Search: both build scripts in `package.json` run Pagefind with `--force-language fr`. The single French index keeps both languages searchable from `/search/`. Article HTML retains its own language.
+- Search proof: the index metadata lists `fr` and counts every published post. From `/search/`, a distinctive word from each of two articles returns the corresponding English or French article. Update the search recipe in verify-blog with both queries and expected URLs.
 - Dependencies: #127 supplies the preview checks. E08 documents the resulting language, listing and featured rules. W02B publishes the result.
 
 ### E08: The editorial rules are on one page, and each rule names its check → #150
@@ -118,7 +119,7 @@ A local preview shows the finished reader experience. W02B publishes the accepte
 - Traces: [BC §9](https://github.com/pascalandy/pascalandy-blog-paper/blob/main/plan/00-business-case.md#s9), SC9
 - Executor: agent
 - Problem (CMO): Authors must consult the schema, tag guide, frontmatter guide and agent instructions to understand the publishing rules.
-- Outcome (FMO): The English guide at `src/data/blog/dev_workflows/editorial-rules.md` describes the reader-visible effect of each rule. It names the schema rule or check that proves the effect. A missing check gets a focused fixture.
+- Outcome (FMO): The public guide at `src/data/blog/dev_workflows/editorial-rules.md` sets `lang: en`. The guide describes the reader-visible effect of each rule. It names the schema rule or check that proves the effect. A missing check gets a focused fixture.
 - Cover hidden tags, drafts, the 15-minute publication window, featured articles, language metadata and legacy redirects. The agent guide links to the published guide.
 - Dependencies: E06 (#148) supplies the redirect rule. E07 (#149) supplies the tested post lists. W02B uses the results for release.
 

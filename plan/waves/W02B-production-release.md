@@ -22,7 +22,9 @@ Publish the reader changes after the W02 results and Pascal’s release decision
 
 - Existing release issue [#151](https://github.com/pascalandy/pascalandy-blog-paper/issues/151) retains the history of E09. Expand it at the wave review.
 - The release waits for passing QA on #147, #148, #149 and #150. The four closed epics supply that evidence. Pascal receives the screenshots before authorizing the production change.
-- The authorization identifies the revision. If the branch advances, the release needs evidence and approval for the new revision.
+- Risk: Sevalla builds the tip of a branch. A merge during deployment can publish a different revision.
+- Before comparing commits, pause merges to `main` until the deployment and live checks finish. Compare `git ls-remote origin refs/heads/main` with the full commit Pascal authorized. A mismatch stops the release before submission.
+- The `Deploying main at` line must show the authorized seven-character prefix. The final provider record must match the full commit. A different revision requires fresh evidence and approval.
 - Independent QA on the Mini checks the public URLs after deployment. The provider’s commit record and the public responses answer different questions (D005).
 
 ## Changes since original plan

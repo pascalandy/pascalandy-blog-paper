@@ -44,7 +44,7 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - `AGENTS.md` sends work and deferred defects to the open GitHub issues of this repository, and its route "Pick work" names the GitHub issues and `plan/01-project.md`. The PR template names a GitHub issue instead of `dev_notes/backlog.md`
   - `AGENTS.md` names CodeRabbit as the review bot and keeps the rule "a PR has 90 files or fewer" (D007)
   - The AVIF gotcha records the scope of the existing check. R8 retires #89 because the blog ships no AVIF images
-  - The decision log has 14 new lines dated 2026-11-19, one for each decision of the second table. Each line links the #103 comment
+  - The decision log has 14 new lines dated 2026-11-19, one for each decision of the second table. Each line links the #103 comment. A newer entry dated 2026-11-21 records the final R13 and R15 lists from #149.
 - Answers for the #103 comment:
 
   | ID | Answer of 2026-11-19 |
@@ -95,7 +95,7 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
 - Acceptance:
   - [ ] `gh issue view 103 --comments` shows one new comment with each row of the answers table
   - [ ] `rg -n 'backlog\.md|Greptile' AGENTS.md .github/PULL_REQUEST_TEMPLATE.md` prints nothing, and the route "Pick work" of `AGENTS.md` names the GitHub issues and `plan/01-project.md`
-  - [ ] `rg -c '^- 2026-11-19' src/data/blog/dev_workflows/decision-log.md` prints 14, and each of these lines links the #103 comment
+  - [ ] `rg -c '^- 2026-11-19' src/data/blog/dev_workflows/decision-log.md` prints 14. Each entry links the #103 comment. The entry dated 2026-11-21 links #149 and records both delegated decisions
   - [ ] `wc -l < AGENTS.md` prints 150 or less (decision log, 2026-09-29: `AGENTS.md` is a router of at most 150 lines)
   - [ ] `just check` exits 0
 - Verify: `just check`
@@ -242,7 +242,7 @@ All open work is in one labeled queue, the docs state the decisions of 2026-11-1
   - [ ] FR-01, FR-14: No ticket is lost: for each ID in the tables of `git show cb723c8:dev_notes/backlog.md`, match it to the disposition below and find the evidence: an open issue (`gh issue list --state all --search "<ID> in:title"`), a brief in `plan/waves/` (`rg -n '<ID>' plan/waves`), a closed issue, a merged PR that its old row cites, a direct check of the behavior on the default branch (for B20: `sitemap()` in `astro.config.ts`), or a line dated 2026-11-19 in the decision log → each ID has evidence
   - [ ] FR-01: `gh issue list --state open --limit 200 --json number,title,labels` → each open issue has one `wave:` label or one `3-pty:*` label, and one `1-*` label or the `4-epic` label
   - [ ] FR-01: Follow the route "Pick work" of `AGENTS.md` → the GitHub queue includes #130 and the project summary lists W01
-  - [ ] FR-02: Open the link of each line dated 2026-11-19 in the decision log → it opens the #103 comment, and the comment gives the same answer
+  - [ ] FR-02: Read the dated decision entries. The fourteen November 19 links open the matching answers on #103. The November 21 entry points to the final language and vacancy lists on #149
   - [ ] FR-01: `gh issue view <n> --json state,stateReason` for 54, 56, 59, 62, 65, 89, 90, 95 and 98 → #89 and #90 are not planned. The other seven are complete, and `gh label list --limit 200 | rg autorelease` prints nothing
   - [ ] FR-01: `sed -n '/^## Inbox/,$p' dev_notes/backlog.md` → the Inbox text equals the text at `cb723c8`, and the file has no ticket table
   - [ ] NFR-01: In the fresh Mini checkout, run `just check`. The installed Bun builds the tested revision.

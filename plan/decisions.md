@@ -133,7 +133,7 @@ Plan-structure and technical decisions, newest last. Pascal's product decisions 
 - Date: 2026-11-21
 - Trigger: Pascal delegated the pending editorial choices
 - Decision: E07 and #149 give the English files, the six vacancies and the five featured files. The English choices follow the main article, role description or event announcement. For image-only posts, the title and description supply the language.
-- Why: event footers, pasted specifications and external links can outweigh the author’s text in a word count. A fixed list keeps language metadata, listings and search verifiable.
+- Why: event footers, pasted specifications and external links can outweigh the author’s text in a word count. A fixed list keeps the language metadata and listings verifiable. Pagefind 1.4 selects one index on the French search page. A shared French index preserves search across languages.
 - Affects: E07. This decision replaces the list confirmation in D004. The original November 19 answers remain historical.
 
 ## D016: Publish after the reader wave
@@ -150,4 +150,4 @@ Plan-structure and technical decisions, newest last. Pascal's product decisions 
 - Trigger: the requested handoff must work from the issues alone
 - Decision: the fourteen deferred items now have individual issues (#155–#168), acceptance criteria and prerequisites. The four missing labels exist. E01-T03 reconciles these issues and preserves the Inbox.
 - Why: an agent can inspect the scope before a later wave starts. Each later brief reuses the existing issue, which preserves its history.
-- Affects: E01-T03, W03 and W04. This decision updates the timing in D008 and D011. B24 supplies the comparison baseline for B30. B28, B29, B30 and B31 use the same dependency files in that order.
+- Affects: E01-T03, W03 and W04. The readiness label describes the issue brief. Only work in the active wave can start. This decision updates the timing in D008 and D011. B24 supplies the comparison baseline for B30. B28, B29, B30 and B31 use the same dependency files in that order.
