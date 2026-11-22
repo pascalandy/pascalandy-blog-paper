@@ -3,7 +3,8 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Deploy a branch from GitHub to a Sevalla static site and wait for the build.
+"""Deploy a GitHub branch to Sevalla. By default, wait for the build
+and verify the live site after a production deploy.
 
 Sevalla clones the branch from GitHub and builds it, so only pushed commits
 ship. production always deploys main; preview deploys any pushed branch.
@@ -18,7 +19,8 @@ Site IDs come from
 SEVALLA_STATIC_SITE_ID and SEVALLA_STATIC_SITE_ID_PREVIEW in the environment,
 or else from the GitHub repository variables of the same names through gh.
 
-Exit codes: 0 deployed, 1 refused or the deployment failed, 2 bad usage.
+Exit codes: 0 completed, 1 refused, deployment or post-deploy check failed,
+2 bad usage.
 """
 
 from __future__ import annotations
@@ -34,6 +36,8 @@ import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
+
+from verify_live import DEFAULT_BASE, astro_from_package, failures
 
 API = "https://api.sevalla.com/v3"
 POLL_SECONDS = 5.0
@@ -95,6 +99,26 @@ def github_tip(branch: str) -> str:
     return result.stdout.split()[0]
 
 
+def deployed_astro_version(sha: str) -> str:
+    read_manifest = ("git", "--no-replace-objects", "show", f"{sha}:package.json")
+    manifest = run(*read_manifest)
+    if manifest.returncode != 0:
+        fetched = run(
+            "git", "fetch", "--no-tags", "--no-write-fetch-head", "origin", sha
+        )
+        if fetched.returncode != 0:
+            raise Refused(f"could not fetch deployed commit {sha} from origin")
+        manifest = run(*read_manifest)
+    if manifest.returncode != 0:
+        raise Refused(f"could not read package.json at deployed commit {sha}")
+    try:
+        return astro_from_package(manifest.stdout)
+    except ValueError as error:
+        raise Refused(
+            f"could not read Astro version at deployed commit {sha}: {error}"
+        ) from None
+
+
 def require_local_matches(branch: str, remote_sha: str) -> None:
     local = run("git", "rev-parse", "--verify", "--quiet", f"refs/heads/{branch}")
     local_sha = local.stdout.strip()
@@ -133,15 +157,15 @@ def request(method: str, path: str, token: str, body: dict | None = None) -> dic
         raise ApiError(f"could not reach Sevalla: {error}", retryable=True) from None
 
 
-def wait_for(site: str, deployment: str, token: str) -> int:
+def wait_for(site: str, deployment: str, token: str) -> str | None:
     deadline = time.monotonic() + DEADLINE_SECONDS
     last = None
     while time.monotonic() < deadline:
         time.sleep(POLL_SECONDS)
         try:
-            status = request(
+            report = request(
                 "GET", f"/static-sites/{site}/deployments/{deployment}", token
-            ).get("status")
+            )
         except ApiError as error:
             if not error.retryable:
                 print(
@@ -149,18 +173,24 @@ def wait_for(site: str, deployment: str, token: str) -> int:
                     "the deployment may still run on Sevalla",
                     file=sys.stderr,
                 )
-                return 1
+                return None
             print(f"status check failed ({error}); retrying", file=sys.stderr)
             continue
+        status = report.get("status")
         if status != last:
             print(f"deployment {deployment}: {status}")
             last = status
         if status in FINISHED:
-            return 0 if FINISHED[status] else 1
+            if not FINISHED[status]:
+                return None
+            sha = report.get("commit_sha")
+            if not isinstance(sha, str) or not sha.strip():
+                raise Refused("Sevalla did not report the deployed commit")
+            return sha
     print(
         f"error: deployment {deployment} did not finish in 30 minutes", file=sys.stderr
     )
-    return 1
+    return None
 
 
 def fnox_token() -> str:
@@ -228,13 +258,32 @@ def deploy(target_name: str, branch: str | None, dry_run: bool, wait: bool) -> i
     if not deployment_id:
         raise Refused(f"Sevalla answered without a deployment id: {deployment}")
     print(f"deployment {deployment_id}: started")
-    return wait_for(site, deployment_id, token) if wait else 0
+    if not wait:
+        skipped = "the deployed commit check"
+        if target_name == "production":
+            skipped += " and live checks"
+        print(f"skipped {skipped} (--no-wait)")
+        return 0
+    deployed = wait_for(site, deployment_id, token)
+    if deployed is None:
+        return 1
+    if deployed != sha:
+        raise Refused(f"Sevalla built {deployed}, not {sha}")
+    if target_name == "production":
+        errors = failures(DEFAULT_BASE, astro_version=deployed_astro_version(deployed))
+        if errors:
+            for error in errors:
+                print(error, file=sys.stderr)
+            return 1
+    print(f"deployed {sha} to {target_name}")
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="scripts/deploy.py",
         description=__doc__.split("\n\n")[0],
+        epilog=__doc__.strip().rsplit("\n\n", 1)[-1],
     )
     parser.add_argument("target", choices=TARGETS, help="production deploys main")
     parser.add_argument(

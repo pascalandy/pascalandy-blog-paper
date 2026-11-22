@@ -26,7 +26,7 @@ When sources disagree, trust them in this order:
 - Never hardcode colors: use the theme variables from `src/config.ts`
 - Prefer a check over a sentence: when a rule matters, add a row to `scripts/check.py` or a constraint to `src/content.config.ts`
 - Do not re-propose a settled decision; read its line in the decision log first
-- Keep scope: a defect outside the task becomes a ticket in `dev_notes/backlog.md`, not a drive-by fix
+- File defects outside the task in this repository's GitHub issues
 - Code conventions that no tool enforces: imports go external, then `@/`, then relative, then types; components are PascalCase, utils camelCase, constants SCREAMING_SNAKE; Tailwind conditionals use `class:list`; `app-layout` is the container utility
 
 ## Routes: read on demand
@@ -42,7 +42,7 @@ When sources disagree, trust them in this order:
 | Parallel work             | [worktrees](src/data/blog/dev_workflows/worktree-workflow.md), or the [`/worktree`](.claude/commands/worktree.md) command               |
 | Dependencies              | [updating dependencies](src/data/blog/dev_workflows/how-to-update-dependencies.md), [`renovate.json`](renovate.json)                    |
 | Astro APIs                | the `astro-docs` MCP server in `.mcp.json`; fallback https://docs.astro.build/llms-small.txt                                            |
-| Pick work                 | `dev_notes/backlog.md`                                                                                                                  |
+| Pick work                 | [GitHub issues](https://github.com/pascalandy/pascalandy-blog-paper/issues) and [project plan](plan/01-project.md)                         |
 | Check the UI in a browser | the [verify-blog skill](.claude/skills/verify-blog/SKILL.md): launch, drive, and capture evidence without touching the dev server      |
 | Compare two builds        | the [verify-blog skill](.claude/skills/verify-blog/SKILL.md#compare-two-builds): `just parity` and the 44-shot matrix                |
 
@@ -51,7 +51,7 @@ When sources disagree, trust them in this order:
 - Commits follow Pascal's [commit skill](https://github.com/pascalandy/skills/tree/main/skills/commit): one logical change per commit, and a subject that needs "and" means two commits
 - Commit files under `dev_notes/` with the message `update dev_notes`
 - Never skip hooks with `--no-verify` unless Pascal says so
-- Keep a PR under 96 files, since Greptile skips larger ones: past 90, push a subset, get the review, then push the rest
+- CodeRabbit reviews PRs. Keep each PR to 90 changed files or fewer
 - Split large work into stacked PRs, each based on the branch below it
 - Fill the PR template: summary, evidence, and what you could not confirm
 
@@ -60,7 +60,7 @@ When sources disagree, trust them in this order:
 The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just gh-gitleaks`, `just gh-labels`). A PR merges into `main` only with a green `signoff` status on its head commit; admins can bypass that rule, so never bypass it.
 
 - Agents run `just check` and `just signoff-check` and report the result before they report a PR ready
-- The agent that merges signs off the pushed head itself: `just merge` on the PR's branch runs the `just signoff` steps on that exact commit, then merges that commit
+- Run `just merge` on the PR's branch. It reuses a green `signoff` on the exact pushed head. If that head lacks a green status, it runs the `just signoff` steps before merging
 - A stack of PRs lands with `gh stack merge` once each layer's head carries a green `signoff` (`just signoff` on each branch), not with `just merge` on each layer
 - Never merge with `gh pr merge --admin` or the bypass option to skip the gate; when `just merge` refuses, report its message
 - Merging does not deploy: `just deploy` ships main to the public site, and agents run it only when Pascal asks
@@ -80,7 +80,7 @@ The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just
 - Run `just fresh` before a comparison build to clear generated output and image caches while keeping fonts and browser evidence
 - An image named `.jpg` may decode as MPO with an unavailable second frame; parity compares the first frame that browsers render
 - Pillow can decode identical RGBA pixels from AVIF files with different CICP color signalling; parity follows the primary `av01` item's associated color and reduced still-image header, compares grid/other primary items by bytes, and errors on non-reduced AV1 headers
-- Firefox can reject an AVIF with a repeated primary `ispe`, or with primary `ispe` after `clap`, `irot`, or `imir`, even when Chromium decodes it; parity marks those invalid primary orders without changing valid AVIF signatures, while other items' order is tracked in issue #89
+- Firefox can reject an AVIF with a repeated primary `ispe`, or with primary `ispe` after `clap`, `irot`, or `imir`, even when Chromium decodes it. Parity checks the order of properties on the primary item and preserves valid AVIF signatures
 - The playbooks are public blog posts: write them for readers
 
 ## Leave a trace
@@ -89,5 +89,5 @@ Before you finish, record what the next session needs:
 
 - A gotcha you hit: a line in Gotchas above
 - A decision Pascal settles: a dated line in the decision log, linked to its PR
-- Work you defer: a ticket in `dev_notes/backlog.md`
+- File deferred work in this repository's GitHub issues
 - A new workflow: a playbook in `src/data/blog/dev_workflows/`

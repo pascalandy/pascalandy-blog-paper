@@ -73,10 +73,10 @@ It refuses in about a second when a tool is missing, `gh` is signed out, `main` 
 | Stacked PRs                             | Sign off each layer; a restack changes every head, so sign off each again                                                                                                              |
 | A PR from a fork                        | Read the whole diff first, since the checks run its code on your machine; then `gh pr checkout <number>` and `bun install --frozen-lockfile && just ci && just gitleaks && gh signoff` |
 | Did this commit get signed off?         | `gh signoff status`                                                                                                                                                                    |
-| Merge blocked on `signoff`              | `just merge` signs off the PR head, then merges it; never merge with `gh pr merge --admin` to skip it                                                                                  |
+| Merge blocked on `signoff`              | Run `just merge` to check and sign off the PR head. Never bypass the required status with `gh pr merge --admin`                                                                        |
 | Want a run on a clean machine           | `just gh-ci <branch>`, then `gh run watch`                                                                                                                                             |
 
-Agents run `just ci` and `just signoff-check` and report the result before they report a PR ready. Whoever merges runs `just merge`, which signs off and merges. Claude Code on the web has no `gh`, and agents never deploy unless Pascal asks.
+Agents run `just ci` and `just signoff-check` and report the result before they report a PR ready. Whoever merges runs `just merge`. Claude Code on the web has no `gh`, and agents never deploy unless Pascal asks.
 
 ### One-time setup
 
@@ -98,10 +98,10 @@ Merge the current branch's PR into `main` with one command:
 just merge
 ```
 
-It merges only the commit it tested:
+It merges only the signed-off commit.
 
 1. It refuses in a few seconds when a tool is missing, `main` does not require `signoff` or uses a merge queue, or the PR is a draft, comes from a fork, targets another branch, or has auto-merge on. It also refuses when the working tree has changes, HEAD is not the PR head on GitHub, or the branch does not contain the tip of `main`
-2. It runs the `just signoff` steps on that head: the install, `just ci`, `just gitleaks`, then the status
+2. It reuses a green `signoff` on the exact pushed head. If that head lacks a green status, it installs dependencies, runs `just ci` and `just gitleaks`, and posts the status on that head
 3. It waits up to a minute for GitHub to count the status. It stops when the PR head or base changes, the PR closes, a review or check blocks it, or it conflicts with `main`
 4. It checks that `main` did not move during the checks, then runs `gh pr merge --merge --match-head-commit <sha>`, so GitHub refuses any other head
 5. It reads the PR back and prints the merge commit and the PR URL
@@ -117,7 +117,7 @@ Since the branch must contain the tip of `main`, the tree that lands on `main` i
 | Refused: part of a GitHub stack           | GitHub merges a PR in a stack only through its stack: run `gh stack unstack <stack>` to merge layer by layer with `just merge`, or `gh stack merge` |
 | Refused after the checks                  | Fix what the message names, then run `just merge` again; a rerun also reports a PR that merged in the meantime                                      |
 
-`just merge` runs the signoff itself, so whoever merges needs no separate `just signoff`. A stack of PRs lands with `gh stack merge` once each layer is signed off, not with `just merge` on each layer.
+`just merge` obtains or reuses the pushed head's signoff. For a stack of PRs, run `just signoff` on each layer, then run `gh stack merge`.
 
 ## Deploy
 
@@ -135,7 +135,15 @@ just deploy-preview my-branch
 just deploy --dry-run
 ```
 
-`just deploy-preview` refuses a branch that GitHub does not have, or a local branch whose last commit differs from GitHub's. Uncommitted changes never ship. Add `--no-wait` to return as soon as Sevalla accepts the deployment.
+`just deploy-preview` refuses a branch that GitHub does not have, or a local branch whose last commit differs from GitHub's. Uncommitted changes never ship.
+
+After Sevalla reports a successful build, both commands compare its commit with the GitHub branch tip they read at the start. A mismatch names both commits and exits 1. If Sevalla omits the commit, the command also exits 1.
+
+After a match on production, `just deploy` runs the same checks as `just verify-live`. It reads the expected Astro version from the deployed commit's `package.json`. If any live check fails, it prints the diagnostics and exits 1. When the waited checks pass, the command prints `deployed <sha> to <target>` and exits 0.
+
+Add `--no-wait` to return as soon as Sevalla accepts the deployment. On production, the command reports that it skipped both the commit check and live checks. On preview, it reports that it skipped the commit check.
+
+After a production deploy through the manual GitHub Actions workflow, run `just verify-live` from a checkout of the deployed commit. The standalone command reads the Astro version from that checkout. Use `just verify-live --help` for details on the retry window and request timeouts.
 
 Each PR was signed off on its own, so two PRs can pass separately and still clash once both are on `main`. After several merges, run `just ci` on an up-to-date `main`, or `just gh-ci main`, before `just deploy`.
 
