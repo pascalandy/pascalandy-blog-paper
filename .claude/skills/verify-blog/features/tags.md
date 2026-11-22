@@ -22,12 +22,12 @@ Preconditions:
 - `site.py doctor` exits 0
 - `just overview --json | jq '.tags'` gives each tag's slug, name, visible post count, and flags
 
-- **Open the list.** Run `agent-browser open "$URL/tags"` and `agent-browser get title`. The title is `Tags | Le blog de Pascal Andy`.
+- **Open the list.** Run `agent-browser open "$URL/tags/"` and `agent-browser get title`. The title is `Tags | Le blog de Pascal Andy`.
 - **Compare the counts.** Run `agent-browser snapshot -i`. Each tag with `hiddenFromTagsPage: false` in the overview appears with its `posts` count, and no hidden tag appears.
-- **Open one tag.** Run `agent-browser open "$URL/tags/technologie"`. The heading reads `🏷️ technologie` and the list matches the tag's count.
-- **Open a hidden tag.** Run `agent-browser open "$URL/tags/void"`. The page lists the `void` posts, though `/tags` does not show the tag.
+- **Open one tag.** Run `agent-browser open "$URL/tags/technologie/"`. The heading reads `🏷️ technologie` and the list matches the tag's count.
+- **Open a hidden tag.** Run `agent-browser open "$URL/tags/void/"`. The page lists the `void` posts, though `/tags/` does not show the tag.
 - **Proof.** Run `agent-browser snapshot -i` and `agent-browser screenshot cache/verify-blog/$RUN/tags/tags.png`.
-- **Fallback.** Run `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/tags" --out cache/verify-blog/$RUN/tags`. `aria.txt` lists the tags and counts.
+- **Fallback.** Run `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/tags/" --out cache/verify-blog/$RUN/tags`. `aria.txt` lists the tags and counts.
 
 ## Gotchas
 

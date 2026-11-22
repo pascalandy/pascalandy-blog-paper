@@ -13,7 +13,7 @@ A post page shows one article with its title, date, and tags, then links to the 
 ## How to get to it (user POV)
 
 - Choose a post in the blog roll at `/blog`, on a tag page, or in search results
-- Open its URL directly, such as `$URL/blog/lhorizon-cest-toi`
+- Open its URL directly, such as `$URL/blog/lhorizon-cest-toi/`
 
 ## Driving it with agent-browser
 
@@ -22,14 +22,14 @@ Preconditions:
 - `site.py doctor` exits 0
 - The steps use `/blog/lhorizon-cest-toi`; its overview entry is `just overview --json | jq '.posts.buckets.blog_roll[] | select(.url == "/blog/lhorizon-cest-toi")'`. For another post, take its `url` and `title` from the overview the same way
 
-- **Open the post.** Run `agent-browser open "$URL/blog/lhorizon-cest-toi"` and `agent-browser get title`. The title is `L'horizon, c'est toi | Le blog de Pascal Andy`.
+- **Open the post.** Run `agent-browser open "$URL/blog/lhorizon-cest-toi/"` and `agent-browser get title`. The title is `L'horizon, c'est toi | Le blog de Pascal Andy`.
 - **Read the title.** Run `agent-browser get text "#main-content > h1"`. It matches the `title` of that overview entry; the body sits in `#article`, below the heading.
 - **Follow a tag.** Run `agent-browser snapshot -i`, then click the tag link. The page moves to `/tags/TAG/` and lists the post.
 - **Follow a neighbor.** Return to the post and run `agent-browser find role link click --name "Suivant"`. The next post opens, and its `Précédent` link leads back.
-- **Check a Mermaid post.** Run `agent-browser open "$URL/blog/dev-workflows/using-mermaid"` and `agent-browser wait ".mermaid-diagram svg"`. Each diagram renders as an SVG inside `.mermaid-diagram`.
+- **Check a Mermaid post.** Run `agent-browser open "$URL/blog/dev-workflows/using-mermaid/"` and `agent-browser wait ".mermaid-diagram svg"`. Each diagram renders as an SVG inside `.mermaid-diagram`.
 - **Check a draft.** Pick a path from `just overview --json | jq '.posts.buckets.draft[0].url'` and open it. The site answers with its 404 page.
 - **Proof.** Run `agent-browser snapshot -i` and `agent-browser screenshot cache/verify-blog/$RUN/post/post.png`.
-- **Fallback.** Run `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/blog/lhorizon-cest-toi" --out cache/verify-blog/$RUN/post --step 'click:role=link[name=/^Suivant/]'`. `state.json` holds the next post's URL and title.
+- **Fallback.** Run `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/blog/lhorizon-cest-toi/" --out cache/verify-blog/$RUN/post --step 'click:role=link[name=/^Suivant/]'`. `state.json` holds the next post's URL and title.
 
 ## Gotchas
 
