@@ -166,3 +166,15 @@ class DeployTest(unittest.TestCase):
         self.assertEqual((code, stderr), (0, ""))
         self.assertIn(f"deployed {self.preview_head} to preview\n", stdout)
         self.live_checks.assert_not_called()
+
+    def test_live_check_ignores_local_git_replace_refs(self) -> None:
+        fetch = deploy.run("git", "fetch", "--no-write-fetch-head", "origin", self.head)
+        self.assertEqual(fetch.returncode, 0, fetch.stderr)
+        replace = deploy.run("git", "replace", self.head, self.preview_head)
+        self.assertEqual(replace.returncode, 0, replace.stderr)
+        self.responses({"id": "build"}, {"status": "success", "commit_sha": self.head})
+        code, _, stderr = self.run_deploy()
+        self.assertEqual(code, 0, stderr)
+        self.live_checks.assert_called_once_with(
+            PRODUCTION, astro_version=DEPLOYED_ASTRO
+        )

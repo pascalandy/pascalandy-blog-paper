@@ -98,14 +98,15 @@ def github_tip(branch: str) -> str:
 
 
 def deployed_astro_version(sha: str) -> str:
-    manifest = run("git", "show", f"{sha}:package.json")
+    read_manifest = ("git", "--no-replace-objects", "show", f"{sha}:package.json")
+    manifest = run(*read_manifest)
     if manifest.returncode != 0:
         fetched = run(
             "git", "fetch", "--no-tags", "--no-write-fetch-head", "origin", sha
         )
         if fetched.returncode != 0:
             raise Refused(f"could not fetch deployed commit {sha} from origin")
-        manifest = run("git", "show", f"{sha}:package.json")
+        manifest = run(*read_manifest)
     if manifest.returncode != 0:
         raise Refused(f"could not read package.json at deployed commit {sha}")
     try:
