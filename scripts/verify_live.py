@@ -6,7 +6,8 @@
 """Verify the public blog with read-only HTTP GETs.
 
 Checks cover the homepage language and Astro generator, RSS and its first post,
-the sitemap index, and the sitemap named in robots.txt. Failed checks retry
+the sitemap index, the sitemap named in robots.txt, and the 41 legacy event
+redirects and their destination articles. Failed checks retry
 every ten seconds within a 120-second window.
 
 The verifier requires complete headers and body framing. A response without
@@ -34,6 +35,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 from typing import BinaryIO
 from urllib.parse import urljoin, urlsplit
+
+from event_redirects import EVENT_REDIRECTS, redirect_problem
 
 DEFAULT_BASE = "https://pascalandy.com/"
 PACKAGE_JSON = Path(__file__).resolve().parents[1] / "package.json"
@@ -274,6 +277,16 @@ def check_robots(requests: SiteRequests, url: str) -> list[str]:
     raise CheckFailed(problem(url, "Sitemap directive with a URL", "no Sitemap URL"))
 
 
+def check_event(
+    requests: SiteRequests, base: str, route: str, target: str
+) -> list[str]:
+    url = urljoin(base, route)
+    html = requests.get(url, read_body=True).decode("utf-8", errors="replace")
+    if error := redirect_problem(html, target):
+        return [f"{url}: {error}"]
+    return check_status(requests, urljoin(base, target))
+
+
 def check_status(requests: SiteRequests, url: str) -> list[str]:
     requests.get(url)
     return []
@@ -311,6 +324,10 @@ def verify(
         (1, partial(check_status, requests, urljoin(base, "sitemap-index.xml"))),
         (2, partial(check_robots, requests, urljoin(base, "robots.txt"))),
     ]
+    checks.extend(
+        (2, partial(check_event, requests, base, route, target))
+        for route, target in EVENT_REDIRECTS.items()
+    )
     count = sum(size for size, _ in checks)
     pending = [check for _, check in checks]
     while True:

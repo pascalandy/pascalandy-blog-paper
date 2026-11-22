@@ -13,10 +13,15 @@ import { transformerFileName } from "./src/utils/transformers/fileName";
 import { SITE } from "./src/config";
 import { rehypeAstro5HeadingIds } from "./src/utils/rehypeAstro5HeadingIds";
 
-// https://astro.build/config
 export default defineConfig({
   site: SITE.website,
   trailingSlash: "always",
+  redirects: Object.fromEntries(
+    Array.from({ length: 41 }, (_, index) => {
+      const event = String(index + 1).padStart(2, "0");
+      return [`/blog/cryptoinmontreal-${event}/`, `/blog/cim-${event}/`];
+    })
+  ),
   cacheDir: "./cache",
   compressHTML: true,
   integrations: [
