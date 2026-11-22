@@ -23,7 +23,7 @@ Preconditions:
 - **Read the start.** Run `agent-browser open "$URL/"` and `agent-browser get attr html data-theme`. It gives `light`, and `agent-browser get attr "#theme-btn" aria-label` gives `clair`.
 - **Toggle.** Run `agent-browser click "#theme-btn"`. `data-theme` becomes `dark`, the button's `aria-label` becomes `sombre`, and the page turns dark.
 - **Reload.** Run `agent-browser reload` and read `data-theme` again. It stays `dark`.
-- **Change page.** Run `agent-browser open "$URL/tags"`. `data-theme` is still `dark`.
+- **Change page.** Run `agent-browser open "$URL/tags/"`. `data-theme` is still `dark`.
 - **Proof.** Screenshot before and after the toggle: `agent-browser screenshot cache/verify-blog/$RUN/theme/before.png` and `.../after.png`.
 - **Fallback.** Run `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/" --out cache/verify-blog/$RUN/theme/before --color-scheme light`, then the same with `--out cache/verify-blog/$RUN/theme/after --step 'click:#theme-btn'`. The two `state.json` files show `theme` `light`, then `dark`.
 
