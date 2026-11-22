@@ -43,3 +43,28 @@ def verify_theme_journey(browser: Browser, base: str) -> None:
             page.get_by_role("link", name="tags", exact=True).click()
             expect(page).to_have_url(base + "/tags/")
             expect(root).to_have_attribute("data-theme", other)
+
+        legacy_state = {
+            "cookies": [],
+            "origins": [
+                {"origin": base, "localStorage": [{"name": "theme", "value": other}]}
+            ],
+        }
+        with browser.new_page(color_scheme=system, storage_state=legacy_state) as page:
+            page.goto(base + "/")
+            root = page.locator("html")
+            expect(root).to_have_attribute("data-theme", other)
+            change_system_theme(page, other)
+            change_system_theme(page, system)
+            expect(root).to_have_attribute("data-theme", other)
+
+            page.locator("#theme-btn").click()
+            expect(root).to_have_attribute("data-theme", system)
+            change_system_theme(page, other)
+            expect(root).to_have_attribute("data-theme", other)
+            page.reload()
+            expect(root).to_have_attribute("data-theme", other)
+            page.get_by_role("link", name="tags", exact=True).click()
+            expect(page).to_have_url(base + "/tags/")
+            change_system_theme(page, system)
+            expect(root).to_have_attribute("data-theme", system)
