@@ -3,11 +3,4 @@
 include = ["*.py"]
 # Keep excluded files excluded when a hook passes them by name
 force-exclude = true
-extend-exclude = [
-  # Ghost migration and content-maintenance helpers that predate the CLI contract
-  "scripts/analyze_images.py",
-  "scripts/convert_frontmatter.py",
-  "scripts/import_ghost_posts.py",
-  "scripts/normalize-tags.py",
-  "scripts/rename_to_kebab.py",
-]
+extend-exclude = ["scripts/archive/"]
