@@ -15,6 +15,7 @@ import threading
 from pathlib import Path
 
 import browse
+from menu_model import verify_menu_model
 from playwright.sync_api import Error, Page, expect, sync_playwright
 
 VIEWPORTS = (
@@ -128,7 +129,7 @@ def background_luminance(page: Page, theme: str) -> float:
     }""")
 
 
-def matrix(base: str, evidence: Path | None) -> int:
+def verify_readers(base: str, evidence: Path | None) -> tuple[int, int]:
     count = 0
     with sync_playwright() as playwright, browse.launch_chromium(playwright) as browser:
         for width, height in VIEWPORTS:
@@ -185,7 +186,8 @@ def matrix(base: str, evidence: Path | None) -> int:
                                 check_menu(page, False, narrow)
                         except (Error, ValueError, AssertionError) as error:
                             raise ValueError(f"{case} on {path}: {error}") from error
-    return count
+        traces = verify_menu_model(browser, base)
+    return count, traces
 
 
 def main() -> int:
@@ -211,11 +213,13 @@ def main() -> int:
             thread = threading.Thread(target=server.serve_forever, daemon=True)
             thread.start()
             try:
-                count = matrix(f"http://127.0.0.1:{server.server_port}", args.evidence)
+                count, traces = verify_readers(
+                    f"http://127.0.0.1:{server.server_port}", args.evidence
+                )
             finally:
                 server.shutdown()
                 thread.join()
-        print(f"{count} reader matrix cases passed")
+        print(f"{count} reader matrix cases and {traces} mobile menu traces passed")
         return 0
     except (OSError, ValueError, Error, AssertionError) as error:
         print(f"reader QA failed: {error}", file=sys.stderr)
