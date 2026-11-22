@@ -17,7 +17,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urljoin, urlsplit
 
-from overview import read, url
+from overview import read
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -245,7 +245,7 @@ def main() -> int:
         cli.error("SITE.website not found")
     site_url = urlsplit(origin.group(1))
     state = read()
-    posts = {url(post["file"]) + "/": post["data"] for post in state["posts"]}
+    posts = {post["url"]: post["data"] for post in state["posts"]}
     errors = problems(args.dist, f"{site_url.scheme}://{site_url.netloc}", posts)
     if errors:
         print("\n".join(errors), file=sys.stderr)

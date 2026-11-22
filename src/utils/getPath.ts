@@ -1,38 +1,35 @@
-import { BLOG_PATH } from "@/content.config";
+import { slug as githubSlug } from "github-slugger";
 import { slugifyStr } from "./slugify";
 
-/**
- * Get full path of a blog post
- * @param id - id of the blog post (aka slug)
- * @param filePath - the blog post full file location
- * @param includeBase - whether to include `/blog` in return value
- * @returns blog post path
- */
+export const BLOG_PATH = "src/data/blog";
+
+export function blogEntryId({
+  entry,
+  data,
+}: {
+  entry: string;
+  data: Record<string, unknown>;
+}) {
+  if (data.slug) return String(data.slug);
+  return entry
+    .replace(/\.md$/, "")
+    .split("/")
+    .map(segment => githubSlug(segment))
+    .join("/")
+    .replace(/\/index$/, "");
+}
+
 export function getPath(
   id: string,
   filePath: string | undefined,
   includeBase = true
 ) {
-  const pathSegments = filePath
-    ?.replace(BLOG_PATH, "")
+  const folders = (filePath ?? "")
+    .replace(BLOG_PATH, "")
     .split("/")
-    .filter(path => path !== "") // remove empty string in the segments ["", "other-path"] <- empty string will be removed
-    .filter(path => !path.startsWith("_")) // exclude directories start with underscore "_"
-    .slice(0, -1) // remove the last segment_ file name_ since it's unnecessary
-    .map(segment => slugifyStr(segment)); // slugify each segment path
-
-  const basePath = includeBase ? "/blog" : "";
-
-  // Making sure `id` does not contain the directory
-  const blogId = id.split("/");
-  const slug = blogId.length > 0 ? blogId.slice(-1) : blogId;
-
-  // If not inside the sub-dir, simply return the file path
-  if (!pathSegments || pathSegments.length < 1) {
-    return [basePath, slug, ...(includeBase ? [""] : [])].join("/");
-  }
-
-  return [basePath, ...pathSegments, slug, ...(includeBase ? [""] : [])].join(
-    "/"
-  );
+    .slice(0, -1)
+    .filter(folder => folder && !folder.startsWith("_"))
+    .map(slugifyStr);
+  const slug = [...folders, id.split("/").at(-1)].join("/");
+  return includeBase ? `/blog/${slug}/` : `/${slug}`;
 }
