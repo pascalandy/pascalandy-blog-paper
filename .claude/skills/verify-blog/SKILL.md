@@ -73,7 +73,7 @@ On `astro:after-swap`, `theme` comes from a listener registered after initial pa
 
 Run `just qa-reader` to build the blog and test its pages in Chromium. To keep screenshots and accessibility trees for every case, pass `--evidence` followed by an empty directory. To replay a historical build, run `uv run .claude/skills/verify-blog/scripts/reader.py /absolute/path/to/dist`. The runner binds a private loopback port to that directory.
 
-The [reader matrix](scripts/reader.py) covers the home, blog, article, tags and search pages in both themes. It exercises the five original formats, including both sides of the 640 px menu breakpoint, and rotates the phone and tablet. Each narrow page is checked with the menu closed and open. The article contains the embedded videos that once overflowed on phones. The check measures their boxes with the external player offline.
+The [reader matrix](scripts/reader.py) covers the home, blog, article, tags and search pages in both themes. It exercises the five original formats, including both sides of the 640 px menu breakpoint, and rotates the phone and tablet. The two phone orientations use touch and a mobile layout viewport. Each narrow page is checked with the menu closed and open, then the runner clicks the button to close it. The checks read the rendered palette, page insets and scroll width. The article contains the embedded videos that once overflowed on phones. The check measures their boxes with the external player offline.
 
 ## Compare two builds
 

@@ -17,7 +17,7 @@ jobs:
       (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
       (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       pull-requests: read
@@ -51,6 +51,9 @@ jobs:
         run: |
           uv tool install "rust-just@$JUST_VERSION"
           uv tool dir --bin >> "$GITHUB_PATH"
+
+      - name: Install Chromium for reader QA
+        run: uv run --with playwright==1.56.0 playwright install --with-deps chromium
 
       - name: Run Claude Code
         id: claude

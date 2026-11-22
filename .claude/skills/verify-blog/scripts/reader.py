@@ -40,82 +40,126 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
         pass
 
 
-def check_layout(page: Page, opened: bool, mobile: bool) -> None:
+def check_menu(page: Page, opened: bool, narrow: bool) -> None:
     button = page.locator("#menu-btn")
-    link = page.locator('#menu-items a[href="/blog/"]')
-    if mobile:
+    panel = page.locator("#menu-items")
+    link = panel.locator('a[href="/blog/"]')
+    if narrow:
         expect(button).to_be_visible()
         expect(button).to_have_attribute("aria-expanded", str(opened).lower())
     else:
         expect(button).to_be_hidden()
-    if opened or not mobile:
+    if opened or not narrow:
+        expect(panel).to_have_css("opacity", "1")
         expect(link).to_be_visible()
         link.click(trial=True)
     else:
         expect(link).to_be_hidden()
+        expect(panel).to_have_css("opacity", "0")
 
-    overflow = page.evaluate(
-        "document.documentElement.scrollWidth - document.documentElement.clientWidth"
-    )
-    if overflow > 0:
-        raise ValueError(f"page overflows horizontally by {overflow} CSS pixels")
-    for frame in page.locator("#article iframe").all():
-        if not frame.evaluate("""frame => {
-            const box = frame.getBoundingClientRect(), article = frame.closest("article").getBoundingClientRect();
-            return box.width > 0 && box.left >= article.left - 1 && box.right <= article.right + 1;
-        }"""):
-            raise ValueError(
-                "embedded video extends outside the article; check its responsive width"
-            )
+
+def check_layout(page: Page, width: int) -> None:
+    sizes = page.evaluate("""() => {
+        const root = document.documentElement;
+        return [root.clientWidth, root.scrollWidth];
+    }""")
+    viewport, content = sizes
+    if viewport != width:
+        raise ValueError(
+            f"expected a {width}px layout viewport, got {viewport}px; check the viewport meta tag"
+        )
+    if content > viewport:
+        raise ValueError(
+            f"page overflows horizontally by {content - viewport} CSS pixels"
+        )
+    if not page.locator("main > :first-child").evaluate("""element => {
+        const box = element.getBoundingClientRect();
+        return box.left > 0 && box.right < document.documentElement.clientWidth;
+    }"""):
+        raise ValueError("main content needs a visible inset on both sides")
+    if not page.locator("#article iframe").evaluate_all("""frames => frames.every(frame => {
+        const box = frame.getBoundingClientRect();
+        let left = 0, right = document.documentElement.clientWidth;
+        for (let parent = frame.parentElement; parent; parent = parent.parentElement) {
+            if (parent.tagName === "ARTICLE" || getComputedStyle(parent).overflowX !== "visible") {
+                const bounds = parent.getBoundingClientRect();
+                left = Math.max(left, bounds.left + parent.clientLeft);
+                right = Math.min(right, bounds.left + parent.clientLeft + parent.clientWidth);
+            }
+        }
+        return box.width > 0 && box.left >= left - 0.5 && box.right <= right + 0.5;
+    })"""):
+        raise ValueError(
+            "embedded video is clipped or extends outside the article or viewport"
+        )
+
+
+def check_palette(page: Page, theme: str) -> None:
+    expect(page.locator("html")).to_have_attribute("data-theme", theme)
+    colors = page.evaluate("""() => {
+        const sample = document.createElement("span");
+        sample.style.cssText = "color:var(--foreground);background-color:var(--background)";
+        document.documentElement.append(sample);
+        const style = getComputedStyle(sample);
+        const colors = [style.color, style.backgroundColor];
+        sample.remove();
+        return colors;
+    }""")
+    body = page.locator("body")
+    expect(body).to_have_css("color", colors[0])
+    expect(body).to_have_css("background-color", colors[1])
 
 
 def matrix(base: str, evidence: Path | None) -> int:
     count = 0
     with sync_playwright() as playwright, browse.launch_chromium(playwright) as browser:
         for width, height in VIEWPORTS:
-            mobile = width < 640
+            narrow = width < 640
+            phone = (width, height) in ((375, 667), (667, 375))
             for theme in ("light", "dark"):
-                with browser.new_context(
-                    viewport={"width": width, "height": height},
-                    color_scheme=theme,
-                    locale="fr-CA",
-                ) as context:
-                    context.route(
-                        "https://www.youtube.com/embed/**",
-                        lambda route: route.fulfill(content_type="text/html", body=""),
-                    )
-                    for label, (path, landmark) in PAGES.items():
-                        with context.new_page() as page:
-                            page.set_default_timeout(5000)
-                            case = f"{label}-{width}x{height}-{theme}-closed"
-                            try:
-                                response = page.goto(base + path)
-                                if response is None or response.status != 200:
-                                    raise ValueError(f"expected HTTP 200 from {path}")
-                                expect(page.locator(landmark).first).to_be_visible()
-                                expect(page.locator("html")).to_have_attribute(
-                                    "data-theme", theme
-                                )
-                                page.evaluate("document.fonts.ready")
-                                for opened in (False, True) if mobile else (False,):
-                                    if opened:
-                                        case = f"{label}-{width}x{height}-{theme}-open"
-                                        page.locator("#menu-btn").click()
-                                    check_layout(page, opened, mobile)
-                                    if evidence:
-                                        page.screenshot(
-                                            path=evidence / f"{case}.png",
-                                            animations="disabled",
-                                        )
-                                        (evidence / f"{case}.txt").write_text(
-                                            page.locator("body").aria_snapshot() + "\n",
-                                            encoding="utf-8",
-                                        )
-                                    count += 1
-                            except (Error, ValueError, AssertionError) as error:
-                                raise ValueError(
-                                    f"{case} on {path}: {error}"
-                                ) from error
+                for label, (path, landmark) in PAGES.items():
+                    with browser.new_page(
+                        viewport={"width": width, "height": height},
+                        color_scheme=theme,
+                        is_mobile=phone,
+                        has_touch=phone,
+                        locale="fr-CA",
+                    ) as page:
+                        page.route(
+                            "https://www.youtube.com/embed/**",
+                            lambda route: route.fulfill(
+                                content_type="text/html", body=""
+                            ),
+                        )
+                        case = f"{label}-{width}x{height}-{theme}-closed"
+                        try:
+                            response = page.goto(base + path)
+                            if response is None or response.status != 200:
+                                raise ValueError(f"expected HTTP 200 from {path}")
+                            expect(page.locator(landmark).first).to_be_visible()
+                            check_palette(page, theme)
+                            page.evaluate("document.fonts.ready")
+                            for opened in (False, True) if narrow else (False,):
+                                if opened:
+                                    case = f"{label}-{width}x{height}-{theme}-open"
+                                    page.locator("#menu-btn").click()
+                                check_layout(page, width)
+                                check_menu(page, opened, narrow)
+                                if evidence:
+                                    page.screenshot(
+                                        path=evidence / f"{case}.png",
+                                        animations="disabled",
+                                    )
+                                    (evidence / f"{case}.txt").write_text(
+                                        page.locator("body").aria_snapshot() + "\n",
+                                        encoding="utf-8",
+                                    )
+                                count += 1
+                            if narrow:
+                                page.locator("#menu-btn").click()
+                                check_menu(page, False, narrow)
+                        except (Error, ValueError, AssertionError) as error:
+                            raise ValueError(f"{case} on {path}: {error}") from error
     return count
 
 
