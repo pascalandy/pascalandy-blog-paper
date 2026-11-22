@@ -7,7 +7,7 @@
 <!-- How you know it works: probes you ran and reverted, before and after screenshots for UI changes. -->
 
 - [ ] `just check` passes (it prints nothing on success)
-- [ ] A changed rule, decision, or deferred item is recorded: `AGENTS.md`, the decision log, or `dev_notes/backlog.md`
+- [ ] Changed rules and decisions are recorded in `AGENTS.md` or the decision log. Deferred work has a GitHub issue
 
 ## Could not confirm
 
