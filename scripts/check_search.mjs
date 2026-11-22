@@ -10,6 +10,11 @@ await options({
 const ids = response => response.results.map(hit => hit.id);
 const accented = await search("système");
 assert.ok(accented.results.length);
+assert.deepEqual(
+  ids(await search("système".normalize("NFD"))),
+  ids(accented),
+  "Canonically equivalent French spellings must return the same articles"
+);
 await search("systeme");
 assert.deepEqual(
   ids(await search("système")),

@@ -40,6 +40,7 @@ async function withPrefix(hits, prefix) {
 }
 
 export async function search(term, options) {
+  if (term) term = term.normalize("NFC");
   const folded = term && fold(term);
   if (folded && folded !== term) await preload(folded, options);
   const matches = await find(term, options);
