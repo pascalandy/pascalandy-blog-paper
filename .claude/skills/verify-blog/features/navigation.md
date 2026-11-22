@@ -22,14 +22,23 @@ Preconditions:
 
 - `site.py doctor` exits 0
 - `just overview --json | jq '.posts.counts.blog_roll'` gives the blog roll size; pages hold 20 posts each
+- Before checking the header or blog roll, run `agent-browser set viewport 1440 900`
 
 - **Follow the header.** Run `agent-browser open "$URL/"`, then `agent-browser find role link click --name "tags"`. The page moves to `/tags/`. Repeat with `rechercher` and `à propos`.
-- **Open the blog roll.** At desktop width, run `agent-browser open "$URL/"`, then `agent-browser click 'a[href="/blog/"]'` and `agent-browser get title`. The URL ends with `/blog/` and the title is `Blog | Le blog de Pascal Andy`.
+- **Open the blog roll.** Run `agent-browser open "$URL/"`, then `agent-browser click 'a[href="/blog/"]'` and `agent-browser get title`. The URL ends with `/blog/` and the title is `Blog | Le blog de Pascal Andy`.
 - **Page forward.** Scroll down, then run `agent-browser find role link click --name "Page suivante"`. The URL ends with `/blog/2/`.
 - **Open the mobile menu.** Run `agent-browser set viewport 390 844`, `agent-browser open "$URL/"`, and `agent-browser click "#menu-btn"`. `agent-browser get attr "#menu-btn" aria-expanded` gives `true`, its `aria-label` gives `Fermer le menu`, and the links show.
 - **Check 639 px.** Run `agent-browser set viewport 639 900` and open `"$URL/"` in a fresh tab. `agent-browser is visible "#menu-btn"` gives `true` and `agent-browser is visible '#menu-items a[href="/blog/"]'` gives `false`. Run `agent-browser click "#menu-btn"`. Repeat the link check and expect `true`.
 - **Check 640 px.** Run `agent-browser set viewport 640 900` and open `"$URL/"` in a fresh tab. `agent-browser is visible "#menu-btn"` gives `false` and `agent-browser is visible '#menu-items a[href="/blog/"]'` gives `true`.
-- **Proof.** After each width check, save `agent-browser snapshot -i` and a screenshot under `cache/verify-blog/$RUN/navigation/` with the width in each filename.
+- **Proof.** Set `WIDTH` to the width you just tested, either `390`, `639`, or `640`. Save the evidence with these commands.
+
+  ```bash
+  OUT="cache/verify-blog/$RUN/navigation"
+  mkdir -p "$OUT"
+  agent-browser snapshot -i > "$OUT/menu-$WIDTH.txt"
+  agent-browser screenshot "$OUT/menu-$WIDTH.png"
+  ```
+
 - **Fallback.** Run the same breakpoint checks and blog-roll click with Playwright.
 
   ```bash
@@ -54,5 +63,4 @@ Preconditions:
 
 ## Gotchas
 
-- On desktop widths the menu button is hidden and the links always show; test the menu at a phone width
 - Choosing the theme button inside the open menu also closes the menu
