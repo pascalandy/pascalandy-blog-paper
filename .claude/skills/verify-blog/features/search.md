@@ -24,7 +24,7 @@ Preconditions:
 - **Open search.** Run `agent-browser open "$URL/search/"` and `agent-browser get title`. The title is `Recherche | Le blog de Pascal Andy`, and the box shows `Rechercher...`.
 - **Type a query.** Run `agent-browser fill ".pagefind-ui__search-input" "bitcoin"`, then `agent-browser wait ".pagefind-ui__result"`. A count such as `12 résultats` appears above linked results.
 - **Check the URL.** Run `agent-browser get url`. It ends with `?q=bitcoin`.
-- **Miss.** Replace the query with `zzqqxx`. The message reads `Aucun résultat`.
+- **Miss.** Replace the query with `"zzqqxx"`, including the quotation marks for an exact search. The message reads `Aucun résultat`.
 - **Clear.** Run `agent-browser click ".pagefind-ui__search-clear"`. The box and the results empty.
 - **Proof.** Run `agent-browser snapshot -i` and `agent-browser screenshot cache/verify-blog/$RUN/search/results.png`.
 - **Fallback.** Run `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/search/" --out cache/verify-blog/$RUN/search --step 'fill:.pagefind-ui__search-input=bitcoin' --step 'wait:.pagefind-ui__result'`. `state.json` holds the URL with `?q=bitcoin`, and `aria.txt` the results.

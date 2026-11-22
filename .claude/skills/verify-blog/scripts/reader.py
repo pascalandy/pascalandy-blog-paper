@@ -17,6 +17,7 @@ from pathlib import Path
 import browse
 from menu_model import verify_menu_model
 from playwright.sync_api import Error, Page, expect, sync_playwright
+from search_journey import verify_search, verify_search_layout
 
 VIEWPORTS = (
     (375, 667),
@@ -190,6 +191,11 @@ def verify_readers(base: str, evidence: Path | None) -> tuple[int, int]:
                                 check_menu(page, False, narrow)
                         except (Error, ValueError, AssertionError) as error:
                             raise ValueError(f"{case} on {path}: {error}") from error
+        with browser.new_page(
+            viewport={"width": 390, "height": 844}, locale="fr-CA"
+        ) as page:
+            verify_search(page, base)
+            verify_search_layout(page, base)
         traces = verify_menu_model(browser, base)
     return count, traces
 
