@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import unittest
 from collections import Counter
 from contextlib import redirect_stderr, redirect_stdout, suppress
@@ -10,7 +11,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from io import StringIO
 from pathlib import Path
 from threading import Thread
-from time import sleep
+from time import monotonic, sleep
 from unittest.mock import patch
 
 from scripts import verify_live
@@ -24,19 +25,32 @@ class VerifyLiveTest(unittest.TestCase):
         pages: dict[str, bytes] = {}
         redirects: dict[str, str] = {}
         retry_delays: dict[str, float] = {}
-        retry_chunks: dict[str, list[bytes]] = {}
+        response_chunks: dict[tuple[str, int], list[bytes]] = {}
         requests: Counter[str] = Counter()
 
         class Handler(BaseHTTPRequestHandler):
+            def write_chunks(self, chunks: list[bytes]) -> None:
+                with suppress(ConnectionError):
+                    for chunk in chunks:
+                        self.wfile.write(chunk)
+                        sleep(0.05)
+
+            def do_CONNECT(self) -> None:
+                requests[self.path] += 1
+                self.write_chunks(
+                    [
+                        b"HTTP/1.1 200 Connection established\r\n",
+                        *([b"X-Fixture: slow\r\n"] * 30),
+                        b"\r\n",
+                    ]
+                )
+
             def do_GET(self) -> None:
                 requests[self.path] += 1
                 if requests[self.path] > 1 and self.path in retry_delays:
                     sleep(retry_delays[self.path])
-                if requests[self.path] > 1 and self.path in retry_chunks:
-                    with suppress(ConnectionError):
-                        for chunk in retry_chunks[self.path]:
-                            self.wfile.write(chunk)
-                            sleep(0.05)
+                if chunks := response_chunks.get((self.path, requests[self.path])):
+                    self.write_chunks(chunks)
                     return
                 if target := redirects.get(self.path):
                     self.send_response(302)
@@ -64,7 +78,7 @@ class VerifyLiveTest(unittest.TestCase):
         self.pages = pages
         self.redirects = redirects
         self.retry_delays = retry_delays
-        self.retry_chunks = retry_chunks
+        self.response_chunks = response_chunks
         self.requests = requests
         pages.update(
             {
@@ -233,10 +247,42 @@ class VerifyLiveTest(unittest.TestCase):
                 patch.object(verify_live, "RETRY_INTERVAL_SECONDS", 0.01),
             ):
                 self.requests.clear()
-                self.retry_chunks["/"] = chunks
+                self.response_chunks["/", 2] = chunks
+                start = monotonic()
                 errors = verify_live.failures(self.base, retry_seconds=0.5)
+                self.assertLess(monotonic() - start, 0.9)
                 self.assertEqual(self.requests["/"], 2)
                 self.assertEqual(
                     errors,
-                    [f"{self.base}: expected HTTP 200, received retry timed out"],
+                    [f"{self.base}: expected HTTP 200, received request timed out"],
                 )
+
+    def test_https_proxy_headers_cannot_extend_the_deadline(self) -> None:
+        target = "https://127.0.0.1:1/"
+        with patch.dict(os.environ, {"https_proxy": self.base}, clear=True):
+            start = monotonic()
+            errors = verify_live.failures(
+                target, astro_version=ASTRO, retry_seconds=0.5
+            )
+        self.assertLess(monotonic() - start, 1)
+        self.assertEqual(self.requests["127.0.0.1:1"], 1)
+        self.assertIn(
+            f"{target}: expected HTTP 200, received request timed out", errors
+        )
+
+    def test_the_first_pass_uses_the_shared_deadline(self) -> None:
+        body = self.home(ASTRO) + b" " * 100
+        headers = (
+            f"HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Length: {len(body)}\r\n\r\n"
+        ).encode()
+        self.response_chunks["/", 1] = [
+            headers,
+            *(body[i : i + 5] for i in range(0, len(body), 5)),
+        ]
+        start = monotonic()
+        errors = verify_live.failures(self.base, retry_seconds=0.5)
+        self.assertLess(monotonic() - start, 0.9)
+        self.assertEqual(dict(self.requests), {"/": 1})
+        self.assertIn(
+            f"{self.base}: expected HTTP 200, received request timed out", errors
+        )

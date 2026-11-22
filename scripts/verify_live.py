@@ -46,18 +46,35 @@ class DirectResponses(urllib.request.HTTPErrorProcessor):
     https_response = http_response
 
 
-def retry_opener(
+def deadline_opener(
     connected: Callable[[socket.socket | None], None],
 ) -> urllib.request.OpenerDirector:
+    def open_socket(
+        address: tuple[str, int],
+        timeout: float,
+        source_address: tuple[str, int] | None,
+    ) -> socket.socket:
+        sock = socket.create_connection(address, timeout, source_address)
+        connected(sock)
+        return sock
+
     class Connection(http.client.HTTPConnection):
         def connect(self) -> None:
+            self._create_connection = open_socket
             super().connect()
-            connected(self.sock)
 
     class SecureConnection(http.client.HTTPSConnection):
         def connect(self) -> None:
-            super().connect()
+            self._create_connection = open_socket
+            http.client.HTTPConnection.connect(self)
+            assert self.sock is not None
+            self.sock = self._context.wrap_socket(
+                self.sock,
+                server_hostname=self._tunnel_host or self.host,
+                do_handshake_on_connect=False,
+            )
             connected(self.sock)
+            self.sock.do_handshake()
 
     class TrackSocket(urllib.request.HTTPSHandler, urllib.request.HTTPHandler):
         def http_open(
@@ -74,18 +91,19 @@ def retry_opener(
 
 
 class SiteRequests:
-    def __init__(self) -> None:
-        self.opener = urllib.request.build_opener(DirectResponses())
-        self.retry_deadline: float | None = None
+    def __init__(self, deadline: float | None) -> None:
+        self.deadline = deadline
 
     def get(self, url: str, *, read_body: bool = False) -> bytes:
-        if self.retry_deadline is None:
-            return self.read(self.opener, url, read_body, HTTP_TIMEOUT_SECONDS)
         now = time.monotonic()
-        if self.retry_deadline <= now:
-            raise CheckFailed(problem(url, "HTTP 200", "retry window elapsed"))
-        deadline = min(self.retry_deadline, now + HTTP_TIMEOUT_SECONDS)
-        timed_out = CheckFailed(problem(url, "HTTP 200", "retry timed out"))
+        deadline = now + HTTP_TIMEOUT_SECONDS
+        if self.deadline is not None:
+            if self.deadline <= now:
+                raise CheckFailed(
+                    problem(url, "HTTP 200", "verification window elapsed")
+                )
+            deadline = min(self.deadline, deadline)
+        timed_out = CheckFailed(problem(url, "HTTP 200", "request timed out"))
         expired = Event()
         active_socket: socket.socket | None = None
 
@@ -101,7 +119,7 @@ class SiteRequests:
             if expired.is_set() or time.monotonic() >= deadline:
                 interrupt()
 
-        opener = retry_opener(connected)
+        opener = deadline_opener(connected)
         remaining = deadline - time.monotonic()
         if remaining <= 0:
             raise timed_out
@@ -243,7 +261,8 @@ def verify(
         base = http_link(base, base)
     except CheckFailed as error:
         return 0, [str(error)]
-    requests = SiteRequests()
+    deadline = time.monotonic() + retry_seconds
+    requests = SiteRequests(deadline if retry_seconds > 0 else None)
     checks = [
         (3, partial(check_home, requests, base, astro_version)),
         (2, partial(check_rss, requests, urljoin(base, "rss.xml"))),
@@ -252,7 +271,6 @@ def verify(
     ]
     count = sum(size for size, _ in checks)
     pending = [check for _, check in checks]
-    deadline = time.monotonic() + retry_seconds
     while True:
         failed = []
         messages = []
@@ -267,7 +285,6 @@ def verify(
         if not failed or time.monotonic() + RETRY_INTERVAL_SECONDS >= deadline:
             return count, messages
         pending = failed
-        requests.retry_deadline = deadline
         time.sleep(RETRY_INTERVAL_SECONDS)
 
 
