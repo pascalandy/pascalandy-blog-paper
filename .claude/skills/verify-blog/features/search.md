@@ -8,6 +8,7 @@ Search finds posts by their text through Pagefind, keeps the query in the URL, a
 - `search-url` writes the query to `?q=` and runs a query found there on load
 - `search-empty` shows `Aucun résultat` for a query with no match
 - `search-clear` empties the query with `Effacer`
+- `search-excerpt` wraps long words inside the result column
 
 ## How to get to it (user POV)
 
@@ -26,6 +27,24 @@ Preconditions:
 - **Check the URL.** Run `agent-browser get url`. It ends with `?q=bitcoin`.
 - **Miss.** Replace the query with `"zzqqxx"`, including the quotation marks for an exact search. The message reads `Aucun résultat`.
 - **Clear.** Run `agent-browser click ".pagefind-ui__search-clear"`. The box and the results empty.
+- **Check a long excerpt.** The PSU result for `toroidal` contains a URL over 1,000 characters long. Check that the full word is present and the page fits at both widths.
+
+  ```bash
+  (
+    set -e
+    session=$(agent-browser session id --scope worktree --prefix search-wrap)
+    browser=(agent-browser --session "$session")
+    trap '"${browser[@]}" close' EXIT
+    for width in 390 1440; do
+      "${browser[@]}" set viewport "$width" 900
+      "${browser[@]}" open "$URL/search/?q=toroidal"
+      "${browser[@]}" wait --text "PSU"
+      "${browser[@]}" wait --fn 'Array.from(document.querySelectorAll(".pagefind-ui__result-excerpt")).some(el => /\S{1000}/u.test(el.textContent))'
+      test "$("${browser[@]}" eval 'document.documentElement.scrollWidth === document.documentElement.clientWidth')" = true
+    done
+  )
+  ```
+
 - **Proof.** Run `agent-browser snapshot -i` and `agent-browser screenshot cache/verify-blog/$RUN/search/results.png`.
 - **Fallback.** Run `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/search/" --out cache/verify-blog/$RUN/search --step 'fill:.pagefind-ui__search-input=bitcoin' --step 'wait:.pagefind-ui__result'`. `state.json` holds the URL with `?q=bitcoin`, and `aria.txt` the results.
 
