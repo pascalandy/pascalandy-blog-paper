@@ -69,6 +69,12 @@ Use `--viewport WIDTHxHEIGHT`, such as `--viewport 639x900`, to set the desktop 
 
 On `astro:after-swap`, `theme` comes from a listener registered after initial page load, following the site's theme handler in the same event dispatch; `theme_before_handlers` preserves the early init-script reading. A full reload installs both listeners in the new document. A link click and cross-route back wait for the navigation's `astro:page-load` or a full page load before the next step. Fragment-only back completes when the URL fragment changes.
 
+## Run the reader matrix
+
+Run `just qa-reader` to build the blog and test its pages in Chromium. To keep screenshots and accessibility trees for every case, pass `--evidence` followed by an empty directory. To replay a historical build, run `uv run .claude/skills/verify-blog/scripts/reader.py /absolute/path/to/dist`. The runner binds a private loopback port to that directory.
+
+The [reader matrix](scripts/reader.py) covers the home, blog, article, tags and search pages in both themes. It exercises the five original formats, including both sides of the 640 px menu breakpoint, and rotates the phone and tablet. Each narrow page is checked with the menu closed and open. The article contains the embedded videos that once overflowed on phones. The check measures their boxes with the external player offline.
+
 ## Compare two builds
 
 Build each commit in its own worktree. Run `just fresh` before each comparison build to discard generated output and image caches. Use the same `cache/fonts/` contents for both builds because Google Fonts can return different files. Keep Pascal's dev server on port 4320 untouched.

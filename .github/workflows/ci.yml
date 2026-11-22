@@ -17,7 +17,6 @@ on:
 permissions: {}
 
 jobs:
-  # The same verdict as `just check` on any machine
   check:
     name: Check
     runs-on: ubuntu-latest
@@ -49,6 +48,9 @@ jobs:
           key: astro-cache-${{ runner.os }}-${{ hashFiles('src/assets/**/*', 'astro.config.ts', 'src/config.ts', 'bun.lock') }}
 
       - run: bun install --frozen-lockfile
+
+      - name: Install Chromium for reader QA
+        run: uv run --with playwright==1.56.0 playwright install --with-deps chromium
 
       - name: Check
         run: uvx --from "rust-just@$JUST_VERSION" just check

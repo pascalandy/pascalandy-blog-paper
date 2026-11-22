@@ -84,7 +84,6 @@ CHECKS = [
     row("content", ("bun", "run", "sync", "--force")),
     row("docs", uv_run("scripts/check_docs.py")),
     row("images", uv_run("scripts/check_images.py")),
-    # The ship scripts against a bare origin and fake tools
     row("scripts", (*UNITTEST, "scripts/tests")),
     row("typecheck", ("bun", "run", "astro", "check")),
     row(
@@ -92,6 +91,7 @@ CHECKS = [
         ("bun", "run", "build:ci"),
         uv_run("scripts/check_css_compat.py"),
         uv_run("scripts/check_html.py"),
+        uv_run(".claude/skills/verify-blog/scripts/reader.py", "dist"),
     ),
 ]
 

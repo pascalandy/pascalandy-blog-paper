@@ -49,6 +49,8 @@ gh extension install basecamp/gh-signoff
 bun --version && just --version && uv --version && gh signoff version && gitleaks version
 ```
 
+Install the Chromium version used by the reader checks with `uv run --with playwright==1.56.0 playwright install chromium`. On a fresh Ubuntu machine, add `--with-deps` to install its system libraries.
+
 Without Just, run any recipe through uv: `uvx --from rust-just just check`.
 
 ## Quick Start

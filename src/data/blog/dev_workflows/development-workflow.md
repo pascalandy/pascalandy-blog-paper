@@ -24,6 +24,7 @@ The full output of each check stays in `cache/check/`.
 - `just check --only scripts` tests the shipping scripts in `scripts/tests/`, against a throwaway git origin and a fake `gh`
 - `just check -v` streams the output of every command
 - `just qa` formats the repo, then runs `just check`
+- `just qa-reader` builds the blog and runs the same browser matrix as the build check. Pass `--evidence cache/verify-blog/reader-run` with a new directory to keep screenshots and accessibility trees for all 90 cases
 
 Without Just installed, run any recipe through uv: `uvx --from rust-just just check`.
 
