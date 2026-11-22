@@ -10,13 +10,17 @@ from __future__ import annotations
 import argparse
 import http.client
 import json
+import socket
 import sys
 import time
 import urllib.request
 import xml.etree.ElementTree as ET
+from collections.abc import Callable
+from contextlib import suppress
 from functools import partial
 from html.parser import HTMLParser
 from pathlib import Path
+from threading import Event, Timer
 from urllib.parse import urljoin, urlsplit
 
 DEFAULT_BASE = "https://pascalandy.com/"
@@ -42,23 +46,92 @@ class DirectResponses(urllib.request.HTTPErrorProcessor):
     https_response = http_response
 
 
+def retry_opener(
+    connected: Callable[[socket.socket | None], None],
+) -> urllib.request.OpenerDirector:
+    class Connection(http.client.HTTPConnection):
+        def connect(self) -> None:
+            super().connect()
+            connected(self.sock)
+
+    class SecureConnection(http.client.HTTPSConnection):
+        def connect(self) -> None:
+            super().connect()
+            connected(self.sock)
+
+    class TrackSocket(urllib.request.HTTPSHandler, urllib.request.HTTPHandler):
+        def http_open(
+            self, request: urllib.request.Request
+        ) -> http.client.HTTPResponse:
+            return self.do_open(Connection, request)
+
+        def https_open(
+            self, request: urllib.request.Request
+        ) -> http.client.HTTPResponse:
+            return self.do_open(SecureConnection, request, context=self._context)
+
+    return urllib.request.build_opener(DirectResponses(), TrackSocket())
+
+
 class SiteRequests:
     def __init__(self) -> None:
         self.opener = urllib.request.build_opener(DirectResponses())
         self.retry_deadline: float | None = None
 
     def get(self, url: str, *, read_body: bool = False) -> bytes:
-        timeout = HTTP_TIMEOUT_SECONDS
-        if self.retry_deadline is not None:
-            remaining = self.retry_deadline - time.monotonic()
-            if remaining <= 0:
-                raise CheckFailed(problem(url, "HTTP 200", "retry window elapsed"))
-            timeout = min(timeout, remaining)
+        if self.retry_deadline is None:
+            return self.read(self.opener, url, read_body, HTTP_TIMEOUT_SECONDS)
+        now = time.monotonic()
+        if self.retry_deadline <= now:
+            raise CheckFailed(problem(url, "HTTP 200", "retry window elapsed"))
+        deadline = min(self.retry_deadline, now + HTTP_TIMEOUT_SECONDS)
+        timed_out = CheckFailed(problem(url, "HTTP 200", "retry timed out"))
+        expired = Event()
+        active_socket: socket.socket | None = None
+
+        def interrupt() -> None:
+            expired.set()
+            if active_socket is not None:
+                with suppress(OSError):
+                    socket.socket.shutdown(active_socket, socket.SHUT_RDWR)
+
+        def connected(sock: socket.socket | None) -> None:
+            nonlocal active_socket
+            active_socket = sock
+            if expired.is_set() or time.monotonic() >= deadline:
+                interrupt()
+
+        opener = retry_opener(connected)
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise timed_out
+        # Socket timeouts bound idle reads. Shut down the connection when the
+        # absolute deadline expires, even if the server keeps sending bytes.
+        timer = Timer(remaining, interrupt)
+        timer.start()
+        try:
+            try:
+                body = self.read(opener, url, read_body, remaining)
+            except CheckFailed:
+                if not expired.is_set() and time.monotonic() < deadline:
+                    raise
+                raise timed_out from None
+            if expired.is_set() or time.monotonic() >= deadline:
+                raise timed_out
+            return body
+        finally:
+            timer.cancel()
+            timer.join()
+
+    @staticmethod
+    def read(
+        opener: urllib.request.OpenerDirector, url: str, read_body: bool, timeout: float
+    ) -> bytes:
         try:
             request = urllib.request.Request(
                 url, headers={"User-Agent": USER_AGENT}, method="GET"
             )
-            with self.opener.open(request, timeout=timeout) as response:
+            with opener.open(request, timeout=timeout) as response:
                 if response.status != 200:
                     raise CheckFailed(
                         problem(url, "HTTP 200", f"HTTP {response.status}")
@@ -88,12 +161,21 @@ def problem(url: str, expected: str, received: str) -> str:
 
 def http_link(source: str, link: str) -> str:
     try:
+        if any(char.isspace() or ord(char) < 32 or ord(char) == 127 for char in link):
+            raise ValueError("link contains whitespace or a control character")
+        original = urlsplit(link)
+        if (original.scheme or link.startswith("//")) and not original.hostname:
+            raise ValueError("absolute link has no host")
         target = urljoin(source, link)
         parts = urlsplit(target)
+        if (
+            parts.scheme not in {"http", "https"}
+            or not parts.hostname
+            or parts.port == 0
+        ):
+            raise ValueError("invalid HTTP(S) target")
     except ValueError:
         raise CheckFailed(problem(source, "HTTP(S) link", repr(link))) from None
-    if parts.scheme not in {"http", "https"} or not parts.netloc:
-        raise CheckFailed(problem(source, "HTTP(S) link", repr(link)))
     return target
 
 

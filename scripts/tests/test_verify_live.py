@@ -24,6 +24,7 @@ class VerifyLiveTest(unittest.TestCase):
         pages: dict[str, bytes] = {}
         redirects: dict[str, str] = {}
         retry_delays: dict[str, float] = {}
+        retry_chunks: dict[str, list[bytes]] = {}
         requests: Counter[str] = Counter()
 
         class Handler(BaseHTTPRequestHandler):
@@ -31,6 +32,12 @@ class VerifyLiveTest(unittest.TestCase):
                 requests[self.path] += 1
                 if requests[self.path] > 1 and self.path in retry_delays:
                     sleep(retry_delays[self.path])
+                if requests[self.path] > 1 and self.path in retry_chunks:
+                    with suppress(ConnectionError):
+                        for chunk in retry_chunks[self.path]:
+                            self.wfile.write(chunk)
+                            sleep(0.05)
+                    return
                 if target := redirects.get(self.path):
                     self.send_response(302)
                     self.send_header("Location", target)
@@ -57,6 +64,7 @@ class VerifyLiveTest(unittest.TestCase):
         self.pages = pages
         self.redirects = redirects
         self.retry_delays = retry_delays
+        self.retry_chunks = retry_chunks
         self.requests = requests
         pages.update(
             {
@@ -158,17 +166,28 @@ class VerifyLiveTest(unittest.TestCase):
         )
 
     def test_malformed_link_reports_its_source(self) -> None:
-        for path, body in {
-            "/rss.xml": b"<rss><channel><item><link>http://[</link></item></channel></rss>",
-            "/robots.txt": b"Sitemap: http://[\n",
-        }.items():
-            with self.subTest(path=path), patch.dict(self.pages, {path: body}):
-                code, stdout, stderr = self.run_cli()
-                self.assertEqual((code, stdout), (1, ""))
-                self.assertEqual(
-                    stderr,
-                    f"{self.base}{path[1:]}: expected HTTP(S) link, received 'http://['\n",
-                )
+        for link in (
+            "http://[",
+            "http://",
+            "http://127.0.0.1:bad/post",
+            "http://invalid host/post",
+        ):
+            for path, body in {
+                "/rss.xml": f"<rss><channel><item><link>{link}</link></item></channel></rss>",
+                "/robots.txt": f"Sitemap: {link}\n",
+            }.items():
+                with (
+                    self.subTest(path=path, link=link),
+                    patch.dict(self.pages, {path: body.encode()}),
+                ):
+                    self.requests.clear()
+                    code, stdout, stderr = self.run_cli()
+                    self.assertEqual((code, stdout), (1, ""))
+                    self.assertEqual(
+                        stderr,
+                        f"{self.base}{path[1:]}: expected HTTP(S) link, received {link!r}\n",
+                    )
+                    self.assertEqual(self.requests[path], 1)
 
     def test_retries_failed_checks_until_they_pass(self) -> None:
         self.pages["/"] = self.home("0.0.0")
@@ -199,3 +218,25 @@ class VerifyLiveTest(unittest.TestCase):
         self.assertEqual(len(errors), 1)
         self.assertIn(f"{self.base}: expected HTTP 200, received", errors[0])
         self.assertIn("timed out", errors[0].lower())
+
+    def test_trickled_headers_and_body_cannot_extend_the_retry_deadline(self) -> None:
+        self.pages["/"] = self.home("0.0.0")
+        body = self.home(ASTRO)
+        status = b"HTTP/1.1 200 OK\r\n"
+        headers = f"Connection: close\r\nContent-Length: {len(body)}\r\n\r\n".encode()
+        for chunks in (
+            [status, *([b"X-Fixture: slow\r\n"] * 20), headers, body],
+            [status + headers, *(body[i : i + 4] for i in range(0, len(body), 4))],
+        ):
+            with (
+                self.subTest(chunks=len(chunks)),
+                patch.object(verify_live, "RETRY_INTERVAL_SECONDS", 0.01),
+            ):
+                self.requests.clear()
+                self.retry_chunks["/"] = chunks
+                errors = verify_live.failures(self.base, retry_seconds=0.5)
+                self.assertEqual(self.requests["/"], 2)
+                self.assertEqual(
+                    errors,
+                    [f"{self.base}: expected HTTP 200, received retry timed out"],
+                )
