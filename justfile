@@ -68,6 +68,12 @@ check *args:
 
 alias ci := check
 
+# Build and exercise the reader matrix; --evidence DIR saves screenshots and accessibility trees
+[group('checks')]
+qa-reader *args:
+    @bun run build:ci
+    @uv run --quiet .claude/skills/verify-blog/scripts/reader.py dist "$@"
+
 # Compare two build folders; --accept reads exact accepted findings
 [group('checks')]
 parity *args:

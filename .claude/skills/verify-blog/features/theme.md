@@ -1,6 +1,6 @@
 # Theme
 
-The theme button switches the site between light and dark, and the choice persists across pages and reloads.
+The theme button switches between light and dark. Choosing the device’s current mode resumes automatic changes. Choosing the other mode saves it across pages and reloads.
 
 ## Sub-features
 
@@ -10,7 +10,7 @@ The theme button switches the site between light and dark, and the choice persis
 
 ## How to get to it (user POV)
 
-- Choose the button titled `Basculer entre clair et sombre` in the header, on any page
+- Choose the theme button in the header on any page. Its tooltip explains how to follow the device theme again
 - On a phone, open the menu first; the button sits in it and reads `Mode sombre` or `Mode clair`
 
 ## Driving it with agent-browser
@@ -24,6 +24,7 @@ Preconditions:
 - **Toggle.** Run `agent-browser click "#theme-btn"`. `data-theme` becomes `dark`, the button's `aria-label` becomes `sombre`, and the page turns dark.
 - **Reload.** Run `agent-browser reload` and read `data-theme` again. It stays `dark`.
 - **Change page.** Run `agent-browser open "$URL/tags/"`. `data-theme` is still `dark`.
+- **Resume the system theme.** With the device still in light mode and the blog in dark mode, click the theme button again. Use `agent-browser set media dark` and then `agent-browser set media light`. After each change, `agent-browser get attr html data-theme` matches the device. Reload and follow a header link to check that automatic changes still apply.
 - **Proof.** Screenshot before and after the toggle: `agent-browser screenshot cache/verify-blog/$RUN/theme/before.png` and `.../after.png`.
 - **Fallback.** Run `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/" --out cache/verify-blog/$RUN/theme/before --color-scheme light`, then the same with `--out cache/verify-blog/$RUN/theme/after --step 'click:#theme-btn'`. The two `state.json` files show `theme` `light`, then `dark`.
 

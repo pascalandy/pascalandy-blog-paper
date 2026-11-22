@@ -2,6 +2,7 @@
 const THEME = "theme";
 const LIGHT = "light";
 const DARK = "dark";
+const systemScheme = window.matchMedia("(prefers-color-scheme: dark)");
 
 // What the theme button's aria-label announces for each theme
 const LABELS: Record<string, string> = { [LIGHT]: "clair", [DARK]: "sombre" };
@@ -10,25 +11,23 @@ const LABELS: Record<string, string> = { [LIGHT]: "clair", [DARK]: "sombre" };
 // Can be "light", "dark", or empty string for system's prefers-color-scheme
 const initialColorScheme = "";
 
+function getSystemTheme(): string {
+  return systemScheme.matches ? DARK : LIGHT;
+}
+
 function getPreferTheme(): string {
-  // get theme data from local storage (user's explicit choice)
-  const currentTheme = localStorage.getItem(THEME);
-  if (currentTheme) return currentTheme;
-
-  // return initial color scheme if it is set (site default)
-  if (initialColorScheme) return initialColorScheme;
-
-  // return user device's prefer color scheme (system fallback)
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? DARK
-    : LIGHT;
+  return localStorage.getItem(THEME) || initialColorScheme || getSystemTheme();
 }
 
 // Use existing theme value from inline script if available, otherwise detect
 let themeValue = window.theme?.themeValue ?? getPreferTheme();
 
 function setPreference(): void {
-  localStorage.setItem(THEME, themeValue);
+  if (themeValue === getSystemTheme()) {
+    localStorage.removeItem(THEME);
+  } else {
+    localStorage.setItem(THEME, themeValue);
+  }
   reflectPreference();
 }
 
@@ -109,11 +108,8 @@ document.addEventListener("astro:before-swap", event => {
   }
 });
 
-// sync with system changes
-window
-  .matchMedia("(prefers-color-scheme: dark)")
-  .addEventListener("change", ({ matches: isDark }) => {
-    themeValue = isDark ? DARK : LIGHT;
-    window.theme?.setTheme(themeValue);
-    setPreference();
-  });
+systemScheme.addEventListener("change", () => {
+  themeValue = getPreferTheme();
+  window.theme?.setTheme(themeValue);
+  reflectPreference();
+});

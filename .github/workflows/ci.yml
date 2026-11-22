@@ -17,10 +17,9 @@ on:
 permissions: {}
 
 jobs:
-  # The same verdict as `just check` on any machine
   check:
     name: Check
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
       contents: read
@@ -49,6 +48,11 @@ jobs:
           key: astro-cache-${{ runner.os }}-${{ hashFiles('src/assets/**/*', 'astro.config.ts', 'src/config.ts', 'bun.lock') }}
 
       - run: bun install --frozen-lockfile
+
+      - name: Install Chromium for reader QA
+        run: |
+          .claude/setup-reader-browser.sh "$RUNNER_TEMP/blog-reader"
+          echo "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/blog-reader/browsers" >> "$GITHUB_ENV"
 
       - name: Check
         run: uvx --from "rust-just@$JUST_VERSION" just check
