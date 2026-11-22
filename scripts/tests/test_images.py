@@ -67,6 +67,32 @@ import picture from "@/assets/images/import.png";
             self.assertEqual(len(errors), 1)
             self.assertIn("missing image ../../assets/images/front.jpg", errors[0])
 
+    def test_new_orphan_next_to_retained_public_image_fails(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            image = root / "public/og-legacy/2017/11/orphan.jpg"
+            image.parent.mkdir(parents=True)
+            image.write_bytes(b"orphan")
+            (image.parent / "rsvp-2.jpg").write_bytes(b"retained fixture")
+            self.assertEqual(
+                problems(root),
+                ["unreferenced image: public/og-legacy/2017/11/orphan.jpg"],
+            )
+
+    def test_referenced_public_images_and_pagefind_images_pass(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            blog = root / "src/data/blog"
+            blog.mkdir(parents=True)
+            (blog / "post.md").write_text("![Public image](/x.jpg)")
+            (root / "src/config.ts").write_text('export const image = "banner.png";')
+            public = root / "public"
+            (public / "pagefind/generated").mkdir(parents=True)
+            (public / "x.jpg").write_bytes(b"public fixture")
+            (public / "banner.png").write_bytes(b"public fixture")
+            (public / "pagefind/generated/icon.svg").write_bytes(b"generated fixture")
+            self.assertEqual(problems(root), [])
+
     def test_generated_image_route_and_remote_images_are_valid(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

@@ -3,7 +3,7 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Find missing image references and unused source images, including drafts."""
+"""Check image references in source, including drafts, and find unused images."""
 
 from __future__ import annotations
 
@@ -14,6 +14,14 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
+# Keep these legacy copies under R17 because external links may use their URLs (issue #182).
+RETAINED_PUBLIC_IMAGES = {
+    "public/og-legacy/2017/11/rsvp-2.jpg",
+    "public/og-legacy/2019/01/026-cryptoinmontreal-1.jpg",
+    "public/og-legacy/2019/02/027b-cryptoinmontreal.jpg",
+    "public/og-legacy/2019/04/029b-cryptoinmontreal.jpg",
+    "public/og-legacy/2019/05/031-cryptoinmontreal.jpg",
+}
 IMAGES = {
     ".png",
     ".jpg",
@@ -56,6 +64,8 @@ def image_references(source: Path) -> set[str]:
 
 
 def inspect(root: Path) -> tuple[list[str], list[str]]:
+    root = root.resolve()
+    public = root / "public"
     referenced: set[Path] = set()
     missing: set[str] = set()
     for source in sorted((root / "src").rglob("*")):
@@ -69,11 +79,11 @@ def inspect(root: Path) -> tuple[list[str], list[str]]:
             if target.startswith("@/"):
                 path = root / "src" / target[2:]
             elif target.startswith("/"):
-                path = root / "public" / target.lstrip("/")
+                path = public / target.lstrip("/")
             elif target.startswith("."):
                 path = source.parent / target
             else:
-                path = root / "public" / target
+                path = public / target
             path = path.resolve()
             if not path.is_file():
                 generated = root / "src/pages" / target.lstrip("/")
@@ -83,12 +93,18 @@ def inspect(root: Path) -> tuple[list[str], list[str]]:
                     continue
                 missing.add(f"{source.relative_to(root)}: missing image {reference}")
             referenced.add(path)
-    assets = {
-        path.resolve()
-        for path in (root / "src/assets/images").rglob("*")
-        if path.is_file() and path.suffix.lower() in IMAGES
-    }
-    orphans = sorted(path.relative_to(root).as_posix() for path in assets - referenced)
+    pagefind = public / "pagefind"
+    retained = {root / name for name in RETAINED_PUBLIC_IMAGES}
+    orphans = sorted(
+        path.relative_to(root).as_posix()
+        for directory in (root / "src/assets/images", public)
+        for path in directory.rglob("*")
+        if not path.is_relative_to(pagefind)
+        and path.suffix.lower() in IMAGES
+        and path not in retained
+        and path.is_file()
+        and path.resolve() not in referenced
+    )
     return sorted(missing), orphans
 
 
@@ -102,7 +118,7 @@ def main() -> int:
     cli.add_argument(
         "--list-orphans",
         action="store_true",
-        help="print the unreferenced source image paths",
+        help="print the unreferenced image paths",
     )
     args = cli.parse_args()
     if args.list_orphans:
@@ -114,7 +130,7 @@ def main() -> int:
     if errors:
         print("\n".join(errors), file=sys.stderr)
         print(
-            "error: fix image references or remove unused source images, then run: just check --only images",
+            "error: fix image references or remove unused images, then run: just check --only images",
             file=sys.stderr,
         )
     return int(bool(errors))

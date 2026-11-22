@@ -30,7 +30,6 @@ The schema lives in `src/content.config.ts`, and it is strict: an unknown key or
 | `draft`        | `boolean`         | —       | Exclude the post from every build, dev included: no page, no listing, no RSS |
 | `ogImage`      | `image \| string` | —       | Custom OG image (local or URL)                                               |
 | `canonicalURL` | `string`          | —       | The original source of duplicated content, so search engines credit it       |
-| `hideEditPost` | `boolean`         | —       | Hide the "Edit post" link                                                    |
 | `mermaid`      | `boolean`         | `false` | Enable Mermaid diagram rendering                                             |
 
 ## Scheduled Posts
@@ -69,7 +68,6 @@ featured: true
 draft: false
 ogImage: "./custom-og.png"
 canonicalURL: "https://original-source.com/post"
-hideEditPost: false
 mermaid: true
 description: "Brief description for SEO and cards"
 ---

@@ -10,11 +10,6 @@ export const SITE = {
   lightAndDarkMode: true,
   postPerPage: 20,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
-  editPost: {
-    enabled: false,
-    text: "Edit page",
-    url: "https://github.com/satnaing/astro-paper/edit/main/",
-  },
   dynamicOgImage: true,
   dir: "ltr", // "rtl" | "auto"
   lang: "fr-CA",

@@ -7,7 +7,6 @@ import Banner from "@/components/Banner.astro";
 import Footer from "@/components/Footer.astro";
 import Tag from "@/components/Tag.astro";
 import Datetime from "@/components/Datetime.astro";
-import EditPost from "@/components/EditPost.astro";
 
 import { getPath } from "@/utils/getPath";
 import { slugifyStr } from "@/utils/slugify";
@@ -31,7 +30,6 @@ const {
   canonicalURL,
   date_created,
   tags,
-  hideEditPost,
   mermaid,
   lang,
 } = post.data;
@@ -111,14 +109,6 @@ const nextPost =
     >
       <div class="flex items-center gap-2 text-muted-foreground">
         <Datetime {date_created} size="sm" />
-        {
-          SITE.editPost.enabled && !hideEditPost && (
-            <>
-              <span aria-hidden="true">|</span>
-              <EditPost {hideEditPost} {post} />
-            </>
-          )
-        }
       </div>
       <ul class="flex flex-wrap gap-2">
         {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
