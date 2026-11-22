@@ -30,7 +30,7 @@ Preconditions:
 - **Open the mobile menu.** Run `agent-browser set viewport 390 844`, `agent-browser open "$URL/"`, and `agent-browser click "#menu-btn"`. `agent-browser get attr "#menu-btn" aria-expanded` gives `true`, its `aria-label` gives `Fermer le menu`, and the links show.
 - **Check 639 px.** Run `agent-browser set viewport 639 900` and open `"$URL/"` in a fresh tab. `agent-browser is visible "#menu-btn"` gives `true` and `agent-browser is visible '#menu-items a[href="/blog/"]'` gives `false`. Run `agent-browser click "#menu-btn"`. Repeat the link check and expect `true`.
 - **Check 640 px.** Run `agent-browser set viewport 640 900` and open `"$URL/"` in a fresh tab. `agent-browser is visible "#menu-btn"` gives `false` and `agent-browser is visible '#menu-items a[href="/blog/"]'` gives `true`.
-- **Proof.** Set `WIDTH` to the width you just tested, either `390`, `639`, or `640`. Save the evidence with these commands.
+- **Proof.** After each width check, set `WIDTH` to that width (`390`, `639`, or `640`) and save the evidence with these commands.
 
   ```bash
   OUT="cache/verify-blog/$RUN/navigation"
