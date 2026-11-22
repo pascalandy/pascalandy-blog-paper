@@ -157,6 +157,10 @@ def verify_readers(base: str, evidence: Path | None) -> tuple[int, int]:
                             if response is None or response.status != 200:
                                 raise ValueError(f"expected HTTP 200 from {path}")
                             expect(page.locator(landmark).first).to_be_visible()
+                            home = page.get_by_role("banner").get_by_role(
+                                "link", name="Accueil", exact=True
+                            )
+                            expect(home).to_have_attribute("href", "/")
                             luminance = background_luminance(page, theme)
                             if theme == "light":
                                 light_backgrounds[label] = luminance
