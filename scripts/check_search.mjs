@@ -54,6 +54,7 @@ for (const term of [
 }
 
 for (const [term, prefix] of [
+  ["sommes dollars", /(?:^|[^\p{L}\p{N}_])sommes\b/iu],
   ["datecre", /(?:^|[^\p{L}\p{N}_])date_?cre/iu],
   ["camé", /(?:^|[^\p{L}\p{N}_])came/iu],
   ["deuxiè", /(?:^|[^\p{L}\p{N}_])deuxie/iu],

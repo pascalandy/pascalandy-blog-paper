@@ -6,31 +6,31 @@ const lexicon = new URL(
   import.meta.resolve("node-lefff/src/lefff-3.4.mlex/lefff-3.4.mlex")
 );
 
-export async function buildSearchVerbs(articlesByWord, directory) {
-  const readings = new Map();
-  const formsByVerb = new Map();
-  const source = await readFile(lexicon);
-  const lines = source.toString("utf8").split("\n");
-  for (const line of lines) {
+function unambiguousVerbForms(source) {
+  const soleLemma = new Map();
+  const verbs = new Map();
+  for (const line of source.toString("utf8").split("\n")) {
     const [word, type, lemma] = line.split("\t");
     if (!/^\p{Ll}+$/u.test(word)) continue;
-    if (articlesByWord.has(word)) {
-      if (!readings.has(word)) readings.set(word, new Set());
-      readings.get(word).add(lemma);
-    }
-    if (type === "v") {
-      if (!formsByVerb.has(lemma)) formsByVerb.set(lemma, new Set());
-      formsByVerb.get(lemma).add(word);
-    }
+    if (!soleLemma.has(word)) soleLemma.set(word, lemma);
+    else if (soleLemma.get(word) !== lemma) soleLemma.set(word, null);
+    if (type === "v") verbs.set(word, lemma);
   }
+  for (const [word, lemma] of verbs) {
+    if (soleLemma.get(word) !== lemma) verbs.delete(word);
+  }
+  return verbs;
+}
 
+export async function buildSearchVerbs(articlesByWord, directory) {
+  const source = await readFile(lexicon);
+  const verbForms = unambiguousVerbForms(source);
   const pagesByVerb = new Map();
-  for (const [word, lemmas] of readings) {
-    if (lemmas.size !== 1) continue;
-    const [lemma] = lemmas;
-    if (!formsByVerb.get(lemma)?.has(word)) continue;
-    if (!pagesByVerb.has(lemma)) pagesByVerb.set(lemma, new Set());
-    for (const id of articlesByWord.get(word)) pagesByVerb.get(lemma).add(id);
+  for (const [word, pages] of articlesByWord) {
+    const verb = verbForms.get(word);
+    if (!verb) continue;
+    if (!pagesByVerb.has(verb)) pagesByVerb.set(verb, new Set());
+    for (const page of pages) pagesByVerb.get(verb).add(page);
   }
 
   const shards = new Map(
@@ -39,13 +39,12 @@ export async function buildSearchVerbs(articlesByWord, directory) {
       { forms: Object.create(null), pages: Object.create(null) },
     ])
   );
-  for (const [verb, pages] of pagesByVerb) {
-    const ids = [...pages].sort();
-    for (const form of formsByVerb.get(verb)) {
-      const shard = shards.get(shardName(fold(form)));
-      (shard.forms[form] ??= []).push(verb);
-      shard.pages[verb] = ids;
-    }
+  for (const [form, verb] of verbForms) {
+    const pages = pagesByVerb.get(verb);
+    if (!pages) continue;
+    const shard = shards.get(shardName(fold(form)));
+    shard.forms[form] = [verb];
+    shard.pages[verb] ??= [...pages].sort();
   }
 
   await mkdir(directory, { recursive: true });
