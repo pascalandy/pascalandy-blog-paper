@@ -3,7 +3,8 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Deploy a branch from GitHub to a Sevalla static site and wait for the build.
+"""Deploy a GitHub branch to Sevalla. By default, wait for the build
+and verify the live site after a production deploy.
 
 Sevalla clones the branch from GitHub and builds it, so only pushed commits
 ship. production always deploys main; preview deploys any pushed branch.
@@ -282,6 +283,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="scripts/deploy.py",
         description=__doc__.split("\n\n")[0],
+        epilog=__doc__.strip().rsplit("\n\n", 1)[-1],
     )
     parser.add_argument("target", choices=TARGETS, help="production deploys main")
     parser.add_argument(
