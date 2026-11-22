@@ -5,10 +5,11 @@
 # ///
 """Verify the public blog with read-only HTTP GETs.
 
-The retry window limits new requests and late responses count as failures.
+The retry window limits when the checker starts another urllib attempt.
 A blocking socket read can overrun by its configured timeout (up to ten
 seconds). DNS, address fallback, and response parsing inside urllib can take
-longer. The checker checks the deadline when urllib returns control.
+longer. An attempt already in progress can send its GET after expiry. The
+checker checks the deadline when urllib returns control and rejects late results.
 """
 
 from __future__ import annotations
@@ -89,6 +90,14 @@ class SiteRequests:
                     chunk = response.read1(64 * 1024)
                     if not chunk:
                         remaining()
+                        if missing := response.length:
+                            raise CheckFailed(
+                                problem(
+                                    url,
+                                    "complete HTTP body",
+                                    f"EOF with {missing} bytes missing",
+                                )
+                            )
                         return bytes(body)
                     body.extend(chunk)
         except (OSError, ValueError, http.client.HTTPException) as error:

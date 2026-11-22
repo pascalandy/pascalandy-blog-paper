@@ -289,3 +289,23 @@ class VerifyLiveTest(unittest.TestCase):
         self.assertIn(
             f"{self.base}: expected HTTP 200, received request timed out", errors
         )
+
+    def test_incomplete_bodies_fail_even_when_the_prefix_is_valid(self) -> None:
+        for path in ("/", "/rss.xml", "/robots.txt"):
+            body = self.pages[path]
+            response = (
+                f"HTTP/1.1 200 OK\r\nConnection: close\r\n"
+                f"Content-Length: {len(body) + 10}\r\n\r\n"
+            ).encode() + body
+            with (
+                self.subTest(path=path),
+                patch.dict(self.response_chunks, {(path, 1): [response]}),
+            ):
+                self.requests.clear()
+                code, stdout, stderr = self.run_cli()
+                self.assertEqual((code, stdout), (1, ""))
+                self.assertEqual(
+                    stderr,
+                    f"{self.base}{path[1:]}: expected complete HTTP body, "
+                    "received EOF with 10 bytes missing\n",
+                )
