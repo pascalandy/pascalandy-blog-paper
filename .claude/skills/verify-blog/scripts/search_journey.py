@@ -35,6 +35,12 @@ def verify_search(page: Page, base: str) -> None:
     expect(page.get_by_text("Aucun résultat", exact=True)).to_be_visible()
     expect(result).to_have_count(0)
 
+    field.fill("bitcoin ?")
+    expect(result).to_have_text(first_title)
+    page.reload()
+    expect(field).to_have_value("bitcoin ?")
+    expect(result).to_have_text(first_title)
+
 
 def verify_search_layout(page: Page, base: str) -> None:
     page.goto(f"{base}/search/?q=aliexpress")

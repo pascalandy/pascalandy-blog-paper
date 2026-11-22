@@ -1,16 +1,25 @@
-import { writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { options, search } from "../dist/pagefind/pagefind.js";
-import { wordForms } from "../public/search/words.js";
+import { initials, shardName, wordForms } from "../public/search/words.js";
 
-await options({ basePath: new URL("../dist/pagefind/", import.meta.url).href });
+const base = new URL("../dist/pagefind/", import.meta.url);
+await options({ basePath: base.href });
 const { results } = await search(null);
-const words = new Set();
+const shards = new Map([...initials, "other"].map(initial => [initial, {}]));
+
 for (const hit of results) {
   const { content } = await hit.data();
-  for (const token of content.split(/\s+/u)) {
-    for (const form of wordForms(token)) words.add(form);
+  const words = new Set(content.split(/\s+/u).flatMap(wordForms));
+  const sorted = [...words].sort();
+  const longest = sorted.filter((word, i) => !sorted[i + 1]?.startsWith(word));
+  const groups = Map.groupBy(longest, shardName);
+  for (const [initial, pages] of shards) {
+    pages[hit.id] = "\n" + (groups.get(initial) ?? []).join("\n");
   }
 }
-const sorted = [...words].sort();
-const prefixes = sorted.filter((word, i) => !sorted[i + 1]?.startsWith(word));
-await writeFile(new URL("../dist/pagefind/words.txt", import.meta.url), `\n${prefixes.join("\n")}\n`);
+
+const directory = new URL("prefixes/", base);
+await mkdir(directory, { recursive: true });
+for (const [initial, pages] of shards) {
+  await writeFile(new URL(initial + ".json", directory), JSON.stringify(pages));
+}

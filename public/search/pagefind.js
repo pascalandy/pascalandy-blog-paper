@@ -1,50 +1,60 @@
 import { preload, search as find } from "../pagefind/pagefind.js";
-import { fold, wordForms } from "./words.js";
+import { fold, shardName, wordForms } from "./words.js";
 export * from "../pagefind/pagefind.js";
 
-let vocabulary;
+const shards = new Map();
 
-async function matchesWord(word, hits) {
-  if (!hits.length) return false;
-  if ((await find(`"${word}"`)).results.length) return true;
+async function withPrefix(hits, prefix) {
+  const initial = shardName(prefix);
+  if (!shards.has(initial)) {
+    const url = new URL(
+      `../pagefind/prefixes/${initial}.json`,
+      import.meta.url
+    );
+    shards.set(
+      initial,
+      fetch(url, { cache: "no-cache" })
+        .then(response => (response.ok ? response.json() : null))
+        .catch(() => null)
+    );
+  }
 
-  const prefix = fold(word).replace(/[^\p{L}\p{N}_]/gu, "");
-  if (!prefix) return true;
-  vocabulary ??= fetch(new URL("../pagefind/words.txt", import.meta.url), {
-    cache: "no-cache",
-  })
-    .then(response => (response.ok ? response.text() : null))
-    .catch(() => null);
-  const words = await vocabulary;
-  if (words && !words.includes(`\n${prefix}`)) return false;
-
-  // Pagefind also matches shorter words inside the query. Keep its ranking
-  // if an indexed position really contains the requested prefix.
+  const pages = await shards.get(initial);
+  const matches = [];
   for (const hit of hits) {
-    const tokens = (await hit.data()).content.split(/\s+/u);
-    if (
-      hit.words.some(at =>
-        wordForms(tokens[at] ?? "").some(form => form.startsWith(prefix))
-      )
-    ) {
-      return true;
+    const words = pages?.[hit.id];
+    if (typeof words === "string") {
+      if (words.includes("\n" + prefix)) matches.push(hit);
+    } else {
+      const { content } = await hit.data();
+      if (
+        content
+          .split(/\s+/u)
+          .some(token => wordForms(token).some(form => form.startsWith(prefix)))
+      ) {
+        matches.push(hit);
+      }
     }
   }
-  return false;
+  return matches;
 }
 
 export async function search(term, options) {
   const folded = term && fold(term);
   if (folded && folded !== term) await preload(folded, options);
   const matches = await find(term, options);
-  if (!matches.results.length || !term || /^\s*".+"\s*$/.test(term))
+  if (!matches.results.length || !term || /^\s*".+"\s*$/.test(term)) {
     return matches;
-
-  const words = new Set(term.trim().split(/\s+/u));
-  for (const word of words) {
-    const candidates = words.size === 1 ? matches : await find(word, options);
-    if (!(await matchesWord(word, candidates.results)))
-      return find("", options);
   }
-  return matches;
+
+  let hits = matches.results;
+  for (const word of new Set(term.trim().split(/\s+/u))) {
+    const prefix = fold(word).replace(/[^\p{L}\p{N}_]/gu, "");
+    if (!prefix || (await find(`"${word}"`, options)).results.length) continue;
+    hits = await withPrefix(hits, prefix);
+    if (!hits.length) return find("", options);
+  }
+  return hits.length === matches.results.length
+    ? matches
+    : { ...matches, results: hits, unfilteredResultCount: hits.length };
 }
