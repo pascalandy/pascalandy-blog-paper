@@ -133,15 +133,15 @@ def request(method: str, path: str, token: str, body: dict | None = None) -> dic
         raise ApiError(f"could not reach Sevalla: {error}", retryable=True) from None
 
 
-def wait_for(site: str, deployment: str, token: str) -> int:
+def wait_for(site: str, deployment: str, token: str) -> str | None:
     deadline = time.monotonic() + DEADLINE_SECONDS
     last = None
     while time.monotonic() < deadline:
         time.sleep(POLL_SECONDS)
         try:
-            status = request(
+            report = request(
                 "GET", f"/static-sites/{site}/deployments/{deployment}", token
-            ).get("status")
+            )
         except ApiError as error:
             if not error.retryable:
                 print(
@@ -149,18 +149,24 @@ def wait_for(site: str, deployment: str, token: str) -> int:
                     "the deployment may still run on Sevalla",
                     file=sys.stderr,
                 )
-                return 1
+                return None
             print(f"status check failed ({error}); retrying", file=sys.stderr)
             continue
+        status = report.get("status")
         if status != last:
             print(f"deployment {deployment}: {status}")
             last = status
         if status in FINISHED:
-            return 0 if FINISHED[status] else 1
+            if not FINISHED[status]:
+                return None
+            sha = report.get("commit_sha")
+            if not isinstance(sha, str) or not sha.strip():
+                raise Refused("Sevalla did not report the deployed commit")
+            return sha
     print(
         f"error: deployment {deployment} did not finish in 30 minutes", file=sys.stderr
     )
-    return 1
+    return None
 
 
 def fnox_token() -> str:
@@ -228,7 +234,16 @@ def deploy(target_name: str, branch: str | None, dry_run: bool, wait: bool) -> i
     if not deployment_id:
         raise Refused(f"Sevalla answered without a deployment id: {deployment}")
     print(f"deployment {deployment_id}: started")
-    return wait_for(site, deployment_id, token) if wait else 0
+    if not wait:
+        print("skipped the deployed commit check (--no-wait)")
+        return 0
+    deployed = wait_for(site, deployment_id, token)
+    if deployed is None:
+        return 1
+    if deployed != sha:
+        raise Refused(f"Sevalla built {deployed}, not {sha}")
+    print(f"deployed {sha} to {target_name}")
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:
