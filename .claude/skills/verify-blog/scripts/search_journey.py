@@ -40,6 +40,14 @@ def verify_search(page: Page, base: str) -> None:
     page.reload()
     expect(field).to_have_value("bitcoin ?")
     expect(result).to_have_text(first_title)
+    field.fill("travailler rythme")
+    expect(
+        page.get_by_role(
+            "link",
+            name="Comment reprendre le dessus quand le rythme accélère",
+            exact=True,
+        ).first
+    ).to_be_visible()
 
 
 def verify_search_layout(page: Page, base: str) -> None:

@@ -43,6 +43,7 @@
     "globals": "^16.5.0",
     "hast-util-to-string": "3.0.1",
     "lefthook": "^2.0.13",
+    "node-lefff": "0.3.1",
     "pagefind": "^1.4.0",
     "prettier": "^3.7.4",
     "prettier-plugin-astro": "^0.14.1",
