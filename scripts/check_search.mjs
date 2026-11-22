@@ -33,6 +33,7 @@ for (const term of [
   "bitcoin",
   "bitco",
   "écon",
+  "système",
   "monde bitcoin",
   '"trou noir"',
   "bitcoin ?",
@@ -50,6 +51,7 @@ for (const term of [
 }
 
 for (const [term, prefix] of [
+  ["camé", /(?:^|[^\p{L}\p{N}_])came/iu],
   ["deuxiè", /(?:^|[^\p{L}\p{N}_])deuxie/iu],
   ["systè", /(?:^|[^\p{L}\p{N}_])syste/iu],
   ["principaleme", /(?:^|[^\p{L}\p{N}_])principaleme/iu],

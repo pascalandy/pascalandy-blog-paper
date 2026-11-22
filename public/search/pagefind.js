@@ -51,8 +51,13 @@ export async function search(term, options) {
   let hits = matches.results;
   for (const word of new Set(term.trim().split(/\s+/u))) {
     const prefix = fold(word).replace(/[^\p{L}\p{N}_]/gu, "");
-    if (!prefix || (await find(`"${word}"`, options)).results.length) continue;
-    hits = await withPrefix(hits, prefix);
+    if (!prefix) continue;
+    const exact = await find(`"${word}"`, options);
+    const accepted = new Set(exact.results.map(hit => hit.id));
+    const ambiguous = hits.filter(hit => !accepted.has(hit.id));
+    if (!ambiguous.length) continue;
+    for (const hit of await withPrefix(ambiguous, prefix)) accepted.add(hit.id);
+    hits = hits.filter(hit => accepted.has(hit.id));
     if (!hits.length) return find("", options);
   }
   return hits.length === matches.results.length
