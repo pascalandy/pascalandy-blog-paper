@@ -47,6 +47,12 @@ def check_menu(page: Page, opened: bool, narrow: bool) -> None:
     if narrow:
         expect(button).to_be_visible()
         expect(button).to_have_attribute("aria-expanded", str(opened).lower())
+        panel.evaluate("""panel => {
+            for (const animation of panel.getAnimations()) {
+                if (animation instanceof CSSTransition && animation.transitionProperty === "opacity")
+                    animation.finish();
+            }
+        }""")
     else:
         expect(button).to_be_hidden()
     if opened or not narrow:
