@@ -31,9 +31,10 @@ class VerifyLiveTest(unittest.TestCase):
         class Handler(BaseHTTPRequestHandler):
             def write_chunks(self, chunks: list[bytes]) -> None:
                 with suppress(ConnectionError):
-                    for chunk in chunks:
+                    for index, chunk in enumerate(chunks):
+                        if index:
+                            sleep(0.05)
                         self.wfile.write(chunk)
-                        sleep(0.05)
 
             def do_CONNECT(self) -> None:
                 requests[self.path] += 1
@@ -292,46 +293,148 @@ class VerifyLiveTest(unittest.TestCase):
             errors,
         )
 
-    def test_incomplete_bodies_fail_even_when_the_prefix_is_valid(self) -> None:
-        for path, body in self.pages.items():
-            response = (
-                f"HTTP/1.1 200 OK\r\nConnection: close\r\n"
-                f"Content-Length: {len(body) + 10}\r\n\r\n"
-            ).encode() + body
-            with (
-                self.subTest(path=path),
-                patch.dict(self.response_chunks, {(path, 1): [response]}),
-            ):
-                self.requests.clear()
-                code, stdout, stderr = self.run_cli()
-                self.assertEqual((code, stdout), (1, ""))
-                self.assertEqual(
-                    stderr,
-                    f"{self.base}{path[1:]}: expected complete HTTP body, "
-                    "received EOF with 10 bytes missing\n",
-                )
+    def test_response_framing_must_prove_the_body_is_complete(self) -> None:
+        def packet(headers: bytes, body: bytes, version: bytes = b"HTTP/1.1") -> bytes:
+            return (
+                version + b" 200 OK\r\nConnection: close\r\n" + headers + b"\r\n" + body
+            )
 
-    def test_invalid_framing_cannot_make_a_valid_body_prefix_pass(self) -> None:
         for path, body in self.pages.items():
             length = str(len(body)).encode()
-            for header in (
-                b"Content-Length: abc",
-                b"Content-Length: -5",
-                b"Content-Length: " + length + b"\r\nContent-Length: 99999",
-                b"Transfer-Encoding: gzip, chunked",
-                b"Transfer-Encoding: chunked\r\nContent-Length: " + length,
-            ):
-                response = (
-                    b"HTTP/1.1 200 OK\r\nConnection: close\r\n"
-                    + header
-                    + b"\r\n\r\n"
-                    + body
-                )
+            content_length = b"Content-Length: " + length + b"\r\n"
+            encoding = b"Transfer-Encoding: chunked\r\n"
+            chunk_size = f"{len(body):x}".encode()
+            chunk = chunk_size + b"\r\n" + body
+            chunked = chunk + b"\r\n0\r\n\r\n"
+            expected_body = "complete HTTP body"
+            expected_status = "HTTP 200"
+            cases = (
+                ("complete fixed length", packet(content_length, body), None),
+                ("identical lengths", packet(content_length * 2, body), None),
+                ("complete chunked", packet(encoding, chunked), None),
+                (
+                    "complete trailer",
+                    packet(encoding, chunked[:-2] + b"X-Trailer: yes\r\n\r\n"),
+                    None,
+                ),
+                ("complete close-delimited", packet(b"", body), None),
+                ("complete HTTP/1.0", packet(b"", body, b"HTTP/1.0"), None),
+                ("short fixed body", packet(content_length, body[:-1]), expected_body),
+                (
+                    "declared bytes missing",
+                    packet(
+                        b"Content-Length: " + str(len(body) + 10).encode() + b"\r\n",
+                        body,
+                    ),
+                    expected_body,
+                ),
+                ("missing body", packet(content_length, b""), expected_body),
+                (
+                    "unknown length",
+                    packet(b"Content-Length: abc\r\n", body),
+                    expected_body,
+                ),
+                (
+                    "negative length",
+                    packet(b"Content-Length: -5\r\n", body),
+                    expected_body,
+                ),
+                (
+                    "signed length",
+                    packet(b"Content-Length: +" + length + b"\r\n", body),
+                    expected_body,
+                ),
+                (
+                    "conflicting lengths",
+                    packet(content_length + b"Content-Length: 99999\r\n", body),
+                    expected_body,
+                ),
+                ("malformed header", packet(b"Bogus\r\n", body), expected_body),
+                (
+                    "unsupported encoding",
+                    packet(b"Transfer-Encoding: gzip, chunked\r\n", chunked),
+                    expected_body,
+                ),
+                ("repeated encoding", packet(encoding * 2, chunked), expected_body),
+                (
+                    "mixed encodings",
+                    packet(encoding + content_length, chunked),
+                    expected_body,
+                ),
+                (
+                    "HTTP/1.0 chunked",
+                    packet(encoding, chunked, b"HTTP/1.0"),
+                    expected_body,
+                ),
+                (
+                    "truncated headers",
+                    b"HTTP/1.1 200 OK\r\nConnection: close\r\n",
+                    expected_status,
+                ),
+                (
+                    "partial header line",
+                    b"HTTP/1.1 200 OK\r\nConnection: clo",
+                    expected_status,
+                ),
+                ("empty response", b"", expected_status),
+                ("bad status line", b"not an HTTP status\r\n\r\n", expected_status),
+                (
+                    "overlong header",
+                    packet(b"X-Long: " + b"a" * 65537 + b"\r\n", body),
+                    expected_status,
+                ),
+                (
+                    "missing trailer newline",
+                    packet(encoding, chunked[:-2]),
+                    expected_body,
+                ),
+                (
+                    "unterminated zero chunk",
+                    packet(encoding, chunk + b"\r\n0"),
+                    expected_body,
+                ),
+                (
+                    "partial trailer line",
+                    packet(encoding, chunked[:-2] + b"X-Trailer: parti"),
+                    expected_body,
+                ),
+                (
+                    "invalid trailer field",
+                    packet(encoding, chunked[:-2] + b"Bogus\r\n\r\n"),
+                    expected_body,
+                ),
+                (
+                    "missing zero chunk",
+                    packet(encoding, chunk + b"\r\n"),
+                    expected_body,
+                ),
+                ("partial chunk data", packet(encoding, chunk[:-1]), expected_body),
+                (
+                    "bad chunk separator",
+                    packet(encoding, chunk + b"xx0\r\n\r\n"),
+                    expected_body,
+                ),
+                (
+                    "prefixed chunk size",
+                    packet(encoding, b"0x" + chunked),
+                    expected_body,
+                ),
+            )
+            for name, response, expected in cases:
                 with (
-                    self.subTest(path=path, header=header),
+                    self.subTest(path=path, framing=name),
                     patch.dict(self.response_chunks, {(path, 1): [response]}),
                 ):
                     self.requests.clear()
                     code, stdout, stderr = self.run_cli()
-                    self.assertEqual((code, stdout), (1, ""))
-                    self.assertIn(f"{self.base}{path[1:]}: expected", stderr)
+                    if expected is None:
+                        self.assertEqual((code, stderr), (0, ""))
+                        self.assertEqual(
+                            stdout, f"live site OK: 8 checks on {self.base}\n"
+                        )
+                    else:
+                        self.assertEqual((code, stdout), (1, ""))
+                        self.assertIn(
+                            f"{self.base}{path[1:]}: expected {expected}, received ",
+                            stderr,
+                        )

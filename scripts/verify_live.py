@@ -9,6 +9,9 @@ Checks cover the homepage language and Astro generator, RSS and its first post,
 the sitemap index, and the sitemap named in robots.txt. Failed checks retry
 every ten seconds within a 120-second window.
 
+The verifier requires complete headers and body framing. A response without
+Content-Length or chunked encoding ends at a clean EOF from the transport.
+
 The retry window limits when the checker starts another urllib attempt.
 A blocking socket read can overrun by its configured timeout (up to ten
 seconds). DNS, address fallback, and response parsing inside urllib can take
@@ -21,6 +24,7 @@ from __future__ import annotations
 import argparse
 import http.client
 import json
+import re
 import sys
 import time
 import urllib.request
@@ -28,6 +32,7 @@ import xml.etree.ElementTree as ET
 from functools import partial
 from html.parser import HTMLParser
 from pathlib import Path
+from typing import BinaryIO
 from urllib.parse import urljoin, urlsplit
 
 DEFAULT_BASE = "https://pascalandy.com/"
@@ -36,6 +41,7 @@ RETRY_WINDOW_SECONDS = 120
 RETRY_INTERVAL_SECONDS = 10
 HTTP_TIMEOUT_SECONDS = 10
 USER_AGENT = "pascalandy-blog-verify-live"
+MAX_HTTP_LINE = 65536
 
 
 class CheckFailed(Exception):
@@ -53,10 +59,108 @@ class DirectResponses(urllib.request.HTTPErrorProcessor):
     https_response = http_response
 
 
+class FramingLines:
+    def __init__(self, stream: BinaryIO) -> None:
+        self.stream = stream
+
+    def readline(self, size: int = -1) -> bytes:
+        line = self.stream.readline(size)
+        if not line:
+            raise http.client.RemoteDisconnected("EOF inside HTTP framing")
+        if len(line) > MAX_HTTP_LINE:
+            raise http.client.LineTooLong("HTTP framing line")
+        if not line.endswith(b"\r\n"):
+            raise http.client.HTTPException("incomplete HTTP framing line")
+        return line
+
+    def close(self) -> None:
+        self.stream.close()
+
+
+class CompleteResponse(http.client.HTTPResponse):
+    """Require complete framing where http.client otherwise accepts an EOF."""
+
+    def begin(self) -> None:
+        if self.headers is not None:
+            return
+        stream = self.fp
+        if stream is None:
+            raise http.client.RemoteDisconnected("response stream closed")
+        self.fp = FramingLines(stream)
+        try:
+            super().begin()
+        finally:
+            if self.fp is not None:
+                self.fp = stream
+
+    def validate_framing(self) -> None:
+        lengths = {
+            value.strip() for value in self.headers.get_all("Content-Length", [])
+        }
+        encodings = self.headers.get_all("Transfer-Encoding", [])
+        if encodings and (
+            len(encodings) != 1 or not self.chunked or lengths or self.version != 11
+        ):
+            raise http.client.HTTPException(
+                "unsupported or conflicting Transfer-Encoding"
+            )
+        if lengths and (
+            len(lengths) > 1
+            or self.length is None
+            or any(not (value.isascii() and value.isdecimal()) for value in lengths)
+        ):
+            raise http.client.HTTPException("invalid or conflicting Content-Length")
+        if self.headers.defects:
+            raise http.client.HTTPException("malformed HTTP headers")
+
+    def _read_next_chunk_size(self) -> int:
+        line = FramingLines(self.fp).readline(MAX_HTTP_LINE + 1)
+        size, extension, _ = line[:-2].partition(b";")
+        if extension:
+            size = size.rstrip(b" \t")
+        if not re.fullmatch(rb"[0-9a-fA-F]+", size):
+            raise http.client.HTTPException("invalid HTTP chunk size")
+        return int(size, 16)
+
+    def _get_chunk_left(self) -> int | None:
+        if self.chunk_left == 0:
+            if self._safe_read(2) != b"\r\n":
+                raise http.client.HTTPException("invalid HTTP chunk separator")
+            self.chunk_left = None
+        return super()._get_chunk_left()
+
+    def _read_and_discard_trailer(self) -> None:
+        trailers = http.client.parse_headers(FramingLines(self.fp))
+        if trailers.defects:
+            raise http.client.HTTPException("malformed HTTP trailers")
+
+    def read1(self, n: int = -1) -> bytes:
+        chunk = super().read1(n)
+        if not chunk and n != 0 and self.length:
+            raise http.client.HTTPException(f"EOF with {self.length} bytes missing")
+        return chunk
+
+
+class CompleteHTTPHandler(urllib.request.HTTPSHandler, urllib.request.HTTPHandler):
+    class HTTPConnection(http.client.HTTPConnection):
+        response_class = CompleteResponse
+
+    class HTTPSConnection(http.client.HTTPSConnection):
+        response_class = CompleteResponse
+
+    def http_open(self, request: urllib.request.Request) -> CompleteResponse:
+        return self.do_open(self.HTTPConnection, request)
+
+    def https_open(self, request: urllib.request.Request) -> CompleteResponse:
+        return self.do_open(self.HTTPSConnection, request, context=self._context)
+
+
 class SiteRequests:
     def __init__(self, deadline: float | None) -> None:
         self.deadline = deadline
-        self.opener = urllib.request.build_opener(DirectResponses())
+        self.opener = urllib.request.build_opener(
+            DirectResponses(), CompleteHTTPHandler()
+        )
 
     def get(self, url: str, *, read_body: bool = False) -> bytes:
         now = time.monotonic()
@@ -82,43 +186,13 @@ class SiteRequests:
                 if response.status != 200:
                     raise CheckFailed(problem(url, expected, f"HTTP {response.status}"))
                 expected = "complete HTTP body"
-                lengths = {
-                    value.strip()
-                    for value in response.headers.get_all("Content-Length", [])
-                }
-                encodings = response.headers.get_all("Transfer-Encoding", [])
-                if encodings and (
-                    len(encodings) != 1 or not response.chunked or lengths
-                ):
-                    raise http.client.HTTPException(
-                        "unsupported or conflicting Transfer-Encoding"
-                    )
-                if lengths and (
-                    len(lengths) > 1
-                    or response.length is None
-                    or any(
-                        not (value.isascii() and value.isdecimal()) for value in lengths
-                    )
-                ):
-                    raise http.client.HTTPException(
-                        "invalid or conflicting Content-Length"
-                    )
-                if response.headers.defects:
-                    raise http.client.HTTPException("malformed HTTP headers")
+                response.validate_framing()
                 body = bytearray()
                 while True:
                     remaining()
                     chunk = response.read1(64 * 1024)
                     if not chunk:
                         remaining()
-                        if missing := response.length:
-                            raise CheckFailed(
-                                problem(
-                                    url,
-                                    expected,
-                                    f"EOF with {missing} bytes missing",
-                                )
-                            )
                         return bytes(body)
                     if read_body:
                         body.extend(chunk)
