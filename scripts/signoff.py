@@ -26,15 +26,15 @@ import shutil
 import subprocess
 import sys
 
-# The install runs first so a dependency bump is checked against its own lockfile
+VERIFIER_INSTALL = ("bun", "install", "--frozen-lockfile", "--ignore-scripts")
 CHECKS = (
-    ("bun", "install", "--frozen-lockfile"),
+    VERIFIER_INSTALL,
     ("just", "ci"),
     ("just", "gitleaks"),
 )
 FORK_HINT = (
     "For a PR from a fork, read its whole diff first, since the checks run its code, "
-    "then run: bun install --frozen-lockfile && just ci && just gitleaks && gh signoff"
+    f"then run: {' '.join(VERIFIER_INSTALL)} && just ci && just gitleaks && gh signoff"
 )
 # owner/name in an SSH or HTTPS GitHub URL
 GITHUB_URL = re.compile(r"github\.com[:/]([^/]+/[^/]+?)(?:\.git)?/?$")

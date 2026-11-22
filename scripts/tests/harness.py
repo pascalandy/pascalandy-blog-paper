@@ -17,8 +17,7 @@ sys.path.insert(0, str(SCRIPTS))
 FAKE = Path(__file__).with_name("fake.py")
 REMOTE = f"git@github.com:{REPO}.git"
 PROGRAMS = ("gh", "bun", "just", "gitleaks")
-# What a signoff runs, in order
-CHECKS = ["bun install --frozen-lockfile", "just ci", "just gitleaks"]
+CHECKS = ["bun install --frozen-lockfile --ignore-scripts", "just ci", "just gitleaks"]
 
 
 class Sandbox:
