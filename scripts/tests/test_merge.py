@@ -80,6 +80,37 @@ class MergeTest(unittest.TestCase):
         self.assertEqual(self.sandbox.checks_run(), [])
         self.assertEqual(self.main(), merged)
 
+    def test_reuses_a_green_signoff_on_the_pushed_head(self) -> None:
+        head = self.sandbox.head()
+        self.sandbox.update(statuses={head: "success"})
+        code, stdout, stderr = self.merge()
+        self.assertEqual(code, 0, stderr)
+        self.assertEqual(self.sandbox.checks_run(), [])
+        self.assertIn(
+            f"PR #7: {head[:7]} already carries a green signoff; skipping the checks",
+            stdout,
+        )
+        self.assertEqual(
+            self.sandbox.git(
+                "--git-dir", str(self.sandbox.origin), "rev-parse", "main^2"
+            ),
+            head,
+        )
+
+    def test_runs_the_checks_when_only_the_parent_has_a_green_signoff(self) -> None:
+        head = self.sandbox.head()
+        parent = self.sandbox.git("rev-parse", "HEAD^")
+        self.sandbox.update(statuses={parent: "success"})
+        code, _, stderr = self.merge()
+        self.assertEqual(code, 0, stderr)
+        self.assertEqual(self.sandbox.checks_run(), CHECKS)
+        self.assertEqual(
+            self.sandbox.git(
+                "--git-dir", str(self.sandbox.origin), "rev-parse", "main^2"
+            ),
+            head,
+        )
+
     def test_a_rerun_reports_the_merge_before_checking_the_setup(self) -> None:
         self.merge()
         self.sandbox.update(rules=[])

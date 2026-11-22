@@ -73,10 +73,10 @@ It refuses in about a second when a tool is missing, `gh` is signed out, `main` 
 | Stacked PRs                             | Sign off each layer; a restack changes every head, so sign off each again                                                                                                              |
 | A PR from a fork                        | Read the whole diff first, since the checks run its code on your machine; then `gh pr checkout <number>` and `bun install --frozen-lockfile && just ci && just gitleaks && gh signoff` |
 | Did this commit get signed off?         | `gh signoff status`                                                                                                                                                                    |
-| Merge blocked on `signoff`              | `just merge` signs off the PR head, then merges it; never merge with `gh pr merge --admin` to skip it                                                                                  |
+| Merge blocked on `signoff`              | Run `just merge` to check and sign off the PR head. Never bypass the required status with `gh pr merge --admin`                                                                        |
 | Want a run on a clean machine           | `just gh-ci <branch>`, then `gh run watch`                                                                                                                                             |
 
-Agents run `just ci` and `just signoff-check` and report the result before they report a PR ready. Whoever merges runs `just merge`, which signs off and merges. Claude Code on the web has no `gh`, and agents never deploy unless Pascal asks.
+Agents run `just ci` and `just signoff-check` and report the result before they report a PR ready. Whoever merges runs `just merge`. Claude Code on the web has no `gh`, and agents never deploy unless Pascal asks.
 
 ### One-time setup
 
@@ -98,10 +98,10 @@ Merge the current branch's PR into `main` with one command:
 just merge
 ```
 
-It merges only the commit it tested:
+It merges only the signed-off commit.
 
 1. It refuses in a few seconds when a tool is missing, `main` does not require `signoff` or uses a merge queue, or the PR is a draft, comes from a fork, targets another branch, or has auto-merge on. It also refuses when the working tree has changes, HEAD is not the PR head on GitHub, or the branch does not contain the tip of `main`
-2. It runs the `just signoff` steps on that head: the install, `just ci`, `just gitleaks`, then the status
+2. It reuses a green `signoff` on the exact pushed head. If that head lacks a green status, it installs dependencies, runs `just ci` and `just gitleaks`, and posts the status on that head
 3. It waits up to a minute for GitHub to count the status. It stops when the PR head or base changes, the PR closes, a review or check blocks it, or it conflicts with `main`
 4. It checks that `main` did not move during the checks, then runs `gh pr merge --merge --match-head-commit <sha>`, so GitHub refuses any other head
 5. It reads the PR back and prints the merge commit and the PR URL
@@ -117,7 +117,7 @@ Since the branch must contain the tip of `main`, the tree that lands on `main` i
 | Refused: part of a GitHub stack           | GitHub merges a PR in a stack only through its stack: run `gh stack unstack <stack>` to merge layer by layer with `just merge`, or `gh stack merge` |
 | Refused after the checks                  | Fix what the message names, then run `just merge` again; a rerun also reports a PR that merged in the meantime                                      |
 
-`just merge` runs the signoff itself, so whoever merges needs no separate `just signoff`. A stack of PRs lands with `gh stack merge` once each layer is signed off, not with `just merge` on each layer.
+`just merge` obtains or reuses the pushed head's signoff. For a stack of PRs, run `just signoff` on each layer, then run `gh stack merge`.
 
 ## Deploy
 
