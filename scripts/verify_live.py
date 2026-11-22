@@ -5,6 +5,10 @@
 # ///
 """Verify the public blog with read-only HTTP GETs.
 
+Checks cover the homepage language and Astro generator, RSS and its first post,
+the sitemap index, and the sitemap named in robots.txt. Failed checks retry
+every ten seconds within a 120-second window.
+
 The retry window limits when the checker starts another urllib attempt.
 A blocking socket read can overrun by its configured timeout (up to ten
 seconds). DNS, address fallback, and response parsing inside urllib can take
@@ -57,19 +61,16 @@ class SiteRequests:
     def get(self, url: str, *, read_body: bool = False) -> bytes:
         now = time.monotonic()
         deadline = now + HTTP_TIMEOUT_SECONDS
+        expected = "HTTP 200"
         if self.deadline is not None:
             if self.deadline <= now:
-                raise CheckFailed(
-                    problem(url, "HTTP 200", "verification window elapsed")
-                )
+                raise CheckFailed(problem(url, expected, "verification window elapsed"))
             deadline = min(self.deadline, deadline)
 
         def remaining() -> float:
             seconds = deadline - time.monotonic()
             if seconds <= 0:
-                raise CheckFailed(
-                    problem(url, "HTTP 200", "request timed out")
-                ) from None
+                raise CheckFailed(problem(url, expected, "request timed out")) from None
             return seconds
 
         try:
@@ -79,9 +80,31 @@ class SiteRequests:
             with self.opener.open(request, timeout=remaining()) as response:
                 remaining()
                 if response.status != 200:
-                    raise CheckFailed(
-                        problem(url, "HTTP 200", f"HTTP {response.status}")
+                    raise CheckFailed(problem(url, expected, f"HTTP {response.status}"))
+                expected = "complete HTTP body"
+                lengths = {
+                    value.strip()
+                    for value in response.headers.get_all("Content-Length", [])
+                }
+                encodings = response.headers.get_all("Transfer-Encoding", [])
+                if encodings and (
+                    len(encodings) != 1 or not response.chunked or lengths
+                ):
+                    raise http.client.HTTPException(
+                        "unsupported or conflicting Transfer-Encoding"
                     )
+                if lengths and (
+                    len(lengths) > 1
+                    or response.length is None
+                    or any(
+                        not (value.isascii() and value.isdecimal()) for value in lengths
+                    )
+                ):
+                    raise http.client.HTTPException(
+                        "invalid or conflicting Content-Length"
+                    )
+                if response.headers.defects:
+                    raise http.client.HTTPException("malformed HTTP headers")
                 body = bytearray()
                 while True:
                     remaining()
@@ -92,7 +115,7 @@ class SiteRequests:
                             raise CheckFailed(
                                 problem(
                                     url,
-                                    "complete HTTP body",
+                                    expected,
                                     f"EOF with {missing} bytes missing",
                                 )
                             )
@@ -101,7 +124,7 @@ class SiteRequests:
                         body.extend(chunk)
         except (OSError, ValueError, http.client.HTTPException) as error:
             remaining()
-            raise CheckFailed(problem(url, "HTTP 200", str(error))) from None
+            raise CheckFailed(problem(url, expected, str(error))) from None
 
 
 class HomeMetadata(HTMLParser):

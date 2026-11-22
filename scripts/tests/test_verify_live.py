@@ -257,9 +257,10 @@ class VerifyLiveTest(unittest.TestCase):
                 if part == "body":
                     self.assertLess(monotonic() - start, 0.9)
                 self.assertEqual(self.requests["/"], 2)
+                expected = "complete HTTP body" if part == "body" else "HTTP 200"
                 self.assertEqual(
                     errors,
-                    [f"{self.base}: expected HTTP 200, received request timed out"],
+                    [f"{self.base}: expected {expected}, received request timed out"],
                 )
 
     def test_late_https_proxy_response_is_a_timeout(self) -> None:
@@ -287,7 +288,8 @@ class VerifyLiveTest(unittest.TestCase):
         self.assertLess(monotonic() - start, 0.9)
         self.assertEqual(dict(self.requests), {"/": 1})
         self.assertIn(
-            f"{self.base}: expected HTTP 200, received request timed out", errors
+            f"{self.base}: expected complete HTTP body, received request timed out",
+            errors,
         )
 
     def test_incomplete_bodies_fail_even_when_the_prefix_is_valid(self) -> None:
@@ -308,3 +310,28 @@ class VerifyLiveTest(unittest.TestCase):
                     f"{self.base}{path[1:]}: expected complete HTTP body, "
                     "received EOF with 10 bytes missing\n",
                 )
+
+    def test_invalid_framing_cannot_make_a_valid_body_prefix_pass(self) -> None:
+        for path, body in self.pages.items():
+            length = str(len(body)).encode()
+            for header in (
+                b"Content-Length: abc",
+                b"Content-Length: -5",
+                b"Content-Length: " + length + b"\r\nContent-Length: 99999",
+                b"Transfer-Encoding: gzip, chunked",
+                b"Transfer-Encoding: chunked\r\nContent-Length: " + length,
+            ):
+                response = (
+                    b"HTTP/1.1 200 OK\r\nConnection: close\r\n"
+                    + header
+                    + b"\r\n\r\n"
+                    + body
+                )
+                with (
+                    self.subTest(path=path, header=header),
+                    patch.dict(self.response_chunks, {(path, 1): [response]}),
+                ):
+                    self.requests.clear()
+                    code, stdout, stderr = self.run_cli()
+                    self.assertEqual((code, stdout), (1, ""))
+                    self.assertIn(f"{self.base}{path[1:]}: expected", stderr)
