@@ -94,7 +94,7 @@ def check_layout(page: Page, width: int) -> None:
         )
 
 
-def check_palette(page: Page, theme: str) -> None:
+def background_luminance(page: Page, theme: str) -> float:
     expect(page.locator("html")).to_have_attribute("data-theme", theme)
     colors = page.evaluate("""() => {
         const sample = document.createElement("span");
@@ -108,6 +108,18 @@ def check_palette(page: Page, theme: str) -> None:
     body = page.locator("body")
     expect(body).to_have_css("color", colors[0])
     expect(body).to_have_css("background-color", colors[1])
+    return body.evaluate("""body => {
+        const canvas = document.createElement("canvas");
+        canvas.width = canvas.height = 1;
+        const context = canvas.getContext("2d");
+        context.fillStyle = getComputedStyle(body).backgroundColor;
+        context.fillRect(0, 0, 1, 1);
+        const [r, g, b] = Array.from(context.getImageData(0, 0, 1, 1).data, channel => {
+            const v = channel / 255;
+            return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+        });
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    }""")
 
 
 def matrix(base: str, evidence: Path | None) -> int:
@@ -116,6 +128,7 @@ def matrix(base: str, evidence: Path | None) -> int:
         for width, height in VIEWPORTS:
             narrow = width < 640
             phone = (width, height) in ((375, 667), (667, 375))
+            light_backgrounds: dict[str, float] = {}
             for theme in ("light", "dark"):
                 for label, (path, landmark) in PAGES.items():
                     with browser.new_page(
@@ -137,7 +150,13 @@ def matrix(base: str, evidence: Path | None) -> int:
                             if response is None or response.status != 200:
                                 raise ValueError(f"expected HTTP 200 from {path}")
                             expect(page.locator(landmark).first).to_be_visible()
-                            check_palette(page, theme)
+                            luminance = background_luminance(page, theme)
+                            if theme == "light":
+                                light_backgrounds[label] = luminance
+                            elif luminance >= light_backgrounds[label]:
+                                raise ValueError(
+                                    "dark background must paint darker than the light background"
+                                )
                             page.evaluate("document.fonts.ready")
                             for opened in (False, True) if narrow else (False,):
                                 if opened:

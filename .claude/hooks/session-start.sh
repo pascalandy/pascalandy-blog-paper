@@ -56,4 +56,3 @@ fi
 
 cd "$CLAUDE_PROJECT_DIR"
 bun install --silent
-uv run --with playwright==1.56.0 playwright install --with-deps chromium

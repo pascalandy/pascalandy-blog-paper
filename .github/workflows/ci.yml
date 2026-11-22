@@ -50,7 +50,9 @@ jobs:
       - run: bun install --frozen-lockfile
 
       - name: Install Chromium for reader QA
-        run: uv run --with playwright==1.56.0 playwright install --with-deps chromium
+        run: |
+          .claude/setup-reader-browser.sh "$RUNNER_TEMP/blog-reader"
+          echo "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/blog-reader/browsers" >> "$GITHUB_ENV"
 
       - name: Check
         run: uvx --from "rust-just@$JUST_VERSION" just check

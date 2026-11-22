@@ -51,6 +51,8 @@ bun --version && just --version && uv --version && gh signoff version && gitleak
 
 Install the Chromium version used by the reader checks with `uv run --with playwright==1.56.0 playwright install chromium`. On a fresh Ubuntu machine, add `--with-deps` to install its system libraries.
 
+For a hosted Claude Code environment, load `.claude/setup-reader-browser.sh` as its setup script. Allow `cdn.playwright.dev` and `playwright.download.prss.microsoft.com` alongside the default package domains, and set `PLAYWRIGHT_BROWSERS_PATH=/opt/blog-reader/browsers` in the environment. The cloud image caches the installation across sessions. [Cloud environment setup](https://code.claude.com/docs/en/cloud-environments#setup-scripts)
+
 Without Just, run any recipe through uv: `uvx --from rust-just just check`.
 
 ## Quick Start
