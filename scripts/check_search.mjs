@@ -51,6 +51,7 @@ for (const term of [
 }
 
 for (const [term, prefix] of [
+  ["datecre", /(?:^|[^\p{L}\p{N}_])date_?cre/iu],
   ["camé", /(?:^|[^\p{L}\p{N}_])came/iu],
   ["deuxiè", /(?:^|[^\p{L}\p{N}_])deuxie/iu],
   ["systè", /(?:^|[^\p{L}\p{N}_])syste/iu],

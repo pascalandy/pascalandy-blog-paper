@@ -14,5 +14,6 @@ export function wordForms(token) {
     .replace(/(\p{Ll})(\p{Lu})/gu, "$1 $2")
     .replace(/(\p{Lu})(\p{Lu}\p{Ll})/gu, "$1 $2");
   const parts = fold(separated).match(/[\p{L}]+|[\p{N}]+/gu) ?? [];
-  return [...surface, surface.join(""), ...parts];
+  const combined = surface.join("");
+  return [...surface, combined, combined.replaceAll("_", ""), ...parts];
 }
