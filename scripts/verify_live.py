@@ -3,24 +3,26 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Verify the public blog with read-only HTTP GETs."""
+"""Verify the public blog with read-only HTTP GETs.
+
+The retry window limits new requests and late responses count as failures.
+A blocking socket read can overrun by its configured timeout (up to ten
+seconds). DNS, address fallback, and response parsing inside urllib can take
+longer. The checker checks the deadline when urllib returns control.
+"""
 
 from __future__ import annotations
 
 import argparse
 import http.client
 import json
-import socket
 import sys
 import time
 import urllib.request
 import xml.etree.ElementTree as ET
-from collections.abc import Callable
-from contextlib import suppress
 from functools import partial
 from html.parser import HTMLParser
 from pathlib import Path
-from threading import Event, Timer
 from urllib.parse import urljoin, urlsplit
 
 DEFAULT_BASE = "https://pascalandy.com/"
@@ -46,53 +48,10 @@ class DirectResponses(urllib.request.HTTPErrorProcessor):
     https_response = http_response
 
 
-def deadline_opener(
-    connected: Callable[[socket.socket | None], None],
-) -> urllib.request.OpenerDirector:
-    def open_socket(
-        address: tuple[str, int],
-        timeout: float,
-        source_address: tuple[str, int] | None,
-    ) -> socket.socket:
-        sock = socket.create_connection(address, timeout, source_address)
-        connected(sock)
-        return sock
-
-    class Connection(http.client.HTTPConnection):
-        def connect(self) -> None:
-            self._create_connection = open_socket
-            super().connect()
-
-    class SecureConnection(http.client.HTTPSConnection):
-        def connect(self) -> None:
-            self._create_connection = open_socket
-            http.client.HTTPConnection.connect(self)
-            assert self.sock is not None
-            self.sock = self._context.wrap_socket(
-                self.sock,
-                server_hostname=self._tunnel_host or self.host,
-                do_handshake_on_connect=False,
-            )
-            connected(self.sock)
-            self.sock.do_handshake()
-
-    class TrackSocket(urllib.request.HTTPSHandler, urllib.request.HTTPHandler):
-        def http_open(
-            self, request: urllib.request.Request
-        ) -> http.client.HTTPResponse:
-            return self.do_open(Connection, request)
-
-        def https_open(
-            self, request: urllib.request.Request
-        ) -> http.client.HTTPResponse:
-            return self.do_open(SecureConnection, request, context=self._context)
-
-    return urllib.request.build_opener(DirectResponses(), TrackSocket())
-
-
 class SiteRequests:
     def __init__(self, deadline: float | None) -> None:
         self.deadline = deadline
+        self.opener = urllib.request.build_opener(DirectResponses())
 
     def get(self, url: str, *, read_body: bool = False) -> bytes:
         now = time.monotonic()
@@ -103,59 +62,37 @@ class SiteRequests:
                     problem(url, "HTTP 200", "verification window elapsed")
                 )
             deadline = min(self.deadline, deadline)
-        timed_out = CheckFailed(problem(url, "HTTP 200", "request timed out"))
-        expired = Event()
-        active_socket: socket.socket | None = None
 
-        def interrupt() -> None:
-            expired.set()
-            if active_socket is not None:
-                with suppress(OSError):
-                    socket.socket.shutdown(active_socket, socket.SHUT_RDWR)
+        def remaining() -> float:
+            seconds = deadline - time.monotonic()
+            if seconds <= 0:
+                raise CheckFailed(
+                    problem(url, "HTTP 200", "request timed out")
+                ) from None
+            return seconds
 
-        def connected(sock: socket.socket | None) -> None:
-            nonlocal active_socket
-            active_socket = sock
-            if expired.is_set() or time.monotonic() >= deadline:
-                interrupt()
-
-        opener = deadline_opener(connected)
-        remaining = deadline - time.monotonic()
-        if remaining <= 0:
-            raise timed_out
-        # Socket timeouts bound idle reads. Shut down the connection when the
-        # absolute deadline expires, even if the server keeps sending bytes.
-        timer = Timer(remaining, interrupt)
-        timer.start()
-        try:
-            try:
-                body = self.read(opener, url, read_body, remaining)
-            except CheckFailed:
-                if not expired.is_set() and time.monotonic() < deadline:
-                    raise
-                raise timed_out from None
-            if expired.is_set() or time.monotonic() >= deadline:
-                raise timed_out
-            return body
-        finally:
-            timer.cancel()
-            timer.join()
-
-    @staticmethod
-    def read(
-        opener: urllib.request.OpenerDirector, url: str, read_body: bool, timeout: float
-    ) -> bytes:
         try:
             request = urllib.request.Request(
                 url, headers={"User-Agent": USER_AGENT}, method="GET"
             )
-            with opener.open(request, timeout=timeout) as response:
+            with self.opener.open(request, timeout=remaining()) as response:
+                remaining()
                 if response.status != 200:
                     raise CheckFailed(
                         problem(url, "HTTP 200", f"HTTP {response.status}")
                     )
-                return response.read() if read_body else b""
+                if not read_body:
+                    return b""
+                body = bytearray()
+                while True:
+                    remaining()
+                    chunk = response.read1(64 * 1024)
+                    if not chunk:
+                        remaining()
+                        return bytes(body)
+                    body.extend(chunk)
         except (OSError, ValueError, http.client.HTTPException) as error:
+            remaining()
             raise CheckFailed(problem(url, "HTTP 200", str(error))) from None
 
 
