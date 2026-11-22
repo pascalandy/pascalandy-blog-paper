@@ -1,60 +1,46 @@
+import { createHash, randomUUID } from "node:crypto";
+import {
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  renameSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { join } from "node:path";
 import { Resvg } from "@resvg/resvg-js";
-import { type CollectionEntry } from "astro:content";
-import { SITE, ACTIVE_THEME } from "@/config";
+import { version } from "@resvg/resvg-js/package.json";
 import postOgImage from "./og-templates/post";
 import siteOgImage from "./og-templates/site";
-import {
-  generateCacheKey,
-  getCachedOgImage,
-  cacheOgImage,
-} from "./ogImageCache";
+import type { CollectionEntry } from "astro:content";
 
-// Bump when site OG template changes
-const SITE_OG_VERSION = "v1";
+const CACHE_DIR = "cache/og-images";
 
-function svgBufferToPngBuffer(svg: string) {
-  const resvg = new Resvg(svg);
-  const pngData = resvg.render();
-  return pngData.asPng();
+function rasterize(svg: string) {
+  const key = createHash("sha256")
+    .update(version)
+    .update("\0")
+    .update(svg)
+    .digest("hex");
+  const path = join(CACHE_DIR, `${key}.png`);
+  if (existsSync(path)) return readFileSync(path);
+
+  const png = new Resvg(svg).render().asPng();
+  mkdirSync(CACHE_DIR, { recursive: true });
+  const temporary = `${path}.${randomUUID()}.tmp`;
+  try {
+    writeFileSync(temporary, png);
+    renameSync(temporary, path);
+  } finally {
+    rmSync(temporary, { force: true });
+  }
+  return png;
 }
 
 export async function generateOgImageForPost(post: CollectionEntry<"blog">) {
-  const cacheKey = generateCacheKey(
-    post.data.title,
-    post.data.author,
-    SITE.title,
-    ACTIVE_THEME
-  );
-
-  // Check cache first
-  const cached = getCachedOgImage(cacheKey);
-  if (cached) {
-    return cached;
-  }
-
-  // Generate and cache
-  const svg = await postOgImage(post);
-  const png = svgBufferToPngBuffer(svg);
-  cacheOgImage(cacheKey, png);
-  return png;
+  return rasterize(await postOgImage(post));
 }
 
 export async function generateOgImageForSite() {
-  // Site OG cache key includes site metadata
-  const cacheKey = generateCacheKey(
-    SITE.title,
-    SITE.author,
-    SITE_OG_VERSION,
-    ACTIVE_THEME
-  );
-
-  const cached = getCachedOgImage(cacheKey);
-  if (cached) {
-    return cached;
-  }
-
-  const svg = await siteOgImage();
-  const png = svgBufferToPngBuffer(svg);
-  cacheOgImage(cacheKey, png);
-  return png;
+  return rasterize(await siteOgImage());
 }
