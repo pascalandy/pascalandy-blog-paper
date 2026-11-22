@@ -24,6 +24,7 @@
         "@tailwindcss/typography": "^0.5.19",
         "@types/lodash.kebabcase": "^4.1.9",
         "@typescript-eslint/parser": "^8.51.0",
+        "axe-core": "4.14.1",
         "eslint": "^9.39.2",
         "eslint-plugin-astro": "^1.5.0",
         "github-slugger": "2.0.0",
@@ -480,6 +481,8 @@
     "astro-broken-links-checker": ["astro-broken-links-checker@1.0.6", "", { "dependencies": { "fast-glob": "^3.3.2", "node-fetch": "^3.3.2", "node-html-parser": "^6.1.13", "p-limit": "^6.1.0" } }, "sha512-otAodaegzAeEPCRJB+ED2IyHlxTQcFsJDP+2O3kGk/MDYbhr+u7qxZQHtZuSfg9p5aGu40Ayk7z7ayVR6kQSpA=="],
 
     "astro-eslint-parser": ["astro-eslint-parser@1.2.1", "", { "dependencies": { "@astrojs/compiler": "2.13.0", "@typescript-eslint/scope-manager": "8.36.0", "@typescript-eslint/types": "8.36.0", "astrojs-compiler-sync": "1.0.1", "debug": "4.4.3", "entities": "6.0.0", "eslint-scope": "8.4.0", "eslint-visitor-keys": "4.2.1", "espree": "10.4.0", "fast-glob": "3.3.3", "is-glob": "4.0.3", "semver": "7.7.3" } }, "sha512-3oqANMjrvJ+IE5pwlUWsH/4UztmYf/GTL0HPUkWnYBNAHiGVGrOh2EbegxS5niAwlO0w9dRYk0CkCPlJcu8c3Q=="],
+
+    "axe-core": ["axe-core@4.14.1", "", {}, "sha512-FHfa+lmNjQZfJz1q8wKqIDwC6DExcHt/pkjNQb09a3NPjCKg2rhu5qb2S4r76ASyFNNtuFooJpZe37OgudVGtQ=="],
 
     "axobject-query": ["axobject-query@4.1.0", "", {}, "sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ=="],
 

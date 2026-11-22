@@ -15,6 +15,7 @@ import threading
 from pathlib import Path
 
 import browse
+from contrast import verify_contrast
 from menu_model import verify_menu_model
 from playwright.sync_api import Error, Page, expect, sync_playwright
 from search_journey import verify_search, verify_search_layout
@@ -171,6 +172,8 @@ def verify_readers(base: str, evidence: Path | None) -> tuple[int, int]:
                                     "dark background must paint darker than the light background"
                                 )
                             page.evaluate("document.fonts.ready")
+                            if width == 375:
+                                verify_contrast(page)
                             for opened in (False, True) if narrow else (False,):
                                 if opened:
                                     case = f"{label}-{width}x{height}-{theme}-open"

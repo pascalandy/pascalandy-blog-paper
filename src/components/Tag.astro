@@ -29,7 +29,7 @@ const displayName = tagName || config.name;
       "flex items-center gap-0.5",
       "rounded px-2 py-0.5",
       "bg-[var(--astro-code-background)] text-foreground",
-      "hover:text-accent",
+      "decoration-accent underline-offset-4 hover:underline",
       { "text-sm": size === "sm" },
       { "text-base": size === "lg" },
     ]}
@@ -43,7 +43,7 @@ const displayName = tagName || config.name;
     />
     {displayName}{
       count !== undefined && (
-        <span class="ml-1 text-xs text-muted-foreground/60">({count})</span>
+        <span class="ml-1 text-xs text-muted-foreground">({count})</span>
       )
     }
   </a>
