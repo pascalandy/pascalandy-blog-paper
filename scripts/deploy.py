@@ -18,7 +18,8 @@ Site IDs come from
 SEVALLA_STATIC_SITE_ID and SEVALLA_STATIC_SITE_ID_PREVIEW in the environment,
 or else from the GitHub repository variables of the same names through gh.
 
-Exit codes: 0 deployed, 1 refused or the deployment failed, 2 bad usage.
+Exit codes: 0 completed, 1 refused, deployment or post-deploy check failed,
+2 bad usage.
 """
 
 from __future__ import annotations
