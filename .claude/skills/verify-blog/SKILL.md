@@ -13,12 +13,13 @@ Prove how the site behaves for a reader: launch an instance, drive a feature the
 uv run .claude/skills/verify-blog/scripts/site.py up
 ```
 
-It prints the base URL once the site answers, and records it in `cache/verify-blog/server.json`:
+It prints the base URL after confirming the instance and records it in `cache/verify-blog/server.json`:
 
 - When Pascal's dev server answers on http://localhost:4320, it is reused and never restarted, unless its pages show it serves another checkout, such as the main one seen from a worktree
-- Otherwise it builds the site (`bun run build:ci`, about a minute when cold) and serves the build with `astro preview` on http://127.0.0.1:4330; a later `up` reuses that preview until a build input changes (`src/`, `public/`, `astro.config.ts`, `package.json`, `bun.lock`), then rebuilds
+- Otherwise it builds the site (`bun run build:ci`, about a minute when cold) and serves the build with Astro on http://127.0.0.1:4330; a later `up` reuses that preview until a build input changes (`src/`, `public/`, `astro.config.ts`, `package.json`, `bun.lock`), then rebuilds
 - It never starts the dev server: Pascal runs `just dev` himself
 - Before it builds, and whenever `node_modules/` is missing, it installs the locked dependencies with `bun install --frozen-lockfile --ignore-scripts`; without scripts, `lefthook install` does not rewrite the git hooks that every worktree of the clone shares
+- If another checkout takes port 4330 during the build, startup fails. The launcher checks an instance ID on the HTTP response before recording or reusing its preview
 - The state records this checkout's path, so a state copied from another checkout is ignored
 
 Set `URL` to the printed base URL for the commands below.

@@ -69,7 +69,7 @@ The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just
 ## Gotchas
 
 - Use Node satisfying `package.json`'s `engines.node` requirement. Set Sevalla's Node version in its build strategy dashboard; repository settings do not select it
-- Astro auto-backgrounds previews run by agents. The verify-blog launcher uses `--ignore-lock` to keep the preview in the process group it tracks and stops
+- The verify-blog launcher runs Astro's preview API in its own process and reports port 4330 only after that process answers
 - Astro 7 sets Vite's client build target to `esnext`; keep its separate CSS target at Safari/iOS 16.3 so production CSS retains WebKit-prefixed backdrop effect declarations and `min-width` media rules for older Safari. `just check` verifies the emitted Footer CSS
 - Drafts never build, dev included. A future `date_created` keeps a post out of listings and RSS until 15 minutes before, but its page still builds
 - A post may use only the frontmatter keys in `src/content.config.ts` and the tags in `src/tags.ts`; `just check --only content` names any other
