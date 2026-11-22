@@ -9,11 +9,11 @@ Run `just qa-reader` from the repository root with the [blog prerequisites](../.
 
 At 639 × 900 in Chromium, Tab from the menu button must skip a closed menu and enter an open one. An open menu must allow the reader to dismiss it and open it again. The [model](../verify-blog/scripts/menu_model.py) runs every combination of these three actions against the built site:
 
-1. Open the menu with a click or Enter.
-2. Dismiss it with a click on the button, Enter, a click outside the menu, a theme change, or the Blog link.
-3. Open it again with a click or Enter.
+1. Open the menu with a click, or tab to its button and press Enter.
+2. Dismiss it with a click on the button, Enter on the focused button, a click outside the menu, a theme change, or the Blog link.
+3. Open it again with a click, or tab to its button and press Enter.
 
-The 20 traces cover both menu states after each action, including the header on the new page after following the link. A pass covers three completed actions in one Chromium tab at the specified viewport. Longer histories, simultaneous inputs and native Safari need separate checks.
+On load and after each action, the model starts from the browser's current focus. It uses Tab to reach the menu button, including after a dismissal or navigation. One more Tab checks whether focus enters or skips the menu. Shift+Tab must return focus to the button before the next action. The 20 traces cover three completed actions in one Chromium tab at the specified viewport. Longer histories, simultaneous inputs and native Safari need separate checks.
 
 ## Investigate a counterexample
 

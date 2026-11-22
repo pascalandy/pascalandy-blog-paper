@@ -4,7 +4,7 @@ from itertools import product
 
 from playwright.sync_api import Browser, Error, Page, expect
 
-TOGGLE = ("click button", "press Enter")
+TOGGLE = ("click button", "tab to button and press Enter")
 DISMISS = (*TOGGLE, "click backdrop", "change theme", "follow blog link")
 
 
@@ -12,7 +12,13 @@ def check_state(page: Page, expanded: bool) -> None:
     button = page.locator("#menu-btn")
     panel = page.locator("#menu-items")
     expect(button).to_have_attribute("aria-expanded", str(expanded).lower())
-    button.press("Tab")
+    for _ in range(page.locator("*").count() + 2):
+        if button.evaluate("el => el === document.activeElement"):
+            break
+        page.keyboard.press("Tab")
+    else:
+        raise ValueError("Tab could not reach the menu button from the current focus")
+    page.keyboard.press("Tab")
     focus_inside = panel.evaluate("menu => menu.contains(document.activeElement)")
     if focus_inside != expanded:
         raise ValueError(
@@ -32,7 +38,7 @@ def act(page: Page, action: str, base: str) -> None:
     match action:
         case "click button":
             button.click()
-        case "press Enter":
+        case "tab to button and press Enter":
             page.keyboard.press("Enter")
         case "click backdrop":
             page.mouse.click(1, page.evaluate("window.innerHeight - 1"))
