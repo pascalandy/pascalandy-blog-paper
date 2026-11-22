@@ -137,9 +137,13 @@ just deploy --dry-run
 
 `just deploy-preview` refuses a branch that GitHub does not have, or a local branch whose last commit differs from GitHub's. Uncommitted changes never ship.
 
-After Sevalla reports a successful build, both commands compare its commit with the GitHub branch tip they read at the start. A match prints `deployed <sha> to <target>` and exits 0. A mismatch names both commits and exits 1. If Sevalla omits the commit, the command also exits 1.
+After Sevalla reports a successful build, both commands compare its commit with the GitHub branch tip they read at the start. A mismatch names both commits and exits 1. If Sevalla omits the commit, the command also exits 1.
 
-Add `--no-wait` to return as soon as Sevalla accepts the deployment. The command reports that it skipped the deployed commit check.
+After a match on production, `just deploy` runs the same checks as `just verify-live`. It reads the expected Astro version from the deployed commit's `package.json`. If any live check fails, it prints the diagnostics and exits 1. When the waited checks pass, the command prints `deployed <sha> to <target>` and exits 0.
+
+Add `--no-wait` to return as soon as Sevalla accepts the deployment. On production, the command reports that it skipped both the commit check and live checks. On preview, it reports that it skipped the commit check.
+
+After a production deploy through the manual GitHub Actions workflow, run `just verify-live` from a checkout of the deployed commit. The standalone command reads the Astro version from that checkout. Use `just verify-live --help` for details on the retry window and request timeouts.
 
 Each PR was signed off on its own, so two PRs can pass separately and still clash once both are on `main`. After several merges, run `just ci` on an up-to-date `main`, or `just gh-ci main`, before `just deploy`.
 

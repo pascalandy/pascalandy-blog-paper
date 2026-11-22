@@ -35,6 +35,8 @@ import urllib.error
 import urllib.request
 from dataclasses import dataclass
 
+from verify_live import DEFAULT_BASE, astro_from_package, failures
+
 API = "https://api.sevalla.com/v3"
 POLL_SECONDS = 5.0
 DEADLINE_SECONDS = 30 * 60
@@ -93,6 +95,25 @@ def github_tip(branch: str) -> str:
     if result.returncode != 0:
         raise Refused(f"{branch} is not on GitHub; run: git push -u origin {branch}")
     return result.stdout.split()[0]
+
+
+def deployed_astro_version(sha: str) -> str:
+    manifest = run("git", "show", f"{sha}:package.json")
+    if manifest.returncode != 0:
+        fetched = run(
+            "git", "fetch", "--no-tags", "--no-write-fetch-head", "origin", sha
+        )
+        if fetched.returncode != 0:
+            raise Refused(f"could not fetch deployed commit {sha} from origin")
+        manifest = run("git", "show", f"{sha}:package.json")
+    if manifest.returncode != 0:
+        raise Refused(f"could not read package.json at deployed commit {sha}")
+    try:
+        return astro_from_package(manifest.stdout)
+    except ValueError as error:
+        raise Refused(
+            f"could not read Astro version at deployed commit {sha}: {error}"
+        ) from None
 
 
 def require_local_matches(branch: str, remote_sha: str) -> None:
@@ -235,13 +256,22 @@ def deploy(target_name: str, branch: str | None, dry_run: bool, wait: bool) -> i
         raise Refused(f"Sevalla answered without a deployment id: {deployment}")
     print(f"deployment {deployment_id}: started")
     if not wait:
-        print("skipped the deployed commit check (--no-wait)")
+        skipped = "the deployed commit check"
+        if target_name == "production":
+            skipped += " and live checks"
+        print(f"skipped {skipped} (--no-wait)")
         return 0
     deployed = wait_for(site, deployment_id, token)
     if deployed is None:
         return 1
     if deployed != sha:
         raise Refused(f"Sevalla built {deployed}, not {sha}")
+    if target_name == "production":
+        errors = failures(DEFAULT_BASE, astro_version=deployed_astro_version(deployed))
+        if errors:
+            for error in errors:
+                print(error, file=sys.stderr)
+            return 1
     print(f"deployed {sha} to {target_name}")
     return 0
 
