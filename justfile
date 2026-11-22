@@ -123,6 +123,11 @@ deploy *args:
 deploy-preview *args:
     @uv run --quiet scripts/deploy.py preview "$@"
 
+# Check the live blog with HTTP GETs
+[group('ship')]
+verify-live base="https://pascalandy.com/":
+    @uv run --quiet scripts/verify_live.py "$@"
+
 # Run the CI workflow on GitHub for a pushed ref; deploy is none, preview, or production (main only)
 [group('github')]
 gh-ci ref=`git branch --show-current` deploy="none":

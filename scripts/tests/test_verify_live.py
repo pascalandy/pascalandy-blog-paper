@@ -1,0 +1,121 @@
+"""Verify the live-site command using a local HTTP server."""
+
+from __future__ import annotations
+
+import json
+import unittest
+from collections import Counter
+from contextlib import redirect_stderr, redirect_stdout
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from io import StringIO
+from pathlib import Path
+from threading import Thread
+from unittest.mock import patch
+
+from scripts import verify_live
+
+PACKAGE = Path(__file__).resolve().parents[2] / "package.json"
+ASTRO = json.loads(PACKAGE.read_text(encoding="utf-8"))["dependencies"]["astro"]
+
+
+class VerifyLiveTest(unittest.TestCase):
+    def setUp(self) -> None:
+        pages: dict[str, bytes] = {}
+        requests: Counter[str] = Counter()
+
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self) -> None:
+                requests[self.path] += 1
+                body = pages.get(self.path)
+                self.send_response(404 if body is None else 200)
+                self.end_headers()
+                if body is not None:
+                    self.wfile.write(body)
+
+            def log_message(self, format: str, *args: object) -> None:
+                pass
+
+        server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        thread = Thread(target=server.serve_forever, kwargs={"poll_interval": 0.01})
+        thread.start()
+        self.addCleanup(server.server_close)
+        self.addCleanup(thread.join)
+        self.addCleanup(server.shutdown)
+
+        self.base = f"http://127.0.0.1:{server.server_port}/"
+        self.pages = pages
+        self.requests = requests
+        pages.update(
+            {
+                "/": self.home(ASTRO),
+                "/rss.xml": (
+                    f"<rss><channel><item><link>{self.base}blog/newest/</link></item>"
+                    f"<item><link>{self.base}blog/older/</link></item></channel></rss>"
+                ).encode(),
+                "/sitemap-index.xml": b"<sitemapindex/>",
+                "/robots.txt": f"User-agent: *\nSitemap: {self.base}sitemap-0.xml\n".encode(),
+                "/sitemap-0.xml": b"<urlset/>",
+                "/blog/newest/": b"Newest post",
+            }
+        )
+
+    @staticmethod
+    def home(version: str) -> bytes:
+        return (
+            f'<html lang="fr-CA"><head><meta content="Astro v{version}" name="generator">'
+            "</head></html>"
+        ).encode()
+
+    def run_cli(self) -> tuple[int, str, str]:
+        stdout, stderr = StringIO(), StringIO()
+        with (
+            patch.object(verify_live, "RETRY_WINDOW_SECONDS", 0),
+            redirect_stdout(stdout),
+            redirect_stderr(stderr),
+        ):
+            code = verify_live.main([self.base])
+        return code, stdout.getvalue(), stderr.getvalue()
+
+    def test_good_site_passes(self) -> None:
+        code, stdout, stderr = self.run_cli()
+        self.assertEqual((code, stderr), (0, ""))
+        self.assertEqual(stdout, f"live site OK: 8 checks on {self.base}\n")
+        self.assertEqual(set(self.requests), set(self.pages))
+
+    def test_wrong_generator_names_the_expected_and_received_versions(self) -> None:
+        self.pages["/"] = self.home("0.0.0")
+        code, stdout, stderr = self.run_cli()
+        self.assertEqual((code, stdout), (1, ""))
+        self.assertEqual(
+            stderr,
+            f"{self.base}: expected generator 'Astro v{ASTRO}', received 'Astro v0.0.0'\n",
+        )
+
+    def test_rss_404_names_the_feed_and_status(self) -> None:
+        del self.pages["/rss.xml"]
+        code, stdout, stderr = self.run_cli()
+        self.assertEqual((code, stdout), (1, ""))
+        self.assertEqual(
+            stderr, f"{self.base}rss.xml: expected HTTP 200, received HTTP 404\n"
+        )
+
+    def test_latest_post_404_names_the_post_and_status(self) -> None:
+        del self.pages["/blog/newest/"]
+        code, stdout, stderr = self.run_cli()
+        self.assertEqual((code, stdout), (1, ""))
+        self.assertEqual(
+            stderr, f"{self.base}blog/newest/: expected HTTP 200, received HTTP 404\n"
+        )
+
+    def test_retries_failed_checks_until_they_pass(self) -> None:
+        self.pages["/"] = self.home("0.0.0")
+
+        def update_home(_: float) -> None:
+            self.pages["/"] = self.home("9.8.7")
+
+        with patch.object(verify_live.time, "sleep", side_effect=update_home):
+            errors = verify_live.failures(self.base, astro_version="9.8.7")
+        self.assertEqual(errors, [])
+        self.assertEqual(self.requests["/"], 2)
+        self.assertEqual(self.requests["/rss.xml"], 1)
+        self.assertEqual(self.requests["/robots.txt"], 1)
