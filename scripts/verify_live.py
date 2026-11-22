@@ -12,7 +12,6 @@ import http.client
 import json
 import sys
 import time
-import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
 from functools import partial
@@ -30,6 +29,43 @@ USER_AGENT = "pascalandy-blog-verify-live"
 
 class CheckFailed(Exception):
     """A failed HTTP check with its URL and expected and received values."""
+
+
+class DirectResponses(urllib.request.HTTPErrorProcessor):
+    """Expose the requested URL's status before urllib can follow a redirect."""
+
+    def http_response(
+        self, _request: urllib.request.Request, response: http.client.HTTPResponse
+    ) -> http.client.HTTPResponse:
+        return response
+
+    https_response = http_response
+
+
+class SiteRequests:
+    def __init__(self) -> None:
+        self.opener = urllib.request.build_opener(DirectResponses())
+        self.retry_deadline: float | None = None
+
+    def get(self, url: str, *, read_body: bool = False) -> bytes:
+        timeout = HTTP_TIMEOUT_SECONDS
+        if self.retry_deadline is not None:
+            remaining = self.retry_deadline - time.monotonic()
+            if remaining <= 0:
+                raise CheckFailed(problem(url, "HTTP 200", "retry window elapsed"))
+            timeout = min(timeout, remaining)
+        try:
+            request = urllib.request.Request(
+                url, headers={"User-Agent": USER_AGENT}, method="GET"
+            )
+            with self.opener.open(request, timeout=timeout) as response:
+                if response.status != 200:
+                    raise CheckFailed(
+                        problem(url, "HTTP 200", f"HTTP {response.status}")
+                    )
+                return response.read() if read_body else b""
+        except (OSError, ValueError, http.client.HTTPException) as error:
+            raise CheckFailed(problem(url, "HTTP 200", str(error))) from None
 
 
 class HomeMetadata(HTMLParser):
@@ -50,27 +86,20 @@ def problem(url: str, expected: str, received: str) -> str:
     return f"{url}: expected {expected}, received {received}"
 
 
-def get(url: str, *, read_body: bool = False) -> bytes:
+def http_link(source: str, link: str) -> str:
     try:
-        if urlsplit(url).scheme not in {"http", "https"}:
-            raise CheckFailed(problem(url, "HTTP(S) URL", "unsupported scheme"))
-        request = urllib.request.Request(
-            url, headers={"User-Agent": USER_AGENT}, method="GET"
-        )
-        with urllib.request.urlopen(request, timeout=HTTP_TIMEOUT_SECONDS) as response:
-            if response.status != 200:
-                raise CheckFailed(problem(url, "HTTP 200", f"HTTP {response.status}"))
-            return response.read() if read_body else b""
-    except urllib.error.HTTPError as error:
-        error.close()
-        raise CheckFailed(problem(url, "HTTP 200", f"HTTP {error.code}")) from None
-    except (OSError, ValueError, http.client.HTTPException) as error:
-        raise CheckFailed(problem(url, "HTTP 200", str(error))) from None
+        target = urljoin(source, link)
+        parts = urlsplit(target)
+    except ValueError:
+        raise CheckFailed(problem(source, "HTTP(S) link", repr(link))) from None
+    if parts.scheme not in {"http", "https"} or not parts.netloc:
+        raise CheckFailed(problem(source, "HTTP(S) link", repr(link)))
+    return target
 
 
-def check_home(url: str, astro_version: str) -> list[str]:
+def check_home(requests: SiteRequests, url: str, astro_version: str) -> list[str]:
     metadata = HomeMetadata()
-    metadata.feed(get(url, read_body=True).decode("utf-8", errors="replace"))
+    metadata.feed(requests.get(url, read_body=True).decode("utf-8", errors="replace"))
     generator = f"Astro v{astro_version}"
     return [
         problem(url, f"{field} {expected!r}", f"{received!r}")
@@ -82,28 +111,29 @@ def check_home(url: str, astro_version: str) -> list[str]:
     ]
 
 
-def check_rss(url: str) -> list[str]:
-    body = get(url, read_body=True)
+def check_rss(requests: SiteRequests, url: str) -> list[str]:
+    body = requests.get(url, read_body=True)
     try:
-        link = (ET.fromstring(body).findtext("./channel/item/link") or "").strip()
-    except ET.ParseError:
-        raise CheckFailed(problem(url, "RSS XML", "invalid XML")) from None
+        item = ET.fromstring(body).find("./channel/item")
+    except (ET.ParseError, LookupError, ValueError) as error:
+        raise CheckFailed(problem(url, "RSS XML", f"invalid XML ({error})")) from None
+    link = "" if item is None else (item.findtext("link") or "").strip()
     if not link:
         raise CheckFailed(problem(url, "first RSS item link", "no link"))
-    return check_status(urljoin(url, link))
+    return check_status(requests, http_link(url, link))
 
 
-def check_robots(url: str) -> list[str]:
-    robots = get(url, read_body=True).decode("utf-8", errors="replace")
+def check_robots(requests: SiteRequests, url: str) -> list[str]:
+    robots = requests.get(url, read_body=True).decode("utf-8", errors="replace")
     for line in robots.splitlines():
         key, _, value = line.partition(":")
         if key.strip().lower() == "sitemap" and value.strip():
-            return check_status(urljoin(url, value.strip()))
+            return check_status(requests, http_link(url, value.strip()))
     raise CheckFailed(problem(url, "Sitemap directive with a URL", "no Sitemap URL"))
 
 
-def check_status(url: str) -> list[str]:
-    get(url)
+def check_status(requests: SiteRequests, url: str) -> list[str]:
+    requests.get(url)
     return []
 
 
@@ -127,11 +157,16 @@ def verify(
             return 0, [problem(base, "Astro version from package.json", str(error))]
 
     base = base.rstrip("/") + "/"
+    try:
+        base = http_link(base, base)
+    except CheckFailed as error:
+        return 0, [str(error)]
+    requests = SiteRequests()
     checks = [
-        (3, partial(check_home, base, astro_version)),
-        (2, partial(check_rss, urljoin(base, "rss.xml"))),
-        (1, partial(check_status, urljoin(base, "sitemap-index.xml"))),
-        (2, partial(check_robots, urljoin(base, "robots.txt"))),
+        (3, partial(check_home, requests, base, astro_version)),
+        (2, partial(check_rss, requests, urljoin(base, "rss.xml"))),
+        (1, partial(check_status, requests, urljoin(base, "sitemap-index.xml"))),
+        (2, partial(check_robots, requests, urljoin(base, "robots.txt"))),
     ]
     count = sum(size for size, _ in checks)
     pending = [check for _, check in checks]
@@ -150,11 +185,14 @@ def verify(
         if not failed or time.monotonic() + RETRY_INTERVAL_SECONDS >= deadline:
             return count, messages
         pending = failed
+        requests.retry_deadline = deadline
         time.sleep(RETRY_INTERVAL_SECONDS)
 
 
 def failures(
-    base: str, astro_version: str | None = None, retry_seconds: float = 120
+    base: str,
+    astro_version: str | None = None,
+    retry_seconds: float = RETRY_WINDOW_SECONDS,
 ) -> list[str]:
     """Return errors for the live site after retrying the checks that fail."""
     _, messages = verify(base, astro_version, retry_seconds)

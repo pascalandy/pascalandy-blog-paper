@@ -5,11 +5,12 @@ from __future__ import annotations
 import json
 import unittest
 from collections import Counter
-from contextlib import redirect_stderr, redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout, suppress
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from io import StringIO
 from pathlib import Path
 from threading import Thread
+from time import sleep
 from unittest.mock import patch
 
 from scripts import verify_live
@@ -21,16 +22,26 @@ ASTRO = json.loads(PACKAGE.read_text(encoding="utf-8"))["dependencies"]["astro"]
 class VerifyLiveTest(unittest.TestCase):
     def setUp(self) -> None:
         pages: dict[str, bytes] = {}
+        redirects: dict[str, str] = {}
+        retry_delays: dict[str, float] = {}
         requests: Counter[str] = Counter()
 
         class Handler(BaseHTTPRequestHandler):
             def do_GET(self) -> None:
                 requests[self.path] += 1
+                if requests[self.path] > 1 and self.path in retry_delays:
+                    sleep(retry_delays[self.path])
+                if target := redirects.get(self.path):
+                    self.send_response(302)
+                    self.send_header("Location", target)
+                    self.end_headers()
+                    return
                 body = pages.get(self.path)
-                self.send_response(404 if body is None else 200)
-                self.end_headers()
-                if body is not None:
-                    self.wfile.write(body)
+                with suppress(ConnectionError):
+                    self.send_response(404 if body is None else 200)
+                    self.end_headers()
+                    if body is not None:
+                        self.wfile.write(body)
 
             def log_message(self, format: str, *args: object) -> None:
                 pass
@@ -44,6 +55,8 @@ class VerifyLiveTest(unittest.TestCase):
 
         self.base = f"http://127.0.0.1:{server.server_port}/"
         self.pages = pages
+        self.redirects = redirects
+        self.retry_delays = retry_delays
         self.requests = requests
         pages.update(
             {
@@ -107,6 +120,56 @@ class VerifyLiveTest(unittest.TestCase):
             stderr, f"{self.base}blog/newest/: expected HTTP 200, received HTTP 404\n"
         )
 
+    def test_first_item_must_have_its_own_link(self) -> None:
+        self.pages["/rss.xml"] = (
+            f"<rss><channel><item><title>Newest</title></item>"
+            f"<item><link>{self.base}blog/older/</link></item></channel></rss>"
+        ).encode()
+        self.pages["/blog/older/"] = b"Older post"
+        code, stdout, stderr = self.run_cli()
+        self.assertEqual((code, stdout), (1, ""))
+        self.assertEqual(
+            stderr,
+            f"{self.base}rss.xml: expected first RSS item link, received no link\n",
+        )
+        self.assertEqual(self.requests["/blog/older/"], 0)
+
+    def test_latest_post_redirect_is_an_http_302_failure(self) -> None:
+        for target in (self.base, "ftp://127.0.0.1:0/post"):
+            with self.subTest(target=target):
+                self.requests.clear()
+                self.redirects["/blog/newest/"] = target
+                code, stdout, stderr = self.run_cli()
+                self.assertEqual((code, stdout), (1, ""))
+                self.assertEqual(
+                    stderr,
+                    f"{self.base}blog/newest/: expected HTTP 200, received HTTP 302\n",
+                )
+                self.assertEqual(self.requests["/"], 1)
+
+    def test_unknown_rss_encoding_reports_the_feed_as_invalid(self) -> None:
+        self.pages["/rss.xml"] = (
+            b'<?xml version="1.0" encoding="unsupported-codec"?><rss><channel/></rss>'
+        )
+        code, stdout, stderr = self.run_cli()
+        self.assertEqual((code, stdout), (1, ""))
+        self.assertIn(
+            f"{self.base}rss.xml: expected RSS XML, received invalid XML", stderr
+        )
+
+    def test_malformed_link_reports_its_source(self) -> None:
+        for path, body in {
+            "/rss.xml": b"<rss><channel><item><link>http://[</link></item></channel></rss>",
+            "/robots.txt": b"Sitemap: http://[\n",
+        }.items():
+            with self.subTest(path=path), patch.dict(self.pages, {path: body}):
+                code, stdout, stderr = self.run_cli()
+                self.assertEqual((code, stdout), (1, ""))
+                self.assertEqual(
+                    stderr,
+                    f"{self.base}{path[1:]}: expected HTTP(S) link, received 'http://['\n",
+                )
+
     def test_retries_failed_checks_until_they_pass(self) -> None:
         self.pages["/"] = self.home("0.0.0")
 
@@ -119,3 +182,20 @@ class VerifyLiveTest(unittest.TestCase):
         self.assertEqual(self.requests["/"], 2)
         self.assertEqual(self.requests["/rss.xml"], 1)
         self.assertEqual(self.requests["/robots.txt"], 1)
+
+    def test_retry_cannot_wait_past_its_request_budget(self) -> None:
+        self.pages["/"] = self.home("0.0.0")
+        self.retry_delays["/"] = 1.5
+
+        def update_home(_: float) -> None:
+            self.pages["/"] = self.home(ASTRO)
+
+        with (
+            patch.object(verify_live, "RETRY_INTERVAL_SECONDS", 0.01),
+            patch.object(verify_live.time, "sleep", side_effect=update_home),
+        ):
+            errors = verify_live.failures(self.base, retry_seconds=0.5)
+        self.assertEqual(self.requests["/"], 2)
+        self.assertEqual(len(errors), 1)
+        self.assertIn(f"{self.base}: expected HTTP 200, received", errors[0])
+        self.assertIn("timed out", errors[0].lower())
