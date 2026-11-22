@@ -18,6 +18,7 @@ import browse
 from menu_model import verify_menu_model
 from playwright.sync_api import Error, Page, expect, sync_playwright
 from search_journey import verify_search, verify_search_layout
+from theme_journey import verify_theme_journey
 
 VIEWPORTS = (
     (375, 667),
@@ -196,6 +197,7 @@ def verify_readers(base: str, evidence: Path | None) -> tuple[int, int]:
         ) as page:
             verify_search(page, base)
             verify_search_layout(page, base)
+        verify_theme_journey(browser, base)
         traces = verify_menu_model(browser, base)
     return count, traces
 
