@@ -1,5 +1,5 @@
 import { defineConfig, envField, fontProviders } from "astro/config";
-import { unified } from "@astrojs/markdown-remark";
+import { isUnifiedProcessor, unified } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import astroBrokenLinksChecker from "astro-broken-links-checker";
@@ -25,6 +25,23 @@ export default defineConfig({
   cacheDir: "./cache",
   compressHTML: true,
   integrations: [
+    {
+      name: "blog-rendering",
+      hooks: {
+        "astro:config:done": ({ config }) => {
+          if (config.compressHTML !== true) {
+            throw new Error(
+              "To preserve inline spacing, set compressHTML: true in astro.config.ts"
+            );
+          }
+          if (!isUnifiedProcessor(config.markdown.processor)) {
+            throw new Error(
+              "To preserve published heading links, set markdown.processor to unified({ rehypePlugins: [rehypeAstro5HeadingIds] }) in astro.config.ts"
+            );
+          }
+        },
+      },
+    },
     sitemap(),
     astroBrokenLinksChecker({
       logFilePath: "broken-links.log",
