@@ -10,13 +10,21 @@ from __future__ import annotations
 import argparse
 import itertools
 import json
+import re
 import sys
 import time
 from pathlib import Path
 from typing import NoReturn
 from urllib.parse import urljoin, urlsplit
 
-from playwright.sync_api import Browser, Error, Page, Playwright, sync_playwright
+from playwright.sync_api import (
+    Browser,
+    Error,
+    Page,
+    Playwright,
+    ViewportSize,
+    sync_playwright,
+)
 
 EPILOG = """\
 Steps run in order, each as ACTION:ARGUMENT, with Playwright selectors such as
@@ -42,7 +50,7 @@ The paths print on stdout.
 
 examples:
   uv run browse.py http://127.0.0.1:4330/ --out cache/verify-blog/run/home
-  uv run browse.py http://127.0.0.1:4330/search --out cache/verify-blog/run/search \\
+  uv run browse.py http://127.0.0.1:4330/search/ --out cache/verify-blog/run/search \\
     --step 'fill:.pagefind-ui__search-input=bitcoin' --step 'wait:.pagefind-ui__result'
   uv run browse.py http://127.0.0.1:4330/ --out cache/verify-blog/run/theme \\
     --color-scheme light --step 'click:#theme-btn'
@@ -81,6 +89,17 @@ class Parser(argparse.ArgumentParser):
     def error(self, message: str) -> NoReturn:
         self.print_usage(sys.stderr)
         self.exit(2, f"error: {message}\nrun '{self.prog} --help'\n")
+
+
+def parse_viewport(value: str) -> ViewportSize:
+    match = re.fullmatch(r"([0-9]{3,4})x([0-9]{3,4})", value)
+    if match:
+        width, height = map(int, match.groups())
+        if 200 <= width <= 1920 and 200 <= height <= 1920:
+            return {"width": width, "height": height}
+    raise argparse.ArgumentTypeError(
+        "use WIDTHxHEIGHT with each dimension from 200 to 1920"
+    )
 
 
 def step(value: str) -> tuple[str, str]:
@@ -194,6 +213,7 @@ def main(argv: list[str] | None = None) -> int:
         epilog=EPILOG,
         formatter_class=argparse.RawDescriptionHelpFormatter,
         allow_abbrev=False,
+        exit_on_error=False,
     )
     cli.add_argument("url", help="the page to open, such as http://127.0.0.1:4330/")
     cli.add_argument(
@@ -204,6 +224,12 @@ def main(argv: list[str] | None = None) -> int:
         choices=["desktop", "iphone"],
         default="desktop",
         help="desktop at 1440x900 (default), or an emulated iPhone 15; not Safari",
+    )
+    cli.add_argument(
+        "--viewport",
+        type=parse_viewport,
+        metavar="WIDTHxHEIGHT",
+        help="replace the desktop viewport (200 to 1920 pixels per side)",
     )
     cli.add_argument(
         "--color-scheme",
@@ -223,7 +249,14 @@ def main(argv: list[str] | None = None) -> int:
     if {"-h", "--help"} & set(itertools.takewhile(lambda arg: arg != "--", argv)):
         cli.print_help()
         return 0
-    args = cli.parse_args(argv)
+    try:
+        args = cli.parse_args(argv)
+    except argparse.ArgumentError as error:
+        if error.argument_name == "--viewport":
+            cli.exit(2, f"error: {error}\n")
+        cli.error(str(error))
+    if args.viewport is not None and args.device == "iphone":
+        cli.exit(2, "error: --viewport cannot be used with --device iphone\n")
     try:
         return drive(args)
     except KeyboardInterrupt:
@@ -250,7 +283,7 @@ def drive(args: argparse.Namespace) -> int:
         if args.device == "iphone":
             options = dict(playwright.devices["iPhone 15"])
         else:
-            options = {"viewport": VIEWPORTS["desktop"]}
+            options = {"viewport": args.viewport or VIEWPORTS["desktop"]}
         if args.color_scheme:
             options["color_scheme"] = args.color_scheme
         context = browser.new_context(**options)
