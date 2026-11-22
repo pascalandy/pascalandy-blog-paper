@@ -291,8 +291,7 @@ class VerifyLiveTest(unittest.TestCase):
         )
 
     def test_incomplete_bodies_fail_even_when_the_prefix_is_valid(self) -> None:
-        for path in ("/", "/rss.xml", "/robots.txt"):
-            body = self.pages[path]
+        for path, body in self.pages.items():
             response = (
                 f"HTTP/1.1 200 OK\r\nConnection: close\r\n"
                 f"Content-Length: {len(body) + 10}\r\n\r\n"

@@ -82,8 +82,6 @@ class SiteRequests:
                     raise CheckFailed(
                         problem(url, "HTTP 200", f"HTTP {response.status}")
                     )
-                if not read_body:
-                    return b""
                 body = bytearray()
                 while True:
                     remaining()
@@ -99,7 +97,8 @@ class SiteRequests:
                                 )
                             )
                         return bytes(body)
-                    body.extend(chunk)
+                    if read_body:
+                        body.extend(chunk)
         except (OSError, ValueError, http.client.HTTPException) as error:
             remaining()
             raise CheckFailed(problem(url, "HTTP 200", str(error))) from None
