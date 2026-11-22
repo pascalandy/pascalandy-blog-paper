@@ -22,7 +22,9 @@ class DeployTest(unittest.TestCase):
                 os.environ, SEVALLA_TOKEN="fixture", SEVALLA_STATIC_SITE_ID="fixture"
             )
         )
-        self.enterContext(patch.object(deploy, "github_tip", return_value=HEAD))
+        self.github_tip = self.enterContext(
+            patch.object(deploy, "github_tip", return_value=HEAD)
+        )
         self.enterContext(patch.object(deploy, "POLL_SECONDS", 0))
         self.urlopen = self.enterContext(patch.object(deploy.urllib.request, "urlopen"))
 
@@ -48,6 +50,7 @@ class DeployTest(unittest.TestCase):
         )
 
     def test_different_commit_fails_and_names_both_shas(self) -> None:
+        self.github_tip.side_effect = [HEAD, OTHER_HEAD]
         self.responses({"id": "build"}, {"status": "success", "commit_sha": OTHER_HEAD})
         code, stdout, stderr = self.run_deploy()
         self.assertEqual(code, 1)
