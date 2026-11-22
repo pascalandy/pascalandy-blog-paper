@@ -17,7 +17,14 @@ const initMermaid = async () => {
 
   if (blocks.length === 0) return;
 
-  const mermaid = await import(/* @vite-ignore */ MERMAID_CDN);
+  const mermaid = await import(/* @vite-ignore */ MERMAID_CDN).catch(
+    () => null
+  );
+  if (!mermaid) {
+    for (const block of blocks)
+      block.parentElement?.classList.add("mermaid-error");
+    return;
+  }
 
   mermaid.default.initialize({
     startOnLoad: false,
@@ -38,7 +45,6 @@ const initMermaid = async () => {
       wrapper.innerHTML = svg;
       pre.replaceWith(wrapper);
     } catch {
-      // On error, leave the code block as-is for debugging
       pre.classList.add("mermaid-error");
     }
   }
