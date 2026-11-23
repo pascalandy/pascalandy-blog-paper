@@ -20,8 +20,7 @@ A post page shows one article with its title, date, and tags, then links to the 
 Preconditions:
 
 - `site.py doctor` exits 0
-- The steps use `/blog/lhorizon-cest-toi`; its overview entry is `just overview --json | jq '.posts.buckets.blog_roll[] | select(.url == "/blog/lhorizon-cest-toi")'`. For another post, take its `url` and `title` from the overview the same way
-- Append `/` to paths from `just overview` before opening them, including the draft path
+- The steps use `/blog/lhorizon-cest-toi/`; its overview entry is `just overview --json | jq '.posts.buckets.blog_roll[] | select(.url == "/blog/lhorizon-cest-toi/")'`. For another post, take its `url` and `title` from the overview the same way
 
 - **Open the post.** Run `agent-browser open "$URL/blog/lhorizon-cest-toi/"` and `agent-browser get title`. The title is `L'horizon, c'est toi | Le blog de Pascal Andy`.
 - **Read the title.** Run `agent-browser get text "#main-content > h1"`. It matches the `title` of that overview entry; the body sits in `#article`, below the heading.

@@ -2,9 +2,8 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { TAGS } from "./tags";
+import { BLOG_PATH, blogEntryId } from "./utils/getPath";
 import { slugifyStr } from "./utils/slugify";
-
-export const BLOG_PATH = "src/data/blog";
 
 const TAG_SLUGS = new Set(TAGS.map(({ slug }) => slug));
 
@@ -26,7 +25,11 @@ const tag = z.string().superRefine((slug, ctx) => {
 });
 
 const blog = defineCollection({
-  loader: glob({ pattern: "**/[^_]*.md", base: `./${BLOG_PATH}` }),
+  loader: glob({
+    pattern: "**/[^_]*.md",
+    base: `./${BLOG_PATH}`,
+    generateId: blogEntryId,
+  }),
   schema: ({ image }) =>
     z
       .object(

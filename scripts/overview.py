@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import re
 import shutil
 import subprocess
 import sys
@@ -31,13 +30,16 @@ READ = """
 try {
   const { TAGS } = await import("./src/tags.ts");
   const { SITE, ACTIVE_THEME } = await import("./src/config.ts");
+  const { BLOG_PATH, blogEntryId, getPath } = await import("./src/utils/getPath.ts");
   const yaml = (await import("js-yaml")).default;
   const posts = [];
   for await (const file of new Bun.Glob(process.argv[1]).scan(".")) {
     const text = await Bun.file(file).text();
     const match = /(?:^\\uFEFF?|^\\s*\\n)---([\\s\\S]*?\\n)---/.exec(text);
     try {
-      posts.push({ file, data: (match && yaml.load(match[1])) || {} });
+      const data = (match && yaml.load(match[1])) || {};
+      const entry = file.slice(BLOG_PATH.length + 1);
+      posts.push({ file, data, url: getPath(blogEntryId({ entry, data }), file) });
     } catch (error) {
       throw new Error(`${file}: ${error.message}`);
     }
@@ -88,19 +90,6 @@ class Parser(argparse.ArgumentParser):
 
 class Failure(Exception):
     """An expected failure; the message says what to fix."""
-
-
-def kebab(text: str) -> str:
-    """lodash.kebabcase, as src/utils/slugify.ts applies it to folder names."""
-    words = re.findall(r"[A-Z]{2,}(?=[A-Z][a-z]|\d|\b)|[A-Z]?[a-z]+|[A-Z]+|\d+", text)
-    return "-".join(word.lower() for word in words)
-
-
-def url(file: str) -> str:
-    """The post's path as src/utils/getPath.ts builds it."""
-    parts = Path(file).relative_to(BLOG).parts
-    folders = [kebab(part) for part in parts[:-1] if not part.startswith("_")]
-    return "/".join(["/blog", *folders, Path(parts[-1]).stem.lower()])
 
 
 def read() -> dict[str, Any]:
@@ -173,7 +162,7 @@ def overview(state: dict[str, Any], now: datetime) -> dict[str, Any]:
         post = {
             "title": data["title"],
             "date": date[:10],
-            "url": url(entry["file"]),
+            "url": entry["url"],
             "file": entry["file"],
             "tags": data["tags"],
         }
