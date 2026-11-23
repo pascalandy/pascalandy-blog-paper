@@ -48,7 +48,6 @@ const structuredData = {
   ],
 };
 
-// Generate theme CSS from config
 const theme = THEMES[ACTIVE_THEME];
 
 function themeToCSS(colors: Record<string, string>): string {
@@ -85,23 +84,19 @@ const themeStyleContent = `
     {noindex && <meta name="robots" content="noindex" />}
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Theme Variables (generated from src/config.ts) -->
     <style is:inline set:html={themeStyleContent}></style>
 
-    <!-- Load Font -->
     <Font
       cssVariable="--font-jetbrains-mono"
       preload={[{ subset: "latin", weight: 400, style: "normal" }]}
     />
 
-    <!-- General Meta Tags -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content={author} />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content={date_created ? "article" : "website"} />
     <meta property="og:locale" content={lang === "en" ? "en_US" : "fr_CA"} />
     <meta property="og:title" content={title} />
@@ -109,7 +104,6 @@ const themeStyleContent = `
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={socialImageURL} />
 
-    <!-- Article Published time -->
     {
       date_created && (
         <meta
@@ -119,14 +113,12 @@ const themeStyleContent = `
       )
     }
 
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
 
-    <!-- Google JSON-LD Structured data -->
     {
       date_created && (
         <script
@@ -137,7 +129,6 @@ const themeStyleContent = `
       )
     }
 
-    <!-- Enable RSS feed auto-discovery  -->
     <!-- https://docs.astro.build/en/recipes/rss/#enabling-rss-feed-auto-discovery -->
     <link
       rel="alternate"
@@ -147,8 +138,6 @@ const themeStyleContent = `
     />
 
     {
-      // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,
-      // include google-site-verification tag in the heading
       // Learn more: https://support.google.com/webmasters/answer/9008080#meta_tag_verification&zippy=%2Chtml-tag
       PUBLIC_GOOGLE_SITE_VERIFICATION && (
         <meta
@@ -176,10 +165,8 @@ const themeStyleContent = `
 
         const themeValue = getPreferTheme();
 
-        // Set theme immediately to prevent flash
         document.firstElementChild?.setAttribute("data-theme", themeValue);
 
-        // Export minimal API for external script
         window.theme = {
           themeValue: themeValue,
           getTheme: () => window.theme.themeValue,
@@ -193,7 +180,6 @@ const themeStyleContent = `
   <body>
     <slot />
 
-    <!-- Load full theme logic -->
     <script src="../scripts/theme.ts"></script>
   </body>
 </html>

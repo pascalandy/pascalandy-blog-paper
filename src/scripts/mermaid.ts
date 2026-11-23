@@ -15,10 +15,8 @@ const getTheme = (): string => {
 const initMermaid = async () => {
   const blocks = document.querySelectorAll("pre > code.language-mermaid");
 
-  // No mermaid blocks found, skip initialization
   if (blocks.length === 0) return;
 
-  // Dynamically import Mermaid from CDN
   const mermaid = await import(/* @vite-ignore */ MERMAID_CDN);
 
   mermaid.default.initialize({
@@ -26,7 +24,6 @@ const initMermaid = async () => {
     theme: getTheme(),
   });
 
-  // Render each mermaid code block
   for (const block of blocks) {
     const pre = block.parentElement;
     if (!pre) continue;
@@ -47,8 +44,6 @@ const initMermaid = async () => {
   }
 };
 
-// Run on initial page load
 initMermaid();
 
-// Re-run on Astro view transitions
 document.addEventListener("astro:page-load", initMermaid);

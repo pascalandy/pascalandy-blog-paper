@@ -17,7 +17,6 @@ type Props = {
 const { showLogo = true } = Astro.props;
 const { pathname } = Astro.url;
 
-// Remove trailing slash from current pathname if exists
 const currentPath =
   pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
 
@@ -174,7 +173,6 @@ const isActive = (path: string) => {
   </div>
 </header>
 
-<!-- Mobile menu backdrop overlay -->
 <div
   id="menu-overlay"
   class="pointer-events-none fixed inset-0 z-30 bg-background/60 opacity-0 backdrop-blur-sm transition-opacity duration-150 sm:hidden"
@@ -224,7 +222,6 @@ const isActive = (path: string) => {
       }
     });
 
-    // Close menu when clicking overlay
     menuOverlay.addEventListener("click", closeMenu);
 
     // Close menu when clicking theme toggle (doesn't navigate, so close manually)
@@ -234,6 +231,5 @@ const isActive = (path: string) => {
 
   toggleNav();
 
-  // Runs on view transitions navigation
   document.addEventListener("astro:after-swap", toggleNav);
 </script>
