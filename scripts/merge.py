@@ -174,7 +174,7 @@ def wait_until_mergeable(repo: str, number: int, sha: str) -> PullRequest:
 
 def land(repo: str, pr: PullRequest, sha: str, subject: str) -> None:
     """Merge sha, then read the PR back: a failed call can still have merged it."""
-    failure = "gh pr merge did not merge it"
+    failure = None
     try:
         gh(
             repo,
@@ -193,12 +193,13 @@ def land(repo: str, pr: PullRequest, sha: str, subject: str) -> None:
         after = view(repo, pr.number)
     except Refused as refused:
         raise Refused(
-            f"{failure}; reading PR #{pr.number} back also failed ({refused}), "
-            f"so check it with: gh pr view {pr.number}"
+            f"could not confirm the merge outcome for PR #{pr.number}: {refused}; "
+            + (f"merge request: {failure}; " if failure else "")
+            + f"check it with: gh pr view {pr.number}"
         ) from None
     if after.state != "MERGED":
         raise Refused(
-            f"{failure}; PR #{pr.number} is still {after.state.lower()}, so it was "
+            f"{failure or 'gh pr merge did not merge it'}; PR #{pr.number} is still {after.state.lower()}, so it was "
             "not merged; rerun just merge once that is fixed"
         )
     # --match-head-commit pins the head, not the base

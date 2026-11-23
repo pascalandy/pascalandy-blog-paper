@@ -165,7 +165,7 @@ class SiteRequests:
             DirectResponses(), CompleteHTTPHandler()
         )
 
-    def get(self, url: str, *, read_body: bool = False) -> bytes:
+    def get(self, url: str, *, read_body: bool = False, html: bool = False) -> bytes:
         now = time.monotonic()
         deadline = now + HTTP_TIMEOUT_SECONDS
         expected = "HTTP 200"
@@ -188,6 +188,12 @@ class SiteRequests:
                 remaining()
                 if response.status != 200:
                     raise CheckFailed(problem(url, expected, f"HTTP {response.status}"))
+                if html and response.headers.get_content_type() != "text/html":
+                    raise CheckFailed(
+                        problem(
+                            url, "text/html", str(response.headers.get("Content-Type"))
+                        )
+                    )
                 expected = "complete HTTP body"
                 response.validate_framing()
                 body = bytearray()
@@ -204,15 +210,18 @@ class SiteRequests:
             raise CheckFailed(problem(url, expected, str(error))) from None
 
 
-class HomeMetadata(HTMLParser):
+class PageMetadata(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.language: str | None = None
         self.generator: str | None = None
+        self.canonicals: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = dict(attrs)
-        if tag == "html":
+        if tag == "link" and "canonical" in (values.get("rel") or "").lower().split():
+            self.canonicals.append(values.get("href") or "")
+        elif tag == "html":
             self.language = values.get("lang")
         elif tag == "meta" and (values.get("name") or "").lower() == "generator":
             self.generator = values.get("content")
@@ -243,7 +252,7 @@ def http_link(source: str, link: str) -> str:
 
 
 def check_home(requests: SiteRequests, url: str, astro_version: str) -> list[str]:
-    metadata = HomeMetadata()
+    metadata = PageMetadata()
     metadata.feed(requests.get(url, read_body=True).decode("utf-8", errors="replace"))
     generator = f"Astro v{astro_version}"
     return [
@@ -281,10 +290,25 @@ def check_event(
     requests: SiteRequests, base: str, route: str, target: str
 ) -> list[str]:
     url = urljoin(base, route)
-    html = requests.get(url, read_body=True).decode("utf-8", errors="replace")
+    html = requests.get(url, read_body=True, html=True).decode(
+        "utf-8", errors="replace"
+    )
     if error := redirect_problem(html, target):
         return [f"{url}: {error}"]
-    return check_status(requests, urljoin(base, target))
+    article = urljoin(base, target)
+    metadata = PageMetadata()
+    metadata.feed(
+        requests.get(article, read_body=True, html=True).decode(
+            "utf-8", errors="replace"
+        )
+    )
+    if (
+        len(metadata.canonicals) != 1
+        or not metadata.canonicals[0]
+        or urlsplit(http_link(article, metadata.canonicals[0])).path != target
+    ):
+        return [problem(article, f"canonical path {target}", repr(metadata.canonicals))]
+    return []
 
 
 def check_status(requests: SiteRequests, url: str) -> list[str]:
