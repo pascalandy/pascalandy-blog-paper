@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import argparse
+import fcntl
 import itertools
 import json
 import os
@@ -19,8 +20,11 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from contextlib import contextmanager
 from pathlib import Path
+from threading import current_thread, main_thread
 from typing import Any, NoReturn
+from uuid import uuid4
 
 ROOT = Path(__file__).resolve().parents[4]
 STATE_DIR = ROOT / "cache" / "verify-blog"
@@ -28,6 +32,7 @@ STATE = STATE_DIR / "server.json"
 DEV = "http://localhost:4320"
 PREVIEW_PORT = 4330
 PREVIEW = f"http://127.0.0.1:{PREVIEW_PORT}"
+PREVIEW_SCRIPT = Path(__file__).with_name("preview.mjs").resolve()
 READY_TIMEOUT = 60.0
 # While its toolbar is on, Astro's dev server marks elements with the absolute
 # path of their source file, which names the checkout it serves
@@ -115,10 +120,11 @@ def site_title() -> str:
     return result.stdout.strip()
 
 
-def fetch(url: str) -> str | None:
-    """The page body when the URL answers 200, else None."""
+def fetch(url: str, instance: str | None = None) -> str | None:
     try:
         with urllib.request.urlopen(url, timeout=3) as response:
+            if instance and response.headers.get("X-Verify-Blog-Instance") != instance:
+                return None
             return response.read().decode("utf-8", "replace")
     except (urllib.error.URLError, OSError, ValueError):
         return None
@@ -162,10 +168,19 @@ def load() -> dict[str, Any] | None:
     return state if state.get("root") == str(ROOT) else None
 
 
-def save(url: str, pid: int | None = None, built: float | None = None) -> None:
+def save(
+    url: str,
+    pid: int | None = None,
+    built: float | None = None,
+    instance: str | None = None,
+) -> None:
     STATE_DIR.mkdir(parents=True, exist_ok=True)
     state = {"url": url, "started": pid is not None, "pid": pid, "root": str(ROOT)}
-    STATE.write_text(json.dumps({**state, "built": built}), encoding="utf-8")
+    temporary = STATE.with_suffix(".tmp")
+    temporary.write_text(
+        json.dumps({**state, "built": built, "instance": instance}), encoding="utf-8"
+    )
+    temporary.replace(STATE)
 
 
 def ours(state: dict[str, Any]) -> bool:
@@ -173,12 +188,13 @@ def ours(state: dict[str, Any]) -> bool:
 
     A process ID outlives its process and can be reused, so its command decides."""
     try:
-        os.kill(state["pid"], 0)
+        if os.getpgid(state["pid"]) != state["pid"]:
+            return False
     except (ProcessLookupError, PermissionError):
         return False
     try:
         result = subprocess.run(
-            ["ps", "-o", "args=", "-p", str(state["pid"])],
+            ["ps", "-ww", "-o", "args=", "-p", str(state["pid"])],
             capture_output=True,
             text=True,
             check=False,
@@ -188,7 +204,52 @@ def ours(state: dict[str, Any]) -> bool:
             f"ps not found, so pid {state['pid']} can't be confirmed as the preview; "
             "install ps, or stop the preview yourself"
         ) from None
-    return f"preview --port {PREVIEW_PORT}" in result.stdout
+    if instance := state.get("instance"):
+        return result.stdout.rstrip().endswith(
+            f" {PREVIEW_SCRIPT} {PREVIEW_PORT} {instance}"
+        )
+    # Older state has no instance ID. Identical Bun commands run in other worktrees.
+    if not result.stdout.rstrip().endswith(
+        f"run preview --port {PREVIEW_PORT} --host 127.0.0.1 --ignore-lock"
+    ):
+        return False
+    if sys.platform.startswith("linux"):
+        try:
+            return Path(f"/proc/{state['pid']}/cwd").readlink() == ROOT
+        except OSError:
+            return False
+    if not shutil.which("lsof"):
+        return False
+    cwd = subprocess.run(
+        ["lsof", "-a", "-p", str(state["pid"]), "-d", "cwd", "-Fn"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return f"n{ROOT}" in cwd.stdout.splitlines()
+
+
+@contextmanager
+def record_before_interrupt():
+    """Finish publishing the detached child's ownership before delivering a stop."""
+    if current_thread() is not main_thread():
+        yield
+        return
+    pending = []
+
+    def defer(signum, _frame):
+        pending.append(signum)
+
+    previous = {}
+    try:
+        for signum in (signal.SIGTERM, signal.SIGINT):
+            previous[signum] = signal.signal(signum, defer)
+        yield
+    finally:
+        for signum, handler in previous.items():
+            signal.signal(signum, handler)
+        for signum in pending:
+            signal.raise_signal(signum)
 
 
 def up() -> str:
@@ -203,9 +264,11 @@ def up() -> str:
             down()
         save(DEV)
         return DEV
-    current = started and ours(state) and changed(state) is None
-    if current and is_blog(fetch(state["url"] + "/"), title):
-        return state["url"]
+    current = (
+        started and state.get("instance") and ours(state) and changed(state) is None
+    )
+    if current and is_blog(fetch(PREVIEW + "/", state["instance"]), title):
+        return PREVIEW
     if started:
         down()
     if fetch(PREVIEW + "/") is not None:
@@ -229,36 +292,40 @@ def up() -> str:
         print("\n".join(tail), file=sys.stderr)
         raise Failure(f"the build failed (log: {log}); run: just check --only build")
     finished = time.time()
-    with (STATE_DIR / "preview.log").open("w", encoding="utf-8") as output:
+    instance = uuid4().hex
+    with (
+        record_before_interrupt(),
+        (STATE_DIR / "preview.log").open("w", encoding="utf-8") as output,
+    ):
         preview = subprocess.Popen(
-            [
-                "bun",
-                "run",
-                "preview",
-                "--port",
-                str(PREVIEW_PORT),
-                "--host",
-                "127.0.0.1",
-                "--ignore-lock",
-            ],
+            ["node", str(PREVIEW_SCRIPT), str(PREVIEW_PORT), instance],
             cwd=ROOT,
             stdout=output,
             stderr=subprocess.STDOUT,
             start_new_session=True,
         )
-    save(PREVIEW, preview.pid, finished)
-    deadline = time.monotonic() + READY_TIMEOUT
-    while time.monotonic() < deadline:
-        if is_blog(fetch(PREVIEW + "/"), title):
-            return PREVIEW
-        if preview.poll() is not None:
-            break
-        time.sleep(0.5)
-    down()
-    raise Failure(
-        f"the preview did not answer within {READY_TIMEOUT:g}s; "
-        f"read {STATE_DIR / 'preview.log'}, then rerun up"
-    )
+        try:
+            save(PREVIEW, preview.pid, finished, instance)
+        except BaseException:
+            preview.kill()
+            preview.wait()
+            raise
+    try:
+        deadline = time.monotonic() + READY_TIMEOUT
+        while preview.poll() is None and time.monotonic() < deadline:
+            if is_blog(fetch(PREVIEW + "/", instance), title):
+                return PREVIEW
+            time.sleep(0.2)
+        raise Failure(
+            f"this preview could not serve {PREVIEW}; check port {PREVIEW_PORT} "
+            f"and {STATE_DIR / 'preview.log'}, then rerun up"
+        )
+    except BaseException:
+        if preview.poll() is None:
+            preview.kill()
+        preview.wait()
+        STATE.unlink(missing_ok=True)
+        raise
 
 
 def doctor() -> tuple[bool, str]:
@@ -266,8 +333,9 @@ def doctor() -> tuple[bool, str]:
     if state is None:
         return False, "no instance recorded for this checkout; run: site.py up"
     title = site_title()
-    body = fetch(state["url"] + "/")
-    healthy = is_blog(body, title)
+    instance = state.get("instance") if state["started"] else None
+    body = fetch(state["url"] + "/", instance)
+    healthy = is_blog(body, title) and (not state["started"] or bool(instance))
     lines = [
         f"url: {state['url']}",
         f"answers as {title!r}: {'yes' if healthy else 'no'}",
@@ -318,7 +386,6 @@ def main(argv: list[str] | None = None) -> int:
         "action", choices=["up", "doctor", "down"], help="up, doctor, or down"
     )
     argv = sys.argv[1:] if argv is None else argv
-    # -h wins over every other argument before --, as the CLI contract asks
     if {"-h", "--help"} & set(itertools.takewhile(lambda arg: arg != "--", argv)):
         cli.print_help()
         return 0
@@ -328,7 +395,10 @@ def main(argv: list[str] | None = None) -> int:
             healthy, report = doctor()
             print(report)
             return 0 if healthy else 1
-        output = up() if args.action == "up" else down()
+        STATE_DIR.mkdir(parents=True, exist_ok=True)
+        with (STATE_DIR / "server.lock").open("a") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX)
+            output = up() if args.action == "up" else down()
     except Failure as failure:
         print(f"error: {failure}", file=sys.stderr)
         return 1
