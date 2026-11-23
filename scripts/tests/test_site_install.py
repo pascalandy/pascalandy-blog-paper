@@ -2,6 +2,7 @@
 
 import importlib.util
 import io
+import json
 import os
 import shutil
 import socket
@@ -61,3 +62,12 @@ class SiteInstallTests(unittest.TestCase):
                 self.assertEqual(sandbox.git("diff", "--", "bun.lock"), "")
             finally:
                 site.main(["down"])
+
+            # A stale manifest must fail without rewriting the committed lockfile.
+            manifest = work / "package.json"
+            package = json.loads(manifest.read_text())
+            del package["dependencies"]["astro"]
+            manifest.write_text(json.dumps(package))
+            with self.assertRaises(site.Failure):
+                site.install()
+            self.assertEqual(sandbox.git("diff", "--", "bun.lock"), "")

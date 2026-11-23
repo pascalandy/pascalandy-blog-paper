@@ -103,6 +103,10 @@ def problems(
         page = Page(html)
         counts = Counter(tag for tag, _ in page.elements)
         reasons: set[str] = set()
+        if route == "/blog/cim-04/" and not any(
+            attrs.get("id") == "est-ce-pour-moi" for _, attrs in page.elements
+        ):
+            reasons.add("published fragment #est-ce-pour-moi is missing")
         if not page.title.strip():
             reasons.add("missing title")
         elif page.title in titles:
