@@ -31,6 +31,7 @@
         "globals": "^16.5.0",
         "hast-util-to-string": "3.0.1",
         "lefthook": "^2.0.13",
+        "node-lefff": "0.3.1",
         "pagefind": "^1.4.0",
         "prettier": "^3.7.4",
         "prettier-plugin-astro": "^0.14.1",
@@ -1007,6 +1008,8 @@
     "node-fetch-native": ["node-fetch-native@1.6.7", "", {}, "sha512-g9yhqoedzIUm0nTnTqAQvueMPVOuIY16bqgAJJC8XOOubYFNwz6IER9qs0Gq2Xd0+CecCKFjtdDTMA4u4xG06Q=="],
 
     "node-html-parser": ["node-html-parser@6.1.13", "", { "dependencies": { "css-select": "^5.1.0", "he": "1.2.0" } }, "sha512-qIsTMOY4C/dAa5Q5vsobRpOOvPfC4pB61UVW2uSwZNUp0QU/jCekTal1vMmbO0DgdHeLUJpv/ARmDqErVxA3Sg=="],
+
+    "node-lefff": ["node-lefff@0.3.1", "", {}, "sha512-FrZ3zmP+MiPTfx6wDy4himw1TF8h0tyj4fsmoHO3V/yEZ7RStGC5/Wfn+43PS5G+HcpButbvSPzrxELIFQu80A=="],
 
     "node-mock-http": ["node-mock-http@1.0.4", "", {}, "sha512-8DY+kFsDkNXy1sJglUfuODx1/opAGJGyrTuFqEoN90oRc2Vk0ZbD4K2qmKXBBEhZQzdKHIVfEJpDU8Ak2NJEvQ=="],
 

@@ -13,6 +13,12 @@ import { SITE } from "@/config";
   <Banner />
   <Main pageTitle="Recherche">
     <div id="pagefind-search" transition:persist></div>
+    <p class="mt-8 text-sm text-muted-foreground">
+      Formes nominales et verbales du <a
+        href="/search/lefff.txt"
+        class="underline">Lefff de Benoît Sagot (LGPL-LR)</a
+      >.
+    </p>
   </Main>
   <Footer />
 </Layout>
@@ -34,6 +40,7 @@ import { SITE } from "@/config";
 
       const search = new PagefindUI({
         element: "#pagefind-search",
+        bundlePath: "/search/",
         showImages: false,
         showSubResults: true,
         translations: {

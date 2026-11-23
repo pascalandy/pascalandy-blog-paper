@@ -91,6 +91,7 @@ CHECKS = [
         ("bun", "run", "build:ci"),
         uv_run("scripts/check_css_compat.py"),
         uv_run("scripts/check_html.py"),
+        ("bun", "scripts/check_search.mjs"),
         uv_run(".claude/skills/verify-blog/scripts/reader.py", "dist"),
     ),
 ]

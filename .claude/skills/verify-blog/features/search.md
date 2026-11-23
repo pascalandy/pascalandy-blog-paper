@@ -25,7 +25,7 @@ Preconditions:
 - **Open search.** Run `agent-browser open "$URL/search/"` and `agent-browser get title`. The title is `Recherche | Le blog de Pascal Andy`, and the box shows `Rechercher...`.
 - **Type a query.** Run `agent-browser fill ".pagefind-ui__search-input" "bitcoin"`, then `agent-browser wait ".pagefind-ui__result"`. A count such as `12 résultats` appears above linked results.
 - **Check the URL.** Run `agent-browser get url`. It ends with `?q=bitcoin`.
-- **Miss.** Replace the query with `"zzqqxx"`, including the quotation marks for an exact search. The message reads `Aucun résultat`.
+- **Miss.** Replace `bitcoin` with `coquecigruegalactique` and wait for `Aucun résultat`. Reload and check for the same message. Repeat from `bitcoin` with `zzqqxx`.
 - **Clear.** Run `agent-browser click ".pagefind-ui__search-clear"`. The box and the results empty.
 - **Check a long excerpt.** The PSU result for `toroidal` contains a URL over 1,000 characters long. Check that the full word is present and the page fits at both widths.
 
@@ -50,6 +50,6 @@ Preconditions:
 
 ## Gotchas
 
-- Pagefind indexes only the post body (`data-pagefind-body`); page chrome and tag lists stay out of the results
+- Pagefind indexes only the post body (`data-pagefind-body`); article tags inside that body are searchable, and page chrome stays out of the results
 - Results appear after a short debounce: wait for `.pagefind-ui__result` or the message, never a fixed sleep
 - Pagefind reports the index language as `fr-ca` in `dist/pagefind/pagefind-entry.json`

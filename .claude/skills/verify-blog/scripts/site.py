@@ -39,7 +39,15 @@ READY_TIMEOUT = 60.0
 SOURCE_FILE = re.compile(r'data-astro-source-file="([^"]+)"')
 # What a build reads. Deleting or renaming a file changes its folder's time, so
 # folders count as well as files
-INPUTS = ("src", "public", "astro.config.ts", "package.json", "bun.lock")
+INPUTS = (
+    "src",
+    "public",
+    "astro.config.ts",
+    "package.json",
+    "bun.lock",
+    "scripts/build_search_words.mjs",
+    "scripts/build_search_verbs.mjs",
+)
 # package.json's prepare script runs `lefthook install`, which rewrites the hooks
 # every worktree of the clone shares, so a verifier installs without scripts (#92)
 INSTALL = ("bun", "install", "--frozen-lockfile", "--ignore-scripts")
@@ -49,7 +57,7 @@ actions:
   up      reuse Pascal's dev server on :4320 when it answers, unless its pages
           name source files in another checkout (Astro marks them while its
           dev toolbar is on); otherwise serve a build on :4330, rebuilt once a
-          build input (src/, public/, astro.config.ts, package.json, bun.lock)
+          build input (src/, public/, astro.config.ts, package.json, bun.lock, or a search index generator)
           changes; print the base URL. Before it builds, and whenever
           node_modules/ is missing, it installs the locked dependencies with
           bun install --frozen-lockfile --ignore-scripts, which leaves the git
@@ -152,6 +160,8 @@ def changed(state: dict[str, Any]) -> str | None:
     built = state.get("built") or 0
     for name in INPUTS:
         top = ROOT / name
+        if name.startswith("scripts/") and not top.is_file():
+            return f"{name} is missing"
         for path in (top, *top.rglob("*")) if top.is_dir() else (top,):
             if path.exists() and path.stat().st_mtime > built:
                 name = f"{path.relative_to(ROOT)}{'/' if path.is_dir() else ''}"

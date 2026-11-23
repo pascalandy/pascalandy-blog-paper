@@ -16,6 +16,16 @@ def verify_search(page: Page, base: str) -> None:
     page.reload()
     expect(field).to_have_value("bitcoin")
     expect(result).to_have_text(first_title)
+
+    missing = "coquecigruegalactique"
+    field.fill(missing)
+    expect(page.get_by_text("Aucun résultat", exact=True)).to_be_visible()
+    expect(result).to_have_count(0)
+    expect(page).to_have_url(f"{url}?q={missing}")
+    page.reload()
+    expect(field).to_have_value(missing)
+    expect(page.get_by_text("Aucun résultat", exact=True)).to_be_visible()
+    expect(result).to_have_count(0)
     page.get_by_role("button", name="Effacer").click()
     expect(field).to_have_value("")
     expect(result).to_have_count(0)
@@ -24,6 +34,20 @@ def verify_search(page: Page, base: str) -> None:
     field.fill('"zzqqxx"')
     expect(page.get_by_text("Aucun résultat", exact=True)).to_be_visible()
     expect(result).to_have_count(0)
+
+    field.fill("bitcoin ?")
+    expect(result).to_have_text(first_title)
+    page.reload()
+    expect(field).to_have_value("bitcoin ?")
+    expect(result).to_have_text(first_title)
+    field.fill("travailler rythme")
+    expect(
+        page.get_by_role(
+            "link",
+            name="Comment reprendre le dessus quand le rythme accélère",
+            exact=True,
+        ).first
+    ).to_be_visible()
 
 
 def verify_search_layout(page: Page, base: str) -> None:
