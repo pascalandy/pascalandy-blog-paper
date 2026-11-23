@@ -20,7 +20,9 @@ import sys
 import time
 import urllib.error
 import urllib.request
+from contextlib import contextmanager
 from pathlib import Path
+from threading import current_thread, main_thread
 from typing import Any, NoReturn
 from uuid import uuid4
 
@@ -235,6 +237,29 @@ def ours(state: dict[str, Any]) -> bool:
     return f"n{ROOT}" in cwd.stdout.splitlines()
 
 
+@contextmanager
+def record_before_interrupt():
+    """Finish publishing the detached child's ownership before delivering a stop."""
+    if current_thread() is not main_thread():
+        yield
+        return
+    pending = []
+
+    def defer(signum, _frame):
+        pending.append(signum)
+
+    previous = {}
+    try:
+        for signum in (signal.SIGTERM, signal.SIGINT):
+            previous[signum] = signal.signal(signum, defer)
+        yield
+    finally:
+        for signum, handler in previous.items():
+            signal.signal(signum, handler)
+        for signum in pending:
+            signal.raise_signal(signum)
+
+
 def up() -> str:
     if not (ROOT / "node_modules").is_dir():
         install()
@@ -276,7 +301,10 @@ def up() -> str:
         raise Failure(f"the build failed (log: {log}); run: just check --only build")
     finished = time.time()
     instance = uuid4().hex
-    with (STATE_DIR / "preview.log").open("w", encoding="utf-8") as output:
+    with (
+        record_before_interrupt(),
+        (STATE_DIR / "preview.log").open("w", encoding="utf-8") as output,
+    ):
         preview = subprocess.Popen(
             ["node", str(PREVIEW_SCRIPT), str(PREVIEW_PORT), instance],
             cwd=ROOT,
@@ -284,8 +312,13 @@ def up() -> str:
             stderr=subprocess.STDOUT,
             start_new_session=True,
         )
+        try:
+            save(PREVIEW, preview.pid, finished, instance)
+        except BaseException:
+            preview.kill()
+            preview.wait()
+            raise
     try:
-        save(PREVIEW, preview.pid, finished, instance)
         deadline = time.monotonic() + READY_TIMEOUT
         while preview.poll() is None and time.monotonic() < deadline:
             if is_blog(fetch(PREVIEW + "/", instance), title):

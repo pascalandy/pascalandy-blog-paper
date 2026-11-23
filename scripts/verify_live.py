@@ -194,6 +194,17 @@ class SiteRequests:
                             url, "text/html", str(response.headers.get("Content-Type"))
                         )
                     )
+                if html and response.headers.get_content_disposition() not in (
+                    None,
+                    "inline",
+                ):
+                    raise CheckFailed(
+                        problem(
+                            url,
+                            "inline HTML",
+                            str(response.headers.get("Content-Disposition")),
+                        )
+                    )
                 expected = "complete HTTP body"
                 response.validate_framing()
                 body = bytearray()
@@ -216,9 +227,15 @@ class PageMetadata(HTMLParser):
         self.language: str | None = None
         self.generator: str | None = None
         self.canonicals: list[str] = []
+        self.article_body = False
+        self.refresh = False
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         values = dict(attrs)
+        if "data-pagefind-body" in values:
+            self.article_body = True
+        if tag == "meta" and (values.get("http-equiv") or "").lower() == "refresh":
+            self.refresh = True
         if tag == "link" and "canonical" in (values.get("rel") or "").lower().split():
             self.canonicals.append(values.get("href") or "")
         elif tag == "html":
@@ -308,6 +325,10 @@ def check_event(
         or urlsplit(http_link(article, metadata.canonicals[0])).path != target
     ):
         return [problem(article, f"canonical path {target}", repr(metadata.canonicals))]
+    if not metadata.article_body or metadata.refresh:
+        return [
+            problem(article, "a published article", "redirect or missing article body")
+        ]
     return []
 
 

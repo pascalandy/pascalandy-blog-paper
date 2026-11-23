@@ -105,7 +105,9 @@ class VerifyLiveTest(unittest.TestCase):
             pages[f"/blog/cryptoinmontreal-{event:02}/"] = (
                 f'<meta http-equiv="refresh" content="0;url={target}">'
             ).encode()
-            pages[target] = f'<link rel="canonical" href="{target}">'.encode()
+            pages[target] = (
+                f'<link rel="canonical" href="{target}"><article data-pagefind-body>Event</article>'.encode()
+            )
 
     @staticmethod
     def home(version: str) -> bytes:
@@ -145,6 +147,26 @@ class VerifyLiveTest(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("expected text/html, received text/plain", stderr)
         self.assertEqual(self.requests["/blog/cim-41/"], 0)
+
+    def test_attachment_cannot_navigate_to_the_event(self) -> None:
+        old = "/blog/cryptoinmontreal-12/"
+        self.response_chunks[old, 1] = [
+            b"HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n"
+            b"Content-Disposition: attachment\r\n\r\n" + self.pages[old]
+        ]
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn("expected inline HTML", stderr)
+        self.assertEqual(self.requests["/blog/cim-12/"], 0)
+
+    def test_destination_cannot_be_another_refresh_page(self) -> None:
+        article = "/blog/cim-12/"
+        self.pages[article] = (
+            self.pages[article] + b'<meta http-equiv="refresh" content="0">'
+        )
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn("expected a published article", stderr)
 
     def test_legacy_event_must_refresh_to_its_own_accessible_article(self) -> None:
         old = "/blog/cryptoinmontreal-41/"
