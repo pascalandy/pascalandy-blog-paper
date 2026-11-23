@@ -50,6 +50,6 @@ Preconditions:
 
 ## Gotchas
 
-- Pagefind indexes only the post body (`data-pagefind-body`); page chrome and tag lists stay out of the results
+- Pagefind indexes only the post body (`data-pagefind-body`); article tags inside that body are searchable, and page chrome stays out of the results
 - Results appear after a short debounce: wait for `.pagefind-ui__result` or the message, never a fixed sleep
 - Pagefind reports the index language as `fr-ca` in `dist/pagefind/pagefind-entry.json`

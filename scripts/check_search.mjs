@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { options, search } from "../dist/search/pagefind.js";
-import { search as nativeSearch } from "../dist/pagefind/pagefind.js";
+import { preload, search as nativeSearch } from "../dist/pagefind/pagefind.js";
 
 await options({
   basePath: new URL("../dist/pagefind/", import.meta.url).href,
@@ -8,6 +8,32 @@ await options({
 });
 
 const ids = response => response.results.map(hit => hit.id);
+const fetched = new Set();
+const originalFetch = globalThis.fetch;
+globalThis.fetch = (url, ...args) => {
+  const path = new URL(url).pathname;
+  if (path.includes("/pagefind/index/")) fetched.add(path.split("/").pop());
+  return originalFetch(url, ...args);
+};
+try {
+  const direct = ids(await search("utiliser IA"));
+  assert.ok(direct.length);
+  const cold = new Set(fetched);
+  await search("util");
+  assert.deepEqual(ids(await search("utiliser IA")), direct);
+  // Ask Pagefind for every word in this build. Older hashed files may remain on disk.
+  const vocabulary = new Set();
+  for (const hit of (await nativeSearch(null)).results) {
+    const { content } = await hit.data();
+    for (const word of content.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []) vocabulary.add(word);
+  }
+  const words = [...vocabulary];
+  for (let i = 0; i < words.length; i += 100) await preload(words.slice(i, i + 100).join(" "));
+  assert.ok(cold.size);
+  assert.deepEqual(fetched, cold, "Cold search must load all active index shards");
+} finally {
+  globalThis.fetch = originalFetch;
+}
 const accented = await search("système");
 assert.ok(accented.results.length);
 assert.deepEqual(
@@ -25,6 +51,10 @@ assert.deepEqual(
 const absent = [
   "coquecigruegalactique",
   "zzqqxx",
+  "bitcoinement",
+  '"bitcoinement"',
+  "communistes",
+  "organiste",
   "bitcoin coquecigruegalactique",
 ];
 for (const term of absent) assert.deepEqual(ids(await search(term)), [], term);
@@ -38,6 +68,8 @@ for (const term of [
   "travailler rythme",
   "utiliser IA",
   "rencontrées",
+  "démos",
+  "plaisirs",
   '"trou noir"',
   "bitcoin ?",
   "bitcoin & monde",
@@ -53,6 +85,9 @@ for (const term of [
   );
 }
 
+const unaccented = await search("rencontrees");
+assert.ok(unaccented.results.length);
+assert.deepEqual(ids(unaccented), ids(await nativeSearch("rencontrees")));
 for (const [term, prefix] of [
   ["sommes dollars", /(?:^|[^\p{L}\p{N}_])sommes\b/iu],
   ["datecre", /(?:^|[^\p{L}\p{N}_])date_?cre/iu],

@@ -82,4 +82,4 @@ just qa      # format, then run the same checks as CI
 - **Code:** MIT License (inherited from AstroPaper)
 - **Content** (`src/data/blog/`): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) - You may reuse with attribution to Pascal Andy.
 
-French verb search uses Benoît Sagot’s Lefff 3.4 under the LGPL-LR. Each build publishes the license at `/search/lefff.txt` and the source lexicon at `/pagefind/verbs/lefff-3.4.mlex.gz`.
+French noun and verb search uses Benoît Sagot’s Lefff 3.4 under the LGPL-LR. Each build publishes the license at `/search/lefff.txt` and the source lexicon at `/pagefind/verbs/lefff-3.4.mlex.gz`.
