@@ -221,7 +221,7 @@ export type ThemeConfig = {
 2. **CSS injection**: Theme colors are injected as CSS variables in the `<head>`
 3. **Tailwind mapping**: `global.css` maps CSS variables to Tailwind color utilities
 4. **Runtime toggle**: The light/dark toggle switches the `data-theme` attribute
-5. **OG images**: `src/utils/getOgColors.ts` converts the active theme's colors for the generated OG images; their cache key includes the theme, so switching themes regenerates them
+5. **OG images**: `src/utils/getOgColors.ts` converts the active theme's colors for the generated OG images. The PNG cache key includes the rendered SVG and the Resvg version
 
 This approach provides:
 
