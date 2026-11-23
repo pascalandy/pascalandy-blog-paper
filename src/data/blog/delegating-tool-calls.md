@@ -8,7 +8,14 @@ lang: en
 description: "Two Astra agents audited the same codebase. Giving one a Luna terminal cut the estimated API cost from $40.91 to $7.71 and added 34 minutes."
 ---
 
-**My lead agent used 92.4% fewer tokens on a codebase audit.** I gave two GPT-6.2 Astra agents the same prompt about Mixtape, my desktop app for keeping Spotify playlists on disk. Both ran at high reasoning effort.
+**My lead agent used 92.4% fewer tokens on a codebase audit.** I started two independent Codex sessions in T3 Code. Both got the same task: audit Mixtape, my desktop app for keeping Spotify playlists on disk.
+
+| Scenario      | Lead model and reasoning effort | Terminal model and reasoning effort    |
+| ------------- | ------------------------------- | -------------------------------------- |
+| 1 · Direct    | GPT-6.2 Astra · **high**        | Astra ran its own tools                |
+| 2 · Delegated | GPT-6.2 Astra · **high**        | One persistent GPT-6 Luna · **medium** |
+
+Here’s the shared prompt.
 
 > mixtape ;
 >
@@ -16,13 +23,32 @@ description: "Two Astra agents audited the same codebase. Giving one a Luna term
 
 **1 · Astra alone.** Astra read the code, ran the tests, and wrote the report.
 
-**2 · Astra with Luna.** I added one instruction block. Astra sent every task-related tool call to one persistent GPT-6 Luna agent at medium effort. Astra could batch independent calls and kept the final say. [Jump to the prompt](#copy-the-tool-call-delegation-prompt).
+**2 · Astra with Luna.** I added one instruction block. Astra chose the operations, grouped independent calls, and interpreted Luna’s results. [Jump to the reusable prompt](#copy-the-tool-call-delegation-prompt).
 
-Follow the orange. Astra went from 37.1M tokens to 2.8M. Including Luna, the audit used 28.0M, down 24.4%.
+<details>
+<summary>Exact instructions added in scenario 2</summary>
+
+Use one Luna agent at medium reasoning effort as your terminal for the entire task.
+Make direct tool calls only to start Luna or communicate with Luna.
+
+1. At each step, identify all the tool calls you can specify.
+2. For each call, tell Luna which operation to run and which result to return.
+3. For AGENTS.md and README.md, request the complete contents of each file.
+4. When calls can safely run in parallel, send them to Luna together for parallel execution.
+5. Ask Luna to label each result and report any error or incomplete output.
+6. Read both files in full.
+7. When a call depends on an earlier result, inspect that result before you specify the call.
+8. If Luna is unavailable or cannot run a required call, report the limitation.
+
+Interpret the results yourself. Write the final answer yourself.
+
+</details>
+
+Follow the orange. Astra went from 37.1M tokens to 2.8M. Including Luna, the audit used 28.0M, down 24.4%. These are cumulative input and output tokens across requests. Cached history counts each time a model reads it.
 
 ![Astra used 92.4% fewer cumulative tokens. The bars compare both runs. The table separates cached input, uncached input, and output for each agent.](../../assets/images/tool-call-delegation/tokens-by-agent.png)
 
-The call count barely moved. What changed was whose conversation filled up with code and test logs.
+Astra sent Luna six work messages. The **162 tool calls** count 31 coordination calls from Astra and 131 calls from Luna. One call could batch several commands.
 
 ![163 tool calls alone versus 162 with delegation. Astra coordinated Luna in 31 calls. Luna made 131.](../../assets/images/tool-call-delegation/tool-calls.png)
 
@@ -34,25 +60,25 @@ A test log can reappear in the model’s input on every later request. Even at t
 
 ![Astra alone finished in 45m 30s. With delegation, the report took 1h 19m 21s, an extra 33m 51s.](../../assets/images/tool-call-delegation/elapsed-time.png)
 
-I matched the three T3 sessions and priced each request in ClickHouse at November 23, 2026 API rates, outside my Codex plan. I used Astra’s configured Fast tier, assumed Standard for Luna, and included long-context pricing above 272,000 input tokens. At all-Standard rates, the same usage costs **$20.45 versus $4.15**. All figures are USD. [OpenAI API pricing](https://developers.openai.com/api/docs/pricing) · [Fast pricing](https://openai.com/api-fast-mode/)
+I used `t3cli` to identify the runs and ClickHouse to price the Codex usage records per request. These are API-equivalent estimates at November 23, 2026 rates. Both Astra sessions requested `priority` (API Fast). Luna had no explicit service tier, so I priced it at Standard. Thirteen solo Astra requests and 34 Luna requests exceeded the 272,000-input-token threshold for long-context pricing. Delegated Astra stayed below it. At all-Standard rates, the same usage costs **$20.45 versus $4.15**. All figures are USD. [OpenAI API pricing](https://developers.openai.com/api/docs/pricing) · [Fast pricing](https://openai.com/api-fast-mode/)
 
 ## Two reports landed on my desk
 
 Both runs downloaded 15 playable songs and passed 511 Rust and 192 Python tests. Yet my installed Linux app couldn’t find Deno. Astra alone reproduced the failure and got the engine check to pass by adding Deno to the audit process’s path.
 
-The delegated run reproduced a Python 3.13 diagnostic failure. It also found that an interrupted replacement could leave a music player reading a stale playlist after the audio and index recovered. Each method ran once from the same starting revision. The second inspected a later commit too. I’d use this trial to budget another audit, not to rank bug-finding ability.
+The delegated run reproduced a Python 3.13 diagnostic failure. It also found that an interrupted replacement could leave a music player reading a stale playlist after the audio and index recovered. I ran each method once. The sessions started six seconds apart and tested the same baseline (`aea8e09`). The second inspected a later commit too. The timings measure each lead’s start to its final report, including tests and waits. This trial doesn’t isolate the time spent on delegation or establish equal audit quality.
 
 ## Was tool call delegation worth it?
 
-**For the way I work in T3 Code? Absolutely.** I can leave an audit running in one thread and get on with something else. Whether the report is ready in half an hour or an hour and a quarter makes little difference to my day.
+**For the way I work in T3 Code? Absolutely.** I can leave an audit running in one thread and get on with something else. Whether I get the report after 45 minutes or 79 makes little difference to my day.
 
-On this run, delegation added **33 minutes and 51 seconds** and saved an estimated **$33.20** at API rates. If I needed the answer before I could do anything else, getting it sooner would be worth about $59 an hour. For a background audit, I’d give Luna the terminal again.
+On this run, delegation added **33 minutes and 51 seconds** and saved an estimated **$33.20** at API rates. If the report blocked my next task, the extra spend would break even at about $59 per hour of my time. For a background audit, I’d give Luna the terminal again.
 
-I’d also give it the working directory. Luna ran `just e2e` from the wrong directory and had to retry. Elsewhere, when a shallow Git repository refused a fetch, Luna found a way to reuse the existing objects. That’s why I’d keep medium effort. I haven’t tested low.
+I’d also give it the working directory. Luna ran `just e2e` from the wrong directory and had to retry. Elsewhere, when a shallow Git repository refused a fetch, Luna found a way to reuse the existing objects. Luna recorded 107,095 reasoning tokens, already included in its output. I’d keep medium for that recovery work. I haven’t compared Luna at low, medium, and high on the same task.
 
 ## Copy the tool call delegation prompt
 
-Append this block to your task. Your agent needs to be able to start a second agent and send it follow-up messages.
+After the audit, I tightened the instructions to cover working directories and fallbacks. This is the version I’d append to my next task. The measurements above come from the original instructions. Your agent needs to be able to start a second agent and send it follow-up messages.
 
 ```text
 Use one persistent GPT-6 Luna agent at medium reasoning effort.
