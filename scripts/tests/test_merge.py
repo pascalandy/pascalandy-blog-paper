@@ -307,6 +307,16 @@ class MergeTest(unittest.TestCase):
                     readback_error=not readable,
                 )
                 code, stdout, stderr = self.merge()
+                if when == "gh signoff":
+                    self.assertFalse(
+                        any(
+                            call["argv"][:3] == ["gh", "pr", "merge"]
+                            for call in self.sandbox.load()["calls"]
+                        )
+                    )
+                if not readable:
+                    self.assertIn("could not confirm the merge outcome", stderr)
+                    self.assertIn("gh pr view 7", stderr)
                 expected_main_merge = event == "none" and reply != "refused"
                 if expected_main_merge:
                     self.assertEqual(
