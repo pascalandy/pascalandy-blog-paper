@@ -271,8 +271,9 @@ class MergeTest(unittest.TestCase):
         update_ref = ("git", "-C", str(self.sandbox.origin), "update-ref")
         push_other = shlex.join((*update_ref, "refs/heads/feature", other))
         events = {
-            "none": [],
+            # The documented fail-fast replay must reach the historical defect first.
             "retarget": {"baseRefName": "layer-1"},
+            "none": [],
             "push": push_other,
             "close": {"state": "CLOSED"},
             "merge other head": [
