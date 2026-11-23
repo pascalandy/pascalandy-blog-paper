@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
+import itertools
+import shlex
 import unittest
 
 from harness import CHECKS, Sandbox
-from merge import merge_subject
 
 URL = "https://github.com/pascalandy/blog/pull/7"
 
@@ -36,10 +37,11 @@ class MergeTest(unittest.TestCase):
         result = self.sandbox.run("merge.py")
         return result.returncode, result.stdout, result.stderr
 
+    def origin(self, *args: str) -> str:
+        return self.sandbox.git(*args, cwd=self.sandbox.origin)
+
     def main(self) -> str:
-        return self.sandbox.git(
-            "--git-dir", str(self.sandbox.origin), "rev-parse", "main"
-        )
+        return self.origin("rev-parse", "main")
 
     def test_signs_off_the_tested_head_then_merges_exactly_it(self) -> None:
         head, main = self.sandbox.head(), self.main()
@@ -259,6 +261,86 @@ class MergeTest(unittest.TestCase):
         self.assertIn("rerun just merge", stderr)
         self.assertEqual(self.main(), main)
 
+    def test_bounded_merge_races(self) -> None:
+        main, tested = self.main(), self.sandbox.head()
+        tree = self.origin("rev-parse", f"{tested}^{{tree}}")
+        other = self.origin("commit-tree", tree, "-p", main, "-m", "other")
+        rival_merge = self.origin(
+            "commit-tree", tree, "-p", main, "-p", other, "-m", "other merge"
+        )
+        update_ref = ("git", "-C", str(self.sandbox.origin), "update-ref")
+        push_other = shlex.join((*update_ref, "refs/heads/feature", other))
+        events = {
+            # The documented fail-fast replay must reach the historical defect first.
+            "retarget": {"baseRefName": "layer-1"},
+            "none": [],
+            "push": push_other,
+            "close": {"state": "CLOSED"},
+            "merge other head": [
+                push_other,
+                shlex.join((*update_ref, "refs/heads/main", rival_merge)),
+                {
+                    "state": "MERGED",
+                    "headRefOid": other,
+                    "mergeCommit": {"oid": rival_merge},
+                },
+            ],
+        }
+        early = (
+            (event, "gh signoff", None, True) for event in events if event != "none"
+        )
+        late = itertools.product(
+            events, ["gh pr merge"], [None, "lost", "refused"], [True, False]
+        )
+        for event, when, reply, readable in itertools.chain(early, late):
+            with self.subTest(event=event, when=when, reply=reply, readable=readable):
+                for ref, sha in (
+                    ("main", main),
+                    ("layer-1", main),
+                    ("feature", tested),
+                ):
+                    self.origin("update-ref", f"refs/heads/{ref}", sha)
+                self.open_pr()
+                self.sandbox.update(
+                    hooks={when: events[event]},
+                    statuses={other: "success"},
+                    merge_error=reply,
+                    readback_error=not readable,
+                )
+                code, stdout, stderr = self.merge()
+                if when == "gh signoff":
+                    self.assertFalse(
+                        any(
+                            call["argv"][:3] == ["gh", "pr", "merge"]
+                            for call in self.sandbox.load()["calls"]
+                        )
+                    )
+                if not readable:
+                    self.assertIn("could not confirm the merge outcome", stderr)
+                    self.assertIn("gh pr view 7", stderr)
+                expected_main_merge = event == "none" and reply != "refused"
+                if expected_main_merge:
+                    self.assertEqual(
+                        self.origin("show", "-s", "--format=%P", "main"),
+                        f"{main} {tested}",
+                    )
+                else:
+                    self.assertEqual(
+                        self.main(),
+                        rival_merge if event == "merge other head" else main,
+                    )
+                if self.origin("rev-parse", "layer-1") != main:
+                    self.assertEqual((event, when), ("retarget", "gh pr merge"))
+                    self.assertNotEqual(reply, "refused")
+                    self.assertEqual(
+                        self.origin("show", "-s", "--format=%P", "layer-1"),
+                        f"{main} {tested}",
+                    )
+                success = expected_main_merge and readable
+                self.assertEqual(code, 0 if success else 1, stdout + stderr)
+                if not success:
+                    self.assertNotIn("merged PR #7", stdout)
+
     def test_the_subject_keeps_only_the_summary_of_the_title(self) -> None:
         cases = {
             "✨ feat: signoff: gate merges with just signoff (stack 2/4)": "🔀 merge: gate merges with just signoff (#7)",
@@ -266,9 +348,16 @@ class MergeTest(unittest.TestCase):
             "🚑 fix: 3:00 AM builds": "🔀 merge: 3:00 AM builds (#7)",
             "Agent-native repo: one verdict (#70)": "🔀 merge: Agent-native repo: one verdict (#70) (#7)",
         }
+        main = self.main()
         for title, subject in cases.items():
-            with self.subTest(title):
-                self.assertEqual(merge_subject(title, 7), subject)
+            with self.subTest(title=title):
+                self.origin("update-ref", "refs/heads/main", main)
+                self.open_pr(title=title)
+                code, _, stderr = self.merge()
+                self.assertEqual(code, 0, stderr)
+                self.assertEqual(
+                    self.origin("show", "-s", "--format=%s", "main"), subject
+                )
 
 
 if __name__ == "__main__":

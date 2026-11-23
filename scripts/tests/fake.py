@@ -2,8 +2,8 @@
 
 Run as `fake.py PROGRAM ARGS...`. Each call appends its argv and GH_REPO to the
 calls in the JSON state named by FAKE_STATE, runs the first hook whose key
-starts the command line, then answers from the state. A hook is a shell
-command, or fields to change on the PR, as someone editing it on GitHub would. gh answers from main's
+starts the command line, then answers from the state. A hook runs a shell command, changes PR fields,
+or applies a sequence of both as one external event. gh answers from main's
 rules, the commit statuses, and the pull requests, whose open heads are branch
 tips in the bare origin. Every other program fails when listed in `failing`.
 """
@@ -114,6 +114,11 @@ def gh(state: dict, args: list[str]) -> int:
             listed = [pull_request(state, number) for number in reversed(numbers)]
             print(json.dumps([pr for pr in listed if pr["headRefName"] == branch]))
         case ["pr", "view", number, "--json", _]:
+            if state.get("readback_error") and any(
+                call["argv"][:3] == ["gh", "pr", "merge"] for call in state["calls"]
+            ):
+                print("error reading pull request", file=sys.stderr)
+                return 1
             print(json.dumps(pull_request(state, number)))
         # Any other flag, such as --admin, is unsupported
         case [
@@ -142,10 +147,11 @@ def main() -> int:
     for start, hook in state["hooks"].items():
         if not command.startswith(start):
             continue
-        if isinstance(hook, dict):
-            state["prs"][0].update(hook)
-        else:
-            subprocess.run(hook, shell=True, check=True)
+        for effect in hook if isinstance(hook, list) else [hook]:
+            if isinstance(effect, dict):
+                state["prs"][0].update(effect)
+            else:
+                subprocess.run(effect, shell=True, check=True)
         break
     if argv[0] == "gh":
         code = gh(state, argv[1:])
