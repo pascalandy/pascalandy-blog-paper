@@ -62,15 +62,15 @@ async function matchingArticles(hits, spelling) {
 export async function search(term, options) {
   if (term) term = term.normalize("NFC");
   if (term?.trim()) {
-    // Warm nearby native index chunks for each query word.
-    const prefixes = new Set();
-    for (const word of fold(term).match(/[\p{L}\p{N}]+/gu) ?? []) {
-      prefixes.add(word);
-      // Geometric prefix lengths keep the preload text linear for long pasted words.
-      for (let width = 1; width < word.length; width *= 2)
-        prefixes.add(word.slice(0, width));
-    }
-    if (prefixes.size) await preload([...prefixes].join(" "), options);
+    const words = fold(term).match(/[\p{L}\p{N}]+/gu) ?? [];
+    const groups = new Set(words.map(shardName));
+    const groupsLoaded = await Promise.all(
+      [...groups].map(key => loadShard("prefixes", key))
+    );
+    const seeds = groupsLoaded.flatMap(shard =>
+      shard?.seeds ? [shard.seeds] : []
+    );
+    await preload([...seeds, ...words].join(" "), options);
   }
   const matches = await find(term, options);
   if (!matches.results.length || !term) return matches;

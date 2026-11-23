@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { options, search } from "../dist/search/pagefind.js";
-import { destroy, search as nativeSearch } from "../dist/pagefind/pagefind.js";
+import { destroy, preload, search as nativeSearch } from "../dist/pagefind/pagefind.js";
 
 const settings = {
   basePath: new URL("../dist/pagefind/", import.meta.url).href,
@@ -33,6 +33,14 @@ try {
   assert.ok(direct.length);
 } finally {
   globalThis.fetch = fetchFile;
+}
+// These French terms straddle native chunks with accented and plain spellings.
+for (const term of ["demai", "repas", "repa"]) {
+  await destroy();
+  await options(settings);
+  const cold = ids(await search(term));
+  await preload("abcdefghijklmnopqrstuvwxyz".split("").join(" "));
+  assert.deepEqual(ids(await search(term)), cold, term);
 }
 const accented = await search("système");
 assert.ok(accented.results.length);
