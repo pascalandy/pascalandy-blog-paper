@@ -106,7 +106,7 @@ class VerifyLiveTest(unittest.TestCase):
                 f'<meta http-equiv="refresh" content="0;url={target}">'
             ).encode()
             pages[target] = (
-                f'<link rel="canonical" href="{target}"><article data-pagefind-body>Event</article>'.encode()
+                f'<link rel="canonical" href="{target}"><main data-pagefind-body><article id="article">Event</article></main>'.encode()
             )
 
     @staticmethod
@@ -170,6 +170,15 @@ class VerifyLiveTest(unittest.TestCase):
         code, _, stderr = self.run_cli()
         self.assertEqual(code, 1)
         self.assertIn("unexpected HTTP Refresh", stderr)
+
+    def test_event_shell_cannot_replace_the_article(self) -> None:
+        article = "/blog/cim-12/"
+        self.pages[article] = (
+            b'<link rel="canonical" href="/blog/cim-12/"><main data-pagefind-body></main>'
+        )
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn("expected a published article", stderr)
 
     def test_destination_cannot_be_another_refresh_page(self) -> None:
         article = "/blog/cim-12/"
