@@ -19,9 +19,13 @@ class DeadlineModelTest(unittest.TestCase):
         window = 4
         interval = 1
 
-        def trace(budget: int, oversleep: int | None, response_time: int) -> None:
+        def trace(
+            budget: int, oversleep: int | None, response_time: int, rss_time: int = 0
+        ) -> None:
             now = 0
             starts = []
+            start = interval + oversleep if oversleep is not None else 0
+            expected_attempts = 1 + int(oversleep is not None and start < budget)
             site.requests.clear()
             site.pages["/"] = healthy if oversleep is None else site.home("0.0.0")
 
@@ -34,9 +38,17 @@ class DeadlineModelTest(unittest.TestCase):
             def open_http(opener, request, **kwargs):
                 nonlocal now
                 starts.append(now)
+                if request.full_url == site.base:
+                    self.assertLess(
+                        site.requests["/"],
+                        expected_attempts,
+                        "unexpected homepage retry",
+                    )
                 response = real_open(opener, request, **kwargs)
                 if request.full_url == site.base and site.pages["/"] == healthy:
                     now += response_time
+                elif request.full_url == site.base + "rss.xml":
+                    now += rss_time
                 return response
 
             with (
@@ -48,11 +60,15 @@ class DeadlineModelTest(unittest.TestCase):
                 clock.sleep.side_effect = wake
                 errors = verifier.failures(site.base, fixtures.ASTRO, budget)
 
-            start = interval + oversleep if oversleep is not None else 0
-            expected_attempts = 1 + int(oversleep is not None and start < budget)
             self.assertEqual(site.requests["/"], expected_attempts)
-            limit = budget or verifier.HTTP_TIMEOUT_SECONDS
-            self.assertEqual(not errors, start + response_time < limit, errors)
+            within_window = not budget or start + response_time + rss_time < budget
+            on_time = max(response_time, rss_time) < verifier.HTTP_TIMEOUT_SECONDS
+            self.assertEqual(not errors, within_window and on_time, errors)
+            if response_time >= verifier.HTTP_TIMEOUT_SECONDS:
+                self.assertIn(
+                    f"{site.base}: expected HTTP 200, received request timed out",
+                    errors,
+                )
             if budget:
                 self.assertTrue(all(tick < budget for tick in starts), starts)
 
@@ -65,3 +81,6 @@ class DeadlineModelTest(unittest.TestCase):
             for response_time in (limit - 1, limit, limit + 1):
                 with self.subTest(first_pass=budget, response_time=response_time):
                     trace(budget, None, response_time)
+
+        trace(verifier.HTTP_TIMEOUT_SECONDS + 1, None, verifier.HTTP_TIMEOUT_SECONDS)
+        trace(0, None, 6, rss_time=6)
