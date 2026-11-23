@@ -6,55 +6,71 @@ const lexicon = new URL(
   import.meta.resolve("node-lefff/src/lefff-3.4.mlex/lefff-3.4.mlex")
 );
 
-function unambiguousInflections(source) {
-  const soleLemma = new Map();
-  const foldedLemmas = new Map();
-  const inflections = new Map();
-  function record(map, word, lemma) {
-    if (!map.has(word)) map.set(word, lemma);
-    else if (map.get(word) !== lemma) map.set(word, null);
-  }
+function recordLemma(map, form, lemma) {
+  if (!map.has(form)) map.set(form, lemma);
+  else if (map.get(form) !== lemma) map.set(form, null);
+}
+
+function lexicalGroups(source) {
+  const lemmas = new Map();
+  const folded = new Map();
+  const nouns = new Map();
+  const verbs = new Map();
   for (const line of source.toString("utf8").split("\n")) {
     const [word, type, lemma] = line.split("\t");
     if (!/^\p{Ll}+$/u.test(word)) continue;
-    record(soleLemma, word, lemma);
-    record(foldedLemmas, fold(word), lemma);
-    if (type === "v" || type === "nc") inflections.set(word, lemma);
+    recordLemma(lemmas, word, lemma);
+    recordLemma(folded, fold(word), lemma);
+    if (type === "nc") recordLemma(nouns, word, lemma);
+    if (type === "v") recordLemma(verbs, word, lemma);
   }
-  for (const [word, lemma] of inflections) {
-    if (soleLemma.get(word) !== lemma) inflections.delete(word);
+
+  function groups(word, forQuery) {
+    const keys = [];
+    const noun = nouns.get(word);
+    // The bilingual blog uses both spellings for this technical term.
+    if (noun) keys.push("noun:" + (noun === "system" ? "système" : noun));
+    const verb = verbs.get(word);
+    if (verb) {
+      const unambiguous = lemmas.get(word) === verb;
+      if (unambiguous) keys.push("verb:" + verb);
+      // An ambiguous article form can support a close, dictionary-attested
+      // inflection (écrit/écrites) without linking sommes to unrelated être forms.
+      if (unambiguous || !forQuery) {
+        keys.push("ending:" + verb + ":" + fold(word).replace(/e{0,2}s?$/u, ""));
+      }
+    }
+    return keys;
   }
-  const queries = new Map(inflections);
-  for (const [word, lemma] of inflections) {
-    const folded = fold(word);
-    if (foldedLemmas.get(folded) === lemma) queries.set(folded, lemma);
-  }
-  return { articles: inflections, queries };
+  return { lemmas, folded, groups };
 }
 
 export async function buildSearchVerbs(articlesByWord, directory) {
   const source = await readFile(lexicon);
-  const { articles, queries } = unambiguousInflections(source);
-  const pagesByVerb = new Map();
+  const { lemmas, folded, groups } = lexicalGroups(source);
+  const pagesByGroup = new Map();
   for (const [word, pages] of articlesByWord) {
-    const verb = articles.get(word);
-    if (!verb) continue;
-    if (!pagesByVerb.has(verb)) pagesByVerb.set(verb, new Set());
-    for (const page of pages) pagesByVerb.get(verb).add(page);
+    for (const key of groups(word, false)) {
+      if (!pagesByGroup.has(key)) pagesByGroup.set(key, new Set());
+      for (const page of pages) pagesByGroup.get(key).add(page);
+    }
   }
-
   const shards = new Map(
     [...initials, "other"].map(initial => [
       initial,
       { forms: Object.create(null), pages: Object.create(null) },
     ])
   );
-  for (const [form, verb] of queries) {
-    const pages = pagesByVerb.get(verb);
-    if (!pages) continue;
-    const shard = shards.get(shardName(fold(form)));
-    shard.forms[form] = [verb];
-    shard.pages[verb] ??= [...pages].sort();
+  for (const [word, lemma] of lemmas) {
+    const keys = groups(word, true).filter(key => pagesByGroup.has(key));
+    if (!keys.length) continue;
+    const plain = fold(word);
+    const shard = shards.get(shardName(plain));
+    const spellings = word !== plain && lemma && folded.get(plain) === lemma ? [word, plain] : [word];
+    for (const form of spellings) {
+      shard.forms[form] = [...new Set([...(shard.forms[form] ?? []), ...keys])];
+    }
+    for (const key of keys) shard.pages[key] ??= [...pagesByGroup.get(key)].sort();
   }
 
   await mkdir(directory, { recursive: true });

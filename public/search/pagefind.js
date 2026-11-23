@@ -1,9 +1,8 @@
 import { preload, search as find } from "../pagefind/pagefind.js";
-import { fold, initials, shardName, wordForms } from "./words.js";
+import { fold, shardName, wordForms } from "./words.js";
 export * from "../pagefind/pagefind.js";
 
 const shards = new Map();
-let ready;
 
 async function loadShard(kind, initial, retry = true) {
   const url = new URL(`../pagefind/${kind}/${initial}.json`, import.meta.url);
@@ -22,11 +21,7 @@ async function loadShard(kind, initial, retry = true) {
   return shards.get(url.href);
 }
 
-function surfaceFamily(word) {
-  return fold(word).replace(/e{0,2}s?$/u, "");
-}
-
-async function matchingArticles(hits, spelling, options) {
+async function matchingArticles(hits, spelling) {
   const prefix = fold(spelling);
   const initial = shardName(prefix);
   const [pages, verbs] = await Promise.all([
@@ -37,8 +32,6 @@ async function matchingArticles(hits, spelling, options) {
   const conjugated = new Set(
     Array.isArray(lemmas) ? lemmas.flatMap(lemma => verbs.pages[lemma]) : []
   );
-  const family = surfaceFamily(spelling);
-  let quoted;
   const matches = [];
   for (const hit of hits) {
     if (conjugated.has(hit.id)) {
@@ -62,24 +55,6 @@ async function matchingArticles(hits, spelling, options) {
         continue;
       }
     }
-    // Pagefind also groups close spellings in this bilingual index (system/système).
-    // Confirm a whole surface word before keeping one of its stemmed phrase hits.
-    if (!Array.isArray(lemmas) || family.length < 4) continue;
-    quoted ??= new Set(
-      (await find('"' + spelling + '"', options)).results.map(hit => hit.id)
-    );
-    if (quoted.has(hit.id)) {
-      const { content } = await hit.data();
-      if (
-        content
-          .split(/\s+/u)
-          .some(token =>
-            wordForms(token).some(word => surfaceFamily(word) === family)
-          )
-      ) {
-        matches.push(hit);
-      }
-    }
   }
   return matches;
 }
@@ -87,13 +62,15 @@ async function matchingArticles(hits, spelling, options) {
 export async function search(term, options) {
   if (term) term = term.normalize("NFC");
   if (term?.trim()) {
-    // Pagefind's stemming considers the shards loaded by earlier queries.
-    // Warm this small index once so opening a shared URL and typing agree.
-    ready ??= preload([...initials].join(" ")).catch(error => {
-      ready = undefined;
-      throw error;
-    });
-    await ready;
+    // Warm nearby native index chunks for each query word.
+    const prefixes = new Set();
+    for (const word of fold(term).match(/[\p{L}\p{N}]+/gu) ?? []) {
+      prefixes.add(word);
+      // Geometric prefix lengths keep the preload text linear for long pasted words.
+      for (let width = 1; width < word.length; width *= 2)
+        prefixes.add(word.slice(0, width));
+    }
+    if (prefixes.size) await preload([...prefixes].join(" "), options);
   }
   const matches = await find(term, options);
   if (!matches.results.length || !term) return matches;
@@ -102,7 +79,7 @@ export async function search(term, options) {
   for (const word of new Set(term.trim().split(/\s+/u))) {
     const spelling = word.toLowerCase().replace(/[^\p{L}\p{N}_]/gu, "");
     if (!spelling) continue;
-    hits = await matchingArticles(hits, spelling, options);
+    hits = await matchingArticles(hits, spelling);
     if (!hits.length) return find("", options);
   }
   return hits.length === matches.results.length

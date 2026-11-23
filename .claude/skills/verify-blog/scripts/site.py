@@ -160,6 +160,8 @@ def changed(state: dict[str, Any]) -> str | None:
     built = state.get("built") or 0
     for name in INPUTS:
         top = ROOT / name
+        if name.startswith("scripts/") and not top.is_file():
+            return f"{name} is missing"
         for path in (top, *top.rglob("*")) if top.is_dir() else (top,):
             if path.exists() and path.stat().st_mtime > built:
                 name = f"{path.relative_to(ROOT)}{'/' if path.is_dir() else ''}"

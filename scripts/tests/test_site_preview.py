@@ -49,6 +49,9 @@ class PreviewTest(unittest.TestCase):
         (root / "node_modules").symlink_to(
             ROOT / "node_modules", target_is_directory=True
         )
+        (root / "scripts").mkdir()
+        for name in ("build_search_words.mjs", "build_search_verbs.mjs"):
+            (root / "scripts" / name).touch()
         (root / "src").mkdir()
         (root / "src/config.ts").write_text(
             'export const SITE = {title: "Fixture blog"}'
@@ -126,6 +129,8 @@ class PreviewTest(unittest.TestCase):
                 self.assertEqual(site.main(["doctor"]), 0)
                 self.assertEqual(site.main(["up"]), 0)
                 self.assertEqual(json.loads(site.STATE.read_text()), first_state)
+                (root / "scripts/build_search_verbs.mjs").unlink()
+                self.assertEqual(site.main(["doctor"]), 1)
             finally:
                 self.assertEqual(site.main(["down"]), 0)
             with self.assertRaises(OSError):

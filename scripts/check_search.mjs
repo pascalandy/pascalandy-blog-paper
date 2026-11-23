@@ -1,38 +1,38 @@
 import assert from "node:assert/strict";
 import { options, search } from "../dist/search/pagefind.js";
-import { preload, search as nativeSearch } from "../dist/pagefind/pagefind.js";
+import { destroy, search as nativeSearch } from "../dist/pagefind/pagefind.js";
 
-await options({
+const settings = {
   basePath: new URL("../dist/pagefind/", import.meta.url).href,
   baseUrl: "/",
-});
-
+};
 const ids = response => response.results.map(hit => hit.id);
-const fetched = new Set();
-const originalFetch = globalThis.fetch;
+const fetchFile = globalThis.fetch;
+const bitcoinChunks = new Set();
+let outage = false;
+let recording = true;
 globalThis.fetch = (url, ...args) => {
   const path = new URL(url).pathname;
-  if (path.includes("/pagefind/index/")) fetched.add(path.split("/").pop());
-  return originalFetch(url, ...args);
+  if (recording && path.endsWith(".pf_index")) bitcoinChunks.add(path);
+  if (outage && bitcoinChunks.has(path)) return Promise.resolve(new Response(null, {status: 503}));
+  return fetchFile(url, ...args);
 };
 try {
+  await options(settings);
+  const bitcoins = ids(await nativeSearch("bitcoin"));
+  assert.ok(bitcoinChunks.size && bitcoins.length);
+  await destroy();
+  await options(settings);
+  recording = false;
+  outage = true;
   const direct = ids(await search("utiliser IA"));
-  assert.ok(direct.length);
-  const cold = new Set(fetched);
+  outage = false;
+  assert.deepEqual(ids(await search("bitcoin")), bitcoins, "An unrelated search must not poison the Bitcoin index");
   await search("util");
   assert.deepEqual(ids(await search("utiliser IA")), direct);
-  // Ask Pagefind for every word in this build. Older hashed files may remain on disk.
-  const vocabulary = new Set();
-  for (const hit of (await nativeSearch(null)).results) {
-    const { content } = await hit.data();
-    for (const word of content.toLowerCase().match(/[\p{L}\p{N}]+/gu) ?? []) vocabulary.add(word);
-  }
-  const words = [...vocabulary];
-  for (let i = 0; i < words.length; i += 100) await preload(words.slice(i, i + 100).join(" "));
-  assert.ok(cold.size);
-  assert.deepEqual(fetched, cold, "Cold search must load all active index shards");
+  assert.ok(direct.length);
 } finally {
-  globalThis.fetch = originalFetch;
+  globalThis.fetch = fetchFile;
 }
 const accented = await search("système");
 assert.ok(accented.results.length);
@@ -118,4 +118,22 @@ for (const [term, prefix] of [
 }
 for (const term of absent) {
   assert.deepEqual(ids(await search(term)), [], `Edited search for ${term}`);
+}
+
+for (const term of ["filles", '"filles"']) {
+  const hits = await search(term);
+  for (const hit of hits.results) {
+    const data = await hit.data();
+    assert.match(data.content, /\bfilles?\b/iu, data.url);
+  }
+}
+for (const [term, pattern] of [["voitures", /\bvoitures?\b/iu], ["ecrites", /(?:^|[^\p{L}])écrit/iu]]) {
+  const expected = [];
+  for (const hit of (await nativeSearch(term)).results) {
+    const text = (await hit.data()).content;
+    if (pattern.test(text)) expected.push(hit.id);
+  }
+  const found = ids(await search(term));
+  assert.ok(expected.length, term);
+  assert.ok(expected.every(id => found.includes(id)), term);
 }
