@@ -48,6 +48,17 @@ Follow the orange. Astra went from 37.1M tokens to 2.8M. Including Luna, the aud
 
 ![Astra used 92.4% fewer cumulative tokens. The bars compare both runs. The table separates cached input, uncached input, and output for each agent.](../../assets/images/tool-call-delegation/tokens-by-agent.png)
 
+<details>
+<summary>Token counts by agent (millions)</summary>
+
+| Scenario and agent | Uncached input | Cached input | Output |
+| ------------------ | -------------: | -----------: | -----: |
+| 1 · Astra          |          0.289 |       36.754 |  0.046 |
+| 2 · Astra          |          0.256 |        2.537 |  0.013 |
+| 2 · Luna           |          0.789 |       24.254 |  0.184 |
+
+</details>
+
 Astra sent Luna six work messages. The **162 tool calls** count 31 coordination calls from Astra and 131 calls from Luna. One call could batch several commands.
 
 ![163 tool calls alone versus 162 with delegation. Astra coordinated Luna in 31 calls. Luna made 131.](../../assets/images/tool-call-delegation/tool-calls.png)
@@ -57,6 +68,19 @@ Astra sent Luna six work messages. The **162 tool calls** count 31 coordination 
 A test log can reappear in the model’s input on every later request. Even at the cache discount, Astra alone spent an estimated **$32.28 rereading context**. With Luna, Astra’s cache reads cost **$2.03**. Its uncached input fell only 11.5%. The pair used more uncached input and generated more output, yet Luna’s entire share came to **58 cents**.
 
 ![Estimated API cost fell from $40.91 to $7.71. The table breaks each agent’s cost into uncached input, cached input, and output.](../../assets/images/tool-call-delegation/api-cost.png)
+
+<details>
+<summary>Estimated API cost by agent (USD)</summary>
+
+| Scenario and agent | Uncached input | Cached input | Output |  Total |
+| ------------------ | -------------: | -----------: | -----: | -----: |
+| 1 · Astra          |          $4.79 |       $32.28 |  $3.84 | $40.91 |
+| 2 · Astra          |          $4.09 |        $2.03 |  $1.02 |  $7.14 |
+| 2 · Luna           |          $0.10 |        $0.35 |  $0.12 |  $0.58 |
+
+Amounts are rounded independently.
+
+</details>
 
 ![Astra alone finished in 45m 30s. With delegation, the report took 1h 19m 21s, an extra 33m 51s.](../../assets/images/tool-call-delegation/elapsed-time.png)
 
@@ -99,6 +123,6 @@ Give Luna these rules at startup:
 - When you need a decision, ask me. Continue independent calls.
 ```
 
-I keep the full instructions in my `tool-call-delegation` skill. Once it’s configured, I can append `$tool-call-delegation` to a task and specify Luna at medium effort to use the same setup.
+I keep the full instructions in my `tool-call-delegation` skill. The skill requires Fleet, `uv`, and a configured delegation profile. With those in place, I can append `$tool-call-delegation` to a task and specify Luna at medium effort to use the same setup.
 
 <https://github.com/pascalandy/skills/tree/main/authoring/andy/tool-call-delegation>
