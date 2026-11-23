@@ -140,11 +140,13 @@ just deploy --dry-run
 
 After Sevalla reports a successful build, both commands compare its commit with the GitHub branch tip they read at the start. A mismatch names both commits and exits 1. If Sevalla omits the commit, the command also exits 1.
 
-After a match on production, `just deploy` runs the same checks as `just verify-live`. It reads the expected Astro version from the deployed commit's `package.json`. If any live check fails, it prints the diagnostics and exits 1. When the waited checks pass, the command prints `deployed <sha> to <target>` and exits 0.
+After a match on production, `just deploy` runs the live checks. It reads the expected Astro version from the deployed commit's `package.json`. It also requires the public homepage to report that commit and its linked stylesheets and banner images to load. If any live check fails, the command prints the diagnostics and exits 1. When the waited checks pass, it prints `deployed <sha> to <target>` and exits 0.
 
 Add `--no-wait` to return as soon as Sevalla accepts the deployment. On production, the command reports that it skipped both the commit check and live checks. On preview, it reports that it skipped the commit check.
 
-After a production deploy through the manual GitHub Actions workflow, run `just verify-live` from a checkout of the deployed commit. The standalone command reads the Astro version from that checkout. Use `just verify-live --help` for details on the retry window and request timeouts.
+The manual GitHub Actions production job runs the same deployment script. It refuses to start if `main` has moved since the workflow checked it, and fails if the deployment or public homepage reports a different commit.
+
+To run the live checks again for a known commit, use `just verify-live --expected-commit <sha>` from that commit's checkout. For the basic checks on a preview or another URL, use `just verify-live BASE`. Both commands read the expected Astro version from the checkout.
 
 Each PR was signed off on its own, so two PRs can pass separately and still clash once both are on `main`. After several merges, run `just ci` on an up-to-date `main`, or `just gh-ci main`, before `just deploy`.
 

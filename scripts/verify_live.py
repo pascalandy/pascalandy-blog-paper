@@ -7,7 +7,8 @@
 
 Checks cover the homepage language and Astro generator, RSS and its first post,
 the sitemap index, the sitemap named in robots.txt, and the 41 legacy event
-redirects and their destination articles. Failed checks retry
+redirects and their destination articles. With an expected commit, the check
+also requires the homepage commit, stylesheets and banner images. Failed checks retry
 every ten seconds within a 120-second window.
 
 The verifier requires complete headers and body framing. A response without
@@ -33,7 +34,7 @@ import xml.etree.ElementTree as ET
 from functools import partial
 from pathlib import Path
 from typing import BinaryIO
-from urllib.parse import urljoin, urlsplit
+from urllib.parse import urldefrag, urljoin, urlsplit
 
 from event_redirects import EVENT_REDIRECTS, PageMetadata, redirect_problem
 
@@ -48,6 +49,45 @@ MAX_HTTP_LINE = 65536
 
 class CheckFailed(Exception):
     """A failed HTTP check with its URL and expected and received values."""
+
+
+def srcset_urls(value: str) -> list[str]:
+    return [candidate.split()[0] for candidate in value.split(",") if candidate.strip()]
+
+
+class HomeMetadata(PageMetadata):
+    def __init__(self) -> None:
+        super().__init__()
+        self.commits: list[str] = []
+        self.stylesheets: list[str] = []
+        self.banner_webp: list[str] = []
+        self.banner_src = ""
+        self.banner_srcset: list[str] = []
+        self.in_banner = False
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        super().handle_starttag(tag, attrs)
+        if self.inert:
+            return
+        values = dict(attrs)
+        if tag == "meta" and values.get("name") == "build-commit":
+            self.commits.append(values.get("content") or "")
+        elif (
+            tag == "link" and "stylesheet" in (values.get("rel") or "").lower().split()
+        ):
+            self.stylesheets.append(values.get("href") or "")
+        elif tag == "picture" and "data-site-banner" in values:
+            self.in_banner = True
+        elif self.in_banner and tag == "source" and values.get("type") == "image/webp":
+            self.banner_webp.extend(srcset_urls(values.get("srcset") or ""))
+        elif self.in_banner and tag == "img":
+            self.banner_src = values.get("src") or ""
+            self.banner_srcset = srcset_urls(values.get("srcset") or "")
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "picture" and not self.inert:
+            self.in_banner = False
+        super().handle_endtag(tag)
 
 
 class DirectResponses(urllib.request.HTTPErrorProcessor):
@@ -164,7 +204,14 @@ class SiteRequests:
             DirectResponses(), CompleteHTTPHandler()
         )
 
-    def get(self, url: str, *, read_body: bool = False, html: bool = False) -> bytes:
+    def get(
+        self,
+        url: str,
+        *,
+        read_body: bool = False,
+        html: bool = False,
+        media_type: str | None = None,
+    ) -> bytes:
         now = time.monotonic()
         deadline = now + HTTP_TIMEOUT_SECONDS
         expected = "HTTP 200"
@@ -191,10 +238,16 @@ class SiteRequests:
                     raise CheckFailed(
                         problem(url, "inline HTML", "unexpected HTTP Refresh")
                     )
-                if html and response.headers.get_content_type() != "text/html":
+                required_type = "text/html" if html else media_type
+                if (
+                    required_type is not None
+                    and response.headers.get_content_type() != required_type
+                ):
                     raise CheckFailed(
                         problem(
-                            url, "text/html", str(response.headers.get("Content-Type"))
+                            url,
+                            required_type,
+                            str(response.headers.get("Content-Type")),
                         )
                     )
                 if html and response.headers.get_content_disposition() not in (
@@ -248,11 +301,67 @@ def http_link(source: str, link: str) -> str:
     return target
 
 
-def check_home(requests: SiteRequests, url: str, astro_version: str) -> list[str]:
-    metadata = PageMetadata()
-    metadata.feed(requests.get(url, read_body=True).decode("utf-8", errors="replace"))
+def check_home_assets(
+    requests: SiteRequests, url: str, metadata: HomeMetadata
+) -> list[str]:
+    if metadata.has_base or metadata.directives:
+        return [problem(url, "homepage with same-origin assets", "base or refresh tag")]
+    errors = []
+    asset_groups = (
+        ("linked stylesheet", metadata.stylesheets, "text/css", 1),
+        ("responsive WebP banner srcset", metadata.banner_webp, "image/webp", 2),
+        ("responsive JPEG banner srcset", metadata.banner_srcset, "image/jpeg", 2),
+        ("linked banner fallback", [metadata.banner_src], "image/jpeg", 1),
+    )
+    origin = urlsplit(url)
+    checked_assets = set()
+    for label, links, media_type, minimum in asset_groups:
+        if not links or not all(links):
+            errors.append(problem(url, label, "missing URL"))
+            continue
+        targets = set()
+        for link in links:
+            try:
+                target, _ = urldefrag(http_link(url, link))
+                parts = urlsplit(target)
+                if (parts.scheme, parts.netloc) != (origin.scheme, origin.netloc):
+                    raise CheckFailed(
+                        problem(url, f"same-origin {label}", repr(target))
+                    )
+                targets.add(target)
+                asset = (target, media_type)
+                if asset in checked_assets:
+                    continue
+                checked_assets.add(asset)
+                if not requests.get(target, read_body=True, media_type=media_type):
+                    raise CheckFailed(
+                        problem(target, f"nonempty {media_type}", "empty body")
+                    )
+            except CheckFailed as error:
+                errors.append(str(error))
+        if len(targets) < minimum:
+            errors.append(
+                problem(
+                    url,
+                    f"{label} with at least {minimum} distinct URLs",
+                    str(len(targets)),
+                )
+            )
+    return errors
+
+
+def check_home(
+    requests: SiteRequests, url: str, astro_version: str, expected_commit: str | None
+) -> list[str]:
+    metadata = HomeMetadata()
+    metadata.feed(
+        requests.get(url, read_body=True, html=expected_commit is not None).decode(
+            "utf-8", errors="replace"
+        )
+    )
+    metadata.close()
     generator = f"Astro v{astro_version}"
-    return [
+    errors = [
         problem(url, f"{field} {expected!r}", f"{received!r}")
         for field, expected, received in (
             ("HTML language", "fr-CA", metadata.language),
@@ -260,6 +369,13 @@ def check_home(requests: SiteRequests, url: str, astro_version: str) -> list[str
         )
         if expected != received
     ]
+    if expected_commit is not None:
+        if metadata.commits != [expected_commit]:
+            errors.append(
+                problem(url, f"build commit {expected_commit}", repr(metadata.commits))
+            )
+        errors.extend(check_home_assets(requests, url, metadata))
+    return errors
 
 
 def check_rss(requests: SiteRequests, url: str) -> list[str]:
@@ -328,7 +444,11 @@ def astro_from_package(source: str) -> str:
 
 
 def verify(
-    base: str, astro_version: str | None, retry_seconds: float
+    base: str,
+    astro_version: str | None,
+    retry_seconds: float,
+    *,
+    expected_commit: str | None = None,
 ) -> tuple[int, list[str]]:
     if astro_version is None:
         try:
@@ -344,7 +464,10 @@ def verify(
     deadline = time.monotonic() + retry_seconds
     requests = SiteRequests(deadline if retry_seconds > 0 else None)
     checks = [
-        (3, partial(check_home, requests, base, astro_version)),
+        (
+            3 if expected_commit is None else 6,
+            partial(check_home, requests, base, astro_version, expected_commit),
+        ),
         (2, partial(check_rss, requests, urljoin(base, "rss.xml"))),
         (1, partial(check_status, requests, urljoin(base, "sitemap-index.xml"))),
         (2, partial(check_robots, requests, urljoin(base, "robots.txt"))),
@@ -376,18 +499,28 @@ def failures(
     base: str,
     astro_version: str | None = None,
     retry_seconds: float = RETRY_WINDOW_SECONDS,
+    *,
+    expected_commit: str | None = None,
 ) -> list[str]:
     """Return errors for the live site after retrying the checks that fail."""
-    _, messages = verify(base, astro_version, retry_seconds)
+    _, messages = verify(
+        base, astro_version, retry_seconds, expected_commit=expected_commit
+    )
     return messages
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="just verify-live", description=__doc__)
     parser.add_argument("base", nargs="?", default=DEFAULT_BASE)
+    parser.add_argument(
+        "--expected-commit",
+        help="require a full build commit and working homepage assets",
+    )
     args = parser.parse_args(argv)
     try:
-        count, messages = verify(args.base, None, RETRY_WINDOW_SECONDS)
+        count, messages = verify(
+            args.base, None, RETRY_WINDOW_SECONDS, expected_commit=args.expected_commit
+        )
     except KeyboardInterrupt:
         return 130
     if messages:

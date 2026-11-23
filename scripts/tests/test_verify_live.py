@@ -20,6 +20,14 @@ import verify_live
 
 PACKAGE = Path(__file__).resolve().parents[2] / "package.json"
 ASTRO = json.loads(PACKAGE.read_text(encoding="utf-8"))["dependencies"]["astro"]
+EXPECTED_COMMIT = "a" * 40
+HOME_ASSETS = {
+    "/_astro/home.css": "text/css",
+    "/_astro/banner-small.webp": "image/webp",
+    "/_astro/banner-large.webp": "image/webp",
+    "/_astro/banner-small.jpg": "image/jpeg",
+    "/_astro/banner-large.jpg": "image/jpeg",
+}
 
 
 class VerifyLiveTest(unittest.TestCase):
@@ -63,8 +71,10 @@ class VerifyLiveTest(unittest.TestCase):
                 body = pages.get(self.path)
                 with suppress(ConnectionError):
                     self.send_response(404 if body is None else 200)
-                    if self.path.startswith("/blog/"):
+                    if self.path == "/" or self.path.startswith("/blog/"):
                         self.send_header("Content-Type", "text/html; charset=utf-8")
+                    elif content_type := HOME_ASSETS.get(self.path):
+                        self.send_header("Content-Type", content_type)
                     self.end_headers()
                     if body is not None:
                         self.wfile.write(body)
@@ -116,14 +126,14 @@ class VerifyLiveTest(unittest.TestCase):
             "</head></html>"
         ).encode()
 
-    def run_cli(self) -> tuple[int, str, str]:
+    def run_cli(self, *args: str) -> tuple[int, str, str]:
         stdout, stderr = StringIO(), StringIO()
         with (
             patch.object(verify_live, "RETRY_WINDOW_SECONDS", 0),
             redirect_stdout(stdout),
             redirect_stderr(stderr),
         ):
-            code = verify_live.main([self.base])
+            code = verify_live.main([self.base, *args])
         return code, stdout.getvalue(), stderr.getvalue()
 
     def test_good_site_passes(self) -> None:
@@ -131,6 +141,75 @@ class VerifyLiveTest(unittest.TestCase):
         self.assertEqual((code, stderr), (0, ""))
         self.assertEqual(stdout, f"live site OK: 90 checks on {self.base}\n")
         self.assertEqual(set(self.requests), set(self.pages))
+
+    def release_home(self, commit: str = EXPECTED_COMMIT) -> None:
+        self.pages["/"] = self.home(ASTRO).replace(
+            b"</head></html>",
+            (
+                f'<meta name="build-commit" content="{commit}">'
+                '<link rel="stylesheet" href="/_astro/home.css"></head><body>'
+                "<picture data-site-banner>"
+                '<source type="image/webp" srcset="/_astro/banner-small.webp 640w, /_astro/banner-large.webp 1400w">'
+                '<img src="/_astro/banner-large.jpg" srcset="/_astro/banner-small.jpg 640w, /_astro/banner-large.jpg 1400w">'
+                "</picture></body></html>"
+            ).encode(),
+        )
+        self.pages.update(dict.fromkeys(HOME_ASSETS, b"asset body"))
+
+    def test_release_fetches_all_assets_linked_by_the_homepage(self) -> None:
+        self.release_home()
+        code, _, stderr = self.run_cli("--expected-commit", EXPECTED_COMMIT)
+        self.assertEqual((code, stderr), (0, ""))
+        for path in HOME_ASSETS:
+            self.assertEqual(self.requests[path], 1, path)
+
+    def test_stale_home_with_matching_astro_fails(self) -> None:
+        self.release_home("b" * 40)
+        code, _, stderr = self.run_cli("--expected-commit", EXPECTED_COMMIT)
+        self.assertEqual(code, 1)
+        self.assertIn(f"expected build commit {EXPECTED_COMMIT}", stderr)
+
+    def test_home_with_a_missing_stylesheet_or_banner_candidate_fails(self) -> None:
+        self.release_home()
+        for path in ("/_astro/home.css", "/_astro/banner-small.webp"):
+            with self.subTest(path=path):
+                body = self.pages.pop(path)
+                code, _, stderr = self.run_cli("--expected-commit", EXPECTED_COMMIT)
+                self.pages[path] = body
+                self.assertEqual(code, 1)
+                self.assertIn(f"{path}: expected HTTP 200, received HTTP 404", stderr)
+
+    def test_home_requires_responsive_webp_and_jpeg_banner(self) -> None:
+        self.release_home()
+        homepage = self.pages["/"]
+        for old, new, diagnostic in (
+            (b"/_astro/banner-small.webp 640w, ", b"", "responsive WebP banner srcset"),
+            (
+                b"/_astro/banner-small.webp 640w",
+                b"./_astro/banner-large.webp 640w",
+                "responsive WebP banner srcset with at least 2 distinct URLs, received 1",
+            ),
+            (
+                b"/_astro/banner-small.jpg 640w",
+                b"./_astro/banner-large.jpg#small 640w",
+                "responsive JPEG banner srcset with at least 2 distinct URLs, received 1",
+            ),
+            (
+                b' srcset="/_astro/banner-small.jpg 640w, /_astro/banner-large.jpg 1400w"',
+                b"",
+                "responsive JPEG banner srcset",
+            ),
+            (
+                b'src="/_astro/banner-large.jpg"',
+                b'src="/_astro/banner-large.webp"',
+                "expected image/jpeg, received image/webp",
+            ),
+        ):
+            with self.subTest(diagnostic=diagnostic):
+                self.pages["/"] = homepage.replace(old, new, 1)
+                code, _, stderr = self.run_cli("--expected-commit", EXPECTED_COMMIT)
+                self.assertEqual(code, 1)
+                self.assertIn(diagnostic, stderr)
 
     def test_event_must_serve_its_own_article(self) -> None:
         self.pages["/blog/cim-07/"] = self.pages["/blog/cim-08/"]

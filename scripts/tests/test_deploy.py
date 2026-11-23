@@ -79,11 +79,11 @@ class DeployTest(unittest.TestCase):
 
     def test_matching_commit_is_reported_as_deployed(self) -> None:
         self.responses({"id": "build"}, {"status": "success", "commit_sha": self.head})
-        code, stdout, stderr = self.run_deploy()
+        code, stdout, stderr = self.run_deploy("--expected-commit", self.head)
         self.assertEqual(code, 0, stderr)
         self.assertIn(f"deployed {self.head} to production\n", stdout)
         self.live_checks.assert_called_once_with(
-            PRODUCTION, astro_version=DEPLOYED_ASTRO
+            PRODUCTION, astro_version=DEPLOYED_ASTRO, expected_commit=self.head
         )
         self.assertEqual(
             [call.args[0].get_method() for call in self.urlopen.call_args_list],
@@ -100,6 +100,13 @@ class DeployTest(unittest.TestCase):
             stderr, f"error: Sevalla built {OTHER_HEAD}, not {self.head}\n"
         )
         self.live_checks.assert_not_called()
+
+    def test_main_moving_after_checks_refuses_to_start_a_deployment(self) -> None:
+        code, stdout, stderr = self.run_deploy("--expected-commit", self.preview_head)
+        self.assertEqual((code, stdout), (1, ""))
+        self.assertIn(f"GitHub main is at {self.head}", stderr)
+        self.assertIn(f"checked commit {self.preview_head}", stderr)
+        self.urlopen.assert_not_called()
 
     def test_success_without_a_commit_fails(self) -> None:
         for fields in ({}, {"commit_sha": ""}):
@@ -134,10 +141,15 @@ class DeployTest(unittest.TestCase):
             f"{PRODUCTION}rss.xml: expected HTTP 200, received HTTP 404",
         ]
 
-        def check_live(base: str, *, astro_version: str) -> list[str]:
+        def check_live(
+            base: str, *, astro_version: str, expected_commit: str
+        ) -> list[str]:
             self.assertEqual(self.urlopen.call_count, 2)
             self.assertEqual(self.urlopen.call_args.args[0].get_method(), "GET")
-            self.assertEqual((base, astro_version), (PRODUCTION, DEPLOYED_ASTRO))
+            self.assertEqual(
+                (base, astro_version, expected_commit),
+                (PRODUCTION, DEPLOYED_ASTRO, self.head),
+            )
             return diagnostics
 
         self.live_checks.side_effect = check_live
@@ -176,5 +188,5 @@ class DeployTest(unittest.TestCase):
         code, _, stderr = self.run_deploy()
         self.assertEqual(code, 0, stderr)
         self.live_checks.assert_called_once_with(
-            PRODUCTION, astro_version=DEPLOYED_ASTRO
+            PRODUCTION, astro_version=DEPLOYED_ASTRO, expected_commit=self.head
         )

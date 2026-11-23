@@ -227,7 +227,13 @@ def sevalla_token() -> str:
     return token
 
 
-def deploy(target_name: str, branch: str | None, dry_run: bool, wait: bool) -> int:
+def deploy(
+    target_name: str,
+    branch: str | None,
+    dry_run: bool,
+    wait: bool,
+    expected_commit: str | None = None,
+) -> int:
     target = TARGETS[target_name]
     branch = (
         target.fixed_branch
@@ -236,11 +242,15 @@ def deploy(target_name: str, branch: str | None, dry_run: bool, wait: bool) -> i
     )
     if not branch:
         raise Refused("no branch to deploy; check out a branch or pass one")
-    token = sevalla_token()
-    site = site_id(target.site_variable)
     sha = github_tip(branch)
+    if expected_commit is not None and sha != expected_commit:
+        raise Refused(
+            f"GitHub {branch} is at {sha}, not the checked commit {expected_commit}"
+        )
     if target.fixed_branch is None:
         require_local_matches(branch, sha)
+    token = sevalla_token()
+    site = site_id(target.site_variable)
 
     print(f"Deploying {branch} at {sha[:7]} to {target_name}")
     if dry_run:
@@ -270,7 +280,11 @@ def deploy(target_name: str, branch: str | None, dry_run: bool, wait: bool) -> i
     if deployed != sha:
         raise Refused(f"Sevalla built {deployed}, not {sha}")
     if target_name == "production":
-        errors = failures(DEFAULT_BASE, astro_version=deployed_astro_version(deployed))
+        errors = failures(
+            DEFAULT_BASE,
+            astro_version=deployed_astro_version(deployed),
+            expected_commit=deployed,
+        )
         if errors:
             for error in errors:
                 print(error, file=sys.stderr)
@@ -295,11 +309,22 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--no-wait", action="store_true", help="return once Sevalla accepts"
     )
+    parser.add_argument(
+        "--expected-commit", help="require this checked commit to still be on main"
+    )
     args = parser.parse_args(argv)
     if args.branch and args.target == "production":
         parser.error("production always deploys main; a branch is for preview")
+    if args.expected_commit is not None and args.target != "production":
+        parser.error("--expected-commit applies to production only")
     try:
-        return deploy(args.target, args.branch, args.dry_run, not args.no_wait)
+        return deploy(
+            args.target,
+            args.branch,
+            args.dry_run,
+            not args.no_wait,
+            args.expected_commit,
+        )
     except Refused as refused:
         print(f"error: {refused}", file=sys.stderr)
         return 1
