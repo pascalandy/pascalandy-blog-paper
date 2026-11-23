@@ -34,7 +34,7 @@ import xml.etree.ElementTree as ET
 from functools import partial
 from pathlib import Path
 from typing import BinaryIO
-from urllib.parse import urljoin, urlsplit
+from urllib.parse import urldefrag, urljoin, urlsplit
 
 from event_redirects import EVENT_REDIRECTS, PageMetadata, redirect_problem
 
@@ -307,42 +307,46 @@ def check_home_assets(
     if metadata.has_base or metadata.directives:
         return [problem(url, "homepage with same-origin assets", "base or refresh tag")]
     errors = []
-    for media_type, links in (
-        ("WebP", metadata.banner_webp),
-        ("JPEG", metadata.banner_srcset),
-    ):
-        if len(set(links)) < 2:
-            errors.append(
-                problem(url, f"responsive {media_type} banner srcset", repr(links))
-            )
     asset_groups = (
-        ("stylesheet", metadata.stylesheets, "text/css"),
-        ("banner WebP source", metadata.banner_webp, "image/webp"),
-        (
-            "banner fallback",
-            [metadata.banner_src, *metadata.banner_srcset],
-            "image/jpeg",
-        ),
+        ("linked stylesheet", metadata.stylesheets, "text/css", 1),
+        ("responsive WebP banner srcset", metadata.banner_webp, "image/webp", 2),
+        ("responsive JPEG banner srcset", metadata.banner_srcset, "image/jpeg", 2),
+        ("linked banner fallback", [metadata.banner_src], "image/jpeg", 1),
     )
     origin = urlsplit(url)
-    for label, links, media_type in asset_groups:
+    checked_assets = set()
+    for label, links, media_type, minimum in asset_groups:
         if not links or not all(links):
-            errors.append(problem(url, f"linked {label}", "missing URL"))
+            errors.append(problem(url, label, "missing URL"))
             continue
-        for link in dict.fromkeys(links):
+        targets = set()
+        for link in links:
             try:
-                target = http_link(url, link)
+                target, _ = urldefrag(http_link(url, link))
                 parts = urlsplit(target)
                 if (parts.scheme, parts.netloc) != (origin.scheme, origin.netloc):
                     raise CheckFailed(
                         problem(url, f"same-origin {label}", repr(target))
                     )
+                targets.add(target)
+                asset = (target, media_type)
+                if asset in checked_assets:
+                    continue
+                checked_assets.add(asset)
                 if not requests.get(target, read_body=True, media_type=media_type):
                     raise CheckFailed(
                         problem(target, f"nonempty {media_type}", "empty body")
                     )
             except CheckFailed as error:
                 errors.append(str(error))
+        if len(targets) < minimum:
+            errors.append(
+                problem(
+                    url,
+                    f"{label} with at least {minimum} distinct URLs",
+                    str(len(targets)),
+                )
+            )
     return errors
 
 

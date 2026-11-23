@@ -185,6 +185,16 @@ class VerifyLiveTest(unittest.TestCase):
         for old, new, diagnostic in (
             (b"/_astro/banner-small.webp 640w, ", b"", "responsive WebP banner srcset"),
             (
+                b"/_astro/banner-small.webp 640w",
+                b"./_astro/banner-large.webp 640w",
+                "responsive WebP banner srcset with at least 2 distinct URLs, received 1",
+            ),
+            (
+                b"/_astro/banner-small.jpg 640w",
+                b"./_astro/banner-large.jpg#small 640w",
+                "responsive JPEG banner srcset with at least 2 distinct URLs, received 1",
+            ),
+            (
                 b' srcset="/_astro/banner-small.jpg 640w, /_astro/banner-large.jpg 1400w"',
                 b"",
                 "responsive JPEG banner srcset",
