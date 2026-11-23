@@ -137,30 +137,28 @@ class PreviewTest(unittest.TestCase):
             (site.ROOT / "node_modules").mkdir()
             (site.ROOT / "package.json").write_text('{"scripts":{"build:ci":"true"}}')
             site.PREVIEW_SCRIPT.write_text("setTimeout(() => {}, 12000)")
-            shutil.copy2(
-                site.PREVIEW_SCRIPT.with_name("site.py"),
-                site.PREVIEW_SCRIPT.with_name("site_launcher.py"),
+            # Interrupt the launcher at the file rename that publishes ownership.
+            driver = site.PREVIEW_SCRIPT.with_name("interrupt_start.py")
+            driver.write_text(
+                "import os, runpy, signal\n"
+                "from pathlib import Path\n"
+                "site = runpy.run_path(str(Path(__file__).with_name('site.py')))\n"
+                "up = site['up']\n"
+                "up.__globals__.update(install=lambda: None, site_title=lambda: 'fixture', "
+                "fetch=lambda *args: None)\n"
+                "replace = Path.replace\n"
+                "def interrupt(path, dest):\n"
+                "    os.kill(os.getpid(), signal.SIGTERM)\n"
+                "    return replace(path, dest)\n"
+                "Path.replace = interrupt\n"
+                "site['main'](['up'])\n"
             )
-            process = subprocess.Popen(
-                [
-                    sys.executable,
-                    "-c",
-                    (
-                        "import site_launcher as s; s.install=lambda:None; s.site_title=lambda:'fixture'; "
-                        "s.fetch=lambda *args:None; s.main(['up'])"
-                    ),
-                ],
-                cwd=site.PREVIEW_SCRIPT.parent,
-            )
+            process = subprocess.Popen([sys.executable, driver])
             try:
-                deadline = time.monotonic() + 8
-                while not site.STATE.exists() and time.monotonic() < deadline:
-                    time.sleep(0.05)
+                self.assertEqual(process.wait(timeout=8), -signal.SIGTERM)
                 self.assertTrue(
                     site.STATE.exists(), "detached preview has no recovery record"
                 )
-                process.terminate()
-                process.wait(timeout=5)
                 state = site.load()
                 self.assertTrue(site.ours(state))
                 site.down()
