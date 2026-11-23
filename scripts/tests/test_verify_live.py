@@ -63,6 +63,8 @@ class VerifyLiveTest(unittest.TestCase):
                 body = pages.get(self.path)
                 with suppress(ConnectionError):
                     self.send_response(404 if body is None else 200)
+                    if self.path.startswith("/blog/"):
+                        self.send_header("Content-Type", "text/html; charset=utf-8")
                     self.end_headers()
                     if body is not None:
                         self.wfile.write(body)
@@ -103,7 +105,7 @@ class VerifyLiveTest(unittest.TestCase):
             pages[f"/blog/cryptoinmontreal-{event:02}/"] = (
                 f'<meta http-equiv="refresh" content="0;url={target}">'
             ).encode()
-            pages[target] = b"Event article"
+            pages[target] = f'<link rel="canonical" href="{target}">'.encode()
 
     @staticmethod
     def home(version: str) -> bytes:
@@ -127,6 +129,22 @@ class VerifyLiveTest(unittest.TestCase):
         self.assertEqual((code, stderr), (0, ""))
         self.assertEqual(stdout, f"live site OK: 90 checks on {self.base}\n")
         self.assertEqual(set(self.requests), set(self.pages))
+
+    def test_event_must_serve_its_own_article(self) -> None:
+        self.pages["/blog/cim-07/"] = self.pages["/blog/cim-08/"]
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn("expected canonical path /blog/cim-07/", stderr)
+
+    def test_plain_text_redirect_does_not_navigate(self) -> None:
+        old = "/blog/cryptoinmontreal-41/"
+        self.response_chunks[old, 1] = [
+            b"HTTP/1.0 200 OK\r\nContent-Type: text/plain\r\n\r\n" + self.pages[old]
+        ]
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn("expected text/html, received text/plain", stderr)
+        self.assertEqual(self.requests["/blog/cim-41/"], 0)
 
     def test_legacy_event_must_refresh_to_its_own_accessible_article(self) -> None:
         old = "/blog/cryptoinmontreal-41/"
@@ -334,7 +352,11 @@ class VerifyLiveTest(unittest.TestCase):
     def test_response_framing_must_prove_the_body_is_complete(self) -> None:
         def packet(headers: bytes, body: bytes, version: bytes = b"HTTP/1.1") -> bytes:
             return (
-                version + b" 200 OK\r\nConnection: close\r\n" + headers + b"\r\n" + body
+                version
+                + b" 200 OK\r\nContent-Type: text/html\r\nConnection: close\r\n"
+                + headers
+                + b"\r\n"
+                + body
             )
 
         for path in (

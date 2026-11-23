@@ -29,7 +29,8 @@ export function getPath(
     .split("/")
     .slice(0, -1)
     .filter(folder => folder && !folder.startsWith("_"))
-    .map(slugifyStr);
+    .map(slugifyStr)
+    .filter(Boolean);
   const slug = [...folders, id.split("/").at(-1)].join("/");
   return includeBase ? `/blog/${slug}/` : `/${slug}`;
 }
