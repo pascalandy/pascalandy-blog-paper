@@ -188,6 +188,10 @@ class SiteRequests:
                 remaining()
                 if response.status != 200:
                     raise CheckFailed(problem(url, expected, f"HTTP {response.status}"))
+                if html and "Refresh" in response.headers:
+                    raise CheckFailed(
+                        problem(url, "inline HTML", "unexpected HTTP Refresh")
+                    )
                 if html and response.headers.get_content_type() != "text/html":
                     raise CheckFailed(
                         problem(
