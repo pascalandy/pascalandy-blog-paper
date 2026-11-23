@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import unittest
 from collections import Counter
 from contextlib import redirect_stderr, redirect_stdout, suppress
@@ -14,7 +15,8 @@ from threading import Thread
 from time import monotonic, sleep
 from unittest.mock import patch
 
-from scripts import verify_live
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import verify_live
 
 PACKAGE = Path(__file__).resolve().parents[2] / "package.json"
 ASTRO = json.loads(PACKAGE.read_text(encoding="utf-8"))["dependencies"]["astro"]
@@ -61,6 +63,8 @@ class VerifyLiveTest(unittest.TestCase):
                 body = pages.get(self.path)
                 with suppress(ConnectionError):
                     self.send_response(404 if body is None else 200)
+                    if self.path.startswith("/blog/"):
+                        self.send_header("Content-Type", "text/html; charset=utf-8")
                     self.end_headers()
                     if body is not None:
                         self.wfile.write(body)
@@ -95,6 +99,16 @@ class VerifyLiveTest(unittest.TestCase):
             }
         )
 
+        self.feed_and_site_paths = tuple(pages)
+        for event in range(1, 42):
+            target = f"/blog/cim-{event:02}/"
+            pages[f"/blog/cryptoinmontreal-{event:02}/"] = (
+                f'<meta http-equiv="refresh" content="0;url={target}">'
+            ).encode()
+            pages[target] = (
+                f'<link rel="canonical" href="{target}"><main data-pagefind-body><article id="article">Event</article></main>'.encode()
+            )
+
     @staticmethod
     def home(version: str) -> bytes:
         return (
@@ -115,8 +129,108 @@ class VerifyLiveTest(unittest.TestCase):
     def test_good_site_passes(self) -> None:
         code, stdout, stderr = self.run_cli()
         self.assertEqual((code, stderr), (0, ""))
-        self.assertEqual(stdout, f"live site OK: 8 checks on {self.base}\n")
+        self.assertEqual(stdout, f"live site OK: 90 checks on {self.base}\n")
         self.assertEqual(set(self.requests), set(self.pages))
+
+    def test_event_must_serve_its_own_article(self) -> None:
+        self.pages["/blog/cim-07/"] = self.pages["/blog/cim-08/"]
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn("expected canonical path /blog/cim-07/", stderr)
+
+    def test_plain_text_redirect_does_not_navigate(self) -> None:
+        old = "/blog/cryptoinmontreal-41/"
+        self.response_chunks[old, 1] = [
+            b"HTTP/1.0 200 OK\r\nContent-Type: text/plain\r\n\r\n" + self.pages[old]
+        ]
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn("expected text/html, received text/plain", stderr)
+        self.assertEqual(self.requests["/blog/cim-41/"], 0)
+
+    def test_attachment_cannot_navigate_to_the_event(self) -> None:
+        old = "/blog/cryptoinmontreal-12/"
+        self.response_chunks[old, 1] = [
+            b"HTTP/1.0 200 OK\r\nContent-Type: text/html\r\n"
+            b"Content-Disposition: attachment\r\n\r\n" + self.pages[old]
+        ]
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn("expected inline HTML", stderr)
+        self.assertEqual(self.requests["/blog/cim-12/"], 0)
+
+    def test_http_refresh_cannot_redirect_the_reader_away_from_the_article(
+        self,
+    ) -> None:
+        article = "/blog/cim-12/"
+        self.response_chunks[article, 1] = [
+            b"HTTP/1.0 200 OK\r\nContent-Type: text/html\r\nRefresh: 0; url=/blog/\r\n\r\n"
+            + self.pages[article]
+        ]
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn("unexpected HTTP Refresh", stderr)
+
+    def test_inert_content_cannot_supply_the_event_article(self) -> None:
+        target = "/blog/cim-12/"
+        article = b'<article id="article">Event</article>'
+        for tag in ("template", "script", "style", "noscript"):
+            with self.subTest(tag=tag):
+                inert = f"<{tag}>".encode() + article + f"</{tag}>".encode()
+                self.pages[target] = (
+                    b'<link rel="canonical" href="/blog/cim-12/"><main data-pagefind-body>'
+                    + inert
+                    + b"</main>"
+                )
+                self.assertIn("expected a published article", self.run_cli()[2])
+                self.pages[target] = self.pages[target].replace(
+                    inert, b'<article id="article">' + inert + b"</article>"
+                )
+                self.assertIn("expected a published article", self.run_cli()[2])
+
+    def test_inert_refresh_cannot_redirect_the_reader(self) -> None:
+        old = "/blog/cryptoinmontreal-12/"
+        self.pages[old] = b"<template>" + self.pages[old] + b"</template>"
+        self.assertIn("expected an immediate refresh", self.run_cli()[2])
+
+    def test_event_shell_cannot_replace_the_article(self) -> None:
+        article = "/blog/cim-12/"
+        self.pages[article] = (
+            b'<link rel="canonical" href="/blog/cim-12/"><main data-pagefind-body></main>'
+        )
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn("expected a published article", stderr)
+
+    def test_destination_cannot_be_another_refresh_page(self) -> None:
+        article = "/blog/cim-12/"
+        self.pages[article] = (
+            self.pages[article] + b'<meta http-equiv="refresh" content="0">'
+        )
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn("expected a published article", stderr)
+
+    def test_legacy_event_must_refresh_to_its_own_accessible_article(self) -> None:
+        old = "/blog/cryptoinmontreal-41/"
+        article = "/blog/cim-41/"
+        with patch.dict(
+            self.pages,
+            {old: b'<meta http-equiv="refresh" content="0;url=/blog/cim-40/">'},
+        ):
+            code, _, stderr = self.run_cli()
+            self.assertEqual(code, 1)
+            self.assertIn(
+                f"{self.base}{old[1:]}: expected an immediate refresh to {article}",
+                stderr,
+            )
+            self.assertEqual(self.requests[article], 0)
+        del self.pages[article]
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn(
+            f"{self.base}{article[1:]}: expected HTTP 200, received HTTP 404", stderr
+        )
 
     def test_wrong_generator_names_the_expected_and_received_versions(self) -> None:
         self.pages["/"] = self.home("0.0.0")
@@ -217,6 +331,7 @@ class VerifyLiveTest(unittest.TestCase):
         self.assertEqual(self.requests["/rss.xml"], 1)
         self.assertEqual(self.requests["/robots.txt"], 1)
 
+    @patch.dict(verify_live.EVENT_REDIRECTS, clear=True)
     def test_retry_cannot_wait_past_its_request_budget(self) -> None:
         self.pages["/"] = self.home("0.0.0")
         self.retry_delays["/"] = 1.5
@@ -234,6 +349,7 @@ class VerifyLiveTest(unittest.TestCase):
         self.assertIn(f"{self.base}: expected HTTP 200, received", errors[0])
         self.assertIn("timed out", errors[0].lower())
 
+    @patch.dict(verify_live.EVENT_REDIRECTS, clear=True)
     def test_retry_rejects_late_headers_or_body(self) -> None:
         self.pages["/"] = self.home("0.0.0")
         body = self.home(ASTRO)
@@ -293,13 +409,27 @@ class VerifyLiveTest(unittest.TestCase):
             errors,
         )
 
+    @patch.dict(
+        verify_live.EVENT_REDIRECTS,
+        {"/blog/cryptoinmontreal-01/": "/blog/cim-01/"},
+        clear=True,
+    )
     def test_response_framing_must_prove_the_body_is_complete(self) -> None:
         def packet(headers: bytes, body: bytes, version: bytes = b"HTTP/1.1") -> bytes:
             return (
-                version + b" 200 OK\r\nConnection: close\r\n" + headers + b"\r\n" + body
+                version
+                + b" 200 OK\r\nContent-Type: text/html\r\nConnection: close\r\n"
+                + headers
+                + b"\r\n"
+                + body
             )
 
-        for path, body in self.pages.items():
+        for path in (
+            *self.feed_and_site_paths,
+            "/blog/cryptoinmontreal-01/",
+            "/blog/cim-01/",
+        ):
+            body = self.pages[path]
             length = str(len(body)).encode()
             content_length = b"Content-Length: " + length + b"\r\n"
             encoding = b"Transfer-Encoding: chunked\r\n"
@@ -430,7 +560,7 @@ class VerifyLiveTest(unittest.TestCase):
                     if expected is None:
                         self.assertEqual((code, stderr), (0, ""))
                         self.assertEqual(
-                            stdout, f"live site OK: 8 checks on {self.base}\n"
+                            stdout, f"live site OK: 10 checks on {self.base}\n"
                         )
                     else:
                         self.assertEqual((code, stdout), (1, ""))

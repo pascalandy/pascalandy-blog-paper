@@ -17,6 +17,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urljoin, urlsplit
 
+from event_redirects import EVENT_REDIRECTS, redirect_problem
 from overview import read
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -71,18 +72,35 @@ def exists(dist: Path, target: str) -> bool:
 
 
 def problems(
-    dist: Path, origin: str, posts: dict[str, dict[str, str]] | None = None
+    dist: Path,
+    origin: str,
+    posts: dict[str, dict[str, str]] | None = None,
+    *,
+    redirects: dict[str, str],
 ) -> list[str]:
     errors: list[str] = []
     titles: dict[str, str] = {}
     pages = sorted(dist.rglob("*.html"))
     if not pages:
         return [f"{dist}: no HTML pages; run: just build"]
+    for route in redirects:
+        if not (dist / route.lstrip("/") / "index.html").is_file():
+            errors.append(
+                f"{route}: missing legacy redirect; restore it in astro.config.ts"
+            )
     post_pages = 0
     for path in pages:
         relative = path.relative_to(dist).as_posix()
         route = "/" + relative.removesuffix("index.html")
-        page = Page(path.read_text(encoding="utf-8"))
+        html = path.read_text(encoding="utf-8")
+        if route in redirects:
+            target = redirects[route]
+            if error := redirect_problem(html, target):
+                errors.append(f"{relative}: {error}")
+            if not (dist / target.lstrip("/") / "index.html").is_file():
+                errors.append(f"{relative}: missing destination article {target}")
+            continue
+        page = Page(html)
         counts = Counter(tag for tag, _ in page.elements)
         reasons: set[str] = set()
         if not page.title.strip():
@@ -246,7 +264,12 @@ def main() -> int:
     site_url = urlsplit(origin.group(1))
     state = read()
     posts = {post["url"]: post["data"] for post in state["posts"]}
-    errors = problems(args.dist, f"{site_url.scheme}://{site_url.netloc}", posts)
+    errors = problems(
+        args.dist,
+        f"{site_url.scheme}://{site_url.netloc}",
+        posts,
+        redirects=EVENT_REDIRECTS,
+    )
     if errors:
         print("\n".join(errors), file=sys.stderr)
         print(

@@ -20,7 +20,7 @@ class HtmlTests(unittest.TestCase):
                 "Sitemap: https://example.test/sitemap.xml"
             )
             (dist / "sitemap.xml").touch()
-            self.assertEqual(problems(dist, "https://example.test"), [])
+            self.assertEqual(problems(dist, "https://example.test", redirects={}), [])
 
     def test_broken_metadata_names_each_rule(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -39,7 +39,7 @@ class HtmlTests(unittest.TestCase):
             (dist / "robots.txt").write_text(
                 "Sitemap: https://example.test/missing.xml"
             )
-            errors = "\n".join(problems(dist, "https://example.test"))
+            errors = "\n".join(problems(dist, "https://example.test", redirects={}))
             for expected in (
                 "duplicate title",
                 "H1",
@@ -74,21 +74,29 @@ class HtmlTests(unittest.TestCase):
             )
             (dist / "sitemap.xml").touch()
             source = {"/": {"lang": "en", "date_created": "2020-01-15T00:00:00Z"}}
-            self.assertEqual(problems(dist, "https://example.test", source), [])
+            self.assertEqual(
+                problems(dist, "https://example.test", source, redirects={}), []
+            )
             page.write_text(
                 text.replace('lang="en"', 'lang="fr-CA"').replace(
                     "15 janvier", "14 janvier"
                 )
             )
-            errors = "\n".join(problems(dist, "https://example.test", source))
+            errors = "\n".join(
+                problems(dist, "https://example.test", source, redirects={})
+            )
             self.assertIn("html lang must be en", errors)
             self.assertIn("displayed date must be 15 janvier 2020", errors)
             first = {"/": {"lang": "en", "date_created": "2020-01-01T00:00:00Z"}}
-            errors = "\n".join(problems(dist, "https://example.test", first))
+            errors = "\n".join(
+                problems(dist, "https://example.test", first, redirects={})
+            )
             self.assertIn("displayed date must be 1er janvier 2020", errors)
             page.write_text(text.replace(" data-pagefind-body", ""))
             index.write_text('{"languages":{"en":{"page_count":3}}}')
-            errors = "\n".join(problems(dist, "https://example.test", source))
+            errors = "\n".join(
+                problems(dist, "https://example.test", source, redirects={})
+            )
             self.assertIn("post needs data-pagefind-body", errors)
             self.assertIn("pagefind indexes 3 pages for 1 posts", errors)
 
@@ -104,6 +112,37 @@ class HtmlTests(unittest.TestCase):
             )
             (dist / "sitemap.xml").touch()
             source = {"/": {"date_created": "2020-01-15T00:00:00Z"}}
-            errors = "\n".join(problems(dist, "https://example.test", source))
+            errors = "\n".join(
+                problems(dist, "https://example.test", source, redirects={})
+            )
             self.assertIn("og:type must occur once with article", errors)
             self.assertIn("BlogPosting belongs only on posts, once per post", errors)
+
+    def test_only_known_event_urls_can_use_redirect_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            dist = Path(temporary)
+            old = "/blog/cryptoinmontreal-07/"
+            target = "/blog/cim-07/"
+            source = dist / old.strip("/") / "index.html"
+            source.parent.mkdir(parents=True)
+            redirects = {old: target}
+
+            def errors() -> str:
+                return "\n".join(
+                    problems(dist, "https://example.test", redirects=redirects)
+                )
+
+            (dist / "index.html").write_text("<title>Home</title>")
+            self.assertIn("missing legacy redirect", errors())
+            source.write_text(
+                '<meta http-equiv="refresh" content="0;url=/blog/cim-08/">'
+            )
+            self.assertIn(f"expected an immediate refresh to {target}", errors())
+            self.assertIn("missing destination article", errors())
+            source.write_text(f'<meta http-equiv="refresh" content="0;url={target}">')
+            article = dist / target.strip("/") / "index.html"
+            article.parent.mkdir(parents=True)
+            article.write_text("<title>Event</title>")
+            remaining = errors()
+            self.assertNotIn("cryptoinmontreal-07", remaining)
+            self.assertIn("blog/cim-07/index.html: html lang must be fr-CA", remaining)

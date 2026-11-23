@@ -6,7 +6,8 @@
 """Verify the public blog with read-only HTTP GETs.
 
 Checks cover the homepage language and Astro generator, RSS and its first post,
-the sitemap index, and the sitemap named in robots.txt. Failed checks retry
+the sitemap index, the sitemap named in robots.txt, and the 41 legacy event
+redirects and their destination articles. Failed checks retry
 every ten seconds within a 120-second window.
 
 The verifier requires complete headers and body framing. A response without
@@ -30,10 +31,11 @@ import time
 import urllib.request
 import xml.etree.ElementTree as ET
 from functools import partial
-from html.parser import HTMLParser
 from pathlib import Path
 from typing import BinaryIO
 from urllib.parse import urljoin, urlsplit
+
+from event_redirects import EVENT_REDIRECTS, PageMetadata, redirect_problem
 
 DEFAULT_BASE = "https://pascalandy.com/"
 PACKAGE_JSON = Path(__file__).resolve().parents[1] / "package.json"
@@ -162,7 +164,7 @@ class SiteRequests:
             DirectResponses(), CompleteHTTPHandler()
         )
 
-    def get(self, url: str, *, read_body: bool = False) -> bytes:
+    def get(self, url: str, *, read_body: bool = False, html: bool = False) -> bytes:
         now = time.monotonic()
         deadline = now + HTTP_TIMEOUT_SECONDS
         expected = "HTTP 200"
@@ -185,6 +187,27 @@ class SiteRequests:
                 remaining()
                 if response.status != 200:
                     raise CheckFailed(problem(url, expected, f"HTTP {response.status}"))
+                if html and "Refresh" in response.headers:
+                    raise CheckFailed(
+                        problem(url, "inline HTML", "unexpected HTTP Refresh")
+                    )
+                if html and response.headers.get_content_type() != "text/html":
+                    raise CheckFailed(
+                        problem(
+                            url, "text/html", str(response.headers.get("Content-Type"))
+                        )
+                    )
+                if html and response.headers.get_content_disposition() not in (
+                    None,
+                    "inline",
+                ):
+                    raise CheckFailed(
+                        problem(
+                            url,
+                            "inline HTML",
+                            str(response.headers.get("Content-Disposition")),
+                        )
+                    )
                 expected = "complete HTTP body"
                 response.validate_framing()
                 body = bytearray()
@@ -199,20 +222,6 @@ class SiteRequests:
         except (OSError, ValueError, http.client.HTTPException) as error:
             remaining()
             raise CheckFailed(problem(url, expected, str(error))) from None
-
-
-class HomeMetadata(HTMLParser):
-    def __init__(self) -> None:
-        super().__init__()
-        self.language: str | None = None
-        self.generator: str | None = None
-
-    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        values = dict(attrs)
-        if tag == "html":
-            self.language = values.get("lang")
-        elif tag == "meta" and (values.get("name") or "").lower() == "generator":
-            self.generator = values.get("content")
 
 
 def problem(url: str, expected: str, received: str) -> str:
@@ -240,7 +249,7 @@ def http_link(source: str, link: str) -> str:
 
 
 def check_home(requests: SiteRequests, url: str, astro_version: str) -> list[str]:
-    metadata = HomeMetadata()
+    metadata = PageMetadata()
     metadata.feed(requests.get(url, read_body=True).decode("utf-8", errors="replace"))
     generator = f"Astro v{astro_version}"
     return [
@@ -272,6 +281,35 @@ def check_robots(requests: SiteRequests, url: str) -> list[str]:
         if key.strip().lower() == "sitemap" and value.strip():
             return check_status(requests, http_link(url, value.strip()))
     raise CheckFailed(problem(url, "Sitemap directive with a URL", "no Sitemap URL"))
+
+
+def check_event(
+    requests: SiteRequests, base: str, route: str, target: str
+) -> list[str]:
+    url = urljoin(base, route)
+    html = requests.get(url, read_body=True, html=True).decode(
+        "utf-8", errors="replace"
+    )
+    if error := redirect_problem(html, target):
+        return [f"{url}: {error}"]
+    article = urljoin(base, target)
+    metadata = PageMetadata()
+    metadata.feed(
+        requests.get(article, read_body=True, html=True).decode(
+            "utf-8", errors="replace"
+        )
+    )
+    if (
+        len(metadata.canonicals) != 1
+        or not metadata.canonicals[0]
+        or urlsplit(http_link(article, metadata.canonicals[0])).path != target
+    ):
+        return [problem(article, f"canonical path {target}", repr(metadata.canonicals))]
+    if not metadata.indexed or not metadata.article_text or metadata.directives:
+        return [
+            problem(article, "a published article", "redirect or missing article body")
+        ]
+    return []
 
 
 def check_status(requests: SiteRequests, url: str) -> list[str]:
@@ -311,6 +349,10 @@ def verify(
         (1, partial(check_status, requests, urljoin(base, "sitemap-index.xml"))),
         (2, partial(check_robots, requests, urljoin(base, "robots.txt"))),
     ]
+    checks.extend(
+        (2, partial(check_event, requests, base, route, target))
+        for route, target in EVENT_REDIRECTS.items()
+    )
     count = sum(size for size, _ in checks)
     pending = [check for _, check in checks]
     while True:
