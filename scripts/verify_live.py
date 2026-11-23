@@ -31,12 +31,11 @@ import time
 import urllib.request
 import xml.etree.ElementTree as ET
 from functools import partial
-from html.parser import HTMLParser
 from pathlib import Path
 from typing import BinaryIO
 from urllib.parse import urljoin, urlsplit
 
-from event_redirects import EVENT_REDIRECTS, redirect_problem
+from event_redirects import EVENT_REDIRECTS, PageMetadata, redirect_problem
 
 DEFAULT_BASE = "https://pascalandy.com/"
 PACKAGE_JSON = Path(__file__).resolve().parents[1] / "package.json"
@@ -225,41 +224,6 @@ class SiteRequests:
             raise CheckFailed(problem(url, expected, str(error))) from None
 
 
-class PageMetadata(HTMLParser):
-    def __init__(self) -> None:
-        super().__init__()
-        self.language: str | None = None
-        self.generator: str | None = None
-        self.canonicals: list[str] = []
-        self.indexed = False
-        self.in_article = False
-        self.article_text = False
-        self.refresh = False
-
-    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        values = dict(attrs)
-        if "data-pagefind-body" in values:
-            self.indexed = True
-        if tag == "article" and values.get("id") == "article":
-            self.in_article = True
-        if tag == "meta" and (values.get("http-equiv") or "").lower() == "refresh":
-            self.refresh = True
-        if tag == "link" and "canonical" in (values.get("rel") or "").lower().split():
-            self.canonicals.append(values.get("href") or "")
-        elif tag == "html":
-            self.language = values.get("lang")
-        elif tag == "meta" and (values.get("name") or "").lower() == "generator":
-            self.generator = values.get("content")
-
-    def handle_endtag(self, tag: str) -> None:
-        if tag == "article":
-            self.in_article = False
-
-    def handle_data(self, data: str) -> None:
-        if self.in_article and data.strip():
-            self.article_text = True
-
-
 def problem(url: str, expected: str, received: str) -> str:
     return f"{url}: expected {expected}, received {received}"
 
@@ -341,7 +305,7 @@ def check_event(
         or urlsplit(http_link(article, metadata.canonicals[0])).path != target
     ):
         return [problem(article, f"canonical path {target}", repr(metadata.canonicals))]
-    if not metadata.indexed or not metadata.article_text or metadata.refresh:
+    if not metadata.indexed or not metadata.article_text or metadata.directives:
         return [
             problem(article, "a published article", "redirect or missing article body")
         ]

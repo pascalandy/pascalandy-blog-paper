@@ -9,22 +9,55 @@ EVENT_REDIRECTS = {
 }
 
 
-class Refresh(HTMLParser):
+class PageMetadata(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
+        self.language: str | None = None
+        self.generator: str | None = None
+        self.canonicals: list[str] = []
+        self.indexed = False
+        self.in_article = False
+        self.article_text = False
         self.directives: list[str] = []
         self.has_base = False
+        self.inert: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        attributes = dict(attrs)
-        if tag == "base" and "href" in attributes:
+        if tag in {"template", "script", "style", "noscript"}:
+            self.inert.append(tag)
+        if self.inert:
+            return
+        values = dict(attrs)
+        if tag == "base" and "href" in values:
             self.has_base = True
-        if tag == "meta" and (attributes.get("http-equiv") or "").lower() == "refresh":
-            self.directives.append(attributes.get("content") or "")
+        if "data-pagefind-body" in values:
+            self.indexed = True
+        if tag == "article" and values.get("id") == "article":
+            self.in_article = True
+        if tag == "meta" and (values.get("http-equiv") or "").lower() == "refresh":
+            self.directives.append(values.get("content") or "")
+        if tag == "link" and "canonical" in (values.get("rel") or "").lower().split():
+            self.canonicals.append(values.get("href") or "")
+        elif tag == "html":
+            self.language = values.get("lang")
+        elif tag == "meta" and (values.get("name") or "").lower() == "generator":
+            self.generator = values.get("content")
+
+    def handle_endtag(self, tag: str) -> None:
+        if self.inert:
+            if tag == self.inert[-1]:
+                self.inert.pop()
+            return
+        if tag == "article":
+            self.in_article = False
+
+    def handle_data(self, data: str) -> None:
+        if self.in_article and not self.inert and data.strip():
+            self.article_text = True
 
 
 def redirect_problem(html: str, target: str) -> str | None:
-    refresh = Refresh()
+    refresh = PageMetadata()
     refresh.feed(html)
     refresh.close()
     if refresh.has_base:
