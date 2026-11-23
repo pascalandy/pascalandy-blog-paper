@@ -131,7 +131,7 @@ deploy-preview *args:
 
 # Check the live blog with HTTP GETs
 [group('ship')]
-verify-live base="https://pascalandy.com/":
+verify-live *args:
     @uv run --quiet scripts/verify_live.py "$@"
 
 # Run the CI workflow on GitHub for a pushed ref; deploy is none, preview, or production (main only)

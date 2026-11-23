@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { defineConfig, envField, fontProviders } from "astro/config";
 import { isUnifiedProcessor, unified } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
@@ -28,6 +29,22 @@ export default defineConfig({
     {
       name: "blog-rendering",
       hooks: {
+        "astro:config:setup": ({ command, config, updateConfig }) => {
+          if (command !== "build") return;
+          const commit = execFileSync(
+            "git",
+            ["rev-parse", "--verify", "HEAD"],
+            {
+              cwd: config.root,
+              encoding: "utf8",
+            }
+          ).trim();
+          updateConfig({
+            vite: {
+              define: { "import.meta.env.BLOG_COMMIT": JSON.stringify(commit) },
+            },
+          });
+        },
         "astro:config:done": ({ config }) => {
           if (config.compressHTML !== true) {
             throw new Error(

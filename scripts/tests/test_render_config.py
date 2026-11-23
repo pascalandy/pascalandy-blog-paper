@@ -45,6 +45,25 @@ class RenderingConfigTests(unittest.TestCase):
         self.check_missing("markdown.processor", "set markdown.processor to unified")
 
     def test_inline_words_stay_separate(self) -> None:
+        subprocess.run(["git", "init", "--quiet"], cwd=self.root, check=True)
+        subprocess.run(
+            [
+                "git",
+                "-c",
+                "user.name=Render fixture",
+                "-c",
+                "user.email=render-fixture@example.invalid",
+                "-c",
+                "commit.gpgsign=false",
+                "commit",
+                "--quiet",
+                "--allow-empty",
+                "-m",
+                "Initialize render fixture",
+            ],
+            cwd=self.root,
+            check=True,
+        )
         (self.pages / "index.astro").write_text(
             "<p><em>Bonjour</em>\n<strong>Pascal</strong></p>", encoding="utf-8"
         )

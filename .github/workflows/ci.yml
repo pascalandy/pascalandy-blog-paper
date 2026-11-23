@@ -61,10 +61,11 @@ jobs:
     name: Deploy in Production
     runs-on: ubuntu-latest
     environment: production
-    timeout-minutes: 5
+    timeout-minutes: 35
     needs: check
     if: inputs.deploy == 'production'
-    permissions: {}
+    permissions:
+      contents: read
     steps:
       # The deploy below always ships main, so checks on another ref prove nothing about it
       - name: Refuse a ref other than main
@@ -73,13 +74,19 @@ jobs:
           echo "::error::production deploys only main, not $GITHUB_REF_NAME"
           exit 1
 
-      - uses: sevalla-hosting/sevalla-deploy@cea78040bda96fa24be11ef35458e1b4f7646bfa # v1.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          action: deploy-static-site
-          sevalla-token: ${{ secrets.SEVALLA_TOKEN }}
-          static-site-id: ${{ vars.SEVALLA_STATIC_SITE_ID }}
-          branch: main
-          wait-for-finish: true
+          persist-credentials: false
+
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.19"
+
+      - name: Deploy and verify the checked commit
+        env:
+          SEVALLA_TOKEN: ${{ secrets.SEVALLA_TOKEN }}
+          SEVALLA_STATIC_SITE_ID: ${{ vars.SEVALLA_STATIC_SITE_ID }}
+        run: uv run --quiet scripts/deploy.py production --expected-commit "$GITHUB_SHA"
 
   deploy-preview:
     name: Deploy Preview
