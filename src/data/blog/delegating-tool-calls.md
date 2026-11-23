@@ -1,5 +1,5 @@
 ---
-title: "Delegating tool calls cut my audit cost by 81 percent"
+title: "Delegating tool calls cut my estimated API cost by 81 percent"
 tags:
   - technologie
 date_created: 2026-11-23
@@ -62,6 +62,17 @@ Follow the orange. Astra went from 37.1M tokens to 2.8M. Including Luna, the aud
 Astra sent Luna six work messages. The **162 tool calls** count 31 coordination calls from Astra and 131 calls from Luna. One call could batch several commands.
 
 ![163 tool calls alone versus 162 with delegation. Astra coordinated Luna in 31 calls. Luna made 131.](../../assets/images/tool-call-delegation/tool-calls.png)
+
+<details>
+<summary>Tool calls by agent and operation</summary>
+
+| Scenario and agent | Exec | Wait or sleep | Start agent | Total |
+| ------------------ | ---: | ------------: | ----------: | ----: |
+| 1 · Astra          |  160 |             3 |           0 |   163 |
+| 2 · Astra          |   26 |             4 |           1 |    31 |
+| 2 · Luna           |  129 |             2 |           0 |   131 |
+
+</details>
 
 ## What was that worth in dollars and minutes?
 
