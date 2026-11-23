@@ -130,10 +130,12 @@ for (const term of absent) {
 
 for (const term of ["filles", '"filles"']) {
   const hits = await search(term);
-  for (const hit of hits.results) {
-    const data = await hit.data();
-    assert.match(data.content, /\bfilles?\b/iu, data.url);
-  }
+  const articles = await Promise.all(hits.results.map(hit => hit.data()));
+  assert.ok(
+    articles.some(article => article.url === "/blog/etre-a-son-compte-cest-bien-construire-une-entreprise-cest-mieux/"),
+    `The query ${term} must keep the article containing “une fille sur appel”`
+  );
+  for (const article of articles) assert.match(article.content, /\bfilles?\b/iu, article.url);
 }
 for (const [term, pattern] of [["voitures", /\bvoitures?\b/iu], ["ecrites", /(?:^|[^\p{L}])écrit/iu]]) {
   const expected = [];
