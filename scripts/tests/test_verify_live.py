@@ -171,6 +171,28 @@ class VerifyLiveTest(unittest.TestCase):
         self.assertEqual(code, 1)
         self.assertIn("unexpected HTTP Refresh", stderr)
 
+    def test_inert_content_cannot_supply_the_event_article(self) -> None:
+        target = "/blog/cim-12/"
+        article = b'<article id="article">Event</article>'
+        for tag in ("template", "script", "style", "noscript"):
+            with self.subTest(tag=tag):
+                inert = f"<{tag}>".encode() + article + f"</{tag}>".encode()
+                self.pages[target] = (
+                    b'<link rel="canonical" href="/blog/cim-12/"><main data-pagefind-body>'
+                    + inert
+                    + b"</main>"
+                )
+                self.assertIn("expected a published article", self.run_cli()[2])
+                self.pages[target] = self.pages[target].replace(
+                    inert, b'<article id="article">' + inert + b"</article>"
+                )
+                self.assertIn("expected a published article", self.run_cli()[2])
+
+    def test_inert_refresh_cannot_redirect_the_reader(self) -> None:
+        old = "/blog/cryptoinmontreal-12/"
+        self.pages[old] = b"<template>" + self.pages[old] + b"</template>"
+        self.assertIn("expected an immediate refresh", self.run_cli()[2])
+
     def test_event_shell_cannot_replace_the_article(self) -> None:
         article = "/blog/cim-12/"
         self.pages[article] = (
