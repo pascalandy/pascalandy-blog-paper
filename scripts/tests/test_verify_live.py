@@ -159,6 +159,18 @@ class VerifyLiveTest(unittest.TestCase):
         self.assertIn("expected inline HTML", stderr)
         self.assertEqual(self.requests["/blog/cim-12/"], 0)
 
+    def test_http_refresh_cannot_redirect_the_reader_away_from_the_article(
+        self,
+    ) -> None:
+        article = "/blog/cim-12/"
+        self.response_chunks[article, 1] = [
+            b"HTTP/1.0 200 OK\r\nContent-Type: text/html\r\nRefresh: 0; url=/blog/\r\n\r\n"
+            + self.pages[article]
+        ]
+        code, _, stderr = self.run_cli()
+        self.assertEqual(code, 1)
+        self.assertIn("unexpected HTTP Refresh", stderr)
+
     def test_destination_cannot_be_another_refresh_page(self) -> None:
         article = "/blog/cim-12/"
         self.pages[article] = (
