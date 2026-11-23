@@ -39,7 +39,7 @@ Preconditions:
       "${browser[@]}" set viewport "$width" 900
       "${browser[@]}" open "$URL/search/?q=toroidal"
       "${browser[@]}" wait --text "PSU"
-      "${browser[@]}" wait --fn 'Array.from(document.querySelectorAll(".pagefind-ui__result-excerpt")).some(el => /\S{1000}/u.test(el.textContent))'
+      "${browser[@]}" wait --fn 'Array.from(document.querySelectorAll(".pagefind-ui__result")).some(result => result.querySelector(".pagefind-ui__result-title")?.textContent.includes("PSU") && Array.from(result.querySelectorAll(".pagefind-ui__result-excerpt")).some(el => /\S{1000}/u.test(el.textContent) && el.clientWidth > 0 && el.clientHeight > 0 && el.scrollWidth <= el.clientWidth && el.scrollHeight <= el.clientHeight))'
       test "$("${browser[@]}" eval 'document.documentElement.scrollWidth === document.documentElement.clientWidth')" = true
     done
   )

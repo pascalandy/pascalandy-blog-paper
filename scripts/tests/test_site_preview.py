@@ -9,6 +9,7 @@ import shutil
 import signal
 import socket
 import subprocess
+import sys
 import tempfile
 import time
 import unittest
@@ -129,6 +130,46 @@ class PreviewTest(unittest.TestCase):
                 self.assertEqual(site.main(["down"]), 0)
             with self.assertRaises(OSError):
                 urlopen(site.PREVIEW, timeout=3)
+
+    def test_interrupted_start_can_be_stopped_before_readiness(self) -> None:
+        with tempfile.TemporaryDirectory() as folder:
+            site = launcher(Path(folder))
+            (site.ROOT / "node_modules").mkdir()
+            (site.ROOT / "package.json").write_text('{"scripts":{"build:ci":"true"}}')
+            site.PREVIEW_SCRIPT.write_text("setTimeout(() => {}, 12000)")
+            shutil.copy2(
+                site.PREVIEW_SCRIPT.with_name("site.py"),
+                site.PREVIEW_SCRIPT.with_name("site_launcher.py"),
+            )
+            process = subprocess.Popen(
+                [
+                    sys.executable,
+                    "-c",
+                    (
+                        "import site_launcher as s; s.install=lambda:None; s.site_title=lambda:'fixture'; "
+                        "s.fetch=lambda *args:None; s.main(['up'])"
+                    ),
+                ],
+                cwd=site.PREVIEW_SCRIPT.parent,
+            )
+            try:
+                deadline = time.monotonic() + 8
+                while not site.STATE.exists() and time.monotonic() < deadline:
+                    time.sleep(0.05)
+                self.assertTrue(
+                    site.STATE.exists(), "detached preview has no recovery record"
+                )
+                process.terminate()
+                process.wait(timeout=5)
+                state = site.load()
+                self.assertTrue(site.ours(state))
+                site.down()
+                self.assertFalse(site.ours(state))
+            finally:
+                if process.poll() is None:
+                    process.terminate()
+                process.wait(timeout=5)
+                site.down()
 
     def test_old_state_stops_only_a_preview_from_its_checkout(self) -> None:
         with tempfile.TemporaryDirectory() as folder:

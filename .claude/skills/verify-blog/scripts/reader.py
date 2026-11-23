@@ -200,6 +200,20 @@ def verify_readers(base: str, evidence: Path | None) -> tuple[int, int]:
         ) as page:
             verify_search(page, base)
             verify_search_layout(page, base)
+        with browser.new_page() as page:
+            errors = []
+            page.on("pageerror", lambda error: errors.append(str(error)))
+            page.route("https://cdn.jsdelivr.net/**", lambda route: route.abort())
+            page.goto(f"{base}/blog/dev-workflows/using-mermaid/")
+            sources = page.locator("pre.mermaid-error > code")
+            expect(sources).to_have_count(2)
+            examples = page.locator('#article pre[data-language="text"] > code')
+            expect(examples).to_have_count(2)
+            for index, original in enumerate(examples.all()):
+                expect(sources.nth(index)).to_be_visible()
+                expect(sources.nth(index)).to_have_text(original.text_content() or "")
+            if errors:
+                raise ValueError(f"Mermaid CDN failure raised page errors: {errors}")
         verify_theme_journey(browser, base)
         traces = verify_menu_model(browser, base)
     return count, traces

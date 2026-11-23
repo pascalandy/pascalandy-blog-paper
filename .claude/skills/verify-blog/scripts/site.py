@@ -277,10 +277,10 @@ def up() -> str:
             start_new_session=True,
         )
     try:
+        save(PREVIEW, preview.pid, finished, instance)
         deadline = time.monotonic() + READY_TIMEOUT
         while preview.poll() is None and time.monotonic() < deadline:
             if is_blog(fetch(PREVIEW + "/", instance), title):
-                save(PREVIEW, preview.pid, finished, instance)
                 return PREVIEW
             time.sleep(0.2)
         raise Failure(
@@ -291,6 +291,7 @@ def up() -> str:
         if preview.poll() is None:
             preview.kill()
         preview.wait()
+        STATE.unlink(missing_ok=True)
         raise
 
 

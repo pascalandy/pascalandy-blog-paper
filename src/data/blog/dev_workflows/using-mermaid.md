@@ -22,9 +22,11 @@ graph TD
     C -->|No| E[End]
 ```
 
-## Rendered Diagram (WILL render)
+<span id="rendered-diagram-will-render"></span>
 
-Set `mermaid: true` in the post frontmatter, then use `mermaid` as the code block language. The flag loads Mermaid from cdn.jsdelivr.net in the browser. Without the flag, the block stays as code:
+## Rendered Diagram
+
+Set `mermaid: true` in the post frontmatter, then use `mermaid` as the code block language. The browser loads Mermaid from cdn.jsdelivr.net. If the CDN is unavailable, the reader sees the original diagram source. Without the flag, the block stays as code:
 
 ```mermaid
 graph TD
@@ -56,9 +58,9 @@ sequenceDiagram
 
 ## Summary
 
-| Language Identifier | Result             |
-| ------------------- | ------------------ |
-| `mermaid`           | Renders as diagram |
-| `text`              | Shows raw code     |
-| `plaintext`         | Shows raw code     |
-| (none)              | Shows raw code     |
+| Language Identifier | Result                           |
+| ------------------- | -------------------------------- |
+| `mermaid`           | Diagram, or source while offline |
+| `text`              | Shows raw code                   |
+| `plaintext`         | Shows raw code                   |
+| (none)              | Shows raw code                   |
