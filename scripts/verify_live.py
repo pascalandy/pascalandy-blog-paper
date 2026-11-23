@@ -32,7 +32,6 @@ import time
 import urllib.request
 import xml.etree.ElementTree as ET
 from functools import partial
-from mimetypes import guess_type
 from pathlib import Path
 from typing import BinaryIO
 from urllib.parse import urljoin, urlsplit
@@ -308,10 +307,22 @@ def check_home_assets(
     if metadata.has_base or metadata.directives:
         return [problem(url, "homepage with same-origin assets", "base or refresh tag")]
     errors = []
+    for media_type, links in (
+        ("WebP", metadata.banner_webp),
+        ("JPEG", metadata.banner_srcset),
+    ):
+        if len(set(links)) < 2:
+            errors.append(
+                problem(url, f"responsive {media_type} banner srcset", repr(links))
+            )
     asset_groups = (
         ("stylesheet", metadata.stylesheets, "text/css"),
         ("banner WebP source", metadata.banner_webp, "image/webp"),
-        ("banner fallback", [metadata.banner_src, *metadata.banner_srcset], None),
+        (
+            "banner fallback",
+            [metadata.banner_src, *metadata.banner_srcset],
+            "image/jpeg",
+        ),
     )
     origin = urlsplit(url)
     for label, links, media_type in asset_groups:
@@ -326,16 +337,9 @@ def check_home_assets(
                     raise CheckFailed(
                         problem(url, f"same-origin {label}", repr(target))
                     )
-                expected_type = media_type or guess_type(parts.path)[0]
-                if not expected_type or (
-                    media_type is None and not expected_type.startswith("image/")
-                ):
+                if not requests.get(target, read_body=True, media_type=media_type):
                     raise CheckFailed(
-                        problem(target, "banner image URL", "unknown image type")
-                    )
-                if not requests.get(target, read_body=True, media_type=expected_type):
-                    raise CheckFailed(
-                        problem(target, f"nonempty {expected_type}", "empty body")
+                        problem(target, f"nonempty {media_type}", "empty body")
                     )
             except CheckFailed as error:
                 errors.append(str(error))

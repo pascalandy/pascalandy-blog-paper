@@ -1,6 +1,7 @@
 """The effective Astro configuration preserves spaces and published heading links."""
 
 import json
+import os
 import subprocess
 import tempfile
 import unittest
@@ -15,6 +16,12 @@ class RenderingConfigTests(unittest.TestCase):
         folder = tempfile.TemporaryDirectory()
         self.addCleanup(folder.cleanup)
         self.root = Path(folder.name)
+        self.env = {
+            key: value
+            for key, value in os.environ.items()
+            if not key.startswith("GIT_")
+        }
+        self.env.update(GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_NOSYSTEM="1")
         (self.root / "node_modules").symlink_to(ROOT / "node_modules")
         self.pages = self.root / "src/pages"
         self.pages.mkdir(parents=True)
@@ -27,6 +34,7 @@ class RenderingConfigTests(unittest.TestCase):
         return subprocess.run(
             [str(ROOT / "node_modules/.bin/astro"), command],
             cwd=self.root,
+            env=self.env,
             capture_output=True,
             text=True,
             check=False,
@@ -45,7 +53,9 @@ class RenderingConfigTests(unittest.TestCase):
         self.check_missing("markdown.processor", "set markdown.processor to unified")
 
     def test_inline_words_stay_separate(self) -> None:
-        subprocess.run(["git", "init", "--quiet"], cwd=self.root, check=True)
+        subprocess.run(
+            ["git", "init", "--quiet"], cwd=self.root, env=self.env, check=True
+        )
         subprocess.run(
             [
                 "git",
@@ -62,6 +72,7 @@ class RenderingConfigTests(unittest.TestCase):
                 "Initialize render fixture",
             ],
             cwd=self.root,
+            env=self.env,
             check=True,
         )
         (self.pages / "index.astro").write_text(

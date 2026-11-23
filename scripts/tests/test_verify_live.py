@@ -179,6 +179,28 @@ class VerifyLiveTest(unittest.TestCase):
                 self.assertEqual(code, 1)
                 self.assertIn(f"{path}: expected HTTP 200, received HTTP 404", stderr)
 
+    def test_home_requires_responsive_webp_and_jpeg_banner(self) -> None:
+        self.release_home()
+        homepage = self.pages["/"]
+        for old, new, diagnostic in (
+            (b"/_astro/banner-small.webp 640w, ", b"", "responsive WebP banner srcset"),
+            (
+                b' srcset="/_astro/banner-small.jpg 640w, /_astro/banner-large.jpg 1400w"',
+                b"",
+                "responsive JPEG banner srcset",
+            ),
+            (
+                b'src="/_astro/banner-large.jpg"',
+                b'src="/_astro/banner-large.webp"',
+                "expected image/jpeg, received image/webp",
+            ),
+        ):
+            with self.subTest(diagnostic=diagnostic):
+                self.pages["/"] = homepage.replace(old, new, 1)
+                code, _, stderr = self.run_cli("--expected-commit", EXPECTED_COMMIT)
+                self.assertEqual(code, 1)
+                self.assertIn(diagnostic, stderr)
+
     def test_event_must_serve_its_own_article(self) -> None:
         self.pages["/blog/cim-07/"] = self.pages["/blog/cim-08/"]
         code, _, stderr = self.run_cli()
