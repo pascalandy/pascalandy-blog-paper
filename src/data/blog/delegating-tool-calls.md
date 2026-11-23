@@ -16,7 +16,7 @@ description: "Two Astra agents audited the same codebase. Giving one a Luna term
 
 **1 · Astra alone.** Astra read the code, ran the tests, and wrote the report.
 
-**2 · Astra with Luna.** I added one instruction block. Astra sent every task-related tool call to one persistent GPT-6 Luna agent at medium effort. Astra could batch independent calls and kept the final say.
+**2 · Astra with Luna.** I added one instruction block. Astra sent every task-related tool call to one persistent GPT-6 Luna agent at medium effort. Astra could batch independent calls and kept the final say. [Jump to the prompt](#copy-the-tool-call-delegation-prompt).
 
 Follow the orange. Astra went from 37.1M tokens to 2.8M. Including Luna, the audit used 28.0M, down 24.4%.
 
@@ -42,10 +42,37 @@ Both runs downloaded 15 playable songs and passed 511 Rust and 192 Python tests.
 
 The delegated run reproduced a Python 3.13 diagnostic failure. It also found that an interrupted replacement could leave a music player reading a stale playlist after the audio and index recovered. Each method ran once from the same starting revision. The second inspected a later commit too. I’d use this trial to budget another audit, not to rank bug-finding ability.
 
-## How I’d run it again
+## Was tool call delegation worth it?
 
-Luna ran `just e2e` in the wrong directory and had to retry. Giving it an absolute path would have saved a round trip. When a shallow Git repository refused a fetch, Luna found a way to reuse the existing objects. I’d keep medium effort for that recovery. I haven’t tested low.
+**For the way I work in T3 Code? Absolutely.** I can leave an audit running in one thread and get on with something else. Whether the report is ready in half an hour or an hour and a quarter makes little difference to my day.
 
-My `tool-call-delegation` skill keeps the decisions with Astra. Asking Luna to “find contradictions” delegates judgment. Asking for lines 40–85 of a file delegates a read. If your setup supports a persistent agent and follow-up messages, paste the instructions after your task or invoke `$tool-call-delegation` once installed. [Get the instructions](https://github.com/pascalandy/skills/tree/main/authoring/andy/tool-call-delegation)
+On this run, delegation added **33 minutes and 51 seconds** and saved an estimated **$33.20** at API rates. If I needed the answer before I could do anything else, getting it sooner would be worth about $59 an hour. For a background audit, I’d give Luna the terminal again.
 
-Would I pay **$33.20** to get those **33 minutes and 51 seconds** back? If the result blocks work worth more than **$59 an hour**, yes. If I’m heading out for lunch, Luna gets the terminal.
+I’d also give it the working directory. Luna ran `just e2e` from the wrong directory and had to retry. Elsewhere, when a shallow Git repository refused a fetch, Luna found a way to reuse the existing objects. That’s why I’d keep medium effort. I haven’t tested low.
+
+## Copy the tool call delegation prompt
+
+Append this block to your task. Your agent needs to be able to start a second agent and send it follow-up messages.
+
+```text
+Use one persistent GPT-6 Luna agent at medium reasoning effort.
+Delegate all task-related tool calls to Luna. Make direct calls only
+to start Luna or communicate with it. You choose the operations,
+interpret the results, and write the final answer.
+
+Send an ID, the exact tool and arguments, and the output you need.
+For shell commands, include the absolute working directory.
+Batch independent calls when safe. Read each prerequisite result
+before choosing a dependent call.
+
+Give Luna these rules at startup:
+- Execute the specified calls. Run marked parallel calls together.
+- Follow running commands to completion. Return the ID, status,
+  and requested output. Quote errors exactly. Flag truncated output.
+- Use a fallback only if I specify the trigger and the exact action.
+- When you need a decision, ask me. Continue independent calls.
+```
+
+I keep the full instructions in my `tool-call-delegation` skill. Once it’s configured, I can append `$tool-call-delegation` to a task and specify Luna at medium effort to use the same setup.
+
+<https://github.com/pascalandy/skills/tree/main/authoring/andy/tool-call-delegation>
