@@ -1,4 +1,4 @@
-![Isometric drawing of a person writing at a lamp-lit desk in a small study, with a bookshelf and a sunset over the hills through the window](docs/assets/hero.png)
+![Isometric drawing of a person writing in a notebook on the lakeshore rocks at sunrise, with a small tower-house among the pines across the misty water](docs/assets/hero-v2b.png)
 
 # Le blog de Pascal Andy
 
