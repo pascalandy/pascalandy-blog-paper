@@ -83,6 +83,7 @@ The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just
 - Firefox can reject an AVIF with a repeated primary `ispe`, or with primary `ispe` after `clap`, `irot`, or `imir`, even when Chromium decodes it. Parity checks the order of properties on the primary item and preserves valid AVIF signatures
 - The playbooks are public blog posts: write them for readers
 - Keep Cloudflare Rocket Loader off for pascalandy.com. It rewrites every `<script>` type and runs them only on the first load, so a page reached through `ClientRouter`, such as search from the header, never runs its scripts. A `type="<hash>-module"` in the served HTML means it is back on
+- Keep Cloudflare from caching pascalandy.com HTML: no Page Rule or Cache Rule with Cache Everything. Sevalla already caches HTML at its edge and purges it on each deploy, but nothing purges the Cloudflare zone: a Cache Everything Page Rule on `https://pascalandy.com/` (now disabled) kept serving the previous homepage after a deploy. `cf-cache-status` on `/` should read `DYNAMIC`
 
 ## Leave a trace
 
