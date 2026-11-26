@@ -23,6 +23,7 @@ Preconditions:
 - The instance serves a Pagefind index: the preview always does; Pascal's dev server needs a prior build, which copies the index into `public/pagefind`
 
 - **Open search.** Run `agent-browser open "$URL/search/"` and `agent-browser get title`. The title is `Recherche | Le blog de Pascal Andy`, and the box shows `Rechercher...`.
+- **Open it from the header.** Open `$URL/blog/`, click the header link whose `href` ends with `/search/`, then `agent-browser wait ".pagefind-ui__search-input"`. The box appears after this client-side navigation too; an empty `#pagefind-search` means the page script did not run. Cloudflare exists only on the public site, so after a Cloudflare change run this step with `URL=https://pascalandy.com`
 - **Type a query.** Run `agent-browser fill ".pagefind-ui__search-input" "bitcoin"`, then `agent-browser wait ".pagefind-ui__result"`. A count such as `12 résultats` appears above linked results.
 - **Check the URL.** Run `agent-browser get url`. It ends with `?q=bitcoin`.
 - **Miss.** Replace `bitcoin` with `coquecigruegalactique` and wait for `Aucun résultat`. Reload and check for the same message. Repeat from `bitcoin` with `zzqqxx`.
@@ -46,7 +47,7 @@ Preconditions:
   ```
 
 - **Proof.** Run `agent-browser snapshot -i` and `agent-browser screenshot cache/verify-blog/$RUN/search/results.png`.
-- **Fallback.** Run `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/search/" --out cache/verify-blog/$RUN/search --step 'fill:.pagefind-ui__search-input=bitcoin' --step 'wait:.pagefind-ui__result'`. `state.json` holds the URL with `?q=bitcoin`, and `aria.txt` the results.
+- **Fallback.** Run `uv run .claude/skills/verify-blog/scripts/browse.py "$URL/blog/" --out cache/verify-blog/$RUN/search --step 'click:a[href$="/search/"]' --step 'fill:.pagefind-ui__search-input=bitcoin' --step 'wait:.pagefind-ui__result'`. `state.json` holds the URL with `?q=bitcoin`, and `aria.txt` the results.
 
 ## Gotchas
 
