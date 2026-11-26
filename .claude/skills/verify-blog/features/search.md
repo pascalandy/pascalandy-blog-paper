@@ -23,6 +23,7 @@ Preconditions:
 - The instance serves a Pagefind index: the preview always does; Pascal's dev server needs a prior build, which copies the index into `public/pagefind`
 
 - **Open search.** Run `agent-browser open "$URL/search/"` and `agent-browser get title`. The title is `Recherche | Le blog de Pascal Andy`, and the box shows `Rechercher...`.
+- **Open it from the header.** Open `$URL/blog/`, click the header link whose `href` ends with `/search/`, then `agent-browser wait ".pagefind-ui__search-input"`. The box appears after this client-side navigation too; an empty `#pagefind-search` means the page script did not run
 - **Type a query.** Run `agent-browser fill ".pagefind-ui__search-input" "bitcoin"`, then `agent-browser wait ".pagefind-ui__result"`. A count such as `12 résultats` appears above linked results.
 - **Check the URL.** Run `agent-browser get url`. It ends with `?q=bitcoin`.
 - **Miss.** Replace `bitcoin` with `coquecigruegalactique` and wait for `Aucun résultat`. Reload and check for the same message. Repeat from `bitcoin` with `zzqqxx`.

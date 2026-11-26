@@ -82,6 +82,7 @@ The CI, Gitleaks, and PR Labeler workflows run only by hand (`just gh-ci`, `just
 - Pillow can decode identical RGBA pixels from AVIF files with different CICP color signalling; parity follows the primary `av01` item's associated color and reduced still-image header, compares grid/other primary items by bytes, and errors on non-reduced AV1 headers
 - Firefox can reject an AVIF with a repeated primary `ispe`, or with primary `ispe` after `clap`, `irot`, or `imir`, even when Chromium decodes it. Parity checks the order of properties on the primary item and preserves valid AVIF signatures
 - The playbooks are public blog posts: write them for readers
+- Keep Cloudflare Rocket Loader off for pascalandy.com. It rewrites every `<script>` type and runs them only on the first load, so a page reached through `ClientRouter`, such as search from the header, never runs its scripts. A `type="<hash>-module"` in the served HTML means it is back on
 
 ## Leave a trace
 
